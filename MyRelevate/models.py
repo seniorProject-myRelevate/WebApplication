@@ -28,7 +28,8 @@ class DemographicData(models.Model):
     #probably should pull lots of this info from someone elses DB.
     RACE = (
         ('a', 'asian'),
-        ('b' 'black'),
+        ('b', 'black'),
+        ('h', 'hispanic/latino'),
         ('w', 'white'),
     )
 
@@ -39,11 +40,11 @@ class DemographicData(models.Model):
         ('s', 'single'),
     )
 
-    SEXUAL_ORIENTATION = (
-        ('b', 'bisexual'),
-        ('g', 'gay'),
-        ('l', 'lesbian'),
-        ('s', 'straight'),
+    SEXUAL_PREFERENCE = (
+        ('m', 'men'),
+        ('w', 'women'),
+        ('b', 'men and women'),
+        ('o', 'other'),
     )
 
     user = models.ForeignKey(User)
