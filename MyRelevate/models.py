@@ -9,6 +9,7 @@ class User(models.Model):
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=150)
     createdDate = models.DateField()
+    lastLogin = models.DateField()
 
 
 # DemographicData Database Model
@@ -77,7 +78,7 @@ class DemographicData(models.Model):
     relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS)
 
     # postal code to derive location
-    postalCode = models.CharField(maxlength=32)
+    postalCode = models.CharField(max_length=32)
     race = models.CharField(max_length=2)
     salary = models.IntegerField(choices=SALARY)
     sexual_orientation = models.CharField(max_length=1)
