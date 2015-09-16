@@ -1,15 +1,9 @@
 from django.db import models
 
 
-# User Database Model
-class User(models.Model):
+# extends predefined user model created by Django. ^_^
+class User(models.User):
     confirmed = models.BooleanField(auto_created=False)
-    email = models.EmailField(max_length=100, unique=True)
-    password = models.CharField(max_length=500)
-    firstName = models.CharField(max_length=100)
-    lastName = models.CharField(max_length=150)
-    createdDate = models.DateField()
-    lastLogin = models.DateField()
 
 
 # DemographicData Database Model
@@ -62,8 +56,8 @@ class DemographicData(models.Model):
 
     SEXUAL_PREFERENCE = (
         ('m', 'men'),
-        ('w', 'women'),
         ('b', 'men and women'),
+        ('w', 'women'),
         ('o', 'other'),
     )
 
