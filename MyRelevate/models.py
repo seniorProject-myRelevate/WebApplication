@@ -4,7 +4,7 @@ from django.db import models
 # extends predefined user model created by Django. ^_^
 class User(models.User):
     confirmed = models.BooleanField(auto_created=False)
-    pass
+
 
 # DemographicData Database Model
 class DemographicData(models.Model):
