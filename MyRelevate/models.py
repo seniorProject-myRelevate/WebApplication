@@ -16,6 +16,7 @@ class DemographicData(models.Model):
         (3, 'Graduated with bachelors'),
         (4, 'Graduated with bachelors'),
         (5, 'Graduated with PhD'),
+        (6, 'Did not complete high school'),
     )
 
     EMPLOYMENT_STATUS = (
@@ -58,10 +59,7 @@ class DemographicData(models.Model):
         ('m', 'men'),
         ('b', 'men and women'),
         ('w', 'women'),
-        ('o', 'other'),
-    )
-
-    user = models.ForeignKey(User)
+        ('o', 'otheruser = models.ForeignKey(User)
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
     education = models.IntegerField(choices=EDUCATION)
@@ -76,3 +74,20 @@ class DemographicData(models.Model):
     race = models.CharField(max_length=2)
     salary = models.IntegerField(choices=SALARY)
     sexual_orientation = models.CharField(max_length=1)
+
+#base model for article
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey(User)
+    content = models.TextField()#check if this requires bounding for security purposes
+    publishDate = models.DateField()
+    updateDate = models.DateField()
+
+#table of tags for use in adding new tags
+class Tag(models.Model):
+    tagName = models.CharField(max_length=100)
+
+#table for linking tags to articles
+class TagTable(models.Model):
+    article = models.ForeignKey(Article)
+    tag = models.ForeignKey(Tag)
