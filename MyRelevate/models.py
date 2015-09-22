@@ -59,7 +59,8 @@ class DemographicData(models.Model):
         ('m', 'men'),
         ('b', 'men and women'),
         ('w', 'women'),
-        ('o', 'otheruser = models.ForeignKey(User)
+        ('o', 'otheruser = models.ForeignKey(User)'),
+    )
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
     education = models.IntegerField(choices=EDUCATION)
