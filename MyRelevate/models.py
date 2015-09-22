@@ -1,9 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 
 
-# extends predefined user model created by Django. ^_^
-class User(models.User):
-    confirmed = models.BooleanField(auto_created=False)
+class User(AbstractBaseUser):
+    """
+    Basic User Class
+    """
+
+    email = models.EmailField(unique=True, db_index=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    joined_date = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    confirmed = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+
+    def __unicode__(self):
+            return self.email
 
 
 # DemographicData Database Model
