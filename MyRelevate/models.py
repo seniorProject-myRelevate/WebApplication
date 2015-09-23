@@ -90,6 +90,7 @@ class DemographicData(models.Model):
     salary = models.IntegerField(choices=SALARY)
     sexual_orientation = models.CharField(max_length=1)
 
+
 #base model for article
 class Article(models.Model):
     title = models.CharField(max_length=100)
@@ -98,9 +99,11 @@ class Article(models.Model):
     publishDate = models.DateField()
     updateDate = models.DateField()
 
+
 #table of tags for use in adding new tags
 class Tag(models.Model):
     tagName = models.CharField(max_length=100)
+
 
 #table for linking tags to articles
 class TagTable(models.Model):
