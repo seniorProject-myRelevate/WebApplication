@@ -9,6 +9,7 @@ class UserTests(TestCase):
     def setUp(self):
         User.objects.create(email="fbar@gmail.com", first_name="Alex", last_name="Beahm",
                             joined_date=datetime.datetime.now(), is_active=True, confirmed=True)
+
         User.objects.create(email="fbar",
                             first_name="Thisnameiswaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters",
                             last_name="Thislastnameisalsowaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters",
