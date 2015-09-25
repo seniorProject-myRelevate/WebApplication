@@ -58,6 +58,7 @@ class UserTests(TestCase):
         self.assertTrue(dateOfProduction < goodUserDate)
         self.assertFalse(dateOfProduction > badUserDate)
 
+
 class DemographicModelTests(TestCase):
     def setUp(self):
         models.DemographicData.objects.create(birthday = datetime.datetime(1994,1,1,0,0,0,0),
