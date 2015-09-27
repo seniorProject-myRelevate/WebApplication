@@ -11,49 +11,51 @@ class UserTests(TestCase):
                             joined_date=datetime.datetime.now(), is_active=True, confirmed=True)
 
         models.User.objects.create(email="fbar",
-                            first_name="Thisnameiswaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters",
-                            last_name="Thislastnameisalsowaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters",
-                            joined_date=datetime.datetime(2011,1,1,0,0,0,0), is_active=False, is_confirmed=False)
+                            first_name="Thisnameiswaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters3344$$",
+                            last_name="Thislastnameisalsowaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters55%^  F",
+                            joined_date=datetime.datetime(2011,1,1,0,0,0,0), is_active=False, confirmed=False)
 
-    def validEmail(self):
+    def test_ValidEmail(self):
         """
         Regex is used to just check if the e-mail is in a correct format
         """
-        goodUser = models.User.objects.get(email="fbar@gmail.com")
-        badUser = models.User.objects.get(email="bar")
+        goodUser = models.User.objects.get(email="fbar@gmail.com").email
+        badUser = models.User.objects.get(email="fbar").email
 
-        self.assertTrue(re.match(r"[^@]@[^@]\.[^@]", goodUser['email']))
-        self.assertFalse(re.match(r"[^@]@[^@]\.[^@]", badUser['email']))
+        self.assertTrue(re.match(r"[^@]*@[^@]*\.[^@]{3}", goodUser))
+        self.assertFalse(re.match(r"[^@]*@[^@]*\.[^@]{3}", badUser))
 
-    def validFirstName(self):
-        goodUserName = models.User.objects.get(email="fbar@gmail.com")['first_name']
-        badUserName = models.User.objects.get(email="bar")['first_name']
+    def test_ValidFirstName(self):
+        goodUserName = models.User.objects.get(email="fbar@gmail.com").first_name
+        badUserName = models.User.objects.get(email="fbar").first_name
         maxChars = 50
-        self.assertTrue(re.match(r"^[A-Za-z/-]*$"),goodUserName)
-        self.assertTrue(len(goodUserName) <= maxChars and not len(goodUserName))
+        self.assertTrue(re.match(r"^[A-Za-z/-]*$",goodUserName))
+        self.assertTrue(len(goodUserName) <= maxChars and len(goodUserName) > 0)
 
-        self.assertFalse(re.match(r"^[A-Za-z/-]*$"), badUserName)
-        self.assertFalse(len(badUserName) <= maxChars)
+        self.assertFalse(re.match(r"^[A-Za-z/-]*$", badUserName))
+        self.assertFalse(len(badUserName) < maxChars)
 
-    def validLastName(self):
-        goodUserLast = models.User.objects.get(email="fbar@gmail.com")
-        badUserLast = models.User.objects.get(email="bar")
+    def test_ValidLastName(self):
+        goodUserLast = models.User.objects.get(email="fbar@gmail.com").last_name
+        badUserLast = models.User.objects.get(email="fbar").last_name
 
         maxChars = 50
-        self.assertTrue(re.match(r"^[A-Za-z/-]*$"),goodUserLast)
-        self.assertTrue(len(goodUserLast) <= maxChars and not len(goodUserLast))
+        self.assertTrue(re.match(r"^[A-Za-z/-]*$",goodUserLast))
+        self.assertTrue(len(goodUserLast) <= maxChars and len(goodUserLast) > 0)
 
-        self.assertFalse(re.match(r"^[A-Za-z/-]*$"),badUserLast)
-        self.assertFalse(len(badUserLast) <= maxChars)
+        self.assertFalse(re.match(r"^[A-Za-z/-]*$",badUserLast))
+        self.assertFalse(len(badUserLast) < maxChars)
 
-    def validDate(self):
-        goodUserDate = models.User.objects.get(email="fbar@gmail.com")['joined_date']
-        badUserDate = models.User.objects.get(email="bar")['joined_date']
+    def test_ValidDate(self):
+        goodUserDate = models.User.objects.get(email="fbar@gmail.com").joined_date
+        badUserDate = models.User.objects.get(email="fbar").joined_date
 
-        self.assertIsInstance(goodUserDate, datetime)
+        self.assertIsInstance(goodUserDate, datetime.datetime)
 
-        """Will be changed to a time where the site will actually go live for accuracya"""
+        """Will be changed to a time where the site will actually go live for accuracy"""
         dateOfProduction = datetime.datetime(2015,9,22,0,0,0,0)
+        goodUserDate = goodUserDate.replace(tzinfo=None)
+        badUserDate = badUserDate.replace(tzinfo=None)
 
         self.assertTrue(dateOfProduction < goodUserDate)
         self.assertFalse(dateOfProduction > badUserDate)
@@ -81,35 +83,38 @@ class DemographicModelTests(TestCase):
                                               salary = 6,
                                               sexual_orientation = 'z')
 
-    def validBirthday(self):
+
+
+
+    def test_ValidBirthday(self):
         goodDate = models.DemographicData.objects.get(postalCode = "66503").birthday
         badDate = models.DemographicData.objects.get(postalCode = "ZIPCODE").birthday
 
         """Assuming nobody lives forever and also not a baby and using this, setting up some age limits for testing"""
-        dateOfOldAge   = datetime.datetime(1899,7,6)
-        dateOfYoungAge = datetime.datetime(2001,9,23)
+        dateOfOldAge   = datetime.date(1899,7,6)
+        dateOfYoungAge = datetime.date(2001,9,23)
 
-        self.assertIsInstance(goodDate,datetime)
-        self.assertTrue(dateOfOldAge > goodDate)
-        self.assertTrue(dateOfYoungAge < goodDate)
+        self.assertIsInstance(goodDate,datetime.date)
+        self.assertTrue(dateOfOldAge < goodDate)
+        self.assertTrue(dateOfYoungAge > goodDate)
 
-        self.assertFalse(dateOfYoungAge < badDate)
+        self.assertFalse(dateOfYoungAge > badDate)
 
-    def validEducation(self):
+    def test_ValidEducation(self):
         goodEdu = models.DemographicData.objects.get(postalCode = "66503").education
         badEdu = models.DemographicData.objects.get(postalCode = "ZIPCODE").education
 
-        self.assertIn(goodEdu, models.DemographicData.EDUCATION)
-        self.assertNotIn(badEdu, models.DemographicData.EDUCATION)
+        self.assertIn(goodEdu, models.DemographicData.EDUCATION[goodEdu])
+        self.assertTrue(badEdu >= len(models.DemographicData.EDUCATION))
 
-    def validEmployment(self):
+    def test_ValidEmployment(self):
         goodEmploy = models.DemographicData.objects.get(postalCode = "66503").employmentStatus
         badEmploy = models.DemographicData.objects.get(postalCode = "ZIPCODE").employmentStatus
 
-        self.assertIn(goodEmploy, models.DemographicData.EDUCATION)
-        self.assertNotIn(badEmploy, models.DemographicData.EDUCATION)
+        self.assertIn(goodEmploy, models.DemographicData.EMPLOYMENT_STATUS)
+        self.assertNotIn(badEmploy, models.DemographicData.EMPLOYMENT_STATUS)
 
-    def validFamily(self):
+    def test_ValidFamily(self):
         goodFamily = models.DemographicData.objects.get(postalCode = "66503").familySize
         badFamily = models.DemographicData.objects.get(postalCode = "ZIPCODE").familySize
 
@@ -118,42 +123,42 @@ class DemographicModelTests(TestCase):
 
         self.assertTrue(badFamily < 0 or badFamily > 15)
 
-    def validGender(self):
+    def test_ValidGender(self):
         goodGen = models.DemographicData.objects.get(postalCode = "66503").gender
         badGen = models.DemographicData.objects.get(postalCode = "ZIPCODE").gender
 
         self.assertIn(goodGen, models.DemographicData.GENDER)
         self.assertNotIn(badGen, models.DemographicData.GENDER)
 
-    def validRelationship(self):
-        goodRel = models.DemographicData.objects.get(postalCode = "66503").relationship_status
-        badRel = models.DemographicData.objects.get(postalCode = "ZIPCODE").relationship_status
+    def test_ValidRelationship(self):
+        goodRel = models.DemographicData.objects.get(postalCode = "66503").relationshipStatus
+        badRel = models.DemographicData.objects.get(postalCode = "ZIPCODE").relationshipStatus
 
         self.assertIn(goodRel, models.DemographicData.RELATIONSHIP_STATUS)
         self.assertNotIn(badRel, models.DemographicData.RELATIONSHIP_STATUS)
 
-    def validPostalCode(self):
+    def test_ValidPostalCode(self):
         goodPost = models.DemographicData.objects.get(postalCode = "66503").postalCode
         badPost = models.DemographicData.objects.get(postalCode = "ZIPCODE").postalCode
 
         self.assertTrue(re.match(r"^[0-9]{5}-[0-9]{4}$|^[0-9]{5}$",goodPost))
         self.assertFalse(re.match(r"^[0-9]{5}-[0-9]{4}$|^[0-9]{5}$",badPost))
 
-    def validRace(self):
+    def test_ValidRace(self):
         goodRace = models.DemographicData.objects.get(postalCode = "66503").race
         badRace = models.DemographicData.objects.get(postalCode = "ZIPCODE").race
 
         self.assertIn(goodRace, models.DemographicData.RACE)
         self.assertNotIn(badRace, models.DemographicData.RACE)
 
-    def validSalary(self):
+    def test_ValidSalary(self):
         goodSalary = models.DemographicData.objects.get(postalCode = "66503").salary
         badSalary = models.DemographicData.objects.get(postalCode = "ZIPCODE").salary
 
-        self.assertIn(goodSalary, models.DemographicData.SALARY)
-        self.assertNotIn(badSalary, models.DemographicData.SALARY)
+        self.assertIn(goodSalary, models.DemographicData.SALARY[goodSalary])
+        self.assertFalse(badSalary < len(models.DemographicData.SALARY))
 
-    def validSexualOrientation(self):
+    def test_ValidSexualOrientation(self):
         goodSex = models.DemographicData.objects.get(postalCode = "66503").sexual_orientation
         badSex= models.DemographicData.objects.get(postalCode = "ZIPCODE").sexual_orientation
 
@@ -169,31 +174,33 @@ class ArticleModelTests(TestCase):
         models.Article.objects.create(title = "SomeTitle", author = testUser, content = "Test content for the article",
                                       publishDate = datetime.datetime.now(), updateDate = datetime.datetime.now())
 
-        models.Article.objects.create(title = "", author = None, content = "",
+        models.Article.objects.create(title = "", author = testUser, content = "",
                                       publishDate = datetime.datetime.now(), updateDate = datetime.datetime(2014,1,1))
 
-    def validTitle(self):
+
+
+    def test_ValidTitle(self):
         goodTitle = models.User.objects.get(title = "SomeTitle").title
         badTitle = models.User.objects.get(title = "").title
 
         self.assertTrue(len(goodTitle) > 0)
-        self.assertFalse(len(goodTitle) > 0)
+        self.assertFalse(len(badTitle) > 0)
 
-    def validAuthor(self):
+    def test_ValidAuthor(self):
         goodUser = models.User.objects.get(title = "SomeTitle").author
         badUser = models.User.objects.get(title = "").author
 
         self.assertIsInstance(goodUser, models.User)
         self.assertNotIsInstance(badUser, models.User)
 
-    def validContent(self):
+    def test_ValidContent(self):
         goodContent = models.User.objects.get(title = "SomeTitle").content
         badContent = models.User.objects.get(title = "").content
 
         self.assertGreater(len(goodContent), 0)
         self.assertEqual(len(badContent), 0)
 
-    def validDateInstances(self):
+    def test_ValidDateInstances(self):
         goodPDate = models.User.objects.get(title = "SomeTitle").publishDate
         badPDate = models.User.objects.get(title = "SomeTitle").publishDate
         goodUDate = models.User.objects.get(title = "SomeTitle").updateDate
@@ -211,11 +218,11 @@ class TagModelTests(TestCase):
         models.Tag.objects.create(tagName = "testTag")
         models.Tag.objects.create(tagName = "")
 
-    def validTagName(self):
+    def test_ValidTagName(self):
         goodTag = models.Tag.objects.get(tagName = "testTag").tagName
         badTag = models.Tag.objects.get(tagName = "").tagName
-        self.assertGreater(goodTag, 0)
-        self.assertFalse(badTag > 0)
+        self.assertGreater(len(goodTag), 0)
+        self.assertFalse(len(badTag) > 0)
 
 class TagTableModelTests(TestCase):
     def setUp(self):
@@ -227,12 +234,12 @@ class TagTableModelTests(TestCase):
 
         models.TagTable.objects.create(article = testArticle, tag = testTag)
 
-    def validArticle(self):
+    def test_ValidArticle(self):
         goodArticle = models.TagTable.objects.get().article
 
         self.assertIsInstance(goodArticle, models.Article)
 
-    def validTag(self):
+    def test_ValidTag(self):
         goodTag = models.TagTable.objects.get().tag
 
         self.assertIsInstance(goodTag, models.Tag)
