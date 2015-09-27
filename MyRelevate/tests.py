@@ -1,24 +1,31 @@
-from django.test import TestCase
 import datetime
 import re
 import random
 import models
+from django.test import TestCase
 
 
-class UserTests(TestCase):
+
+class UserModelTests(TestCase):
     def setUp(self):
         models.User.objects.create(email="fbar@gmail.com", first_name="Alex", last_name="Beahm",
-                            joined_date=datetime.datetime.now(), is_active=True, confirmed=True)
-
+                                   joined_date=datetime.datetime.now(), is_active=True, confirmed=True)
         models.User.objects.create(email="fbar",
-                            first_name="Thisnameiswaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters3344$$",
-                            last_name="Thislastnameisalsowaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters55%^  F",
-                            joined_date=datetime.datetime(2011,1,1,0,0,0,0), is_active=False, confirmed=False)
+                                   first_name="Thisnameiswaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters3344$$",
+                                   last_name="Thislastnameisalsowaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters55%^  F",
+                                   joined_date=datetime.datetime(2011,1,1,0,0,0,0), is_active=False, confirmed=False)
+
+        uG = models.User.objects.get(email="fbar@gmail.com")
+        uG.set_password("password")
+        uB = models.User.objects.get(email="fbar")
+        uB.password = "password"
+
 
     def test_ValidEmail(self):
         """
         Regex is used to just check if the e-mail is in a correct format
         """
+
         goodUser = models.User.objects.get(email="fbar@gmail.com").email
         badUser = models.User.objects.get(email="fbar").email
 
@@ -53,16 +60,17 @@ class UserTests(TestCase):
         self.assertIsInstance(goodUserDate, datetime.datetime)
 
         """Will be changed to a time where the site will actually go live for accuracy"""
+
         dateOfProduction = datetime.datetime(2015,9,22,0,0,0,0)
         goodUserDate = goodUserDate.replace(tzinfo=None)
         badUserDate = badUserDate.replace(tzinfo=None)
-
         self.assertTrue(dateOfProduction < goodUserDate)
         self.assertFalse(dateOfProduction > badUserDate)
 
 
 class DemographicModelTests(TestCase):
     def setUp(self):
+
         models.DemographicData.objects.create(birthday = datetime.datetime(1994,1,1,0,0,0,0),
                                               education = random.randint(0,6),
                                               employmentStatus = 'e',
@@ -123,19 +131,20 @@ class DemographicModelTests(TestCase):
 
         self.assertTrue(badFamily < 0 or badFamily > 15)
 
+
     def test_ValidGender(self):
         goodGen = models.DemographicData.objects.get(postalCode = "66503").gender
         badGen = models.DemographicData.objects.get(postalCode = "ZIPCODE").gender
-
         self.assertIn(goodGen, models.DemographicData.GENDER)
         self.assertNotIn(badGen, models.DemographicData.GENDER)
+
 
     def test_ValidRelationship(self):
         goodRel = models.DemographicData.objects.get(postalCode = "66503").relationshipStatus
         badRel = models.DemographicData.objects.get(postalCode = "ZIPCODE").relationshipStatus
-
         self.assertIn(goodRel, models.DemographicData.RELATIONSHIP_STATUS)
         self.assertNotIn(badRel, models.DemographicData.RELATIONSHIP_STATUS)
+
 
     def test_ValidPostalCode(self):
         goodPost = models.DemographicData.objects.get(postalCode = "66503").postalCode
@@ -150,6 +159,7 @@ class DemographicModelTests(TestCase):
 
         self.assertIn(goodRace, models.DemographicData.RACE)
         self.assertNotIn(badRace, models.DemographicData.RACE)
+
 
     def test_ValidSalary(self):
         goodSalary = models.DemographicData.objects.get(postalCode = "66503").salary
@@ -169,6 +179,7 @@ class DemographicModelTests(TestCase):
 class ArticleModelTests(TestCase):
     def setUp(self):
         testUser = models.User.objects.create(email="fbar@gmail.com", first_name="Alex", last_name="Beahm",
+
                                    joined_date=datetime.datetime.now(), is_active=True, confirmed=True)
 
         models.Article.objects.create(title = "SomeTitle", author = testUser, content = "Test content for the article",
@@ -193,12 +204,13 @@ class ArticleModelTests(TestCase):
         self.assertIsInstance(goodUser, models.User)
         self.assertNotIsInstance(badUser, models.User)
 
+
     def test_ValidContent(self):
         goodContent = models.User.objects.get(title = "SomeTitle").content
         badContent = models.User.objects.get(title = "").content
-
         self.assertGreater(len(goodContent), 0)
         self.assertEqual(len(badContent), 0)
+
 
     def test_ValidDateInstances(self):
         goodPDate = models.User.objects.get(title = "SomeTitle").publishDate
@@ -215,6 +227,7 @@ class ArticleModelTests(TestCase):
 
 class TagModelTests(TestCase):
     def setUp(self):
+
         models.Tag.objects.create(tagName = "testTag")
         models.Tag.objects.create(tagName = "")
 
@@ -224,9 +237,11 @@ class TagModelTests(TestCase):
         self.assertGreater(len(goodTag), 0)
         self.assertFalse(len(badTag) > 0)
 
+
 class TagTableModelTests(TestCase):
     def setUp(self):
         testUser = models.User.objects.create(email="fbar@gmail.com", first_name="Alex", last_name="Beahm",
+
                                    joined_date=datetime.datetime.now(), is_active=True, confirmed=True)
         testArticle = models.Article.objects.create(title = "SomeTitle", author = testUser, content = "Test content for the article",
                                       publishDate = datetime.datetime.now(), updateDate = datetime.datetime.now())
@@ -236,10 +251,11 @@ class TagTableModelTests(TestCase):
 
     def test_ValidArticle(self):
         goodArticle = models.TagTable.objects.get().article
-
         self.assertIsInstance(goodArticle, models.Article)
+
 
     def test_ValidTag(self):
         goodTag = models.TagTable.objects.get().tag
 
         self.assertIsInstance(goodTag, models.Tag)
+
