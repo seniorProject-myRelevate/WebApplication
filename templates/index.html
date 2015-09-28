@@ -11,8 +11,13 @@
     {% endblock %}
 </head>
 <body>
-{% block content %}
+    {% block content %}
     This is a test page
-{% endblock %}
+    <form action="{% url 'MyRelevate:index'%}" method="post">
+        {% csrf_token %}
+        {{ from }}
+    <input type="submit" value="Sign in" />
+    </form>
+    {% endblock %}
 </body>
 </html>
