@@ -114,11 +114,16 @@ class DemographicModelTests(TestCase):
                                               salary=random.randint(0, 5),
                                               sexualPreference='w',
                                               religion='c',
-                                              religiousInfluence=3,
+                                              religiousInfluence=random.randint(0, 4),
                                               addictive='n',
                                               violence='n',
                                               breakups='n',
                                               verbalEmotionalAbuse='n',
+                                              infidelity='n',
+                                              addictiveOther='n',
+                                              violenceOther='n',
+                                              breakupsOther='n',
+                                              verbalEmotionalAbuseOther='n',
                                               infidelityOther='n',
                                               cyclicRelationships=False,
                                               timesCycled=0,
@@ -127,7 +132,7 @@ class DemographicModelTests(TestCase):
                                               adoptedChildren=0,
                                               stepChildren=0,
                                               lengthOfCurrentRelationship=0,
-                                              currentRelationshipHappiness=1,
+                                              currentRelationshipHappiness=random.randint(0, 4),
                                               gettingDivorced=False)
 
         models.DemographicData.objects.create(user = testUser,
@@ -135,18 +140,23 @@ class DemographicModelTests(TestCase):
                                               education=7,
                                               employmentStatus='z',
                                               familySize=16,
-                                              sex='t',
+                                              sex='z',
                                               relationshipStatus='z',
                                               postalCode="ZIPCODE",
                                               race='z',
                                               salary=6,
                                               sexualPreference='z',
                                               religion='z',
-                                              religiousInfluence=0,
+                                              religiousInfluence=-1,
                                               addictive='z',
                                               violence='z',
                                               breakups='z',
                                               verbalEmotionalAbuse='z',
+                                              infidelity='z',
+                                              addictiveOther='z',
+                                              violenceOther='z',
+                                              breakupsOther='z',
+                                              verbalEmotionalAbuseOther='z',
                                               infidelityOther='z',
                                               cyclicRelationships=True,
                                               timesCycled=-1,
@@ -165,9 +175,20 @@ class DemographicModelTests(TestCase):
 
     def findInTuple(self, character, options):
         for x in options:
-            if (x[0] == character):
+            if x[0] == character:
                 return True
         return False
+
+    def test_ValidUsers(self):
+        goodUser = models.DemographicData.objects.get(postalCode="66503").user
+        otherUser = models.DemographicData.objects.get(postalCode="ZIPCODE").user
+        goodUserID = models.DemographicData.objects.get(postalCode="66503").user_id
+        otherUserID = models.DemographicData.objects.get(postalCode="ZIPCODE").user_id
+
+        self.assertIsInstance(goodUser, models.User)
+        self.assertIsInstance(otherUser, models.User)
+        self.assertNotEqual(goodUserID, otherUserID)
+
 
     def test_ValidBirthday(self):
         goodDate = models.DemographicData.objects.get(postalCode="66503").birthday
@@ -207,6 +228,13 @@ class DemographicModelTests(TestCase):
         self.assertTrue(goodFamily >= 0 and goodFamily <= 15)
         self.assertTrue(badFamily < 0 or badFamily > 15)
 
+    def test_ValidSex(self):
+        goodSex = models.DemographicData.objects.get(postalCode="66503").sex
+        badSex = models.DemographicData.objects.get(postalCode="ZIPCODE").sex
+
+        self.assertTrue(self.findInTuple(goodSex, models.DemographicData.SEX))
+        self.assertFalse(self.findInTuple(badSex, models.DemographicData.SEX))
+
 
     def test_ValidRelationship(self):
         goodRel = models.DemographicData.objects.get(postalCode="66503").relationshipStatus
@@ -245,6 +273,157 @@ class DemographicModelTests(TestCase):
 
         self.assertTrue(self.findInTuple(goodSex, models.DemographicData.SEXUAL_PREFERENCE))
         self.assertFalse(self.findInTuple(badSex, models.DemographicData.SEXUAL_PREFERENCE))
+
+    def test_ValidReligion(self):
+        goodReli = models.DemographicData.objects.get(postalCode="66503").religion
+        badReli = models.DemographicData.objects.get(postalCode="ZIPCODE").religion
+
+        self.assertTrue(self.findInTuple(goodReli, models.DemographicData.RELIGION))
+        self.assertFalse(self.findInTuple(badReli, models.DemographicData.RELIGION))
+
+    def test_ValidReligionInfluence(self):
+        goodReliI = models.DemographicData.objects.get(postalCode="66503").religiousInfluence
+        badReliI = models.DemographicData.objects.get(postalCode="ZIPCODE").religiousInfluence
+
+        self.assertTrue(self.findInTuple(goodReliI, models.DemographicData.AGREEMENT))
+        self.assertFalse(self.findInTuple(badReliI, models.DemographicData.AGREEMENT))
+
+    def test_ValidAddiction(self):
+        goodAdd = models.DemographicData.objects.get(postalCode="66503").addictive
+        goodAddOther = models.DemographicData.objects.get(postalCode="66503").addictiveOther
+        badAdd = models.DemographicData.objects.get(postalCode="ZIPCODE").addictive
+        badAddOther = models.DemographicData.objects.get(postalCode="ZIPCODE").addictiveOther
+
+        self.assertTrue(self.findInTuple(goodAdd, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badAdd, models.DemographicData.FREQUENCY))
+        self.assertTrue(self.findInTuple(goodAddOther, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badAddOther, models.DemographicData.FREQUENCY))
+
+    def test_ValidViolence(self):
+        goodViol = models.DemographicData.objects.get(postalCode="66503").violence
+        goodViolOther = models.DemographicData.objects.get(postalCode="66503").violenceOther
+        badViol = models.DemographicData.objects.get(postalCode="ZIPCODE").violence
+        badViolOther = models.DemographicData.objects.get(postalCode="ZIPCODE").violenceOther
+
+        self.assertTrue(self.findInTuple(goodViol, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badViol, models.DemographicData.FREQUENCY))
+        self.assertTrue(self.findInTuple(goodViolOther, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badViolOther, models.DemographicData.FREQUENCY))
+
+    def test_ValidBreakups(self):
+        goodBreak = models.DemographicData.objects.get(postalCode="66503").breakups
+        goodBreakOther = models.DemographicData.objects.get(postalCode="66503").breakupsOther
+        badBreak = models.DemographicData.objects.get(postalCode="ZIPCODE").breakups
+        badBreakOther = models.DemographicData.objects.get(postalCode="ZIPCODE").breakupsOther
+
+        self.assertTrue(self.findInTuple(goodBreak, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badBreak, models.DemographicData.FREQUENCY))
+        self.assertTrue(self.findInTuple(goodBreakOther, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badBreakOther, models.DemographicData.FREQUENCY))
+
+    def test_ValidEmotion(self):
+        goodEmote = models.DemographicData.objects.get(postalCode="66503").verbalEmotionalAbuse
+        goodEmoteOther = models.DemographicData.objects.get(postalCode="66503").verbalEmotionalAbuseOther
+        badEmote = models.DemographicData.objects.get(postalCode="ZIPCODE").verbalEmotionalAbuse
+        badEmoteOther = models.DemographicData.objects.get(postalCode="ZIPCODE").verbalEmotionalAbuseOther
+
+        self.assertTrue(self.findInTuple(goodEmote, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badEmote, models.DemographicData.FREQUENCY))
+        self.assertTrue(self.findInTuple(goodEmoteOther, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badEmoteOther, models.DemographicData.FREQUENCY))
+
+    def test_ValidInfidelity(self):
+        goodInf = models.DemographicData.objects.get(postalCode="66503").infidelity
+        goodInfOther = models.DemographicData.objects.get(postalCode="66503").infidelityOther
+        badInf = models.DemographicData.objects.get(postalCode="ZIPCODE").infidelity
+        badInfOther = models.DemographicData.objects.get(postalCode="ZIPCODE").infidelityOther
+
+        self.assertTrue(self.findInTuple(goodInf, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badInf, models.DemographicData.FREQUENCY))
+        self.assertTrue(self.findInTuple(goodInfOther, models.DemographicData.FREQUENCY))
+        self.assertFalse(self.findInTuple(badInfOther, models.DemographicData.FREQUENCY))
+
+    def test_ValidCyclicRelationships(self):
+        goodCycle = models.DemographicData.objects.get(postalCode="66503").cyclicRelationships
+        badCycle = models.DemographicData.objects.get(postalCode="ZIPCODE").cyclicRelationships
+
+        self.assertIsInstance(goodCycle,bool)
+        self.assertIsInstance(badCycle,bool)
+        self.assertFalse(goodCycle)
+        self.assertTrue(badCycle)
+
+    def test_ValidTimesCycled(self):
+        goodCycle = models.DemographicData.objects.get(postalCode="66503").timesCycled
+        badCycle = models.DemographicData.objects.get(postalCode="ZIPCODE").timesCycled
+
+        self.assertIsInstance(goodCycle,int)
+        self.assertIsInstance(badCycle,int)
+        self.assertGreaterEqual(goodCycle, 0)
+        self.assertLess(badCycle, 0)
+
+    def test_ValidTimesMarried(self):
+        goodMarry = models.DemographicData.objects.get(postalCode="66503").timesMarried
+        badMarry = models.DemographicData.objects.get(postalCode="ZIPCODE").timesMarried
+
+        self.assertIsInstance(goodMarry, int)
+        self.assertIsInstance(badMarry, int)
+        self.assertGreaterEqual(goodMarry, 0)
+        self.assertLess(badMarry, 0)
+
+    def test_ValidBiologicalChildren(self):
+        goodBio = models.DemographicData.objects.get(postalCode="66503").biologicalChildren
+        badBio = models.DemographicData.objects.get(postalCode="ZIPCODE").biologicalChildren
+
+        self.assertIsInstance(goodBio, int)
+        self.assertIsInstance(badBio, int)
+        self.assertGreaterEqual(goodBio, 0)
+        self.assertLess(badBio, 0)
+
+    def test_ValidAdoptedChildren(self):
+        goodAdopt = models.DemographicData.objects.get(postalCode="66503").adoptedChildren
+        badAdopt = models.DemographicData.objects.get(postalCode="ZIPCODE").adoptedChildren
+
+        self.assertIsInstance(goodAdopt, int)
+        self.assertIsInstance(badAdopt, int)
+        self.assertGreaterEqual(goodAdopt, 0)
+        self.assertLess(badAdopt, 0)
+
+    def test_ValidStepChildren(self):
+        goodStep = models.DemographicData.objects.get(postalCode="66503").stepChildren
+        badStep = models.DemographicData.objects.get(postalCode="ZIPCODE").stepChildren
+
+        self.assertIsInstance(goodStep, int)
+        self.assertIsInstance(badStep, int)
+        self.assertGreaterEqual(goodStep, 0)
+        self.assertLess(badStep, 0)
+
+    def test_ValidLengthOfCurrentRelationship(self):
+        goodLength = models.DemographicData.objects.get(postalCode="66503").lengthOfCurrentRelationship
+        badLength = models.DemographicData.objects.get(postalCode="ZIPCODE").lengthOfCurrentRelationship
+
+        self.assertIsInstance(goodLength, int)
+        self.assertIsInstance(badLength, int)
+        self.assertGreaterEqual(goodLength, 0)
+        self.assertLess(badLength, 0)
+
+    def test_ValidCurrentRelationshipHappiness(self):
+        goodHappy = models.DemographicData.objects.get(postalCode="66503").currentRelationshipHappiness
+        badHappy = models.DemographicData.objects.get(postalCode="ZIPCODE").currentRelationshipHappiness
+
+        self.assertIsInstance(goodHappy, int)
+        self.assertIsInstance(badHappy, int)
+        self.assertTrue(self.findInTuple(goodHappy,models.DemographicData.AGREEMENT))
+        self.assertFalse(self.findInTuple(badHappy,models.DemographicData.AGREEMENT))
+
+
+    def test_ValidDivorce(self):
+        goodDiv = models.DemographicData.objects.get(postalCode="66503").gettingDivorced
+        badDiv = models.DemographicData.objects.get(postalCode="ZIPCODE").gettingDivorced
+
+        self.assertIsInstance(goodDiv,bool)
+        self.assertIsInstance(badDiv,bool)
+        self.assertFalse(goodDiv)
+        self.assertTrue(badDiv)
 
 
 class ArticleModelTests(TestCase):
