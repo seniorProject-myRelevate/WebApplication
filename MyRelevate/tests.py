@@ -96,27 +96,68 @@ class UserModelTests(TestCase):
 
 class DemographicModelTests(TestCase):
     def setUp(self):
-        models.DemographicData.objects.create(birthday=datetime.datetime(1994, 1, 1, 0, 0, 0, 0),
+        testUser = models.User.objects.create(email="fbar@gmail.com",
+                                   first_name="Alex",
+                                   last_name="Beahm",
+                                   joined_date=datetime.datetime.now(),
+                                   is_active=True,
+                                   confirmed=True)
+        models.DemographicData.objects.create(user = testUser,
+                                              birthday=datetime.datetime(1994, 1, 1, 0, 0, 0, 0),
                                               education=random.randint(0, 6),
-                                              employmentStatus='e',
+                                              employmentStatus='n',
                                               familySize=random.randint(0, 15),
-                                              gender='m',
+                                              sex = 'm',
                                               relationshipStatus='s',
                                               postalCode="66503",
                                               race='w',
                                               salary=random.randint(0, 5),
-                                              sexual_orientation='w')
+                                              sexualPreference='w',
+                                              religion='c',
+                                              religiousInfluence=3,
+                                              addictive='n',
+                                              violence='n',
+                                              breakups='n',
+                                              verbalEmotionalAbuse='n',
+                                              infidelityOther='n',
+                                              cyclicRelationships=False,
+                                              timesCycled=0,
+                                              timesMarried=0,
+                                              biologicalChildren=0,
+                                              adoptedChildren=0,
+                                              stepChildren=0,
+                                              lengthOfCurrentRelationship=0,
+                                              currentRelationshipHappiness=1,
+                                              gettingDivorced=False)
 
-        models.DemographicData.objects.create(birthday=datetime.datetime.now(),
+        models.DemographicData.objects.create(user = testUser,
+                                              birthday=datetime.datetime.now(),
                                               education=7,
                                               employmentStatus='z',
                                               familySize=16,
-                                              gender='z',
+                                              sex='t',
                                               relationshipStatus='z',
                                               postalCode="ZIPCODE",
                                               race='z',
                                               salary=6,
-                                              sexual_orientation='z')
+                                              sexualPreference='z',
+                                              religion='z',
+                                              religiousInfluence=0,
+                                              addictive='z',
+                                              violence='z',
+                                              breakups='z',
+                                              verbalEmotionalAbuse='z',
+                                              infidelityOther='z',
+                                              cyclicRelationships=True,
+                                              timesCycled=-1,
+                                              timesMarried=-1,
+                                              biologicalChildren=-1,
+                                              adoptedChildren=-1,
+                                              stepChildren=-1,
+                                              lengthOfCurrentRelationship=-1,
+                                              currentRelationshipHappiness=-1,
+                                              gettingDivorced=True)
+
 
     """
     Used to find the option within the tuples in option lists
@@ -166,12 +207,6 @@ class DemographicModelTests(TestCase):
         self.assertTrue(goodFamily >= 0 and goodFamily <= 15)
         self.assertTrue(badFamily < 0 or badFamily > 15)
 
-    def test_ValidGender(self):
-        goodGen = models.DemographicData.objects.get(postalCode="66503").gender
-        badGen = models.DemographicData.objects.get(postalCode="ZIPCODE").gender
-
-        self.assertTrue(self.findInTuple(goodGen, models.DemographicData.GENDER))
-        self.assertFalse(self.findInTuple(badGen, models.DemographicData.GENDER))
 
     def test_ValidRelationship(self):
         goodRel = models.DemographicData.objects.get(postalCode="66503").relationshipStatus
@@ -205,8 +240,8 @@ class DemographicModelTests(TestCase):
         self.assertFalse(badSalary < len(models.DemographicData.SALARY))
 
     def test_ValidSexualOrientation(self):
-        goodSex = models.DemographicData.objects.get(postalCode="66503").sexual_orientation
-        badSex = models.DemographicData.objects.get(postalCode="ZIPCODE").sexual_orientation
+        goodSex = models.DemographicData.objects.get(postalCode="66503").sexualPreference
+        badSex = models.DemographicData.objects.get(postalCode="ZIPCODE").sexualPreference
 
         self.assertTrue(self.findInTuple(goodSex, models.DemographicData.SEXUAL_PREFERENCE))
         self.assertFalse(self.findInTuple(badSex, models.DemographicData.SEXUAL_PREFERENCE))
@@ -306,3 +341,18 @@ class TagTableModelTests(TestCase):
         goodTag = models.TagTable.objects.get().tag
 
         self.assertIsInstance(goodTag, models.Tag)
+
+class IndexViewTests(TestCase):
+    def test_call_view_denies_anonymous(self):
+        self.assertTrue(True)
+    def test_call_view_loads(self):
+        self.assertTrue(True)
+
+    def test_call_view_fails_blank(self):
+        self.assertTrue(True)
+
+    def test_call_view_fails_invalid(self):
+        self.assertTrue(True)
+
+    def test_call_view_fails_invalid(self):
+        self.assertTrue(True)

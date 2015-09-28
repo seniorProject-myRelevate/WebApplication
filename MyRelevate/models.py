@@ -95,11 +95,11 @@ class DemographicData(models.Model):
     )
 
     AGREEMENT = (
-        ('1', 'strongly disagree'),
-        ('2', 'disagree'),
-        ('3', 'neither agree nor disagree'),
-        ('4', 'agree'),
-        ('5', 'strongly agree'),
+        (1, 'strongly disagree'),
+        (2, 'disagree'),
+        (3, 'neither agree nor disagree'),
+        (4, 'agree'),
+        (5, 'strongly agree'),
     )
 
     FREQUENCY = (
@@ -126,7 +126,7 @@ class DemographicData(models.Model):
     sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE)
 
     religion = models.CharField(max_length=1, choices=RELIGION)
-    religiousInfluence = models.CharField(max_length=1, choices=AGREEMENT)
+    religiousInfluence = models.IntegerField(choices=AGREEMENT)
 
     # personal relationship experiences
     addictive = models.CharField(max_length=1, choices=FREQUENCY)
@@ -151,7 +151,7 @@ class DemographicData(models.Model):
     stepChildren = models.IntegerField()
     lengthOfCurrentRelationship = models.IntegerField()
 
-    currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT)
+    currentRelationshipHappiness = models.IntegerField(choices=AGREEMENT)
     gettingDivorced = models.BooleanField()
 
 
