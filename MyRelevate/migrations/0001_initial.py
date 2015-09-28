@@ -11,11 +11,21 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Article',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=100)),
+                ('content', models.TextField()),
+                ('publishDate', models.DateField()),
+                ('updateDate', models.DateField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='DemographicData',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('birthday', models.DateField()),
-                ('education', models.IntegerField(choices=[(0, b'Completed high school/GED'), (1, b'Some college no longer attending'), (2, b'Some college currently attending'), (3, b'Graduated with bachelors'), (4, b'Graduated with bachelors'), (5, b'Graduated with PhD')])),
+                ('education', models.IntegerField(choices=[(0, b'Completed high school/GED'), (1, b'Some college no longer attending'), (2, b'Some college currently attending'), (3, b'Graduated with bachelors'), (4, b'Graduated with bachelors'), (5, b'Graduated with PhD'), (6, b'Did not complete high school')])),
                 ('employmentStatus', models.CharField(max_length=1, choices=[(b'e', b'employed'), (b'n', b'not employed'), (b's', b'self employed')])),
                 ('familySize', models.IntegerField()),
                 ('gender', models.CharField(max_length=1, choices=[(b'f', b'female'), (b'm', b'male'), (b't', b'transgender')])),
@@ -27,21 +37,40 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Tag',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('tagName', models.CharField(max_length=100)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='TagTable',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('article', models.ForeignKey(to='MyRelevate.Article')),
+                ('tag', models.ForeignKey(to='MyRelevate.Tag')),
+            ],
+        ),
+        migrations.CreateModel(
             name='User',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('confirmed', models.BooleanField()),
-                ('email', models.EmailField(unique=True, max_length=100)),
-                ('password', models.CharField(max_length=500)),
-                ('firstName', models.CharField(max_length=100)),
-                ('lastName', models.CharField(max_length=150)),
-                ('createdDate', models.DateField()),
-                ('lastLogin', models.DateField()),
+                ('password', models.CharField(max_length=128, verbose_name='password')),
+                ('last_login', models.DateTimeField(null=True, verbose_name='last login', blank=True)),
+                ('email', models.EmailField(unique=True, max_length=254, db_index=True)),
+                ('first_name', models.CharField(max_length=50)),
+                ('last_name', models.CharField(max_length=50)),
+                ('joined_date', models.DateTimeField(auto_now_add=True)),
+                ('is_active', models.BooleanField(default=True)),
+                ('confirmed', models.BooleanField(default=False)),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.AddField(
-            model_name='demographicdata',
-            name='user',
+            model_name='article',
+            name='author',
             field=models.ForeignKey(to='MyRelevate.User'),
         ),
     ]
