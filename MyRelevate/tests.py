@@ -118,7 +118,7 @@ class DemographicModelTests(TestCase):
                                               postalCode="66503",
                                               race='w',
                                               salary=random.randint(0, 5),
-                                              sexualPreference='w',
+                                              sexualPreference='o',
                                               religion='c',
                                               religiousInfluence=random.randint(0, 4),
                                               addictive='n',
@@ -145,7 +145,7 @@ class DemographicModelTests(TestCase):
                                               birthday=datetime.datetime.now(),
                                               education=7,
                                               employmentStatus='z',
-                                              familySize=16,
+                                              familySize=-1,
                                               sex='z',
                                               relationshipStatus='z',
                                               postalCode="ZIPCODE",
@@ -228,11 +228,8 @@ class DemographicModelTests(TestCase):
         goodFamily = models.DemographicData.objects.get(postalCode="66503").familySize
         badFamily = models.DemographicData.objects.get(postalCode="ZIPCODE").familySize
 
-        """
-        Setting arbitrary family limit at 15 for now, will probably change
-        """
-        self.assertTrue(goodFamily >= 0 and goodFamily <= 15)
-        self.assertTrue(badFamily < 0 or badFamily > 15)
+        self.assertIn(goodFamily, range(101))
+        self.assertNotIn(badFamily, range(101))
 
     def test_ValidSex(self):
         goodSex = models.DemographicData.objects.get(postalCode="66503").sex
@@ -364,8 +361,8 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodCycle,int)
         self.assertIsInstance(badCycle,int)
-        self.assertGreaterEqual(goodCycle, 0)
-        self.assertLess(badCycle, 0)
+        self.assertIn(goodCycle, range(21))
+        self.assertNotIn(badCycle, range(21))
 
     def test_ValidTimesMarried(self):
         goodMarry = models.DemographicData.objects.get(postalCode="66503").timesMarried
@@ -373,8 +370,8 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodMarry, int)
         self.assertIsInstance(badMarry, int)
-        self.assertGreaterEqual(goodMarry, 0)
-        self.assertLess(badMarry, 0)
+        self.assertIn(goodMarry, range(21))
+        self.assertNotIn(badMarry, range(21))
 
     def test_ValidBiologicalChildren(self):
         goodBio = models.DemographicData.objects.get(postalCode="66503").biologicalChildren
@@ -382,8 +379,8 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodBio, int)
         self.assertIsInstance(badBio, int)
-        self.assertGreaterEqual(goodBio, 0)
-        self.assertLess(badBio, 0)
+        self.assertIn(goodBio, range(101))
+        self.assertNotIn(badBio, range(101))
 
     def test_ValidAdoptedChildren(self):
         goodAdopt = models.DemographicData.objects.get(postalCode="66503").adoptedChildren
@@ -391,8 +388,8 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodAdopt, int)
         self.assertIsInstance(badAdopt, int)
-        self.assertGreaterEqual(goodAdopt, 0)
-        self.assertLess(badAdopt, 0)
+        self.assertIn(goodAdopt, range(101))
+        self.assertNotIn(badAdopt, range(101))
 
     def test_ValidStepChildren(self):
         goodStep = models.DemographicData.objects.get(postalCode="66503").stepChildren
@@ -400,8 +397,8 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodStep, int)
         self.assertIsInstance(badStep, int)
-        self.assertGreaterEqual(goodStep, 0)
-        self.assertLess(badStep, 0)
+        self.assertIn(goodStep, range(101))
+        self.assertNotIn(badStep, range(101))
 
     def test_ValidLengthOfCurrentRelationship(self):
         goodLength = models.DemographicData.objects.get(postalCode="66503").lengthOfCurrentRelationship
@@ -409,8 +406,8 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodLength, int)
         self.assertIsInstance(badLength, int)
-        self.assertGreaterEqual(goodLength, 0)
-        self.assertLess(badLength, 0)
+        self.assertIn(goodLength, range(101))
+        self.assertNotIn(badLength, range(101))
 
     def test_ValidCurrentRelationshipHappiness(self):
         goodHappy = models.DemographicData.objects.get(postalCode="66503").currentRelationshipHappiness
