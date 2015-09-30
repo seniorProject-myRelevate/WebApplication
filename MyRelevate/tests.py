@@ -523,15 +523,19 @@ class TagTableModelTests(TestCase):
 
 class IndexViewTests(TestCase):
     def test_call_view_denies_anonymous(self):
-        self.assertTrue(True)
+        response = self.client.get('/url/to/view', follow=True)
+        self.assertRedirects(response, '/login/')
+        response = self.client.post('/url/to/view', follow=True)
+        self.assertRedirects(response, '/login/')
+
     def test_call_view_loads(self):
-        self.assertTrue(True)
+        self.client.login(user='ajbeahm@ksu.edu', password='password')
+        response = self.client.get('index')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'index.html')
 
     def test_call_view_fails_blank(self):
-        self.assertTrue(True)
+        self.client.login(username='user', password='test')
+        response = self.client.post('index', {}) # blank data dictionary
+        self.assertFormError(response, 'index.html', 'some_field', 'This field is required.')
 
-    def test_call_view_fails_invalid(self):
-        self.assertTrue(True)
-
-    def test_call_view_fails_invalid(self):
-        self.assertTrue(True)
