@@ -113,34 +113,34 @@ class DemographicData(models.Model):
     user = models.ForeignKey(User)
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
-    education = models.IntegerField(choices=EDUCATION)
-    employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS)
+    education = models.IntegerField(choices=EDUCATION, blank=True)
+    employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS, blank=True)
     familySize = models.IntegerField()
-    sex = models.CharField(max_length=1, choices=SEX)
-    relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS)
+    sex = models.CharField(max_length=1, choices=SEX, blank=True)
+    relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS, blank=True)
 
     # postal code to derive location
     postalCode = models.CharField(max_length=32)
-    race = models.CharField(max_length=2)
-    salary = models.IntegerField(choices=SALARY)
-    sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE)
+    race = models.CharField(max_length=1, choices=RACE, blank=True)
+    salary = models.IntegerField(choices=SALARY, blank=True)
+    sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE, blank=True)
 
-    religion = models.CharField(max_length=1, choices=RELIGION)
-    religiousInfluence = models.IntegerField(choices=AGREEMENT)
+    religion = models.CharField(max_length=1, choices=RELIGION, blank=True)
+    religiousInfluence = models.IntegerField(choices=AGREEMENT, blank=True)
 
     # personal relationship experiences
-    addictive = models.CharField(max_length=1, choices=FREQUENCY)
-    violence = models.CharField(max_length=1, choices=FREQUENCY)
-    breakups = models.CharField(max_length=1, choices=FREQUENCY)
-    verbalEmotionalAbuse = models.CharField(max_length=1, choices=FREQUENCY)
-    infidelity = models.CharField(max_length=1, choices=FREQUENCY)
+    addictive = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    violence = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    breakups = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    verbalEmotionalAbuse = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    infidelity = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
 
     # Others relationship experiences
-    addictiveOther = models.CharField(max_length=1, choices=FREQUENCY)
-    violenceOther = models.CharField(max_length=1, choices=FREQUENCY)
-    breakupsOther = models.CharField(max_length=1, choices=FREQUENCY)
-    verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY)
-    infidelityOther = models.CharField(max_length=1, choices=FREQUENCY)
+    addictiveOther = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    violenceOther = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    breakupsOther = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
+    infidelityOther = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
 
     # metrics
     cyclicRelationships = models.BooleanField()
@@ -151,7 +151,7 @@ class DemographicData(models.Model):
     stepChildren = models.IntegerField()
     lengthOfCurrentRelationship = models.IntegerField()
 
-    currentRelationshipHappiness = models.IntegerField(choices=AGREEMENT)
+    currentRelationshipHappiness = models.IntegerField(choices=AGREEMENT, blank=True)
     gettingDivorced = models.BooleanField()
 
 

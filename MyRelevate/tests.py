@@ -102,6 +102,12 @@ class DemographicModelTests(TestCase):
                                    joined_date=datetime.datetime.now(),
                                    is_active=True,
                                    confirmed=True)
+        testUserTwo = models.User.objects.create(email="fbar",
+                                   first_name="Alex",
+                                   last_name="Beahm",
+                                   joined_date=datetime.datetime.now(),
+                                   is_active=True,
+                                   confirmed=True)
         models.DemographicData.objects.create(user = testUser,
                                               birthday=datetime.datetime(1994, 1, 1, 0, 0, 0, 0),
                                               education=random.randint(0, 6),
@@ -135,7 +141,7 @@ class DemographicModelTests(TestCase):
                                               currentRelationshipHappiness=random.randint(0, 4),
                                               gettingDivorced=False)
 
-        models.DemographicData.objects.create(user = testUser,
+        models.DemographicData.objects.create(user = testUserTwo,
                                               birthday=datetime.datetime.now(),
                                               education=7,
                                               employmentStatus='z',
