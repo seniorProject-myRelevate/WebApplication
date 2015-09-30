@@ -23,6 +23,7 @@ class User(AbstractBaseUser):
 # DemographicData Database Model
 class DemographicData(models.Model):
     EDUCATION = (
+        (-1, 'No Answer'),
         (0, 'Completed high school/GED'),
         (1, 'Some college no longer attending'),
         (2, 'Some college currently attending'),
@@ -33,6 +34,7 @@ class DemographicData(models.Model):
     )
 
     EMPLOYMENT_STATUS = (
+        (-1, 'No Answer'),
         ('p', 'part time'),
         ('f', 'full time'),
         ('n', 'not employed'),
@@ -40,6 +42,7 @@ class DemographicData(models.Model):
     )
 
     SEX = (
+        (-1, 'No Answer'),
         ('f', 'female'),
         ('m', 'male'),
         ('t', 'transgender'),
@@ -48,6 +51,7 @@ class DemographicData(models.Model):
 
     # probably should pull lots of this info from someone elses DB.
     RACE = (
+        (-1, 'No Answer'),
         ('a', 'asian'),
         ('b', 'black'),
         ('h', 'hispanic/latino'),
@@ -57,6 +61,7 @@ class DemographicData(models.Model):
     )
 
     RELATIONSHIP_STATUS = (
+        (-1, 'No Answer'),
         ('s', 'single'),
         ('c', 'casually dating'),
         ('r', 'seriously dating'),
@@ -67,6 +72,7 @@ class DemographicData(models.Model):
     )
 
     SALARY = (
+        (-1, 'No Answer'),
         (0, 'Below $10,000'),
         (1, '$10,000 - $30,000'),
         (2, '$30,000 - $50,000'),
@@ -76,6 +82,7 @@ class DemographicData(models.Model):
     )
 
     SEXUAL_PREFERENCE = (
+        (-1, 'No Answer'),
         ('m', 'men'),
         ('b', 'men and women'),
         ('w', 'women'),
@@ -83,6 +90,7 @@ class DemographicData(models.Model):
     )
 
     RELIGION = (
+        (-1, 'No Answer'),
         ('c', 'christianity'),
         ('j', 'judaism'),
         ('i', 'islam'),
@@ -95,6 +103,7 @@ class DemographicData(models.Model):
     )
 
     AGREEMENT = (
+        (-1, 'No Answer'),
         ('1', 'strongly disagree'),
         ('2', 'disagree'),
         ('3', 'neither agree nor disagree'),
@@ -103,6 +112,7 @@ class DemographicData(models.Model):
     )
 
     FREQUENCY = (
+        (-1, 'No Answer'),
         ('n', 'never'),
         ('r', 'rarely'),
         ('s', 'sometimes'),
@@ -113,46 +123,46 @@ class DemographicData(models.Model):
     user = models.ForeignKey(User)
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
-    education = models.IntegerField(choices=EDUCATION)
-    employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS)
+    education = models.IntegerField(choices=EDUCATION, default=-1)
+    employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS, default=-1)
     familySize = models.IntegerField()
-    sex = models.CharField(max_length=1, choices=SEX)
-    relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS)
+    sex = models.CharField(max_length=1, choices=SEX, default=-1)
+    relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS, default=-1)
 
     # postal code to derive location
     postalCode = models.CharField(max_length=32)
     race = models.CharField(max_length=2)
-    salary = models.IntegerField(choices=SALARY)
-    sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE)
+    salary = models.IntegerField(choices=SALARY, default=-1)
+    sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE, default=-1)
 
-    religion = models.CharField(max_length=1, choices=RELIGION)
-    religiousInfluence = models.CharField(max_length=1, choices=AGREEMENT)
+    religion = models.CharField(max_length=1, choices=RELIGION, default=-1)
+    religiousInfluence = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
 
     # personal relationship experiences
-    addictive = models.CharField(max_length=1, choices=FREQUENCY)
-    violence = models.CharField(max_length=1, choices=FREQUENCY)
-    breakups = models.CharField(max_length=1, choices=FREQUENCY)
-    verbalEmotionalAbuse = models.CharField(max_length=1, choices=FREQUENCY)
-    infidelity = models.CharField(max_length=1, choices=FREQUENCY)
+    addictive = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    violence = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    breakups = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    verbalEmotionalAbuse = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    infidelity = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
 
     # Others relationship experiences
-    addictiveOther = models.CharField(max_length=1, choices=FREQUENCY)
-    violenceOther = models.CharField(max_length=1, choices=FREQUENCY)
-    breakupsOther = models.CharField(max_length=1, choices=FREQUENCY)
-    verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY)
-    infidelityOther = models.CharField(max_length=1, choices=FREQUENCY)
+    addictiveOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    violenceOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    breakupsOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+    infidelityOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
 
     # metrics
-    cyclicRelationships = models.BooleanField()
-    timesCycled = models.IntegerField()
-    timesMarried = models.IntegerField()  # needs bounding options set
-    biologicalChildren = models.IntegerField()
-    adoptedChildren = models.IntegerField()
-    stepChildren = models.IntegerField()
-    lengthOfCurrentRelationship = models.IntegerField()
+    cyclicRelationships = models.BooleanField(default=-1)
+    timesCycled = models.IntegerField(default=-1)
+    timesMarried = models.IntegerField(default=-1)  # needs bounding options set
+    biologicalChildren = models.IntegerField(default=-1)
+    adoptedChildren = models.IntegerField(default=-1)
+    stepChildren = models.IntegerField(default=-1)
+    lengthOfCurrentRelationship = models.IntegerField(default=-1)
 
-    currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT)
-    gettingDivorced = models.BooleanField()
+    currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
+    gettingDivorced = models.NullBooleanField()
 
 
 # base model for article
