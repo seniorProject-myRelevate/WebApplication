@@ -76,22 +76,22 @@ class DemographicData(models.Model):
     )
 
     SEXUAL_PREFERENCE = (
-        ('m', 'men'),
-        ('b', 'men and women'),
-        ('w', 'women'),
-        ('o', 'otheruser = models.ForeignKey(User)'),
+        ('o', 'opposite sex'),
+        ('s', 'same sex'),
+        ('b', 'both sexes'),
+        ('n', 'neither'),
     )
 
     RELIGION = (
-        ('c', 'christianity'),
-        ('j', 'judaism'),
-        ('i', 'islam'),
-        ('b', 'buddhism'),
-        ('h', 'hinduism'),
-        ('a', 'atheism'),
-        ('g', 'agnostic'),
-        ('n', 'none'),
-        ('o', 'other'),
+        ('c','christianity'),
+        ('j','judaism'),
+        ('i','islam'),
+        ('b','buddhism'),
+        ('h','hinduism'),
+        ('a','atheism'),
+        ('g','agnostic'),
+        ('n','none'),
+        ('o','other'),
     )
 
     AGREEMENT = (
@@ -110,12 +110,15 @@ class DemographicData(models.Model):
         ('f', 'frequently'),
     )
 
+    FAMILYSIZE = ((i for i in range(101)),)
+        
     user = models.ForeignKey(User)
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
+
     education = models.IntegerField(choices=EDUCATION, blank=True)
     employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS, blank=True)
-    familySize = models.IntegerField()
+    familySize = models.IntegerField(choices=FAMILYSIZE, blank=True)
     sex = models.CharField(max_length=1, choices=SEX, blank=True)
     relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS, blank=True)
 
@@ -124,7 +127,6 @@ class DemographicData(models.Model):
     race = models.CharField(max_length=1, choices=RACE, blank=True)
     salary = models.IntegerField(choices=SALARY, blank=True)
     sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE, blank=True)
-
     religion = models.CharField(max_length=1, choices=RELIGION, blank=True)
     religiousInfluence = models.IntegerField(choices=AGREEMENT, blank=True)
 
@@ -142,17 +144,21 @@ class DemographicData(models.Model):
     verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
     infidelityOther = models.CharField(max_length=1, choices=FREQUENCY, blank=True)
 
-    # metrics
-    cyclicRelationships = models.BooleanField()
-    timesCycled = models.IntegerField()
-    timesMarried = models.IntegerField()  # needs bounding options set
-    biologicalChildren = models.IntegerField()
-    adoptedChildren = models.IntegerField()
-    stepChildren = models.IntegerField()
-    lengthOfCurrentRelationship = models.IntegerField()
 
-    currentRelationshipHappiness = models.IntegerField(choices=AGREEMENT, blank=True)
-    gettingDivorced = models.BooleanField()
+    #metrics
+    CYCLES = ((i for i in range(21)),)
+    cyclicRelationships = models.BooleanField(default=False)
+    timesCycled = models.IntegerField(choices=CYCLES)
+    timesMarried = models.IntegerField(choices=CYCLES)
+    CHILDREN = ((i for i in range(101)),)
+    biologicalChildren = models.IntegerField(choices=CHILDREN)
+    adoptedChildren = models.IntegerField(choices=CHILDREN)
+    stepChildren = models.IntegerField(choices=CHILDREN)
+    YEARS = ((i for i in range(101)),)
+    lengthOfCurrentRelationship = models.IntegerField(choices=YEARS)
+    currentRelationshipHappiness = models.CharField(max_length=1,choices=AGREEMENT, blank=True)
+    gettingDivorced = models.BooleanField(default=False)
+
 
 
 # base model for article
