@@ -23,7 +23,7 @@ class User(AbstractBaseUser):
 # DemographicData Database Model
 class DemographicData(models.Model):
     EDUCATION = (
-        (-1, 'No Answer'),
+        (-1, ''),
         (0, 'Completed high school/GED'),
         (1, 'Some college no longer attending'),
         (2, 'Some college currently attending'),
@@ -34,7 +34,7 @@ class DemographicData(models.Model):
     )
 
     EMPLOYMENT_STATUS = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('p', 'part time'),
         ('f', 'full time'),
         ('n', 'not employed'),
@@ -42,7 +42,7 @@ class DemographicData(models.Model):
     )
 
     SEX = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('f', 'female'),
         ('m', 'male'),
         ('t', 'transgender'),
@@ -51,7 +51,7 @@ class DemographicData(models.Model):
 
     # probably should pull lots of this info from someone elses DB.
     RACE = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('a', 'asian'),
         ('b', 'black'),
         ('h', 'hispanic/latino'),
@@ -61,7 +61,7 @@ class DemographicData(models.Model):
     )
 
     RELATIONSHIP_STATUS = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('s', 'single'),
         ('c', 'casually dating'),
         ('r', 'seriously dating'),
@@ -72,7 +72,7 @@ class DemographicData(models.Model):
     )
 
     SALARY = (
-        (-1, 'No Answer'),
+        (-1, ''),
         (0, 'Below $10,000'),
         (1, '$10,000 - $30,000'),
         (2, '$30,000 - $50,000'),
@@ -82,7 +82,7 @@ class DemographicData(models.Model):
     )
 
     SEXUAL_PREFERENCE = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('m', 'men'),
         ('b', 'men and women'),
         ('w', 'women'),
@@ -90,7 +90,7 @@ class DemographicData(models.Model):
     )
 
     RELIGION = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('c', 'christianity'),
         ('j', 'judaism'),
         ('i', 'islam'),
@@ -103,7 +103,7 @@ class DemographicData(models.Model):
     )
 
     AGREEMENT = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('1', 'strongly disagree'),
         ('2', 'disagree'),
         ('3', 'neither agree nor disagree'),
@@ -112,7 +112,7 @@ class DemographicData(models.Model):
     )
 
     FREQUENCY = (
-        (-1, 'No Answer'),
+        (-1, ''),
         ('n', 'never'),
         ('r', 'rarely'),
         ('s', 'sometimes'),
