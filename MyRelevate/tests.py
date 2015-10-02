@@ -3,6 +3,7 @@ import re
 import random
 import models
 from django.test import TestCase
+from django.test import Client
 
 
 class UserModelTests(TestCase):
@@ -534,20 +535,37 @@ class TagTableModelTests(TestCase):
         self.assertIsInstance(goodTag, models.Tag)
 
 class IndexViewTests(TestCase):
+    def setUp(self):
+        self.testModelUser = models.User.objects.create(email="fbar@gmail.com",
+                                   first_name="Alex",
+                                   last_name="Beahm",
+                                   joined_date=datetime.datetime.now(),
+                                   is_active=True,
+                                   confirmed=True)
+
     def test_call_view_denies_anonymous(self):
-        response = self.client.get('/url/to/view', follow=True)
+        c = Client()
+        response = c.get('/index/', follow=True)
         self.assertRedirects(response, '/login/')
-        response = self.client.post('/url/to/view', follow=True)
-        self.assertRedirects(response, '/login/')
+        response = c.post('/url/to/view', follow=True)
+        self.assertRedirects(response, '/index/')
+
+    def test_call_invalid_view(self):
+        c = Client()
+        c.login()
+        response = c.get(reverse('/index/otherLink'))
+        self.assertEqual(response.status_code, 404)
 
     def test_call_view_loads(self):
-        self.client.login(user='ajbeahm@ksu.edu', password='password')
-        response = self.client.get('index')
+        c = Client()
+        c.login()
+        response = c.get('/index/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'index.html')
 
     def test_call_view_fails_blank(self):
-        self.client.login(username='user', password='test')
-        response = self.client.post('index', {}) # blank data dictionary
+        c = Client()
+        c.login()
+        response = self.client.post('/index/', {}) # blank data dictionary
         self.assertFormError(response, 'index.html', 'some_field', 'This field is required.')
 
