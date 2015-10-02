@@ -17,15 +17,12 @@ class RegistrationForm(forms.ModelForm):
     Registration form, allows users to create accounts.
     """
     email = forms.CharField(widget=forms.EmailInput, label='Email')
-    first_name = forms.CharField(widget=forms.TextInput, label='First Name')
-    last_name = forms.CharField(widget=forms.TextInput, label='Last Name')
+    first_name = forms.CharField(widget=forms.TextInput, max_length=50, label='First name')
+    last_name = forms.CharField(widget=forms.TextInput, max_length=100, label='Last name')
     password1 = PasswordField(widget=forms.PasswordInput, label='Password',
                               validators=[LengthValidator(min_length=6),
                                           ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
     password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
-	
-    first_name = forms.CharField(widget=forms.TextInput, max_length=50, label='First name')
-    last_name = forms.CharField(widget=forms.TextInput, max_length=100, label='Last name')
 
     class Meta:
         model = User
