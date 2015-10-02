@@ -2,7 +2,6 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
->>>>>>> Development-LB
 
 from .forms import RegistrationForm, LoginForm
 from .models import User
