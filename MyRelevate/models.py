@@ -104,11 +104,11 @@ class DemographicData(models.Model):
 
     AGREEMENT = (
         (-1, ''),
-        ('1', 'strongly disagree'),
-        ('2', 'disagree'),
-        ('3', 'neither agree nor disagree'),
-        ('4', 'agree'),
-        ('5', 'strongly agree'),
+        (1, 'strongly disagree'),
+        (2, 'disagree'),
+        (3, 'neither agree nor disagree'),
+        (4, 'agree'),
+        (5, 'strongly agree'),
     )
 
     FREQUENCY = (

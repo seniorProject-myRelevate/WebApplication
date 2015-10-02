@@ -1,6 +1,5 @@
 from django import forms
 from .models import User
-from .models import User
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
@@ -14,17 +13,20 @@ class LoginForm(forms.Form):
 
 
 class RegistrationForm(forms.ModelForm):
-    email = forms.EmailField(widget=forms.TextInput, label='Email')
-    password1 = PasswordField(widget=forms.PasswordInput, label='Password', validators=[{
-        LengthValidator(min_length=5), ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))
-    }])
+    """
+    Registration form, allows users to create accounts.
+    """
+    email = forms.CharField(widget=forms.EmailInput, label='Email')
+    first_name = forms.CharField(widget=forms.TextInput, label='First Name')
+    last_name = forms.CharField(widget=forms.TextInput, label='Last Name')
+    password1 = PasswordField(widget=forms.PasswordInput, label='Password',
+                              validators=[LengthValidator(min_length=6),
+                                          ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
     password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
-    first_name = forms.CharField(widget=forms.TextInput, max_length=50, label='First name')
-    last_name = forms.CharField(widget=forms.TextInput, max_length=100, label='Last name')
 
     class Meta:
         model = User
-        fields = ['email', 'password1', 'password2']
+        fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
 
     def clean(self):
         """
@@ -37,3 +39,10 @@ class RegistrationForm(forms.ModelForm):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError("Passwords don't match. Please enter both fields again.")
         return self.cleaned_data
+
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+        return user
