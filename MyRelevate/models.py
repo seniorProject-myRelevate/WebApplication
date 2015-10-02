@@ -120,23 +120,24 @@ class DemographicData(models.Model):
         ('f', 'frequently'),
     )
 
+    FAMILYSIZE = ((i for i in range(101)),)
+
     user = models.ForeignKey(User)
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
     education = models.IntegerField(choices=EDUCATION, default=-1)
     employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS, default=-1)
-    familySize = models.IntegerField()
+    familySize = models.IntegerField(choices=FAMILYSIZE, default=-1)
     sex = models.CharField(max_length=1, choices=SEX, default=-1)
     relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS, default=-1)
 
     # postal code to derive location
-    postalCode = models.CharField(max_length=32)
-    race = models.CharField(max_length=2)
+    postalCode = models.CharField(max_length=32, default=-1)
+    race = models.CharField(max_length=1, choices=RACE)
     salary = models.IntegerField(choices=SALARY, default=-1)
     sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE, default=-1)
-
     religion = models.CharField(max_length=1, choices=RELIGION, default=-1)
-    religiousInfluence = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
+    religiousInfluence = models.IntegerField(choices=AGREEMENT, default=-1)
 
     # personal relationship experiences
     addictive = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
@@ -152,17 +153,20 @@ class DemographicData(models.Model):
     verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
     infidelityOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
 
-    # metrics
-    cyclicRelationships = models.BooleanField(default=-1)
-    timesCycled = models.IntegerField(default=-1)
-    timesMarried = models.IntegerField(default=-1)  # needs bounding options set
-    biologicalChildren = models.IntegerField(default=-1)
-    adoptedChildren = models.IntegerField(default=-1)
-    stepChildren = models.IntegerField(default=-1)
-    lengthOfCurrentRelationship = models.IntegerField(default=-1)
 
-    currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
-    gettingDivorced = models.NullBooleanField()
+    #metrics
+    CYCLES = ((i for i in range(21)),)
+    cyclicRelationships = models.BooleanField(default=False)
+    timesCycled = models.IntegerField(choices=CYCLES, default=-1)
+    timesMarried = models.IntegerField(choices=CYCLES, default=-1)
+    CHILDREN = ((i for i in range(101)),)
+    biologicalChildren = models.IntegerField(choices=CHILDREN, default=-1)
+    adoptedChildren = models.IntegerField(choices=CHILDREN, default=-1)
+    stepChildren = models.IntegerField(choices=CHILDREN, default=-1)
+    YEARS = ((i for i in range(101)),)
+    lengthOfCurrentRelationship = models.IntegerField(choices=YEARS, default=-1)
+    currentRelationshipHappiness = models.CharField(max_length=1,choices=AGREEMENT, default=-1)
+    gettingDivorced = models.BooleanField(default=False)
 
 
 # base model for article
