@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block tile %}
+            MyRelevate
+        {% endblock %}
+    </title>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    This is a test page
+    <form action="{% url 'MyRelevate:index'%}" method="post">
+        {% csrf_token %}
+        {{ from }}
+    <input type="submit" value="Sign in" />
+    </form>
+    {% endblock %}
+</body>
+</html>

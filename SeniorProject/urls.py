@@ -17,5 +17,9 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+<<<<<<< HEAD
+=======
+    url(r'^MyRelevate/', include('MyRelevate.urls', namespace='MyRelevate')),
+>>>>>>> c4bfe8e832acc437f2c1485cb6d163cc1675c7e3
     url(r'^admin/', include(admin.site.urls)),
 ]
