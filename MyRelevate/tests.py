@@ -1,68 +1,3 @@
-<<<<<<< HEAD
-from django.test import TestCase
-import datetime
-import re
-
-# Create your tests here.
-class UserTests(TestCase):
-    def setUp(self):
-    	User.objects.create(email = "fbar@gmail.com",
-    		                first_name = "Alex",
-    		                last_name = "Beahm",
-    		                joined_date=datetime.datetime.now(),
-    		                is_active = True,
-    		                confirmed = True)
-
-    	User.objects.create(email = "fbar",
-    		                first_name = "Thisnameiswaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters",
-    		                last_name="Thislastnameisalsowaytoolongbecauseitisgreaterthanfiftycharactersandcontainsnumbersandspecialcharacters",
-    		                joined_date=datetime.datetime(2011,1,1,0,0,0,0),
-    		                is_active = False,
-    		                is_confirmed = False)
-
-    def validEmail(self):
-    	goodUser = User.objects.get(email="fbar@gmail.com")
-    	badUser = User.objects.get(email="bar")
-
-    	"""Regex is used to just check if the e-mail is in a correct format"""
-    	self.assertTrue(re.match(r"[^@]+@[^@]+\.[^@]+",goodUser['email']))
-    	self.assertFalse(re.match(r"[^@]+@[^@]+\.[^@]+",baddUser['email']))
-
-    def validFirstName(self):
-    	goodUserName = User.objects.get(email="fbar@gmail.com")['first_name']
-    	badUserName = User.objects.get(email="bar")['first_name']
-    	maxChars = 50
-    	self.assertTrue(re.match(r"^[A-Za-z/-]*$"),goodUserName)
-    	self.assertTrue(len(goodUserName) <= maxChars and not len(goodUserName))
-
-    	self.assertFalse(re.match(r"^[A-Za-z/-]*$"),badUserName)
-    	self.assertFalse(len(badUserName) <= maxChars)
-
-
-
-    def validLastName(self):
-    	goodUserLast = User.objects.get(email="fbar@gmail.com")
-    	badUserLast = User.objects.get(email="bar")
-
-    	maxChars = 50
-    	self.assertTrue(re.match(r"^[A-Za-z/-]*$"),goodUserLast)
-    	self.assertTrue(len(goodUserLast) <= maxChars and not len(goodUserLast))
-
-    	self.assertFalse(re.match(r"^[A-Za-z/-]*$"),badUserName)
-    	self.assertFalse(len(badUserLast) <= maxChars)
-
-    def validDate(self):
-    	goodUserDate = User.objects.get(email="fbar@gmail.com")['joined_date']
-    	badUserDate = User.objects.get(email="bar")['joined_date']
-
-    	assertIsInstance(goodUserDate, datetime)
-
-    	"""Will be changed to a time where the site will actually go live for accuracya"""
-    	dateOfProduction = datetime.datetime(2015,9,22,0,0,0,0)
-
-    	self.assertTrue(dateOfProduction < goodUserDate)
-    	self.assertFalse(dateOfProduction > badUserDate)
-=======
 import datetime
 import re
 import random
@@ -417,6 +352,7 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodCycle,bool)
         self.assertIsInstance(badCycle,bool)
+
         self.assertFalse(goodCycle)
         self.assertTrue(badCycle)
 
@@ -435,6 +371,7 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodMarry, int)
         self.assertIsInstance(badMarry, int)
+
         self.assertIn(goodMarry, range(21))
         self.assertNotIn(badMarry, range(21))
 
@@ -444,6 +381,7 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodBio, int)
         self.assertIsInstance(badBio, int)
+
         self.assertIn(goodBio, range(101))
         self.assertNotIn(badBio, range(101))
 
@@ -453,8 +391,10 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodAdopt, int)
         self.assertIsInstance(badAdopt, int)
+
         self.assertIn(goodAdopt, range(101))
         self.assertNotIn(badAdopt, range(101))
+
 
     def test_ValidStepChildren(self):
         goodStep = models.DemographicData.objects.get(postalCode="66503").stepChildren
@@ -462,6 +402,7 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodStep, int)
         self.assertIsInstance(badStep, int)
+
         self.assertIn(goodStep, range(101))
         self.assertNotIn(badStep, range(101))
 
@@ -471,6 +412,7 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodLength, int)
         self.assertIsInstance(badLength, int)
+
         self.assertIn(goodLength, range(101))
         self.assertNotIn(badLength, range(101))
 
@@ -480,6 +422,7 @@ class DemographicModelTests(TestCase):
 
         self.assertIsInstance(goodHappy, int)
         self.assertIsInstance(badHappy, int)
+
         self.assertTrue(self.findInTuple(goodHappy,models.DemographicData.AGREEMENT))
         self.assertFalse(self.findInTuple(badHappy,models.DemographicData.AGREEMENT))
 
@@ -487,6 +430,7 @@ class DemographicModelTests(TestCase):
     def test_ValidDivorce(self):
         goodDiv = models.DemographicData.objects.get(postalCode="66503").gettingDivorced
         badDiv = models.DemographicData.objects.get(postalCode="ZIPCODE").gettingDivorced
+
 
         self.assertIsInstance(goodDiv,bool)
         self.assertIsInstance(badDiv,bool)
@@ -607,4 +551,3 @@ class IndexViewTests(TestCase):
         response = self.client.post('index', {}) # blank data dictionary
         self.assertFormError(response, 'index.html', 'some_field', 'This field is required.')
 
->>>>>>> c4bfe8e832acc437f2c1485cb6d163cc1675c7e3
