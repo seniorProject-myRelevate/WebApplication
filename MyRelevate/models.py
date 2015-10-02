@@ -35,7 +35,7 @@ class DemographicData(models.Model):
 
     EMPLOYMENT_STATUS = (
         (-1, ''),
-		('p', 'part time'),
+        ('p', 'part time'),
         ('f', 'full time'),
         ('n', 'not employed'),
         ('s', 'student'),
@@ -49,13 +49,15 @@ class DemographicData(models.Model):
         ('q', 'queer'),
     )
 
-    # probably should pull lots of this info from someone elses db
+    # probably should pull lots of this info from someone elses DB.
     RACE = (
         (-1, ''),
         ('a', 'asian'),
         ('b', 'black'),
         ('h', 'hispanic/latino'),
         ('w', 'white'),
+        ('i', 'native american/alaskan'),
+        ('o', 'other'),
     )
 
     RELATIONSHIP_STATUS = (
@@ -85,40 +87,6 @@ class DemographicData(models.Model):
         ('b', 'men and women'),
         ('w', 'women'),
         ('o', 'otheruser = models.ForeignKey(User)'),
-    )
-    # birthday to derive age
-    birthday = models.DateField(auto_now=False)
-    education = models.IntegerField(choices=EDUCATION)
-    employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS)
-    familySize = models.IntegerField()
-    gender = models.CharField(max_length=1, choices=GENDER)
-    # sex = models.CharField(max_length=1)
-    relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS)
-
-    # postal code to derive location
-    postalCode = models.CharField(max_length=32)
-    race = models.CharField(max_length=2)
-    salary = models.IntegerField(choices=SALARY)
-    sexual_orientation = models.CharField(max_length=1)
-
-#base model for article
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    author = models.ForeignKey(User)
-    content = models.TextField()#check if this requires bounding for security purposes
-    publishDate = models.DateField()
-    updateDate = models.DateField()
-
-#table of tags for use in adding new tags
-class Tag(models.Model):
-    tagName = models.CharField(max_length=100)
-
-#table for linking tags to articles
-=======
-        ('o', 'opposite sex'),
-        ('s', 'same sex'),
-        ('b', 'both sexes'),
-        ('n', 'neither'),
     )
 
     RELIGION = (
@@ -152,8 +120,6 @@ class Tag(models.Model):
         ('f', 'frequently'),
     )
 
-    FAMILYSIZE = ((i for i in range(101)),)
-        
     user = models.ForeignKey(User)
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
