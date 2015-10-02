@@ -26,7 +26,11 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.10 virtualenv at ~/PycharmProjects/venvMyRelevate" project-jdk-type="Python SDK" />
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.10 virtualenv at C:\Users\Alex\venv" project-jdk-type="Python SDK" />
+>>>>>>> c4bfe8e832acc437f2c1485cb6d163cc1675c7e3
   <component name="masterDetails">
     <states>
       <state key="ScopeChooserConfigurable.UI">
