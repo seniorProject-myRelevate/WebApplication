@@ -147,7 +147,7 @@ class DemographicModelTests(TestCase):
                                               birthday=datetime.datetime.now(),
                                               education=7,
                                               employmentStatus='z',
-                                              familySize=100,
+                                              familySize=-1,
                                               sex='z',
                                               relationshipStatus='z',
                                               postalCode="ZIPCODE",
@@ -155,7 +155,7 @@ class DemographicModelTests(TestCase):
                                               salary=100,
                                               sexualPreference='z',
                                               religion='z',
-                                              religiousInfluence=100,
+                                              religiousInfluence=-1,
                                               addictive='z',
                                               violence='z',
                                               breakups='z',
@@ -167,12 +167,12 @@ class DemographicModelTests(TestCase):
                                               verbalEmotionalAbuseOther='z',
                                               infidelityOther='z',
                                               cyclicRelationships=True,
-                                              timesCycled=100,
-                                              timesMarried=100,
-                                              biologicalChildren=100,
-                                              adoptedChildren=100,
-                                              stepChildren=100,
-                                              lengthOfCurrentRelationship=100,
+                                              timesCycled=-1,
+                                              timesMarried=-1,
+                                              biologicalChildren=-1,
+                                              adoptedChildren=-1,
+                                              stepChildren=-1,
+                                              lengthOfCurrentRelationship=-1,
                                               currentRelationshipHappiness=100,
                                               gettingDivorced=True)
 
@@ -216,8 +216,8 @@ class DemographicModelTests(TestCase):
         goodEdu = models.DemographicData.objects.get(postalCode="66503").education
         badEdu = models.DemographicData.objects.get(postalCode="ZIPCODE").education
 
-        self.assertIn(goodEdu, models.DemographicData.EDUCATION[goodEdu])
-        self.assertTrue(badEdu >= len(models.DemographicData.EDUCATION))
+        self.assertTrue(self.findInTuple(goodEdu, models.DemographicData.EDUCATION))
+        self.assertFalse(self.findInTuple(badEdu, models.DemographicData.EDUCATION))
 
     def test_ValidEmployment(self):
         goodEmploy = models.DemographicData.objects.get(postalCode="66503").employmentStatus
@@ -269,8 +269,8 @@ class DemographicModelTests(TestCase):
         goodSalary = models.DemographicData.objects.get(postalCode="66503").salary
         badSalary = models.DemographicData.objects.get(postalCode="ZIPCODE").salary
 
-        self.assertIn(goodSalary, models.DemographicData.SALARY[goodSalary])
-        self.assertFalse(badSalary < len(models.DemographicData.SALARY))
+        self.assertTrue(self.findInTuple(goodSalary, models.DemographicData.SALARY))
+        self.assertFalse(self.findInTuple(badSalary,models.DemographicData.SALARY))
 
     def test_ValidSexualOrientation(self):
         goodSex = models.DemographicData.objects.get(postalCode="66503").sexualPreference
