@@ -2,6 +2,7 @@ import datetime
 import re
 import random
 import models
+import django.http
 from django.test import TestCase
 from django.test import Client
 
@@ -146,15 +147,15 @@ class DemographicModelTests(TestCase):
                                               birthday=datetime.datetime.now(),
                                               education=7,
                                               employmentStatus='z',
-                                              familySize=-1,
+                                              familySize=100,
                                               sex='z',
                                               relationshipStatus='z',
                                               postalCode="ZIPCODE",
                                               race='z',
-                                              salary=6,
+                                              salary=100,
                                               sexualPreference='z',
                                               religion='z',
-                                              religiousInfluence=-1,
+                                              religiousInfluence=100,
                                               addictive='z',
                                               violence='z',
                                               breakups='z',
@@ -166,13 +167,13 @@ class DemographicModelTests(TestCase):
                                               verbalEmotionalAbuseOther='z',
                                               infidelityOther='z',
                                               cyclicRelationships=True,
-                                              timesCycled=-1,
-                                              timesMarried=-1,
-                                              biologicalChildren=-1,
-                                              adoptedChildren=-1,
-                                              stepChildren=-1,
-                                              lengthOfCurrentRelationship=-1,
-                                              currentRelationshipHappiness=-1,
+                                              timesCycled=100,
+                                              timesMarried=100,
+                                              biologicalChildren=100,
+                                              adoptedChildren=100,
+                                              stepChildren=100,
+                                              lengthOfCurrentRelationship=100,
+                                              currentRelationshipHappiness=100,
                                               gettingDivorced=True)
 
 
@@ -545,7 +546,7 @@ class IndexViewTests(TestCase):
 
     def test_call_view_denies_anonymous(self):
         c = Client()
-        response = c.get('/index/', follow=True)
+        response = c.get('/MyRelevate/index/', follow=True)
         self.assertRedirects(response, '/login/')
         response = c.post('/url/to/view', follow=True)
         self.assertRedirects(response, '/index/')
@@ -553,19 +554,24 @@ class IndexViewTests(TestCase):
     def test_call_invalid_view(self):
         c = Client()
         c.login()
-        response = c.get(reverse('/index/otherLink'))
+        response = c.get('/index/otherLink')
         self.assertEqual(response.status_code, 404)
 
     def test_call_view_loads(self):
         c = Client()
         c.login()
-        response = c.get('/index/')
+        response = c.get('/MyRelevate/index/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'index.html')
 
     def test_call_view_fails_blank(self):
         c = Client()
         c.login()
-        response = self.client.post('/index/', {}) # blank data dictionary
+        response = self.client.post('/MyRelevate/index/', {}) # blank data dictionary
         self.assertFormError(response, 'index.html', 'some_field', 'This field is required.')
+
+class LoginTests(TestCase):
+    def test_pass_invalid_info(self):
+        c = Client();
+        c.login(username='ajbeahm@ksu.edu', password='password');
 
