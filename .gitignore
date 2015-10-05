@@ -7,7 +7,7 @@
 *.o
 *.so
 *.pyc
-/.idea
+*.idea
 
 # Packages #
 ############
