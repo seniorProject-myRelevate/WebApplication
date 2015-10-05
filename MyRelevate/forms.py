@@ -17,8 +17,8 @@ class RegistrationForm(forms.ModelForm):
     Registration form, allows users to create accounts.
     """
     username = forms.CharField(widget=forms.EmailInput, label='Email')
-    first_name = forms.CharField(widget=forms.TextInput, label='First name')
-    last_name = forms.CharField(widget=forms.TextInput, label='Last name')
+    first_name = forms.CharField(widget=forms.TextInput, label='First Name')
+    last_name = forms.CharField(widget=forms.TextInput, label='Last Name')
     password1 = PasswordField(widget=forms.PasswordInput, label='Password',
                               validators=[LengthValidator(min_length=6),
                                           ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])

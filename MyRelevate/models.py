@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import User
 
 
-# class User(AbstractBaseUser):
+# class Usertest(AbstractBaseUser):
 #     """
 #     Basic User Class
 #     """
@@ -18,7 +19,6 @@ from django.contrib.auth.models import User
 #
 #     def __unicode__(self):
 #         return self.email
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -56,15 +56,13 @@ class DemographicData(models.Model):
         ('q', 'queer'),
     )
 
-    # probably should pull lots of this info from someone elses DB.
+    # probably should pull lots of this info from someone elses db
     RACE = (
         (-1, ''),
         ('a', 'asian'),
         ('b', 'black'),
         ('h', 'hispanic/latino'),
         ('w', 'white'),
-        ('i', 'native american/alaskan'),
-        ('o', 'other'),
     )
 
     RELATIONSHIP_STATUS = (
@@ -93,7 +91,7 @@ class DemographicData(models.Model):
         ('m', 'men'),
         ('b', 'men and women'),
         ('w', 'women'),
-        ('o', models.ForeignKey(User)),
+        ('o', 'otheruser = models.ForeignKey(User)'),
     )
 
     RELIGION = (
@@ -127,24 +125,30 @@ class DemographicData(models.Model):
         ('f', 'frequently'),
     )
 
-    FAMILY_SIZE = ((i for i in range(101)),)
+    # birthday to derive age
+    birthday = models.DateField(auto_now=False)
+    education = models.IntegerField(choices=EDUCATION)
+    employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS)
+    familySize = models.IntegerField()
+    gender = models.CharField(max_length=1, choices=SEX)
+    # sex = models.CharField(max_length=1)
+    relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS)
+
+    # postal code to derive location
+    postalCode = models.CharField(max_length=32)
+    race = models.CharField(max_length=2)
+    salary = models.IntegerField(choices=SALARY)
+    sexual_orientation = models.CharField(max_length=1)
+
+    FAMILYSIZE = ((i for i in range(101)),)
 
     user = models.ForeignKey(User)
     # birthday to derive age
-    birthday = models.DateField(auto_now=False)
-    education = models.IntegerField(choices=EDUCATION, default=-1)
-    employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS, default=-1)
-    familySize = models.IntegerField(choices=FAMILY_SIZE, default=-1)
     sex = models.CharField(max_length=1, choices=SEX, default=-1)
-    relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS, default=-1)
-
-    # postal code to derive location
-    postalCode = models.CharField(max_length=32, default=-1)
-    race = models.CharField(max_length=1, choices=RACE)
-    salary = models.IntegerField(choices=SALARY, default=-1)
     sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE, default=-1)
+
     religion = models.CharField(max_length=1, choices=RELIGION, default=-1)
-    religiousInfluence = models.IntegerField(choices=AGREEMENT, default=-1)
+    religiousInfluence = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
 
     # personal relationship experiences
     addictive = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
@@ -161,18 +165,16 @@ class DemographicData(models.Model):
     infidelityOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
 
     # metrics
-    CYCLES = ((i for i in range(21)),)
-    cyclicRelationships = models.BooleanField(default=False)
-    timesCycled = models.IntegerField(choices=CYCLES, default=-1)
-    timesMarried = models.IntegerField(choices=CYCLES, default=-1)
-    CHILDREN = ((i for i in range(101)),)
-    biologicalChildren = models.IntegerField(choices=CHILDREN, default=-1)
-    adoptedChildren = models.IntegerField(choices=CHILDREN, default=-1)
-    stepChildren = models.IntegerField(choices=CHILDREN, default=-1)
-    YEARS = ((i for i in range(101)),)
-    lengthOfCurrentRelationship = models.IntegerField(choices=YEARS, default=-1)
+    cyclicRelationships = models.BooleanField(default=-1)
+    timesCycled = models.IntegerField(default=-1)
+    timesMarried = models.IntegerField(default=-1)  # needs bounding options set
+    biologicalChildren = models.IntegerField(default=-1)
+    adoptedChildren = models.IntegerField(default=-1)
+    stepChildren = models.IntegerField(default=-1)
+    lengthOfCurrentRelationship = models.IntegerField(default=-1)
+
     currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
-    gettingDivorced = models.BooleanField(default=False)
+    gettingDivorced = models.NullBooleanField()
 
 
 # base model for article

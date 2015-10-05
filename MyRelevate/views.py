@@ -22,7 +22,7 @@ def register_user(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('MyRelevate:index'))
+            return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         form = RegistrationForm()
     return render(request, "register.html", {'form': form})
