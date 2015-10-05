@@ -13,6 +13,7 @@ def index(request):
 
 
 def register_user(request):
+    pass
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
