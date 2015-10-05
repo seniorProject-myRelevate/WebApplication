@@ -1,16 +1,19 @@
 from django.shortcuts import render
-# Create your views here.
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login, logout
 
 from .forms import RegistrationForm, LoginForm
-from .models import User
+from .models import UserProfile
 from django.contrib.auth import authenticate, login
 
 
 def index(request):
-    pass
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        login_view(request)
+    else:
+        form = LoginForm()
+        return render(request, 'index.html', {'form': form})
 
 
 def register_user(request):
@@ -25,19 +28,24 @@ def register_user(request):
     return render(request, "register.html", {'form': form})
 
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(email=email, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
-                HttpResponse('%s is logged in.' % email)
+                return HttpResponse('%s is logged in.' % username)
             else:
-                HttpResponse('%s\'s account is deactivated.')
+                return HttpResponse('%s\'s account is deactivated.')
         else:
-            HttpResponse('Invalid Login.')
+            return HttpResponse('Invalid Login.')
     else:
         form = LoginForm()
         return render(request, 'index.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    HttpResponseRedirect(reverse('myrelevate:index'))

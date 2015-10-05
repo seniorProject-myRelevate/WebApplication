@@ -1,24 +1,24 @@
 from django import forms
-from .models import User
+from .models import User, UserProfile
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput, label="Email")
+    username = forms.EmailField(widget=forms.EmailInput, label="Email")
     password = PasswordField(widget=forms.PasswordInput, label='Password')
 
     class Meta:
-        fields = ['email', 'password']
+        fields = ['username', 'password']
 
 
 class RegistrationForm(forms.ModelForm):
     """
     Registration form, allows users to create accounts.
     """
-    email = forms.CharField(widget=forms.EmailInput, label='Email')
-    first_name = forms.CharField(widget=forms.TextInput, max_length=50, label='First name')
-    last_name = forms.CharField(widget=forms.TextInput, max_length=100, label='Last name')
+    username = forms.CharField(widget=forms.EmailInput, label='Email')
+    first_name = forms.CharField(widget=forms.TextInput, label='First name')
+    last_name = forms.CharField(widget=forms.TextInput, label='Last name')
     password1 = PasswordField(widget=forms.PasswordInput, label='Password',
                               validators=[LengthValidator(min_length=6),
                                           ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
@@ -26,7 +26,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
 
     def clean(self):
         """

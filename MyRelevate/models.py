@@ -1,23 +1,30 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import User
 
 
-class User(AbstractBaseUser):
-    """
-    Basic User Class
-    """
+# class User(AbstractBaseUser):
+#     """
+#     Basic User Class
+#     """
+#
+#     email = models.EmailField(unique=True, db_index=True)
+#     first_name = models.CharField(max_length=50)
+#     last_name = models.CharField(max_length=50)
+#     joined_date = models.DateTimeField(auto_now_add=True)
+#     is_active = models.BooleanField(default=True)
+#     confirmed = models.BooleanField(default=False)
+#
+#     USERNAME_FIELD = 'email'
+#
+#     def __unicode__(self):
+#         return self.email
 
-    email = models.EmailField(unique=True, db_index=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    joined_date = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
-    confirmed = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
 
     def __unicode__(self):
-        return self.email
+        return self.user.username
 
 
 # DemographicData Database Model
@@ -86,7 +93,7 @@ class DemographicData(models.Model):
         ('m', 'men'),
         ('b', 'men and women'),
         ('w', 'women'),
-        ('o', 'otheruser = models.ForeignKey(User)'),
+        ('o', models.ForeignKey(User)),
     )
 
     RELIGION = (
@@ -120,14 +127,14 @@ class DemographicData(models.Model):
         ('f', 'frequently'),
     )
 
-    FAMILYSIZE = ((i for i in range(101)),)
+    FAMILY_SIZE = ((i for i in range(101)),)
 
     user = models.ForeignKey(User)
     # birthday to derive age
     birthday = models.DateField(auto_now=False)
     education = models.IntegerField(choices=EDUCATION, default=-1)
     employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS, default=-1)
-    familySize = models.IntegerField(choices=FAMILYSIZE, default=-1)
+    familySize = models.IntegerField(choices=FAMILY_SIZE, default=-1)
     sex = models.CharField(max_length=1, choices=SEX, default=-1)
     relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS, default=-1)
 
@@ -153,8 +160,7 @@ class DemographicData(models.Model):
     verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
     infidelityOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
 
-
-    #metrics
+    # metrics
     CYCLES = ((i for i in range(21)),)
     cyclicRelationships = models.BooleanField(default=False)
     timesCycled = models.IntegerField(choices=CYCLES, default=-1)
@@ -165,7 +171,7 @@ class DemographicData(models.Model):
     stepChildren = models.IntegerField(choices=CHILDREN, default=-1)
     YEARS = ((i for i in range(101)),)
     lengthOfCurrentRelationship = models.IntegerField(choices=YEARS, default=-1)
-    currentRelationshipHappiness = models.CharField(max_length=1,choices=AGREEMENT, default=-1)
+    currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
     gettingDivorced = models.BooleanField(default=False)
 
 

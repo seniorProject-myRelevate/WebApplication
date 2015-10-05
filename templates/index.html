@@ -3,11 +3,11 @@
 {% block content %}
     index page.
     {% if form %}
-        <form action="{% url 'MyRelevate:login' %}" method="post">
+        <form action="{% url 'myrelevate:login' %}" method="post">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Sign in"/>
-            <a href="{% url 'MyRelevate:register_user' %}">Dont have an account? </a>
+            <a href="{% url 'myrelevate:register_user' %}">Dont have an account? </a>
         </form>
     {% endif %}
 {% endblock %}

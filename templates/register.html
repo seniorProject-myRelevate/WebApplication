@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="{% url 'MyRelevate:register_user' %}" method="post">
+    <form action="{% url 'myrelevate:register_user' %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Register"/>
+        <input type="submit" value="Sign Up"/>
     </form>
 {% endblock %}
