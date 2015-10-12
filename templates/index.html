@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>
-        {% block tile %}
-            MyRelevate
-        {% endblock %}
-    </title>
-    {% block head %}
-    {% endblock %}
-</head>
-<body>
-    {% block content %}
-    This is a test page
-    <form action="{% url 'MyRelevate:index'%}" method="post">
-        {% csrf_token %}
-        {{ from }}
-    <input type="submit" value="Sign in" />
-    </form>
-    {% endblock %}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    index page.
+    {% if form %}
+        <form action="{% url 'myrelevate:login' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Sign in"/>
+            <a href="{% url 'myrelevate:register_user' %}">Dont have an account? </a>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -70,6 +70,11 @@ TEMPLATES = [
     },
 ]
 
+# Authentication backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 
 
