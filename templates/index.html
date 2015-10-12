@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
     index page.
@@ -10,4 +11,6 @@
             <a href="{% url 'myrelevate:register_user' %}">Dont have an account? </a>
         </form>
     {% endif %}
+
+    <img src="{% static "logo.png" %}" alt="logo"/>
 {% endblock %}

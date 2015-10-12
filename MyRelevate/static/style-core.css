@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+}
+
+.title-bar {
+    background-color: #c0c0c0;
+    float: right;
+    padding: 10px 0px;
+    width: 100%;
+}
+
+.title-bar button {
+    float: right;
+    margin-right: 10px;
+}
