@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load staticfiles %}
+
 <head>
     <meta charset="UTF-8">
     <link rel='stylesheet' type='text/css' href=' {% static 'style-core.css' %}'>
@@ -14,10 +15,13 @@
 </head>
 <body>
 <div class='title-bar'>
-    <button type="button">Create Accounttest</button>
-    <button type="button">Sign in</button>
+    <div>
+        <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
+        <a href="{% url 'myrelevate:login' %}">Sign in</a>
+    </div>
 </div>
 {% block content %}
 {% endblock %}
+<img src="{% static "logo.png" %}" alt="logo"/>
 </body>
 </html>

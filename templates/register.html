@@ -3,7 +3,8 @@
 {% block content %}
     <form action="{% url 'myrelevate:register_user' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_ul }}
         <input type="submit" value="Sign Up"/>
     </form>
+
 {% endblock %}
