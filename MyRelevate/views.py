@@ -15,7 +15,8 @@ def index(request):
 
 
 def register_user(request):
-    pass
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('myrelevate:index'))
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -27,6 +28,8 @@ def register_user(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('myrelevate:index'))
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
