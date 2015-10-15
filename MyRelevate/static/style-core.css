@@ -12,7 +12,6 @@
 
 .title-bar .links-wrapper {
     float: right;
-    margin-right: 10px;
 }
 
 .title-bar .links-wrapper > div {
@@ -23,6 +22,7 @@
     color: #fff;
     font-size: medium;
     font-weight: 700;
+    margin: 0 20px 0 0;
     padding: 0 10px 0 0;
     text-decoration: none;
 }
