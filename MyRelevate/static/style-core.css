@@ -1,15 +1,28 @@
 * {
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
 
 .title-bar {
     background-color: #c0c0c0;
-    float: right;
+    display: inline-block;
     padding: 10px 0px;
     width: 100%;
 }
 
-.title-bar button {
+.title-bar .links-wrapper {
     float: right;
     margin-right: 10px;
+}
+
+.title-bar .links-wrapper > div {
+    float: left;
+}
+
+.title-bar div > a {
+    color: #fff;
+    font-size: medium;
+    font-weight: 700;
+    padding: 0 10px 0 0;
+    text-decoration: none;
 }

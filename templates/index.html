@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 {% block content %}
-    index page.
     {% if user.is_authenticated %}
         <h1>{{ user.username }}</h1>
     {% else %}

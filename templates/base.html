@@ -15,9 +15,13 @@
 </head>
 <body>
 <div class='title-bar'>
-    <div>
-        <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
-        <a href="{% url 'myrelevate:login' %}">Sign in</a>
+    <div class='links-wrapper'>
+        <div>
+            <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
+        </div>
+        <div>
+            <a href="{% url 'myrelevate:login' %}">Sign in</a>
+        </div>
     </div>
 </div>
 {% block content %}
