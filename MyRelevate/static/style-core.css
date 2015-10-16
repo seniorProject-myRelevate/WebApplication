@@ -6,15 +6,15 @@
 .title-bar {
     background-color: #2BA2D9;
     display: inline-block;
-    padding: 10px 0px;
+    padding: 10px 15px;
     width: 100%;
 }
 
-.title-bar .links-wrapper {
+.right, .title-bar .links-wrapper {
     float: right;
 }
 
-.title-bar .links-wrapper > div {
+.left, .title-bar .links-wrapper > div {
     float: left;
 }
 
