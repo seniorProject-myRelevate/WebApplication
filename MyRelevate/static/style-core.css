@@ -9,7 +9,17 @@
     width: 100%;
 }
 
-.title-bar button {
+.title-bar a {
+    color: #fff;
     float: right;
     margin-right: 10px;
+}
+
+.title-bar {
+    float: right;
+    margin-right: 10px;
+}
+
+ul {
+    list-style-type: none;
 }
