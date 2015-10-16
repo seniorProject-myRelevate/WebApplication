@@ -1,6 +1,7 @@
-* {
-    font-family: Arial, Helvetica, sans-serif;
+html, body {
+    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
     margin: 0;
+    position: relative;
 }
 
 .title-bar {
