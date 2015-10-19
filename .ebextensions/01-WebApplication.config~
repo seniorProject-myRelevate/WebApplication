@@ -1,4 +1,7 @@
 option_settings:
+  -namespace: aws.elasticbeanstalk:container:python:staticfiles
+    option_name: /static/
+    value: static/
   "aws:elasticbeanstalk:application:environment":
     DJANGO_SETTINGS_MODULE: "SeniorProject.settings"
     PYTHONPATH: "/opt/python/current/app/WebApplication:$PYTHONPATH"
