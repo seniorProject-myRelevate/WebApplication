@@ -1,12 +1,13 @@
 from django import forms
-from .models import User, UserProfile
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
+from .models import User
+
 
 class LoginForm(forms.Form):
-    username = forms.EmailField(widget=forms.EmailInput, label="Email")
-    password = PasswordField(widget=forms.PasswordInput, label='Password')
+    username = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
+    password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), label='')
 
     class Meta:
         fields = ['username', 'password']
@@ -16,13 +17,14 @@ class RegistrationForm(forms.ModelForm):
     """
     Registration form, allows users to create accounts.
     """
-    username = forms.CharField(widget=forms.EmailInput, label='Email')
-    first_name = forms.CharField(widget=forms.TextInput, label='First Name')
-    last_name = forms.CharField(widget=forms.TextInput, label='Last Name')
-    password1 = PasswordField(widget=forms.PasswordInput, label='Password',
+    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}), label='')
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}), label='')
+    password1 = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), label='',
                               validators=[LengthValidator(min_length=6),
                                           ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
-    password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+                                label='')
 
     class Meta:
         model = User
