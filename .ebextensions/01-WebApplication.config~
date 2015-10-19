@@ -6,4 +6,11 @@ option_settings:
     DJANGO_SETTINGS_MODULE: "SeniorProject.settings"
     PYTHONPATH: "/opt/python/current/app/WebApplication:$PYTHONPATH"
   "aws:elasticbeanstalk:container:python":
+<<<<<<< HEAD
     WSGIPath: "SeniorProject/wsgi.py"
+=======
+    WSGIPath: "WebApplication/SeniorProject/wsgi.py"
+  "aws:elasticbeanstalk:container:python:staticfiles":
+    option_name: /static/
+    value: MyRelevate/static/
+>>>>>>> 3a8ada8c26d478db30ca4d7b87c9c3dff4425579
