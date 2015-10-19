@@ -27,3 +27,12 @@ html, body {
     padding: 0 10px 0 0;
     text-decoration: none;
 }
+
+ul.createAccount {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+<!-- text-align : left;
+--> <!-- width : 10 em;
+-->
+}

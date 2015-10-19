@@ -20,12 +20,15 @@
     </div>
     <div class='links-wrapper right'>
         {% if not user.is_authenticated %}
-        <div>
-            <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
-        </div>
-        <div>
-            <a href="{% url 'myrelevate:login' %}">Sign in</a>
-        </div>
+            <div>
+
+            </div>
+            <div>
+                <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
+            </div>
+            <div>
+                <a href="{% url 'myrelevate:login' %}">Sign In</a>
+            </div>
         {% else %}
             <div>
                 <a href="{% url 'myrelevate:logout' %}">Logout</a>
@@ -35,6 +38,5 @@
 </div>
 {% block content %}
 {% endblock %}
-<img src="{% static "logo.png" %}" alt="logo"/>
 </body>
 </html>

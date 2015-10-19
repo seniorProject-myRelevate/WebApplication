@@ -1,10 +1,17 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
     <form action="{% url 'myrelevate:register_user' %}" method="post">
         {% csrf_token %}
-        {{ form.as_ul }}
+        <ul class="createAccount">
+            <li id="username" class="">{{ form.username }}</li>
+            <li id="first_name" class="">{{ form.first_name }}</li>
+            <li id="last_name" class="">{{ form.last_name }}</li>
+            <li id="password1" class="">{{ form.password1 }}</li>
+            <li id="password2" class="">{{ form.password2 }}</li>
+        </ul>
         <input type="submit" value="Sign Up"/>
     </form>
-
+    <img src="{% static "logo.png" %}" alt="logo" align="right"/>
 {% endblock %}
