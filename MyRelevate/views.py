@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import RegistrationForm, LoginForm
+
+from .forms import RegistrationForm, LoginForm, ContributorRequestForm
 
 
 def index(request):
@@ -18,12 +19,15 @@ def register_user(request):
         return HttpResponseRedirect(reverse('myrelevate:index'))
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
+        contibForm = ContributorRequestForm(request.POST, request.FILES)
         if form.is_valid():
+
             form.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         form = RegistrationForm()
-    return render(request, "register.html", {'form': form})
+        contibForm = ContributorRequestForm()
+    return render(request, "register.html", {'form': form, 'contribForm': contibForm})
 
 
 def login_view(request):

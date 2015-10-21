@@ -48,3 +48,11 @@ class RegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class ContributorRequestForm(forms.Form):
+    cv = forms.FileField(widget=forms.FileInput(), label='Upload CV ')
+    accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I understand that blah blah blah')
+
+    def clean(self):
+        pass
