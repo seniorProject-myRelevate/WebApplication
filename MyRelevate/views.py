@@ -50,3 +50,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('myrelevate:index'))
+
+
+def contributors(request):
+    pass

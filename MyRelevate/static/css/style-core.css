@@ -30,9 +30,22 @@ html, body {
 
 ul.createAccount {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
-<!-- text-align : left;
---> <!-- width : 10 em;
--->
+    text-align: left;
 }
+
+img.logo1 {
+    display: block;
+    float: right;
+
+}
+
+img.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+p {
+    text-align: center;
+}
+

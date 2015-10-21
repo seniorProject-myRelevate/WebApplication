@@ -1,12 +1,26 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
-    <form action="{% url 'myrelevate:login' %}" method="post">
+    <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
+    <div class="visible" id="request">
         {% if form %}
             <form action="{% url 'myrelevate:login' %}" method="post">
                 {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Sign In"/>
+                <p>{{ form.username }}</p>
+
+                <p>{{ form.password }}</p>
+
+                <p><input type="submit" value="Sign In"/></p>
+
+                <p>
+                    <button id="Registration_btn">Contributor Registration</button>
+                </p>
             </form>
         {% endif %}
+    </div>
+    <div class="hidden" id="requestAccess">
+        <button type="button">Request Access</button>
+    </div>
+    <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
