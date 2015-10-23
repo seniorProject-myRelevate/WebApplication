@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm, LoginForm
 
+from .models import UserProfile
+
 
 def index(request):
     if request.method == 'POST':
@@ -53,4 +55,5 @@ def logout_view(request):
 
 
 def contributors(request):
-    return HttpResponse()
+    contributors = UserProfile.objects.exclude(contributorProfile__isnull='')
+    return render(request, 'whatever.html', {'contributors': contributors}
