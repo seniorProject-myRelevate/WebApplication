@@ -3,24 +3,27 @@
 
 {% block content %}
     <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
-    <div class="visible" id="request">
+    <div class="visible" id="login">
         {% if form %}
             <form action="{% url 'myrelevate:login' %}" method="post">
                 {% csrf_token %}
-                <p>{{ form.username }}</p>
-
-                <p>{{ form.password }}</p>
-
-                <p><input type="submit" value="Sign In"/></p>
-
-                <p>
-                    <button id="Registration_btn">Contributor Registration</button>
-                </p>
+                <h1>
+                    <ul class="signIn">
+                        <li>{{ form.username }}</li>
+                        <li>{{ form.password }}</li>
+                        <input type="submit" value="Sign In"/>
+                    </ul>
+                </h1>
             </form>
         {% endif %}
+        <p class="align-center">
+            <button id="registration">Contributor Registration</button>
+        </p>
     </div>
-    <div class="hidden" id="requestAccess">
-        <button type="button">Request Access</button>
+    <div class="hidden" id="requestAccess" style="display: none">
+        <p class="align-center">
+            <button id="request">Request Access</button>
+        </p>
     </div>
     <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

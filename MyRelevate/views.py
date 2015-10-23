@@ -53,4 +53,4 @@ def logout_view(request):
 
 
 def contributors(request):
-    pass
+    return HttpResponse()
