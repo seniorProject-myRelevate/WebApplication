@@ -7,23 +7,14 @@
         {% if form %}
             <form action="{% url 'myrelevate:login' %}" method="post">
                 {% csrf_token %}
-                <h1>
-                    <ul class="signIn">
-                        <li>{{ form.username }}</li>
-                        <li>{{ form.password }}</li>
-                        <input type="submit" value="Sign In"/>
-                    </ul>
-                </h1>
+                <div class="align-center">
+                    <p>{{ form.username }}</p>
+
+                    <p>{{ form.password }}</p>
+                    <input type="submit" value="Sign In"/>
+                </div>
             </form>
         {% endif %}
-        <p class="align-center">
-            <button id="registration">Contributor Registration</button>
-        </p>
-    </div>
-    <div class="hidden" id="requestAccess" style="display: none">
-        <p class="align-center">
-            <button id="request">Request Access</button>
-        </p>
     </div>
     <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

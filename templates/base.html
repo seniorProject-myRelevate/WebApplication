@@ -32,6 +32,9 @@
             </div>
         {% else %}
             <div>
+                <a href="{% url 'myrelevate:user_profile' %}">My Profile</a>
+            </div>
+            <div>
                 <a href="{% url 'myrelevate:logout' %}">Logout</a>
             </div>
         {% endif %}

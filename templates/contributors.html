@@ -1,5 +1,33 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
+    <div class="contributorsProfiles" id="profiles">
+        <h4 class="register">
+            Interested in becoming a contributor?
+            <a id="contributorRegistration" title="Access" href="#"
+               onclick="ContributorAccess()">Get contributor access here.</a>
+        </h4>
 
+        <h2 class="align-center">Contributor Profiles</h2>
+
+    </div>
+
+    <div class="registrationForm" id="requestAccess" style="display: none">
+        {% if not user.is_authenticated %}
+            <div class="align-center">
+                <h4>You must first <a href="{% url 'myrelevate:login' %}">login</a>
+                    to your account or <a href="{% url 'myrelevate:register_user' %}">sign up</a>
+                    for an account before you can request contributor access.
+                </h4>
+                <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
+            </div>
+        {% else %}
+            <p class="align-center">
+                <button id="request">Request Access</button>
+            </p>
+        {% endif %}
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

@@ -33,11 +33,6 @@ ul.createAccount {
     text-align: left;
 }
 
-ul.signIn {
-    list-style-type: none;
-    text-align: center;
-}
-
 ul.qualifications {
     text-align: center;
 }
@@ -58,7 +53,15 @@ img.logo {
     margin-right: auto
 }
 
-p.align-center {
+.align-center {
     text-align: center;
 }
 
+.register {
+    text-align: right;
+    padding: 0 30px;
+}
+
+.name {
+    padding: 0 30px;
+}

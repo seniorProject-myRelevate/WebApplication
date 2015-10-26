@@ -56,4 +56,9 @@ def logout_view(request):
 
 def contributors(request):
     contributors = UserProfile.objects.exclude(contributorProfile__isnull='')
-    return render(request, 'whatever.html', {'contributors': contributors}
+    return render(request, 'contributors.html', {'contributors': contributors})
+
+
+def user_profile(request):
+    profile = UserProfile.objects.all();
+    return render(request, 'userprofile.html', {'profile': profile})
