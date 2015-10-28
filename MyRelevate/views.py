@@ -60,5 +60,5 @@ def contributors(request):
 
 
 def user_profile(request):
-    profile = UserProfile.objects.all();
+    profile = UserProfile.objects.all()
     return render(request, 'userprofile.html', {'profile': profile})

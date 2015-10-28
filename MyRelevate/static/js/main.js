@@ -5,11 +5,6 @@ var requestAccessDiv = document.getElementById('requestAccess');
 var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
 
-function loadReq() {
-    console.log('Javascript is working!!')
-}
-
-loadReq();
 
 function ContributorAccess() {
     contributorsDiv.style.display = 'none';
