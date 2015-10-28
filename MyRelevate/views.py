@@ -19,15 +19,15 @@ def register_user(request):
         return HttpResponseRedirect(reverse('myrelevate:index'))
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        contibForm = ContributorRequestForm(request.POST, request.FILES)
+        contribForm = ContributorRequestForm(request.POST, request.FILES)
         if form.is_valid():
 
             form.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         form = RegistrationForm()
-        contibForm = ContributorRequestForm()
-    return render(request, "register.html", {'form': form, 'contribForm': contibForm})
+        contribForm = ContributorRequestForm()
+    return render(request, "register.html", {'form': form, 'contribForm': contribForm})
 
 
 def login_view(request):

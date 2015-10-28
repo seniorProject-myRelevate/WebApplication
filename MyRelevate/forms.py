@@ -1,8 +1,42 @@
+import os
+
 from django import forms
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
 from .models import User
+
+
+class ExtFileField(forms.FileField):
+    """
+    Same as forms.FileField, but you can specify a file extension whitelist.
+
+    >>> from django.core.files.uploadedfile import SimpleUploadedFile
+    >>>
+    >>> t = ExtFileField(ext_whitelist=(".pdf", ".txt"))
+    >>>
+    >>> t.clean(SimpleUploadedFile('filename.pdf', 'Some File Content'))
+    >>> t.clean(SimpleUploadedFile('filename.txt', 'Some File Content'))
+    >>>
+    >>> t.clean(SimpleUploadedFile('filename.exe', 'Some File Content'))
+    Traceback (most recent call last):
+    ...
+    ValidationError: [u'Not allowed filetype!']
+    """
+
+    def __init__(self, *args, **kwargs):
+        ext_whitelist = kwargs.pop("ext_whitelist")
+        self.ext_whitelist = [i.lower() for i in ext_whitelist]
+
+        super(ExtFileField, self).__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        data = super(ExtFileField, self).clean(*args, **kwargs)
+        filename = data.name
+        ext = os.path.splitext(filename)[1]
+        ext = ext.lower()
+        if ext not in self.ext_whitelist:
+            raise forms.ValidationError("Not allowed filetype!")
 
 
 class LoginForm(forms.Form):
@@ -51,8 +85,12 @@ class RegistrationForm(forms.ModelForm):
 
 
 class ContributorRequestForm(forms.Form):
-    cv = forms.FileField(widget=forms.FileInput(), label='Upload CV ')
+    # cv2 = forms.FileField(widget=forms.FileInput(), label='Upload CV ')
+    cv = ExtFileField(widget=forms.FileInput(), label='Upload CV', ext_whitelist=(".pdf", ".txt", ".docx"))
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I understand that blah blah blah')
 
     def clean(self):
+        self.cv.clean()
+
+    def save(self):
         pass
