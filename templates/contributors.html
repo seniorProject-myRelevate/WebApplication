@@ -8,6 +8,7 @@
             <a id="contributorRegistration" title="Access" href="#"
                onclick="ContributorAccess()">Get contributor access here.</a>
         </h4>
+
         <h2 class="align-center">Contributor Profiles</h2>
 
         <div>{{ contributors }}</div>
@@ -23,9 +24,15 @@
                 <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
             </div>
         {% else %}
-            <p class="align-center">
-                <button id="request">Request Access</button>
-            </p>
+            <div class="align-center">
+                <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {{ contribForm }}
+                    <br/>
+                    <input type="submit" value="Request Access"/>
+                </form>
+            </div>
+
         {% endif %}
     </div>
 

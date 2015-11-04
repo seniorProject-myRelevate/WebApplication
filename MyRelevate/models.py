@@ -29,13 +29,13 @@ class Article(models.Model):
 
 
 class ContributorProfile(models.Model):
-    biography = models.CharField(max_length=255)
+    biography = models.CharField(max_length=255, null=True, blank=True)
     # should be multichoice.
-    area_of_expertise = models.CharField(max_length=255, choices=None)
-    profile_image = models.ImageField(null=True)
-    website_url = models.URLField(null=True)
-    # CV?
-    articles = models.ForeignKey(Article, null=True)
+    area_of_expertise = models.CharField(max_length=255, choices=None, null=True, blank=True)
+    profile_image = models.ImageField(null=True, blank=True)
+    website_url = models.URLField(null=True, blank=True)
+    cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
+    articles = models.ForeignKey(Article, null=True, blank=True)
 
 
 class UserProfile(models.Model):

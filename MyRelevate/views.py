@@ -5,8 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import RegistrationForm, LoginForm, ContributorRequestForm
-
-from .models import UserProfile
+from .models import UserProfile, ContributorProfile
 
 
 def index(request):
@@ -21,15 +20,13 @@ def register_user(request):
         return HttpResponseRedirect(reverse('myrelevate:index'))
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        contribForm = ContributorRequestForm(request.POST, request.FILES)
         if form.is_valid():
-
             form.save()
+            login(request, authenticate(username=request.POST['username'], password=request.POST['password1']))
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
-        form = RegistrationForm()
-        contribForm = ContributorRequestForm()
-    return render(request, "register.html", {'form': form, 'contribForm': contribForm})
+        pass
+    return render(request, "register.html", {'form': RegistrationForm(), 'contribForm': ContributorRequestForm()})
 
 
 def login_view(request):
@@ -59,8 +56,22 @@ def logout_view(request):
 
 
 def contributors(request):
-    contributors = UserProfile.objects.exclude(contributorProfile__isnull='')
-    return render(request, 'contributors.html', {'contributors': contributors})
+    if request.method == 'POST':
+        form = ContributorRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            contributor_profile = ContributorProfile(cv=request.FILES['cv'])
+            user = UserProfile.objects.get(user=request.user)
+            contributor_profile.save()
+            user.contributorProfile = contributor_profile
+            user.save()
+            form.save()
+            return HttpResponse('got it!')
+        else:
+            return HttpResponse(form.errors)
+    else:
+        contributors = UserProfile.objects.exclude(contributorProfile__isnull=True)
+        contribForm = ContributorRequestForm()
+    return render(request, 'contributors.html', {'contributors': contributors, 'contribForm': contribForm})
 
 
 def user_profile(request):

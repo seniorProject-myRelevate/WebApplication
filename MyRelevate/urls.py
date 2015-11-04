@@ -10,4 +10,3 @@ urlpatterns = [
     url(r'^contributors/$', views.contributors, name='contributors'),
     url(r'^userprofile/$', views.user_profile, name='user_profile'),
 ]
-

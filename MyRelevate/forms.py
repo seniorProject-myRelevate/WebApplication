@@ -4,7 +4,7 @@ from django import forms
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
-from .models import User
+from .models import User, UserProfile, ContributorProfile
 
 
 class ExtFileField(forms.FileField):
@@ -26,7 +26,10 @@ class ExtFileField(forms.FileField):
 
     def __init__(self, *args, **kwargs):
         ext_whitelist = kwargs.pop("ext_whitelist")
+        ext_maxsize = kwargs.pop("ext_maxsize")
+
         self.ext_whitelist = [i.lower() for i in ext_whitelist]
+        self.maxsize = ext_maxsize
 
         super(ExtFileField, self).__init__(*args, **kwargs)
 
@@ -36,6 +39,23 @@ class ExtFileField(forms.FileField):
         ext = os.path.splitext(filename)[1]
         ext = ext.lower()
         if ext not in self.ext_whitelist:
+            raise forms.ValidationError("Not allowed filetype!")
+
+
+class SpecificFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        mimetype_whitelist = kwargs.pop("mimetype_whitelist")
+
+        self.mimetype_whitelist = [i.lower() for i in mimetype_whitelist]
+
+        super(SpecificFileField, self).__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        data = super(SpecificFileField, self).clean(*args, **kwargs)
+        mime_type = data.content_type
+        bool = False
+        if mime_type not in self.mimetype_whitelist:
+            bool = True
             raise forms.ValidationError("Not allowed filetype!")
 
 
@@ -79,18 +99,27 @@ class RegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
+        user_profile = None
         if commit:
             user.save()
-        return user
+            user_profile = UserProfile(user=user)
+            user_profile.save()
+        return user_profile
 
 
 class ContributorRequestForm(forms.Form):
-    # cv2 = forms.FileField(widget=forms.FileInput(), label='Upload CV ')
-    cv = ExtFileField(widget=forms.FileInput(), label='Upload CV', ext_whitelist=(".pdf", ".txt", ".docx"))
-    accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I understand that blah blah blah')
+    cv = SpecificFileField(label='Specific MIME type',
+                           mimetype_whitelist=("application/pdf", "application/msword",
+                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+    accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
+
+    class Meta:
+        model = ContributorProfile
+        fields = ['cv']
 
     def clean(self):
-        self.cv.clean()
+        cleaned_data = super(ContributorRequestForm, self).clean()
+        return self.cleaned_data
 
     def save(self):
         pass
