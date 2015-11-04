@@ -65,7 +65,7 @@ def contributors(request):
             user.contributorProfile = contributor_profile
             user.save()
             form.save()
-            return HttpResponse('got it!')
+            return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
     else:
