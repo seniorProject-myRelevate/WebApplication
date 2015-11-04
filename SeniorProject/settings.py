@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': DatabaseName,
+        'NAME': 'relevate_dev',
         'USER': DatabaseUser,
         'PASSWORD': DataBasePassword,
         'HOST': DatabaseHost,
