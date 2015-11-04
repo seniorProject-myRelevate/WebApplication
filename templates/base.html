@@ -4,7 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel='stylesheet' type='text/css' href=' {% static 'style-core.css' %}'>
+    <link rel='stylesheet' type='text/css' href=' {% static 'css/style-core.css' %}'>
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
     <title>
         {% block tile %}
             MyRelevate
@@ -16,13 +17,13 @@
 <body>
 <div class='title-bar'>
     <div class='left'>
-        <a href="{% url 'myrelevate:index' %}">Home</a>
+        <a href="{% url 'myrelevate:index' %}">MyRelevate</a>
     </div>
     <div class='links-wrapper right'>
+        <div>
+            <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
+        </div>
         {% if not user.is_authenticated %}
-            <div>
-
-            </div>
             <div>
                 <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
             </div>
@@ -30,6 +31,9 @@
                 <a href="{% url 'myrelevate:login' %}">Sign In</a>
             </div>
         {% else %}
+            <div>
+                <a href="{% url 'myrelevate:user_profile' %}">My Profile</a>
+            </div>
             <div>
                 <a href="{% url 'myrelevate:logout' %}">Logout</a>
             </div>

@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import RegistrationForm, LoginForm, ContributorRequestForm
 
+from .models import UserProfile
+
 
 def index(request):
     if request.method == 'POST':
@@ -54,3 +56,13 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('myrelevate:index'))
+
+
+def contributors(request):
+    contributors = UserProfile.objects.exclude(contributorProfile__isnull='')
+    return render(request, 'contributors.html', {'contributors': contributors})
+
+
+def user_profile(request):
+    profile = UserProfile.objects.all()
+    return render(request, 'userprofile.html', {'profile': profile})
