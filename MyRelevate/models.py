@@ -20,6 +20,9 @@ from django.contrib.auth.models import User
 #     def __unicode__(self):
 #         return self.email
 
+class Subscriber(models.Model):
+    email = models.EmailField()
+
 
 class Article(models.Model):
     title = models.CharField(max_length=100)

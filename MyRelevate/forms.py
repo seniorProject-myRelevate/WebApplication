@@ -4,7 +4,7 @@ from django import forms
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
-from .models import User, UserProfile, ContributorProfile
+from .models import User, UserProfile, ContributorProfile, Subscriber
 
 
 class ExtFileField(forms.FileField):
@@ -123,3 +123,10 @@ class ContributorRequestForm(forms.Form):
 
     def save(self):
         pass
+
+
+class SubscribeForm(forms.Form):
+    subscriptionEmail = forms.EmailField(label='', attrs={'placeholder': 'Email'})
+
+    class Meta:
+        model = Subscriber

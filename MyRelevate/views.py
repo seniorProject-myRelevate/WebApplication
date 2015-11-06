@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegistrationForm, LoginForm, ContributorRequestForm
+from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
 from .models import UserProfile, ContributorProfile
 
 
@@ -77,3 +77,10 @@ def contributors(request):
 def user_profile(request):
     profile = UserProfile.objects.all()
     return render(request, 'userprofile.html', {'profile': profile})
+
+
+def subscribe(request):
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
