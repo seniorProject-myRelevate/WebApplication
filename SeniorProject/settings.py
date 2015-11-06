@@ -33,21 +33,10 @@ dbName = getEnvVariable('DatabaseName')
 dbUser = getEnvVariable('DatabaseUser')
 dbPass = getEnvVariable('DatabasePassword')
 dbHost = getEnvVariable('DatabaseHost')
-
-
-
-
-
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'x^2ni!!(xr6&=f&sy-6=*qj@c4(a_s+ls51x9r33c+gc-bm6p^'
+SECRET_KEY = getEnvVariable('SecretKey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
