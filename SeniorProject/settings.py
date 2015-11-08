@@ -33,7 +33,7 @@ dbName = getEnvVariable('DatabaseName')
 dbUser = getEnvVariable('DatabaseUser')
 dbPass = getEnvVariable('DatabasePassword')
 dbHost = getEnvVariable('DatabaseHost')
-SECRET_KEY = getEnvVariable('SecretKey')
+SECRET_KEY = 'x^2ni!!(xr6&=f&sy-6=*qj@c4(a_s+ls51x9r33c+gc-bm6p^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
