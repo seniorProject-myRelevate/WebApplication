@@ -4,6 +4,11 @@ html, body {
     position: relative;
 }
 
+.relevate-blue {
+    color: #2BA2D9;
+    display: inline;
+}
+
 .title-bar {
     background-color: #2BA2D9;
     display: inline-block;
