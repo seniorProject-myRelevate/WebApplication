@@ -17,32 +17,11 @@
     {% endblock %}
 </head>
 <body>
-<div class='title-bar'>
-    <div class='left'>
-        <a href="{% url 'myrelevate:index' %}">MyRelevate</a>
-    </div>
-    <div class='links-wrapper right'>
-        <div>
-            <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
-        </div>
-        {% if not user.is_authenticated %}
-            <div>
-                <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
-            </div>
-            <div>
-                <a href="{% url 'myrelevate:login' %}">Sign In</a>
-            </div>
-        {% else %}
-            <div>
-                <a href="{% url 'myrelevate:user_profile' %}">My Profile</a>
-            </div>
-            <div>
-                <a href="{% url 'myrelevate:logout' %}">Logout</a>
-            </div>
-        {% endif %}
-    </div>
+{% block body %}
+    <div class='body-content'>
+        {% block content %}
+        {% endblock %}
 </div>
-{% block content %}
-{% endblock %}
+{% endblock body %}
 </body>
 </html>

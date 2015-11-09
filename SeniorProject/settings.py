@@ -83,8 +83,8 @@ WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'relevate_dev',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'USER': 'relevateadmin',
         'PASSWORD': 'r3l3vat3',
         'HOST': 'relevate.cdxbllcvsaza.us-west-2.rds.amazonaws.com',
