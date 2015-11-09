@@ -2,7 +2,11 @@
 {% load staticfiles %}
 
 {% block content %}
-    <i class="fa fa-facebook"></i> fa-camera-retro
+    <i class="fa fa-facebook"></i>
+    <i class="fa fa-twitter"></i>
+    <i class="fa fa-pinterest"></i>
+    <i class="fa fa-youtube"></i>
+
     <div class="container">
         <form action="{% url 'myrelevate:subscribe' %}" method="post">
             {% csrf_token %}
