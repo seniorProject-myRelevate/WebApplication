@@ -30,7 +30,6 @@ html, body {
 
 .container {
     margin: 0 0 30px 0;
-    width: 80%
 }
 
 ul.createAccount {
@@ -84,4 +83,24 @@ img.logo {
 
 #id_subscriptioninput {
     float: left;
+}
+
+.hover-facebook:hover {
+    transition: color 0.3s linear;
+    color: #3B5998;
+}
+
+.hover-twitter:hover {
+    transition: color 0.3s linear;
+    color: #35b0ed;
+}
+
+.hover-pinterest:hover {
+    transition: color 0.3s linear;
+    color: #C92228;
+}
+
+.hover-youtube:hover {
+    transition: color 0.3s linear;
+    color: #e52d27;
 }
