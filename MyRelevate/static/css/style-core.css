@@ -65,3 +65,13 @@ img.logo {
 .name {
     padding: 0 30px;
 }
+
+#id_email {
+    float: left;
+    margin: 0 15px 0 0;
+    width: 80%;
+}
+
+#id_subscriptioninput {
+    float: left;
+}
