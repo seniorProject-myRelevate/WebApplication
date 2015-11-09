@@ -2,12 +2,11 @@
 {% load staticfiles %}
 
 {% block content %}
-    <i class="fa fa-facebook"></i>
-    <i class="fa fa-twitter"></i>
-    <i class="fa fa-pinterest"></i>
-    <i class="fa fa-youtube"></i>
-
     <div class="container">
+        <div><h1>Exciting new things are around the corner for Relevate!</h1><br/>
+            While we've got our hard hats on creating the official website, feel free to jot down your e-mail below for
+            play-by-play updates.
+        </div>
         <form action="{% url 'myrelevate:subscribe' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -15,5 +14,12 @@
                 <input type="submit" id="id_subscriptioninput" value="Subscribe"/>
             </div>
         </form>
+    </div>
+    <div class='container'>
+        <div>Feel free to follow on social media!</div>
+        <div class="social-icon"><i class="fa fa-facebook fa-4x"></i></div>
+        <div class="social-icon"><i class="fa fa-twitter fa-4x"></i></div>
+        <div class="social-icon"><i class="fa fa-pinterest fa-4x"></i></div>
+        <div class="social-icon"><i class="fa fa-youtube fa-4x"></i></div>
     </div>
 {% endblock %}
