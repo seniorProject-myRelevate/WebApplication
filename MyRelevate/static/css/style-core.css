@@ -107,6 +107,10 @@ img.logo {
     width: 20%;
 }
 
+#id_subscriptioninput:hover {
+    border-bottom: 3px solid forestgreen;
+}
+
 .hover-facebook:hover {
     transition: color 0.3s linear;
     color: #3B5998;
