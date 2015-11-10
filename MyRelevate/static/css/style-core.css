@@ -4,6 +4,15 @@ html, body {
     position: relative;
 }
 
+a {
+    color: inherit !important;
+}
+
+.relevate-blue {
+    color: #2BA2D9;
+    display: inline;
+}
+
 .title-bar {
     background-color: #2BA2D9;
     display: inline-block;
@@ -20,12 +29,16 @@ html, body {
 }
 
 .title-bar div > a {
-    color: #fff;
+    color: #fff !important;
     font-size: medium;
     font-weight: 700;
     margin: 0 20px 0 0;
     padding: 0 10px 0 0;
     text-decoration: none;
+}
+
+.container {
+    margin: 0 0 15px 0;
 }
 
 ul.createAccount {
@@ -64,4 +77,52 @@ img.logo {
 
 .name {
     padding: 0 30px;
+}
+
+.social-icon {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+#subscribe {
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 10px;
+}
+
+#id_email {
+    border: none;
+    box-shadow: none;
+    float: left;
+    min-width: 250px;
+    width: 70%;
+}
+
+#id_subscriptioninput {
+    border: none;
+    box-shadow: none;
+    float: left;
+    min-width: 90px;
+    width: 20%;
+}
+
+.hover-facebook:hover {
+    transition: color 0.3s linear;
+    color: #3B5998;
+}
+
+.hover-twitter:hover {
+    transition: color 0.3s linear;
+    color: #35b0ed;
+}
+
+.hover-pinterest:hover {
+    transition: color 0.3s linear;
+    color: #C92228;
+}
+
+.hover-youtube:hover {
+    transition: color 0.3s linear;
+    color: #e52d27;
 }

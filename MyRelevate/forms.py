@@ -107,7 +107,7 @@ class RegistrationForm(forms.ModelForm):
         return user_profile
 
 
-class ContributorRequestForm(forms.Form):
+class ContributorRequestForm(forms.ModelForm):
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
                                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
@@ -125,8 +125,10 @@ class ContributorRequestForm(forms.Form):
         pass
 
 
-class SubscribeForm(forms.Form):
-    subscriptionEmail = forms.EmailField(label='', attrs={'placeholder': 'Email'})
+class SubscribeForm(forms.ModelForm):
+    email = forms.CharField(widget=forms.EmailInput(
+        attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
 
     class Meta:
         model = Subscriber
+        fields = ['email']

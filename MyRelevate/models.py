@@ -21,7 +21,7 @@ from django.contrib.auth.models import User
 #         return self.email
 
 class Subscriber(models.Model):
-    email = models.EmailField()
+    email = models.EmailField(null=False, blank=False)
 
 
 class Article(models.Model):

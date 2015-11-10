@@ -81,9 +81,6 @@ def user_profile(request):
 
 def subscribe(request):
     if request.method == 'POST':
-        form = SubscribeForm(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
         pass
+    else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
