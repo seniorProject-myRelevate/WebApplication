@@ -3,28 +3,39 @@
 
 {% block content %}
     <div class="container">
-        <div>
-            <h1>Exciting new things are around the corner for
-                <div class="relevate-blue">Relevate!</div>
-            </h1>
-            <br/>
-            While we've got our hard hats on creating the official website, feel free to jot down your e-mail below for
+        <h1>Exciting new things are around the corner for
+            <div class="relevate-blue">Relevate!</div>
+        </h1>
+        <div>While we've got our hard hats on creating the official website, feel free to jot down your e-mail below for
             play-by-play updates.
         </div>
+    </div>
+
+    <div class="container">
         <form action="{% url 'myrelevate:subscribe' %}" method="post">
             {% csrf_token %}
-            <div class="form-group">
-                {{ subscribeForm }}
-                <input type="submit" id="id_subscriptioninput" value="Subscribe"/>
+            <div id='subscribe' class="form-group">
+                {{ subscribeForm.email }}
+                <input class="form-control" type="submit" id="id_subscriptioninput" value="Subscribe"/>
+                <br style="clear: both;"/>
             </div>
         </form>
     </div>
 
     <div class='container'>
-        <div>Follow on social media!</div>
-        <div class="social-icon hover-facebook"><i class="fa fa-facebook fa-4x"></i></div>
-        <div class="social-icon hover-twitter"><i class="fa fa-twitter fa-4x"></i></div>
-        <div class="social-icon hover-pinterest"><i class="fa fa-pinterest fa-4x"></i></div>
-        <div class="social-icon hover-youtube"><i class="fa fa-youtube fa-4x"></i></div>
+        <div>Follow us on social media!</div>
+        <div class="social-icon hover-facebook">
+            <a href="https://www.facebook.com/MyRelevate" target="_blank"><i class="fa fa-facebook fa-3x"></i></a>
+        </div>
+        <div class="social-icon hover-twitter">
+            <a href="https://twitter.com/MyRelevate/" target="_blank"><i class="fa fa-twitter fa-3x"></i></a>
+        </div>
+        <div class="social-icon hover-pinterest">
+            <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i class="fa fa-pinterest fa-3x"></i></a>
+        </div>
+        <div class="social-icon hover-youtube">
+            <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
+                    class="fa fa-youtube fa-3x"></i></a>
+        </div>
     </div>
 {% endblock %}
