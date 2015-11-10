@@ -4,8 +4,11 @@ var contributorsDiv = document.getElementById('profiles');
 var requestAccessDiv = document.getElementById('requestAccess');
 var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
+var subscribeDiv = document.getElementById('subscribe');
 
+/*
 
+ */
 function ContributorAccess() {
     contributorsDiv.style.display = 'none';
     requestAccessDiv.style.display = 'block';
@@ -13,4 +16,11 @@ function ContributorAccess() {
     requestBtn.onclick = function () {
 
     }
+}
+
+/*
+
+ */
+function Subscribe() {
+    subscribeDiv.style.display = 'block';
 }

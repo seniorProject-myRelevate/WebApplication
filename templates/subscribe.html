@@ -15,7 +15,19 @@
     </title>
 </head>
 <body>
-<img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
-{{ subscribeForm.subscriptionEmail }}
+{% block content %}
+    <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
+    <form action="{% url 'myrelevate:subscribe' %}" method="post">
+        {% csrf_token %}
+        {{ subscribeForm.subscriptionEmail }}
+        <input onclick="Subscribe()" type="submit" value="Subscribe">
+
+        <div id="subscribe" style="display: none">
+            <p>Thank you for subscribing to MyRelevate!</p>
+
+            <p>Click <a href="{% url 'myrelevate:subscribe' %}">here</a> to subscribe another person.</p>
+        </div>
+    </form>
+{% endblock %}
 </body>
 </html>
