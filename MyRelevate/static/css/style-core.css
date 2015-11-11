@@ -123,6 +123,7 @@ img.logo {
 #id_subscriptioninput {
     border: none;
     box-shadow: none;
+    border-radius: 0;
     display: inline-block;
     min-width: 70px;
     margin: 0;
