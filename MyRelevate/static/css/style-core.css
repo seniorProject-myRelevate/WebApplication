@@ -116,7 +116,7 @@ img.logo {
 
 #subscribe div > i {
     color: #1D9D74;
-    display: inline-block;
+    display: none;
     width: 100%;
 }
 
