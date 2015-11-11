@@ -8,6 +8,14 @@ a {
     color: inherit !important;
 }
 
+#footer {
+    /*
+    background-color: #7F7F7F;
+    color: #fff;
+    padding: 25px 0;
+    */
+}
+
 .relevate-blue {
     color: #2BA2D9;
     display: inline;
