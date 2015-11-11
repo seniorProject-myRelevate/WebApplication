@@ -46,7 +46,6 @@ def login_view(request):
             return HttpResponse('Invalid Login.')
     else:
         form = LoginForm()
-        pass
         return render(request, 'login.html', {'form': form})
 
 
