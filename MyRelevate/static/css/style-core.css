@@ -94,21 +94,35 @@ img.logo {
 #id_email {
     border: none;
     box-shadow: none;
-    float: left;
+    display: inline-block;
     min-width: 250px;
-    width: 70%;
+    width: 50%;
+}
+
+#subscribe > div {
+    display: inline-block;
+    margin: 0 5px 0 0;
+    width: 10px;
+}
+
+#subscribe div > i {
+    color: #1D9D74;
+    display: inline-block;
+    width: 100%;
 }
 
 #id_subscriptioninput {
     border: none;
     box-shadow: none;
-    float: left;
-    min-width: 90px;
-    width: 20%;
+    display: inline-block;
+    min-width: 70px;
+    margin: 0;
+    padding: 0;
+    width: 15%
 }
 
 #id_subscriptioninput:hover {
-    border-bottom: 3px solid forestgreen;
+    border-bottom: 3px solid #1D9D74;
 }
 
 .hover-facebook:hover {
