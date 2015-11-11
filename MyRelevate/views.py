@@ -84,6 +84,6 @@ def subscribe(request):
         form = SubscribeForm(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'index.html')
+        return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
     else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
