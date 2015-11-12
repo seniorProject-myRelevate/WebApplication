@@ -28,11 +28,11 @@ function Subscribe(event) {
 
     event.preventDefault();
 
-    if (email.form.valueOf("")) {
+    if (email.form.value === "") {
         subscribeDiv.style.display = 'none';
         welcomeDiv.style.display = 'block';
     }
     else {
-
+        window.location.reload();
     }
 }
