@@ -43,30 +43,4 @@ function Subscribe(event) {
     else {
 
     }
-
-    //window.location.replace("https://www.google.com");
-    if (emailDiv.value === "") {
-        //subscribeDiv.style.display = 'none';
-        //welcomeDiv.style.display = 'block';
-    }
-    else {
-        //window.location = "https://www.google.com"
-        //subscribeDiv.style.display = 'none';
-        //welcomeDiv.style.display = 'block';
-    }
-
-
-    //window.location.replace("https://www.google.com");
-    //window.location = "https://www.google.com";
-    //console.log('here');
-    /*
-     if ($("input").val()!= ""){
-     subscribeDiv.style.display = 'none';
-     welcomeDiv.style.display = 'block';
-     window.location = "/subscribe"
-     }
-     else{
-
-     }
-     */
 }
