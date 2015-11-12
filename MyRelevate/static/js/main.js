@@ -6,7 +6,6 @@ var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
 var subscribeDiv = document.getElementById('subscribe');
 var welcomeDiv = document.getElementById('welcome');
-var emailDiv = document.getElementById('id_email');
 var email = document.getElementById('id_subscriptioninput');
 
 email.addEventListener('click', Subscribe, true);
@@ -21,13 +20,6 @@ function ContributorAccess() {
 
     }
 }
-
-/*
- $("id_subscriptioninput").click(function(){
- window.location = "https://www.google.com";
- return false;
- });
- */
 
 /*
 
