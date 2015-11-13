@@ -60,8 +60,10 @@ class SpecificFileField(forms.FileField):
 
 
 class LoginForm(forms.Form):
-    username = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
-    password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), label='')
+    username = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+                                label='')
+    password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),
+                             label='')
 
     class Meta:
         fields = ['username', 'password']
@@ -71,14 +73,17 @@ class RegistrationForm(forms.ModelForm):
     """
     Registration form, allows users to create accounts.
     """
-    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}), label='')
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}), label='')
-    password1 = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), label='',
-                              validators=[LengthValidator(min_length=6),
-                                          ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+                               label='')
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
+                                 label='')
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
                                 label='')
+    password1 = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),
+                              label='', validators=[LengthValidator(min_length=6),
+                                                    ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), label='')
 
     class Meta:
         model = User

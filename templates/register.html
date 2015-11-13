@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 {% block content %}
-    <img class="logo1" src="{% static "images/logo.png" %}" alt="logo"/>
     <form action="{% url 'myrelevate:register_user' %}" method="post">
         {% csrf_token %}
         <h1>
@@ -12,8 +11,11 @@
                 <li id="last_name" class="">{{ form.last_name }}</li>
                 <li id="password1" class="">{{ form.password1 }}</li>
                 <li id="password2" class="">{{ form.password2 }}</li>
-                <input type="submit" value="Sign Up"/>
+                <input class='form-control' type="submit" value="Sign Up"/>
             </ul>
         </h1>
     </form>
+    <div class="container">
+        <img src="{% static "images/logo.png" %}" alt="logo"/>
+    </div>
 {% endblock %}
