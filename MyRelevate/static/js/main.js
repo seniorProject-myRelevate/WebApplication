@@ -6,7 +6,7 @@ var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
 var email = document.getElementById('id_subscriptioninput');
 
-email.addEventListener('click', Subscribe, true);
+email.addEventListener('click', Subscribe, false);
 
 
 // AJAX for posting
