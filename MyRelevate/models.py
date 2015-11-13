@@ -20,8 +20,30 @@ from django.contrib.auth.models import User
 #     def __unicode__(self):
 #         return self.email
 
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True, null=False, blank=False)
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()  # check if this requires bounding for security purposes
+    publishDate = models.DateField()
+    updateDate = models.DateField()
+
+
+class ContributorProfile(models.Model):
+    biography = models.CharField(max_length=255, null=True, blank=True)
+    # should be multichoice.
+    area_of_expertise = models.CharField(max_length=255, choices=None, null=True, blank=True)
+    # profile_image = models.ImageField(null=True, blank=True)
+    website_url = models.URLField(null=True, blank=True)
+    cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
+    articles = models.ForeignKey(Article, null=True, blank=True)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    contributorProfile = models.OneToOneField(ContributorProfile, null=True)
 
     def __unicode__(self):
         return self.user.username
@@ -175,15 +197,6 @@ class DemographicData(models.Model):
 
     currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
     gettingDivorced = models.NullBooleanField()
-
-
-# base model for article
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    author = models.ForeignKey(User)
-    content = models.TextField()  # check if this requires bounding for security purposes
-    publishDate = models.DateField()
-    updateDate = models.DateField()
 
 
 # table of tags for use in adding new tags
