@@ -14,9 +14,9 @@
         </div>
 
         <div class="container">
-            <form action="{% url 'myrelevate:subscribe' %}" method="post">
+            <form action="{% url 'myrelevate:subscribe' %}" method="post" id="the-form">
                 {% csrf_token %}
-                <div id='subscribe' class="form-group">
+                <div id='subscribe' class="form-group" id="the_post">
                     {{ subscribeForm.email }}
                     <input class="form-control" type="submit" id="id_subscriptioninput" value="Subscribe"/>
                     <br style="clear: both;"/>
@@ -46,8 +46,9 @@
 
     </div>
 
-    <div id="welcome" style="display: none">
+    <div class="align-center" id="welcome" style="display: none">
         <h1>Thank you for signing up for updates!</h1>
+        <a href="{% url 'myrelevate:subscribe' %}">Submit another email</a>
     </div>
     <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
     <script src="{% static 'js/main.js' %}"></script>
