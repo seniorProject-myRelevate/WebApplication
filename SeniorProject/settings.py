@@ -16,29 +16,16 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-from django.core.exceptions import ImproperlyConfigured
-
-message = "Failed to load environment variable %"
-
-
-def getEnvVariable(varName):
-    try:
-        return os.environ[varName]
-    except KeyError:
-        errorMessage = message % varName
-        raise ImproperlyConfigured(errorMessage)
-
-dbName = getEnvVariable('DatabaseName')
-dbUser = getEnvVariable('DatabaseUser')
-dbPass = getEnvVariable('DatabasePassword')
-dbHost = getEnvVariable('DatabaseHost')
-SECRET_KEY = getEnvVariable('SecretKey')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'x^2ni!!(xr6&=f&sy-6=*qj@c4(a_s+ls51x9r33c+gc-bm6p^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -96,11 +83,11 @@ WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': dbName,
-        'USER': dbUser,
-        'PASSWORD': dbPass,
-        'HOST': dbHost,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'USER': 'relevateadmin',
+        'PASSWORD': 'r3l3vat3',
+        'HOST': 'relevate.cdxbllcvsaza.us-west-2.rds.amazonaws.com',
         'PORT': '3306',
         }
 #    'default':{
@@ -126,6 +113,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_DIRS = (os.path.join(BASE_DIR, 'static'))
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = (os.path.join(BASE_DIR, 'media'))

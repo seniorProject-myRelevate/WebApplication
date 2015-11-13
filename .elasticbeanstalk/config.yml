@@ -1,6 +1,8 @@
 branch-defaults:
   aws-dev:
     environment: WebApplication-dev
+  development-lb:
+    environment: WebApplication-dev
   master:
     environment: WebApplication-dev
 global:

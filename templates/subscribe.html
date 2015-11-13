@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<!--Cloud code was found at http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background-->
+    <div id="clouds">
+        <div class="cloud x1"></div>
+        <!-- Time for multiple clouds to dance around -->
+        <div class="cloud x2"></div>
+        <div class="cloud x3"></div>
+        <div class="cloud x4"></div>
+        <div class="cloud x5"></div>
+    </div>
+    <div>
+        <div class="container">
+            <h1>Exciting new things are around the corner for
+                <div class="relevate-blue">Relevate</div>
+                !
+            </h1>
+            <div>While we've got our hard hats on creating the official website, feel free to jot down your e-mail below
+                for
+                play-by-play updates.
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <form action="{% url 'myrelevate:subscribe' %}" method="post">
+                {% csrf_token %}
+                <div id='subscribe' class="form-group">
+                    {{ subscribeForm.email }}
+                    <div><i class="fa fa-check-circle fa-lg"></i></div>
+                    <input class="form-control" type="submit" id="id_subscriptioninput" value="Subscribe"/>
+                    <br style="clear: both;"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <div>Follow us on social media!</div>
+            <div class="social-icon hover-facebook">
+                <a href="https://www.facebook.com/MyRelevate" target="_blank"><i
+                        class="fa fa-facebook-square fa-3x"></i></a>
+            </div>
+            <div class="social-icon hover-twitter">
+                <a href="https://twitter.com/MyRelevate/" target="_blank"><i class="fa fa-twitter-square fa-3x"></i></a>
+            </div>
+            <div class="social-icon hover-pinterest">
+                <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i
+                        class="fa fa-pinterest-square fa-3x"></i></a>
+            </div>
+            <div class="social-icon hover-youtube">
+                <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
+                        class="fa fa-youtube-square fa-3x"></i></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

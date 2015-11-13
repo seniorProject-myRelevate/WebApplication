@@ -1,12 +1,67 @@
+import os
+
 from django import forms
-from .models import User, UserProfile
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
+from .models import User, UserProfile, ContributorProfile, Subscriber
+
+
+class ExtFileField(forms.FileField):
+    """
+    Same as forms.FileField, but you can specify a file extension whitelist.
+
+    >>> from django.core.files.uploadedfile import SimpleUploadedFile
+    >>>
+    >>> t = ExtFileField(ext_whitelist=(".pdf", ".txt"))
+    >>>
+    >>> t.clean(SimpleUploadedFile('filename.pdf', 'Some File Content'))
+    >>> t.clean(SimpleUploadedFile('filename.txt', 'Some File Content'))
+    >>>
+    >>> t.clean(SimpleUploadedFile('filename.exe', 'Some File Content'))
+    Traceback (most recent call last):
+    ...
+    ValidationError: [u'Not allowed filetype!']
+    """
+
+    def __init__(self, *args, **kwargs):
+        ext_whitelist = kwargs.pop("ext_whitelist")
+        ext_maxsize = kwargs.pop("ext_maxsize")
+
+        self.ext_whitelist = [i.lower() for i in ext_whitelist]
+        self.maxsize = ext_maxsize
+
+        super(ExtFileField, self).__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        data = super(ExtFileField, self).clean(*args, **kwargs)
+        filename = data.name
+        ext = os.path.splitext(filename)[1]
+        ext = ext.lower()
+        if ext not in self.ext_whitelist:
+            raise forms.ValidationError("Not allowed filetype!")
+
+
+class SpecificFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        mimetype_whitelist = kwargs.pop("mimetype_whitelist")
+
+        self.mimetype_whitelist = [i.lower() for i in mimetype_whitelist]
+
+        super(SpecificFileField, self).__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        data = super(SpecificFileField, self).clean(*args, **kwargs)
+        mime_type = data.content_type
+        bool = False
+        if mime_type not in self.mimetype_whitelist:
+            bool = True
+            raise forms.ValidationError("Not allowed filetype!")
+
 
 class LoginForm(forms.Form):
-    username = forms.EmailField(widget=forms.EmailInput, label="Email")
-    password = PasswordField(widget=forms.PasswordInput, label='Password')
+    username = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
+    password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), label='')
 
     class Meta:
         fields = ['username', 'password']
@@ -16,13 +71,14 @@ class RegistrationForm(forms.ModelForm):
     """
     Registration form, allows users to create accounts.
     """
-    username = forms.CharField(widget=forms.EmailInput, label='Email')
-    first_name = forms.CharField(widget=forms.TextInput, label='First Name')
-    last_name = forms.CharField(widget=forms.TextInput, label='Last Name')
-    password1 = PasswordField(widget=forms.PasswordInput, label='Password',
+    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}), label='')
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}), label='')
+    password1 = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), label='',
                               validators=[LengthValidator(min_length=6),
                                           ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
-    password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+                                label='')
 
     class Meta:
         model = User
@@ -43,6 +99,36 @@ class RegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
+        user_profile = None
         if commit:
             user.save()
-        return user
+            user_profile = UserProfile(user=user)
+            user_profile.save()
+        return user_profile
+
+
+class ContributorRequestForm(forms.ModelForm):
+    cv = SpecificFileField(label='Specific MIME type',
+                           mimetype_whitelist=("application/pdf", "application/msword",
+                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+    accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
+
+    class Meta:
+        model = ContributorProfile
+        fields = ['cv']
+
+    def clean(self):
+        cleaned_data = super(ContributorRequestForm, self).clean()
+        return self.cleaned_data
+
+    def save(self):
+        pass
+
+
+class SubscribeForm(forms.ModelForm):
+    email = forms.CharField(widget=forms.EmailInput(
+        attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
+
+    class Meta:
+        model = Subscriber
+        fields = ['email']
