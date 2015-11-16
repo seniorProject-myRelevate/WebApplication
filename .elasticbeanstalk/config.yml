@@ -4,7 +4,7 @@ branch-defaults:
   development-lb:
     environment: WebApplication-dev
   master:
-    environment: WebApplication-dev
+    environment: MyRelevate-test
   master-dev:
     environment: MyRelevate
 global:
