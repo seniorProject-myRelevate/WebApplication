@@ -6,7 +6,7 @@ branch-defaults:
   master:
     environment: WebApplication-dev
   master-dev:
-    environment: WebApplication-dev
+    environment: MyRelevate
 global:
   application_name: WebApplication
   default_ec2_keyname: relevate-eb
