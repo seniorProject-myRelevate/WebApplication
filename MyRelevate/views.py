@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -84,6 +84,6 @@ def subscribe(request):
         form = SubscribeForm(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'index.html')
+        return JsonResponse({'foo': 'bar'})
     else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})

@@ -5,6 +5,7 @@ var requestAccessDiv = document.getElementById('requestAccess');
 var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
 var email = document.getElementById('id_subscriptioninput');
+var form = $('#the-form');
 
 email.addEventListener('click', Subscribe, false);
 
@@ -14,13 +15,14 @@ function create_post() {
     console.log("create post is working!") // sanity check
     console.log($('#id_email').val())
     $.ajax({
-        //url: "", // the endpoint
+        url: form.attr('action'), // the endpoint
         type: "POST", // http method
         data: {the_post: $('#id_email').val()}, // data sent with the post request
 
         // handle a successful response
         success: function (json) {
-            $('#id_email').val('Thank you for signing up!'); // remove the value from the input
+            $('#id_email').val(''); // remove the value from the input
+
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
         }//,

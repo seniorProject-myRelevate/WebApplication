@@ -127,7 +127,7 @@ class ContributorRequestForm(forms.ModelForm):
 
 class SubscribeForm(forms.ModelForm):
     email = forms.CharField(widget=forms.EmailInput(
-        attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
+        attrs={'required': True, 'placeholder': 'Email', 'class': 'form-control'}), label='')
 
     class Meta:
         model = Subscriber
