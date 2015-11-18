@@ -3,11 +3,10 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.validators import EmailValidator
 
 from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
 from .models import UserProfile, ContributorProfile
-
-import popup_forms
 
 
 def index(request):
@@ -81,14 +80,11 @@ def user_profile(request):
     return render(request, 'userprofile.html', {'profile': profile})
 
 
-# @popup_forms.handler
 def subscribe(request):
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
             form.save()
-        # return popup_forms.OpenFormResponse(request,form)
-        #return HttpResponse("Thank you for signing up!")
         return JsonResponse({'foo': 'bar'})
     else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
