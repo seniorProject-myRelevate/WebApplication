@@ -84,6 +84,12 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Email is already in use.")
+        return username
+
     def clean(self):
         """
         Verifies that the values entered into the password fields match
