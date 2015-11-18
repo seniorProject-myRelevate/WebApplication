@@ -4,7 +4,7 @@ branch-defaults:
   development-lb:
     environment: WebApplication-dev
   jr-dev:
-    environment: MyRelevate-test
+    environment: WebApplication-dev
   master:
     environment: WebApplication-dev
   master-dev:
