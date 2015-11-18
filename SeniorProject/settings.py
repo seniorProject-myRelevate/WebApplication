@@ -15,25 +15,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-
-from django.core.exceptions import ImproperlyConfigured
-
-message = "Failed to load environment variable %"
-
-
-def getEnvVariable(varName):
-    try:
-        return os.environ[varName]
-    except KeyError:
-        errorMessage = message % varName
-        raise ImproperlyConfigured(errorMessage)
-
-dbName = getEnvVariable('DatabaseName')
-dbUser = getEnvVariable('DatabaseUser')
-dbPass = getEnvVariable('DatabasePassword')
-dbHost = getEnvVariable('DatabaseHost')
-SECRET_KEY = getEnvVariable('SecretKey')
+SECRET_KEY = os.Environ['SecretKey']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -51,6 +33,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MyRelevate',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,11 +79,11 @@ WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'USER': 'relevateadmin',
-        'PASSWORD': 'r3l3vat3',
-        'HOST': 'relevate.cdxbllcvsaza.us-west-2.rds.amazonaws.com',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.Environ['DatabaseName'],
+        'USER': os.Environ['DatabaseUser'],
+        'PASSWORD': os.Environ['DatabasePassword'],
+        'HOST': os.Environ['DatabaseHost'],
         'PORT': '3306',
         }
 #    'default':{
