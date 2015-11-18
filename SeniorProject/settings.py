@@ -15,7 +15,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.Environ['SecretKey']
+SECRET_KEY = os.environ['SecretKey']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.Environ['DatabaseName'],
-        'USER': os.Environ['DatabaseUser'],
-        'PASSWORD': os.Environ['DatabasePassword'],
-        'HOST': os.Environ['DatabaseHost'],
+        'NAME': os.environ['DatabaseName'],
+        'USER': os.environ['DatabaseUser'],
+        'PASSWORD': os.environ['DatabasePassword'],
+        'HOST': os.environ['DatabaseHost'],
         'PORT': '3306',
         }
 #    'default':{
