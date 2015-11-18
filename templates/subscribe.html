@@ -44,11 +44,17 @@
 
         </div>
 
+        <div class="message" id="welcome" style="display: none">
+            <h3>Thanks for signing up!</h3>
+            <button id="close_message">Close</button>
+        </div>
+        <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
     </div>
 
-    <div class="align-center" id="welcome" style="display: none">
-        <h1>Thank you for signing up for updates!</h1>
-    </div>
-    <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
+    <!--    <div class="alert alert-success" id="welcome" style="display: none">
+            <strong>Success!</strong>
+        </div>
+    -->
+
     <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

@@ -130,3 +130,19 @@ img.logo {
     transition: color 0.3s linear;
     color: #e52d27;
 }
+
+.message {
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    background-color: #2BA2D9;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+#close_message {
+    border: none;
+    box-shadow: none;
+    alignment: center;
+    min-width: 90px;
+    width: 20%;
+}

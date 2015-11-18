@@ -6,6 +6,8 @@ var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
 var email = document.getElementById('id_subscriptioninput');
 var form = $('#the-form');
+var welcomDive = document.getElementById('welcome');
+var closeBtn = document.getElementById('close_message')
 
 email.addEventListener('click', Subscribe, false);
 
@@ -22,7 +24,10 @@ function create_post() {
         // handle a successful response
         success: function (json) {
             $('#id_email').val(''); // remove the value from the input
-
+            welcomDive.style.display = 'block'
+            closeBtn.onclick = function () {
+                welcomDive.style.display = 'none'
+            }
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
         }//,
