@@ -4,44 +4,62 @@ var contributorsDiv = document.getElementById('profiles');
 var requestAccessDiv = document.getElementById('requestAccess');
 var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
-var email = document.getElementById('id_subscriptioninput');
-var form = $('#the-form');
-var welcomDive = document.getElementById('welcome');
-var closeBtn = document.getElementById('close_message')
-
-email.addEventListener('click', Subscribe, false);
 
 
-// AJAX for posting
-function create_post() {
-    console.log("create post is working!") // sanity check
-    console.log($('#id_email').val())
-    $.ajax({
-        url: form.attr('action'), // the endpoint
-        type: "POST", // http method
-        data: {the_post: $('#id_email').val()}, // data sent with the post request
+$(function () {
+    var email = document.getElementById('id_subscriptioninput');
+    var form = $('#the-form');
+    var closeBtn = document.getElementById('close_message');
+    email.addEventListener('click', Subscribe, false);
 
-        // handle a successful response
-        success: function (json) {
-            $('#id_email').val(''); // remove the value from the input
-            welcomDive.style.display = 'block'
-            closeBtn.onclick = function () {
-                welcomDive.style.display = 'none'
-            }
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
-        }//,
-    });
-    /*
-     // handle a non-successful response
-     error : function(xhr,errmsg,err) {
-     $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-     " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-     console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-     }
-     });
-     */
-};
+    //$('#id_subscriptioninput').addEventListener('click', Subscribe, false);
+
+    function Subscribe(event) {
+        event.preventDefault();
+        console.log("form submitted");
+        CreatPost();
+    }
+
+    // AJAX for posting
+    function CreatPost() {
+
+        console.log("create post is working!"); // sanity check
+        console.log($('#id_email').val());
+        if (validateEmail($('#id_email').val())) {
+            console.log('good email');
+            $.ajax({
+                url: form.attr('action'), // the endpoint
+                type: "POST", // http method
+                data: {the_post: $('#id_email').val()}, // data sent with the post request
+
+                // handle a successful response
+                success: function (json) {
+                    $('#id_email').val(''); // remove the value from the input
+                    $('#main').hide();
+                    $('#welcome').show();
+                    closeBtn.onclick = function () {
+                        $('#invalid_email').hide();
+                        $('#welcome').hide();
+                        $('#main').show();
+                    };
+                    console.log(json); // log the returned json to the console
+                    console.log("success"); // another sanity check
+                }
+            });
+        }
+        else {
+            $('#invalid_email').show();
+            console.log("not working");
+        }
+    }
+
+    function validateEmail(checkEmail) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(checkEmail);
+    }
+});
+
+
 
 
 /*
@@ -55,14 +73,6 @@ function ContributorAccess() {
     }
 }
 
-/*
-
- */
-function Subscribe(event) {
-    event.preventDefault();
-    console.log("form submitted");
-    create_post();
-}
 
 
 // This function gets cookie with a given name
