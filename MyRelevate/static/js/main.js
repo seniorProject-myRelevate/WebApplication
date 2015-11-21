@@ -12,11 +12,8 @@ $(function () {
     var closeBtn = document.getElementById('close_message');
     email.addEventListener('click', Subscribe, false);
 
-    //$('#id_subscriptioninput').addEventListener('click', Subscribe, false);
-
     function Subscribe(event) {
         event.preventDefault();
-        console.log("form submitted");
         CreatPost();
     }
 
@@ -33,8 +30,7 @@ $(function () {
                 success: function (json) {
                     $('#invalid_email').hide();
                     $('#id_email').val(''); // remove the value from the input
-                    console.log('i am here');
-                    $('#welcomeModal').modal('show');
+                    $('#welcomeModal').modal('show'); //shows the modal
                 }
             });
         }
