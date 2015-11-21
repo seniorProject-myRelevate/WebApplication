@@ -3,6 +3,7 @@
 
 {% block content %}
     <div id="main" style="display: block">
+        <!--<img class="logo4" src="{% static "images/logo.png" %}" alt="logo"/>-->
         <!--Cloud code was found at http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background-->
         <div id="clouds">
             <div class="cloud x1"></div>
@@ -12,60 +13,83 @@
             <div class="cloud x4"></div>
             <div class="cloud x5"></div>
         </div>
-        <div class="align-center" id="subscribe">
-            <div class="container">
-                <h1>Exciting new things are around the corner for
-                    <div class="relevate-blue">Relevate!</div>
-                </h1>
-                <div>While we've got our hard hats on creating the official website, feel free to jot down your e-mail
-                    below
-                    for
-                    play-by-play updates.
-                </div>
-            </div>
-
-            <div class="container">
-                <img class="logo2" src="{% static "images/logo.png" %}" alt="logo"/>
-                <img class="logo3" src="{% static "images/logo.png" %}" alt="logo"/>
-
-                <form action="{% url 'myrelevate:subscribe' %}" method="post" id="the-form">
-                    {% csrf_token %}
-                    <div id='subscribe' class="form-group" id="the_post">
-                        {{ subscribeForm.email }}
-                        <input class="form-control" type="submit" id="id_subscriptioninput" value="Subscribe"/>
-                        <br style="clear: both;"/>
+        <div class="align-center">
+            <div id="subscribe">
+                <div class="container">
+                    <h1>Exciting new things are around the corner for
+                        <div class="relevate-blue">Relevate!</div>
+                    </h1>
+                    <div>While we've got our hard hats on creating the official website, feel free to jot down your
+                        e-mail
+                        below
+                        for
+                        play-by-play updates.
                     </div>
-                </form>
-                <div class="alert alert-warning" id="invalid_email" style="display: none">
-                    <strong>Invalid email!</strong>
                 </div>
-            </div>
 
-            <div class='container'>
-                <div>Follow us on social media!</div>
-                <div class="social-icon hover-facebook">
-                    <a href="https://www.facebook.com/MyRelevate" target="_blank"><i
-                            class="fa fa-facebook-square fa-3x"></i></a>
+                <div class="container">
+                    <img class="logo2" src="{% static "images/logo.png" %}" alt="logo"/>
+                    <img class="logo3" src="{% static "images/logo.png" %}" alt="logo"/>
+
+                    <form action="{% url 'myrelevate:subscribe' %}" method="post" id="the-form">
+                        {% csrf_token %}
+                        <div id='subscribe' class="form-group" id="the_post">
+                            {{ subscribeForm.email }}
+                            <input class="form-control" type="submit" id="id_subscriptioninput" value="Subscribe"/>
+                            <br style="clear: both;"/>
+                        </div>
+                    </form>
+                    <div class="alert alert-warning" id="invalid_email" style="display: none">
+                        <strong>Invalid email!</strong>
+                    </div>
                 </div>
-                <div class="social-icon hover-twitter">
-                    <a href="https://twitter.com/MyRelevate/" target="_blank"><i class="fa fa-twitter-square fa-3x"></i></a>
-                </div>
-                <div class="social-icon hover-pinterest">
-                    <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i
-                            class="fa fa-pinterest-square fa-3x"></i></a>
-                </div>
-                <div class="social-icon hover-youtube">
-                    <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
-                            class="fa fa-youtube-square fa-3x"></i></a>
+
+                <div class='container'>
+                    <div>Follow us on social media!</div>
+                    <div class="social-icon hover-facebook">
+                        <a href="https://www.facebook.com/MyRelevate" target="_blank"><i
+                                class="fa fa-facebook-square fa-3x"></i></a>
+                    </div>
+                    <div class="social-icon hover-twitter">
+                        <a href="https://twitter.com/MyRelevate/" target="_blank"><i
+                                class="fa fa-twitter-square fa-3x"></i></a>
+                    </div>
+                    <div class="social-icon hover-pinterest">
+                        <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i
+                                class="fa fa-pinterest-square fa-3x"></i></a>
+                    </div>
+                    <div class="social-icon hover-youtube">
+                        <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
+                                class="fa fa-youtube-square fa-3x"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal from http://getbootstrap.com/javascript/#modals-->
+    <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Welcome</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Thanks for signing up!</h4>
 
-    <div class="message" id="welcome" style="display: none">
-        <h3>Thanks for signing up!</h3>
-        <button id="close_message">Close</button>
+                    <p>Please take a few minutes and let us know what you would like to see on the MyRelevate website.
+                        Then click submit to send us your ideas.
+                    </p>
+
+                    <p>Click close to continue without sending us ideas.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

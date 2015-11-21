@@ -23,7 +23,12 @@
     <div class='body-content'>
         {% block content %}
         {% endblock %}
-</div>
+    </div>
 {% endblock body %}
+
+<!--scripts to enable javascript-->
+<script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

@@ -50,6 +50,16 @@ ul.qualifications {
     text-align: center;
 }
 
+img.logo {
+    height: auto;
+    width: auto;
+    max-height: 450px;
+    max-width: 450px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 img.logo1 {
     display: block;
     float: right;
@@ -74,7 +84,7 @@ img.logo3 {
     float: left;
 }
 
-img.logo {
+img.logo4 {
     height: auto;
     width: auto;
     max-height: 450px;
@@ -103,7 +113,7 @@ img.logo {
 }
 
 #subscribe {
-    border: 1px solid gainsboro;
+    /*border: 1px solid gainsboro;*/
     border-radius: 3px;
     display: inline-block;
     padding: 10px;
@@ -149,21 +159,11 @@ img.logo {
     color: #e52d27;
 }
 
-.message {
-    position: absolute;
-    width: 300px;
-    height: 100px;
+/*header for popups*/
+.modal-header {
     background-color: #2BA2D9;
-    box-shadow: 10px 10px 5px #888888;
 }
 
-#close_message {
-    border: none;
-    box-shadow: none;
-    alignment: center;
-    min-width: 90px;
-    width: 20%;
-}
 
 /* Cloud CSS Copied from http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background*/
 /*Lets start with the cloud formation rather*/
@@ -184,7 +184,7 @@ body {
     padding: 100px 0;
     background: #c9dbe9;
     background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
-    background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
+    background: linear-gradient(top, #c9dbe9 0%, #fff 100%);
     background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
 }
 

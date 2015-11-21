@@ -23,10 +23,7 @@ $(function () {
     // AJAX for posting
     function CreatPost() {
 
-        console.log("create post is working!"); // sanity check
-        console.log($('#id_email').val());
         if (validateEmail($('#id_email').val())) {
-            console.log('good email');
             $.ajax({
                 url: form.attr('action'), // the endpoint
                 type: "POST", // http method
@@ -34,22 +31,15 @@ $(function () {
 
                 // handle a successful response
                 success: function (json) {
+                    $('#invalid_email').hide();
                     $('#id_email').val(''); // remove the value from the input
-                    $('#main').hide();
-                    $('#welcome').show();
-                    closeBtn.onclick = function () {
-                        $('#invalid_email').hide();
-                        $('#welcome').hide();
-                        $('#main').show();
-                    };
-                    console.log(json); // log the returned json to the console
-                    console.log("success"); // another sanity check
+                    console.log('i am here');
+                    $('#welcomeModal').modal('show');
                 }
             });
         }
         else {
             $('#invalid_email').show();
-            console.log("not working");
         }
     }
 
@@ -74,8 +64,11 @@ function ContributorAccess() {
 }
 
 
+/*
+ This function gets cookie with a given name
+ code came from https://realpython.com/blog/python/django-and-ajax-form-submissions/
+ */
 
-// This function gets cookie with a given name
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -95,6 +88,7 @@ var csrftoken = getCookie('csrftoken');
 
 /*
  The functions below will create a header with csrftoken
+ code came from https://realpython.com/blog/python/django-and-ajax-form-submissions/
  */
 
 function csrfSafeMethod(method) {
