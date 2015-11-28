@@ -19,12 +19,12 @@ function subscribe_validate() {
     if (isValid) {
         textbox.removeClass('has-error');
         textbox.addClass('has-success');
-        $('#id_email').popover('hide')
+        $('#id_email').popover('destroy');
     }
     else {
         textbox.removeClass('has-success');
         textbox.addClass('has-error');
-        $('#id_email').popover('show')
+        $('#id_email').popover('show');
     }
     return isValid;
 }
@@ -51,6 +51,10 @@ function post_data() {
 
 $('#id_email').blur(function () {
     subscribe_validate()
+});
+
+$('#id_email').focus(function () {
+    $('#id_email').popover('destroy');
 });
 
 $("#form-subscribe").submit(function (event) {
