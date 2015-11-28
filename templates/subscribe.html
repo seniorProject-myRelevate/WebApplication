@@ -12,30 +12,31 @@
             <div class="cloud x4"></div>
             <div class="cloud x5"></div>
         </div>
-        <div class="align-center">
-            <div id="subscribe">
+        <div class="text-center">
+            <div>
                 <div class="container">
                     <h1>Exciting new things are around the corner for
-                        <div class="relevate-blue">Relevate!</div>
+                        <div class="relevate-blue">Relevate</div>
+                        !
                     </h1>
-                    <div>While we've got our hard hats on creating the official website, feel free to jot down your
-                        e-mail
-                        below
-                        for
-                        play-by-play updates.
+                    <div>
+                        While we've got our hard hats on creating the official website, feel free to jot down your
+                        e-mail below for play-by-play updates.
                     </div>
                 </div>
 
                 <div class="container">
-                    <img class="logo2" src="{% static "images/logo.png" %}" alt="logo"/>
-                    <img class="logo3" src="{% static "images/logo.png" %}" alt="logo"/>
-
-                    <form action="{% url 'myrelevate:subscribe' %}" method="post" id="the-form">
+                    <form action="{% url 'myrelevate:subscribe' %}" method="post" id="form-subscribe" novalidate>
                         {% csrf_token %}
-                        <div id='subscribe' class="form-group" id="the_post">
-                            {{ subscribeForm.email }}
-                            <input class="form-control" type="submit" id="id_subscriptioninput" value="Subscribe"/>
-                            <br style="clear: both;"/>
+                        <div>
+                            <div class="row center-block form-group">
+                                <div id="subscription-inputs" class="input-group col-lg-4 col-lg-offset-4">
+                                    {{ subscribeForm.email }}
+                                    <div class="input-group-btn">
+                                        <input id="btn-submit" class="btn btn-default" type="submit" value="Subscribe">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <div class="alert alert-warning" id="invalid_email" style="display: none">

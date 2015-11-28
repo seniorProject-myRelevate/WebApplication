@@ -84,8 +84,9 @@ img.logo3 {
     float: left;
 }
 
-.align-center {
-    text-align: center;
+.center-block {
+    margin: 0 auto;
+    float: none;
 }
 
 .register {
@@ -103,30 +104,30 @@ img.logo3 {
 }
 
 #subscribe {
-    /*border: 1px solid gainsboro;*/
+    border: 1px solid gainsboro;
     border-radius: 3px;
     display: inline-block;
     padding: 10px;
 }
 
 #id_email {
-    border: none;
+    /*border: none;
     box-shadow: none;
-    float: left;
     min-width: 250px;
     width: 70%;
+    */
 }
 
 #id_subscriptioninput {
     border: none;
     box-shadow: none;
-    float: left;
     min-width: 90px;
     width: 20%;
 }
 
 #id_subscriptioninput:hover {
     border-bottom: 3px solid forestgreen;
+    border-radius: 0;
 }
 
 .hover-facebook:hover {
@@ -147,6 +148,16 @@ img.logo3 {
 .hover-youtube:hover {
     transition: color 0.3s linear;
     color: #e52d27;
+}
+
+.popover, .popover-title, .popover-content {
+    background: #F2DEDE !important;
+    background-color: #F2DEDE !important;
+    color: #A94442;
+}
+
+.arrow:after {
+    border-bottom-color: #F2DEDE !important;
 }
 
 /*header for popups*/
