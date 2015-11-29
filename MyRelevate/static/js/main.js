@@ -1,11 +1,7 @@
-/* Created by Jeremy on 10/21/2015. */
-
 var contributorsDiv = document.getElementById('profiles');
 var requestAccessDiv = document.getElementById('requestAccess');
-var registrationBtn = document.getElementById('registration');
 var requestBtn = document.getElementById('request');
-
-var closeBtn = document.getElementById('close_message');
+var emailInput = $('#id_email');
 
 function validate_email(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -14,52 +10,53 @@ function validate_email(email) {
 
 function subscribe_validate() {
     var textbox = $('#subscription-inputs');
-    var isValid = validate_email($('#id_email').val());
+    var isValid = validate_email(emailInput.val());
 
     if (isValid) {
         textbox.removeClass('has-error');
         textbox.addClass('has-success');
-        $('#id_email').popover('destroy');
+        emailInput.popover('destroy');
     }
     else {
         textbox.removeClass('has-success');
         textbox.addClass('has-error');
-        $('#id_email').popover('show');
+        emailInput.popover('show');
     }
     return isValid;
 }
 
 function post_data() {
-    if (subscribe_validate()) {
+    if (validate_email(emailInput.val())) {
         $.ajax({
-            url: form.attr('action'), // the endpoint
+            url: $("#form-subscribe").attr('action'),
             type: "POST", // http method
-            data: {the_post: $('#id_email').val()}, // data sent with the post request
+            data: {the_post: emailInput.val()}, // data sent with the post request
 
             // handle a successful response
             success: function (json) {
-                $('#invalid_email').hide();
-                $('#id_email').val(''); // remove the value from the input
-                $('#welcomeModal').modal('show'); //shows the modal
+                console.log('ajax success');
+                $('#form-subscribe').hide();
+                $('#subscribe-success').removeClass('hidden');
+            },
+            error: function () {
+                console.log('ajax arror');
             }
         });
     }
-    else {
-        $('#invalid_email').show();
-    }
 }
 
-$('#id_email').blur(function () {
+emailInput.blur(function () {
     subscribe_validate()
 });
 
-$('#id_email').focus(function () {
-    $('#id_email').popover('destroy');
+emailInput.focus(function () {
+    emailInput.popover('destroy');
 });
 
 $("#form-subscribe").submit(function (event) {
     event.preventDefault();
-    subscribe_validate()
+    subscribe_validate();
+    post_data();
 });
 
 function ContributorAccess() {
