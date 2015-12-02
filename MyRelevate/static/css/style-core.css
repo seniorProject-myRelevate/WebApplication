@@ -165,6 +165,13 @@ img.logo3 {
     background-color: #2BA2D9;
 }
 
+#logo-horizontal {
+    position: absolute;
+    top: 0;
+    max-width: 600px;
+    transform: translate(50%);
+}
+
 
 /* Cloud CSS Copied from http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background*/
 /*Lets start with the cloud formation rather*/
