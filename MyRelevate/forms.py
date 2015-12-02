@@ -136,6 +136,8 @@ class SubscribeForm(forms.ModelForm):
         attrs={'required': True, 'placeholder': 'Email', 'class': 'form-control', 'data-toggle': 'popover',
                'data-placement': 'bottom', 'data-content': 'Please enter a valid email address.'}), label='')
 
+    idea = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'What would you like to see?'}), label='')
+
     class Meta:
         model = Subscriber
         fields = ['email']

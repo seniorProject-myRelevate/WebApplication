@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
-from .models import UserProfile, ContributorProfile
+from .models import UserProfile, ContributorProfile, Subscriber
 
 
 def index(request):
@@ -83,6 +83,8 @@ def subscribe(request):
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
+            Subscriber.objects.get(email=request.POST[''])
+            print request.POST
             form.save()
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
     else:

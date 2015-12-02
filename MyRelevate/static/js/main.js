@@ -34,13 +34,11 @@ function post_data() {
 
             // handle a successful response
             success: function (json) {
-                console.log('ajax success');
                 $('#form-subscribe').hide();
-                $('#subscribe-success').removeClass('hidden');
+                $('#subscribe-success').removeClass('hidden').fadeIn();
                 $('#welcomeModal').modal('show');
             },
             error: function () {
-                console.log('ajax arror');
             }
         });
     }
