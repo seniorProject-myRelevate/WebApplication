@@ -110,6 +110,12 @@ img.logo3 {
     padding: 10px;
 }
 
+.summary {
+    font-style: italic;
+    font-weight: bold;
+    color: #2BA2D9;
+    display: inline;
+}
 #id_email {
     /*border: none;
     box-shadow: none;
