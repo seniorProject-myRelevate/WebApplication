@@ -115,6 +115,7 @@ img.logo3 {
     font-weight: bold;
     color: #2BA2D9;
     display: inline;
+    text-align: justify;
 }
 #id_email {
     /*border: none;

@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'x^2ni!!(xr6&=f&sy-6=*qj@c4(a_s+ls51x9r33c+gc-bm6p^'
+SECRET_KEY = os.environ['SecretKey']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'USER': 'relevateadmin',
-        'PASSWORD': 'r3l3vat3',
-        'HOST': 'relevate.cdxbllcvsaza.us-west-2.rds.amazonaws.com',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ['DatabaseName'],
+        'USER': os.environ['DatabaseUser'],
+        'PASSWORD': os.environ['DatabasePassword'],
+        'HOST': os.environ['DatabaseHost'],
         'PORT': '3306',
         }
 #    'default':{
