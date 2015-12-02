@@ -37,6 +37,7 @@ function post_data() {
                 console.log('ajax success');
                 $('#form-subscribe').hide();
                 $('#subscribe-success').removeClass('hidden');
+                $('#welcomeModal').modal('show');
             },
             error: function () {
                 console.log('ajax arror');
