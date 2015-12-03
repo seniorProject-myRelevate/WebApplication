@@ -8,6 +8,13 @@ a {
     color: inherit !important;
 }
 
+#main{
+    background: #c9dbe9;
+    background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+    background: linear-gradient(top, #c9dbe9 0%, #fff 100%);
+    background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+}
+
 .relevate-blue {
     color: #2BA2D9;
     display: inline;
@@ -200,10 +207,12 @@ body {
 
 #clouds {
     padding: 100px 0;
+    /*
     background: #c9dbe9;
     background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
     background: linear-gradient(top, #c9dbe9 0%, #fff 100%);
     background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+    */
 }
 
 /*Time to finalise the cloud shape*/
