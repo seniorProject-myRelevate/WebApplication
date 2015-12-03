@@ -174,9 +174,12 @@ img.logo3 {
 
 /**/
 #logo-horizontal {
-    display: block;
+    left: 0;
+    position: absolute;
     max-width: 600px;
     margin: 0 auto;
+    right: 0;
+    top: 0;
 }
 
 
