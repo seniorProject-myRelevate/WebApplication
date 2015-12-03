@@ -90,17 +90,21 @@
                     <h3 class="modal-title" id="myModalLabel">Welcome</h3>
                 </div>
                 <div class="modal-body">
-                    <h4>Thanks for signing up!</h4>
+                    <h4>Thank you for subscribing!</h4>
 
-                    <p>Please take a few minutes and let us know what you would like to see on the MyRelevate website.
+                    <p>
+                        Please take a few minutes and let us know what you would like to see on the MyRelevate website.
                         Then click submit to send us your ideas.
                     </p>
-
                     <p>Click close to continue without sending us ideas.</p>
+
+                    <div class="input-group col-lg-4 col-lg-offset-4">
+                        {{ subscribeForm.idea }}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <input id="btn-submit" class="btn btn-primary" type="submit" value="Submit">
                 </div>
             </div>
         </div>
