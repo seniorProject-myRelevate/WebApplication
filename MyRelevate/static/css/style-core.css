@@ -174,10 +174,9 @@ img.logo3 {
 
 /**/
 #logo-horizontal {
-    position: absolute;
-    top: 0;
+    display: block;
     max-width: 600px;
-    transform: translate(50%);
+    margin: 0 auto;
 }
 
 
