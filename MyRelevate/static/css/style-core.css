@@ -119,7 +119,7 @@ img.logo3 {
 
 .summary {
     font-weight: bold;
-    color: #2BA2D9;
+    color: #a9a9a9;
     display: inline;
     text-align: justify;
 }
@@ -178,7 +178,6 @@ img.logo3 {
     background-color: #2BA2D9;
 }
 
-/**/
 #logo-horizontal {
     left: 0;
     position: absolute;
