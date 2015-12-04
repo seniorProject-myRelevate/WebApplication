@@ -256,6 +256,7 @@ body {
 
 /*Time to animate*/
 .x1 {
+    left: 400px;
     -webkit-animation: moveclouds 15s linear infinite;
     -moz-animation: moveclouds 15s linear infinite;
     -o-animation: moveclouds 15s linear infinite;
@@ -279,7 +280,7 @@ body {
 
 .x3 {
     left: -250px;
-    top: -200px;
+    /*top: -200px;*/
 
     -webkit-transform: scale(0.8);
     -moz-transform: scale(0.8);
