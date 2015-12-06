@@ -36,7 +36,7 @@ function post_data() {
             success: function (json) {
                 $('#form-subscribe').hide();
                 $('#subscribe-success').removeClass('hidden').fadeIn();
-                $('#welcomeModal').modal('show');
+                //$('#welcomeModal').modal('show');
             },
             error: function () {
             }
