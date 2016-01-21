@@ -1,7 +1,7 @@
 html, body {
     font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
     margin: 0;
-    overflow-y: scroll;
+    overflow: auto;
     position: relative;
 }
 
@@ -200,8 +200,8 @@ img.logo3 {
 }
 
 body {
-    /*To hide the horizontal scroller appearing during the animation*/
-    overflow-x: hidden;
+    /*To hide the horizontal scroller appearing during the animation
+    overflow-x: hidden;*/
 }
 
 #clouds {
