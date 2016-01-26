@@ -9,12 +9,11 @@
             <!-- Time for multiple clouds to dance around -->
             <div class="cloud x2"></div>
             <div class="cloud x3"></div>
-            
             <div class="cloud x4"></div>
             <div class="cloud x5"></div>
         </div>
         <div class="text-center">
-            <div style="padding-top: 200px">
+            <div style="padding-top: 200px;">
                 <img id="logo-horizontal" src="{% static "images/logo-horizontal.png" %}" alt="MyRelevate Logo">
                 <div class="container">
                     <h1>Exciting new things are around the corner for
@@ -48,7 +47,13 @@
 
                 <div class="container">
                     <div class="summary">
-                        Relevate is a community of scholars preparing to deliver relevant, research-informed relationship advice to young adults at the touch of their fingers. Through both its website and mobile app, MyRelevate.com gives users the ability to have real data in the palm of their hands and on-the-go. Relevate's purpose is to help single individuals and couples take the steps needed to make the best decisions pertaining to their personal development and love life. We all want to establish and maintain fulfilling romantic relationships in our lives. Together, we can make a lasting positive impact in the way we view love and relationships. Join the movement to help make relationships better!
+                        MyRelevate is a community of scholars preparing to deliver relevant, research-informed relationship
+                        content to young adults at the touch of their fingers. Through both website and mobile app, MyRelevate
+                        gives users the ability to have real data in the palm of their hands and on-the-go. The purpose of
+                        MyRelevate is to help single individuals and couples take the steps needed to make the best decisions
+                        pertaining to their personal development and love life. There is a desperate need to establish and
+                        maintain fulfilling romantic relationships in each of our lives. Together, we can make a lasting
+                        positive impact in the way we view love and relationships looking forward.
                     </div>
                 </div>
 
@@ -85,17 +90,21 @@
                     <h3 class="modal-title" id="myModalLabel">Welcome</h3>
                 </div>
                 <div class="modal-body">
-                    <h4>Thanks for signing up!</h4>
+                    <h4>Thank you for subscribing!</h4>
 
-                    <p>Please take a few minutes and let us know what you would like to see on the MyRelevate website.
+                    <p>
+                        Please take a few minutes and let us know what you would like to see on the MyRelevate website.
                         Then click submit to send us your ideas.
                     </p>
-
                     <p>Click close to continue without sending us ideas.</p>
+
+                    <div class="input-group col-lg-4 col-lg-offset-4">
+                        {{ subscribeForm.idea }}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <input id="btn-submit" class="btn btn-primary" type="submit" value="Submit">
                 </div>
             </div>
         </div>

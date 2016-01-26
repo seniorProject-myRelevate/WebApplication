@@ -1,7 +1,6 @@
 html, body {
     font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
     margin: 0;
-    overflow-y: scroll;
     position: relative;
 }
 
@@ -121,6 +120,7 @@ img.logo3 {
 .summary {
     font-weight: bold;
     color: #a9a9a9;
+    display: inline;
     text-align: justify;
 }
 #id_email {
@@ -185,7 +185,6 @@ img.logo3 {
     margin: 0 auto;
     right: 0;
     top: 0;
-    width: 95%;
 }
 
 
@@ -201,7 +200,7 @@ img.logo3 {
 
 body {
     /*To hide the horizontal scroller appearing during the animation*/
-    overflow-x: hidden;
+    overflow: auto;
 }
 
 #clouds {
@@ -257,7 +256,6 @@ body {
 
 /*Time to animate*/
 .x1 {
-    left: 400px;
     -webkit-animation: moveclouds 15s linear infinite;
     -moz-animation: moveclouds 15s linear infinite;
     -o-animation: moveclouds 15s linear infinite;
@@ -281,7 +279,7 @@ body {
 
 .x3 {
     left: -250px;
-    /*top: -200px;*/
+    top: -200px;
 
     -webkit-transform: scale(0.8);
     -moz-transform: scale(0.8);
