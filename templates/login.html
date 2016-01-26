@@ -16,4 +16,34 @@
         {% endif %}
     </div>
     <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Modal from http://getbootstrap.com/javascript/#modals-->
+    <div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Welcome</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Thank you for subscribing!</h4>
+
+                    <p>
+                        Please take a few minutes and let us know what you would like to see on the MyRelevate website.
+                        Then click submit to send us your ideas.
+                    </p>
+                    <p>Click close to continue without sending us ideas.</p>
+
+                    <div class="input-group col-lg-4 col-lg-offset-4">
+                        {{ subscribeForm.idea }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input id="btn-submit" class="btn btn-primary" type="submit" value="Submit">
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

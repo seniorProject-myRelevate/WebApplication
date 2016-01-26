@@ -58,9 +58,12 @@ $("#form-subscribe").submit(function (event) {
     post_data();
 });
 
+
+
 function ContributorAccess() {
-    contributorsDiv.style.display = 'none';
-    requestAccessDiv.style.display = 'block';
+    //contributorsDiv.style.display = 'none';
+    //requestAccessDiv.style.display = 'block';
+    $('#contributorModal').modal('show');
     requestBtn.onclick = function () {
     }
 }
