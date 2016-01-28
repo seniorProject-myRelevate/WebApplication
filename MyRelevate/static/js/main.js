@@ -53,9 +53,9 @@ emailInput.focus(function () {
 });
 
 $("#form-subscribe").submit(function (event) {
-    event.preventDefault();
-    subscribe_validate();
-    post_data();
+    //event.preventDefault();
+    //subscribe_validate();
+    //post_data();
 });
 
 function ContributorAccess() {

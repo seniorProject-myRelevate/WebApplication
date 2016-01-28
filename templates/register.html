@@ -2,18 +2,23 @@
 {% load staticfiles %}
 
 {% block content %}
+    <br/>
+    <br/>
     <form action="{% url 'myrelevate:register_user' %}" method="post">
         {% csrf_token %}
-        <h1>
-            <ul class="createAccount">
-                <li id="username" class="">{{ form.username }}</li>
-                <li id="first_name" class="">{{ form.first_name }}</li>
-                <li id="last_name" class="">{{ form.last_name }}</li>
-                <li id="password1" class="">{{ form.password1 }}</li>
-                <li id="password2" class="">{{ form.password2 }}</li>
-                <input class='form-control' type="submit" value="Sign Up"/>
-            </ul>
-        </h1>
+        <div class="createAccount col-md-6 col-md-offset-3">
+            {{ form.username }}
+            <br/>
+            {{ form.first_name }}
+            <br/>
+            {{ form.last_name }}
+            <br/>
+            {{ form.password1 }}
+            <br/>
+            {{ form.password2 }}
+            <br/>
+            <input class='form-control' type="submit" value="Sign Up"/>
+        </div>
     </form>
     <div class="container">
         <img src="{% static "images/logo.png" %}" alt="logo"/>

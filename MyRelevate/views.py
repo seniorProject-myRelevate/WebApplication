@@ -1,8 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+import os
+
+import sendgrid
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
 
 from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
 from .models import UserProfile, ContributorProfile, Subscriber
@@ -86,6 +89,20 @@ def subscribe(request):
             Subscriber.objects.get(email=request.POST[''])
             print request.POST
             form.save()
+        else:
+            print form.errors
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
     else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
+
+
+def send_email():
+    client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
+    message = sendgrid.Mail()
+
+    message.add_to("lbreck93@gmail.com")
+    message.set_from("noreply@myrelevate.com")
+    message.set_subject("Test email from MyRelevate")
+    message.set_html("Using sendgrid we are able to send you emails... pretty cool eh?")
+
+    client.send(message)
