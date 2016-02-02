@@ -88,7 +88,7 @@ def subscribe(request):
         form = SubscribeForm(request.POST)
         if form.is_valid():
             Subscriber.objects.get(email=request.POST[''])
-            print request.POST
+            print(request.POST)
             form.save()
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
     else:
