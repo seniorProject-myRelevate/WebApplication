@@ -1,5 +1,3 @@
-var contributorsDiv = document.getElementById('profiles');
-var requestAccessDiv = document.getElementById('requestAccess');
 var requestBtn = document.getElementById('request');
 var emailInput = $('#id_email');
 
@@ -59,11 +57,9 @@ $("#form-subscribe").submit(function (event) {
 });
 
 
-
 function ContributorAccess() {
-    //contributorsDiv.style.display = 'none';
-    //requestAccessDiv.style.display = 'block';
-    $('#contributorModal').modal('show');
+    $('#profiles').hide();
+    $('#requestAccess').show();
     requestBtn.onclick = function () {
     }
 }

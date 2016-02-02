@@ -13,43 +13,40 @@
 
     </div>
 
-    <!-- Modal from http://getbootstrap.com/javascript/#modals-->
-    <!--Popup for contributor access-->
-    <div class="modal fade" id="contributorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Welcome</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="registrationForm" id="requestAccess">
-                        {% if not user.is_authenticated %}
-                            <div class="align-center">
-                                <h4>You must first <a href="{% url 'myrelevate:login' %}">login</a>
-                                    to your account or <a href="{% url 'myrelevate:register_user' %}">sign up</a>
-                                    for an account before you can request contributor access.
-                                </h4>
-                                <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
-                            </div>
-                        {% else %}
-                            <div class="align-center">
-                                <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
-                                    {% csrf_token %}
-                                    {{ contribForm }}
-                                    <br/>
-                                    <input type="submit" value="Request Access"/>
-                                </form>
-                            </div>
-
-                        {% endif %}
+    <div class="contributorAccess" id="requestAccess" style="display: none">
+        <div class="container">
+            <div class="align-center">
+                <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <p>{{ contribForm.first_name }}</p>
+                    <p>{{ contribForm.last_name }}</p>
+                    <p>{{ contribForm.username }}</p>
+                    <p>{{ contribForm.credential }}</p>
+                    <p>{{ contribForm.program }}</p>
+                    <p><h4>Upload your cv: </h4> {{ contribForm.cv }} </p>
+                    <div class="overflow_text">
+                        <p>{{ contribForm.biography }}</p>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                    <p><h3>Terms and Conditions</h3></p>
+                    <div>
+                        <p>
+                            Do not post bad things!
+                            <br>
+                            Be a good contributor!
+                        </p>
+                    </div>
+                    <p>I agree to terms and conditions: {{ contribForm.accept_terms }}</p>
+                    <br/>
+                    <input type="submit" value="Request Access"/>
+                </form>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="background_logo">
+                <!--<img src="{% static "images/logo.png" %}" alt="logo"/>-->
             </div>
         </div>
     </div>
+
 {% endblock %}

@@ -119,14 +119,26 @@ class RegistrationForm(forms.ModelForm):
 
 
 class ContributorRequestForm(forms.ModelForm):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
+                                 label='')
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
+                                label='')
+    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+                               label='')
+    credential = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Credential (advanced degree attained)',
+                                                               'class': 'form-control'}), label='')
+    program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
+                                                            'class': 'form-control'}), label='')
+    biography = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Write a brief biography about yourself.',
+                                                        'class': 'form-control'}), label='')
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
-                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
 
     class Meta:
         model = ContributorProfile
-        fields = ['cv']
+        fields = ['first_name', 'last_name', 'username', 'credential', 'program', 'biography', 'cv']
 
     def clean(self):
         cleaned_data = super(ContributorRequestForm, self).clean()
@@ -137,7 +149,7 @@ class ContributorRequestForm(forms.ModelForm):
 
 
 class ContributorForm(forms.ModelForm):
-    biography = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Write a breif biography of yourself.'}), label='')
+    biography = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Write a brief biography of yourself.'}), label='')
 
 
 class SubscribeForm(forms.ModelForm):

@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
+from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm, ContributorForm
 from .models import UserProfile, ContributorProfile, Subscriber
 
 
