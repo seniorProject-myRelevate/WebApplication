@@ -74,6 +74,10 @@ def contributors(request):
     return render(request, 'contributors.html', {'contributors': contributors, 'contribForm': contribForm})
 
 
+def contributor_profile(request):
+    pass
+
+
 def user_profile(request):
     profile = UserProfile.objects.all()
     return render(request, 'userprofile.html', {'profile': profile})

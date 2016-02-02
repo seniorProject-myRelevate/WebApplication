@@ -136,6 +136,10 @@ class ContributorRequestForm(forms.ModelForm):
         pass
 
 
+class ContributorForm(forms.ModelForm):
+    biography = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Write a breif biography of yourself.'}), label='')
+
+
 class SubscribeForm(forms.ModelForm):
     email = forms.CharField(widget=forms.EmailInput(
         attrs={'required': True, 'placeholder': 'Email', 'class': 'form-control', 'data-toggle': 'popover',
