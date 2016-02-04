@@ -18,11 +18,13 @@
                     <a href="{% url 'myrelevate:login' %}">Sign In</a>
                 </div>
             {% else %}
-                <div>
+                <div class="menu-wrapper">
                     <a href="{% url 'myrelevate:user_profile' %}">My Profile</a>
-                </div>
-                <div>
-                    <a href="{% url 'myrelevate:logout' %}">Logout</a>
+                    <ul id="dropdown-profile" class="dropdown-content">
+                        <li><a href="#">Link 1</a></li>
+                        <li><a href="#">Change Password</a></li>
+                        <li><a href="{% url 'myrelevate:logout' %}">Logout</a></li>
+                    </ul>
                 </div>
             {% endif %}
         </div>

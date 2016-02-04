@@ -64,3 +64,13 @@ function ContributorAccess() {
     requestBtn.onclick = function () {
     }
 }
+
+$('a').parent().hover(
+  function () {
+      if ($(this).children("ul") )
+        $(this).children("ul").show();
+  },
+  function () {
+    $(this).children("ul").hide();
+  }
+);
