@@ -2,33 +2,19 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import User
 
+from SeniorProject import settings
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
-# class Usertest(AbstractBaseUser):
-#     """
-#     Basic User Class
-#     """
-#
-#     email = models.EmailField(unique=True, db_index=True)
-#     first_name = models.CharField(max_length=50)
-#     last_name = models.CharField(max_length=50)
-#     joined_date = models.DateTimeField(auto_now_add=True)
-#     is_active = models.BooleanField(default=True)
-#     confirmed = models.BooleanField(default=False)
-#
-#     USERNAME_FIELD = 'email'
-#
-#     def __unicode__(self):
-#         return self.email
 
 class Subscriber(models.Model):
     email = models.EmailField(unique=True, null=False, blank=False)
 
 
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()  # check if this requires bounding for security purposes
-    publishDate = models.DateField()
-    updateDate = models.DateField()
+# class Article(models.Model):
+#     title = models.CharField(max_length=100)
+#     content = models.TextField()  # check if this requires bounding for security purposes
+#     publishDate = models.DateField()
+#     updateDate = models.DateField()
 
 
 class ContributorProfile(models.Model):
@@ -38,15 +24,33 @@ class ContributorProfile(models.Model):
     # profile_image = models.ImageField(null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
-    articles = models.ForeignKey(Article, null=True, blank=True)
+    approved = models.BooleanField(default=False)
+    # articles = models.ForeignKey(Article, null=True, blank=True)
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    contributorProfile = models.OneToOneField(ContributorProfile, null=True)
+    contributorProfile = models.OneToOneField(ContributorProfile, null=True, blank=True)
+    confirmed = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.user.username
+
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(settings.SECRET_KEY, expiration)
+        return s.dumps({'confirm': self.id})
+
+    def confirm(self, token):
+        s = Serializer(settings.SECRET_KEY)
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.confirmed = True
+        self.save()
+        return True
 
 
 # DemographicData Database Model
@@ -199,12 +203,12 @@ class DemographicData(models.Model):
     gettingDivorced = models.NullBooleanField()
 
 
-# table of tags for use in adding new tags
-class Tag(models.Model):
-    tagName = models.CharField(max_length=100)
-
-
-# table for linking tags to articles
-class TagTable(models.Model):
-    article = models.ForeignKey(Article)
-    tag = models.ForeignKey(Tag)
+# # table of tags for use in adding new tags
+# class Tag(models.Model):
+#     tagName = models.CharField(max_length=100)
+#
+#
+# # table for linking tags to articles
+# class TagTable(models.Model):
+#     article = models.ForeignKey(Article)
+#     tag = models.ForeignKey(Tag)

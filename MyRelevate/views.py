@@ -15,7 +15,12 @@ def index(request):
     if request.method == 'POST':
         login_view(request)
     else:
-        return render(request, 'index.html', {'user': request.user})
+        confirmed = None
+        if request.user.is_authenticated():
+            user_profile = UserProfile.objects.get(user=request.user)
+            if not user_profile.confirmed:
+                confirmed = user_profile.generate_confirmation_token()
+        return render(request, 'index.html', {'user': request.user, 'token': confirmed})
 
 
 def register_user(request):
@@ -96,6 +101,18 @@ def subscribe(request):
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
 
 
+@login_required()
+def confirm(request, token=None):
+    user = UserProfile.objects.get(user=request.user)
+    if user.confirmed:
+        return HttpResponseRedirect(reverse('myrelevate:index'))
+    if user.confirm(token):
+        return HttpResponse("thank you for confirming your account")
+    else:
+        return HttpResponse("something went wrong")
+
+
+# Below are helper functions that are not associated with any particular route
 def send_email():
     client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
     message = sendgrid.Mail()

@@ -8,6 +8,10 @@ a {
     text-decoration: none;
 }
 
+hr{
+    margin: 5px 0px !important;
+}
+
 #main{
     background: #c9dbe9;
     background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
@@ -180,7 +184,9 @@ img.logo3 {
 .dropdown-content {
     display: none;
     position: absolute;
+    right: 0;
     background-color: #f9f9f9;
+    margin-right: 5px;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 5px 10px;
