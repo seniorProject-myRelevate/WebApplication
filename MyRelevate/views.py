@@ -15,12 +15,7 @@ def index(request):
     if request.method == 'POST':
         login_view(request)
     else:
-        confirmed = None
-        if request.user.is_authenticated():
-            user_profile = UserProfile.objects.get(user=request.user)
-            if not user_profile.confirmed:
-                confirmed = user_profile.generate_confirmation_token()
-        return render(request, 'index.html', {'user': request.user, 'token': confirmed})
+        return render(request, 'index.html', {'user': request.user})
 
 
 def register_user(request):
@@ -30,6 +25,10 @@ def register_user(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            user_profile = UserProfile.objects.get(user=request.user)
+            token = user_profile.generate_confirmation_token()
+            url = request.build_absolute_uri(reverse('myrelevate:confirm', kwargs={'token': token}))
+            send_email('Please Confirm Your Account', 'Click <a href="%s">here</a> to confirm your account' % url)
             login(request, authenticate(username=request.POST['username'], password=request.POST['password1']))
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
@@ -113,13 +112,13 @@ def confirm(request, token=None):
 
 
 # Below are helper functions that are not associated with any particular route
-def send_email():
+def send_email(subject="Test email from MyRelevate", html="Using sendgrid we are able to send you emails... pretty cool eh?"):
     client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
     message = sendgrid.Mail()
 
     message.add_to("lbreck93@gmail.com")
     message.set_from("noreply@myrelevate.com")
-    message.set_subject("Test email from MyRelevate")
-    message.set_html("Using sendgrid we are able to send you emails... pretty cool eh?")
+    message.set_subject(subject)
+    message.set_html(html)
 
     client.send(message)

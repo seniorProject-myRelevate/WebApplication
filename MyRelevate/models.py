@@ -1,9 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import User
+from django.contrib import auth
 
 from SeniorProject import settings
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
+# auth.models.User.add_to_class('get_related_foo_models', get_related_foo_models)
 
 
 class Subscriber(models.Model):
