@@ -1,3 +1,5 @@
+var contributorsDiv = document.getElementById('profiles');
+var requestAccessDiv = document.getElementById('requestAccess');
 var requestBtn = document.getElementById('request');
 var emailInput = $('#id_email');
 
@@ -34,7 +36,7 @@ function post_data() {
             success: function (json) {
                 $('#form-subscribe').hide();
                 $('#subscribe-success').removeClass('hidden').fadeIn();
-                //$('#welcomeModal').modal('show');
+                $('#welcomeModal').modal('show');
             },
             error: function () {
             }
@@ -51,15 +53,24 @@ emailInput.focus(function () {
 });
 
 $("#form-subscribe").submit(function (event) {
-    event.preventDefault();
-    subscribe_validate();
-    post_data();
+    //event.preventDefault();
+    //subscribe_validate();
+    //post_data();
 });
 
-
 function ContributorAccess() {
-    $('#profiles').hide();
-    $('#requestAccess').show();
+    contributorsDiv.style.display = 'none';
+    requestAccessDiv.style.display = 'block';
     requestBtn.onclick = function () {
     }
 }
+
+$('a').parent().hover(
+  function () {
+      if ($(this).children("ul") )
+        $(this).children("ul").show();
+  },
+  function () {
+    $(this).children("ul").hide();
+  }
+);

@@ -1,8 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+import os
+
+import sendgrid
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
 
 from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm
 from .models import UserProfile, ContributorProfile, Subscriber
@@ -12,7 +15,12 @@ def index(request):
     if request.method == 'POST':
         login_view(request)
     else:
-        return render(request, 'index.html', {'user': request.user})
+        confirmed = None
+        if request.user.is_authenticated():
+            user_profile = UserProfile.objects.get(user=request.user)
+            if not user_profile.confirmed:
+                confirmed = user_profile.generate_confirmation_token()
+        return render(request, 'index.html', {'user': request.user, 'token': confirmed})
 
 
 def register_user(request):
@@ -93,6 +101,32 @@ def subscribe(request):
             Subscriber.objects.get(email=request.POST[''])
             print(request.POST)
             form.save()
+        else:
+            print form.errors
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
     else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
+
+
+@login_required()
+def confirm(request, token=None):
+    user = UserProfile.objects.get(user=request.user)
+    if user.confirmed:
+        return HttpResponseRedirect(reverse('myrelevate:index'))
+    if user.confirm(token):
+        return HttpResponse("thank you for confirming your account")
+    else:
+        return HttpResponse("something went wrong")
+
+
+# Below are helper functions that are not associated with any particular route
+def send_email():
+    client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
+    message = sendgrid.Mail()
+
+    message.add_to("lbreck93@gmail.com")
+    message.set_from("noreply@myrelevate.com")
+    message.set_subject("Test email from MyRelevate")
+    message.set_html("Using sendgrid we are able to send you emails... pretty cool eh?")
+
+    client.send(message)

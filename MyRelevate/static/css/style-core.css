@@ -5,7 +5,11 @@ html, body {
 }
 
 a {
-    color: inherit !important;
+    text-decoration: none;
+}
+
+hr{
+    margin: 5px 0px !important;
 }
 
 #main{
@@ -36,11 +40,11 @@ a {
 }
 
 .title-bar div > a {
-    color: #fff !important;
+    color: #fff;
     font-size: medium;
     font-weight: 700;
     margin: 0 20px 0 0;
-    padding: 0 10px 0 0;
+    padding: 0 10px 10px 0;
     text-decoration: none;
 }
 
@@ -173,6 +177,29 @@ img.logo3 {
     border-bottom-color: #F2DEDE !important;
 }
 
+.dropdown-content:hover{
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    margin-right: 5px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 5px 10px;
+    list-style-type: none;
+}
+
+.dropdown-content a {
+    color: #2BA2D9;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: block;
+}
+
 /*header for popups*/
 .modal-header {
     background-color: #2BA2D9;
@@ -187,7 +214,6 @@ img.logo3 {
     top: 0;
 }
 
-
 /* Cloud CSS Copied from http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background*/
 /*Lets start with the cloud formation rather*/
 
@@ -200,7 +226,7 @@ img.logo3 {
 
 body {
     /*To hide the horizontal scroller appearing during the animation*/
-    overflow: auto;
+    overflow: hidden;
 }
 
 #clouds {
