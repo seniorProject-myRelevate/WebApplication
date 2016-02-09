@@ -118,18 +118,30 @@ class RegistrationForm(forms.ModelForm):
         return user_profile
 
 
-class ContributorRequestForm(forms.ModelForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
+class ContributorForm(forms.ModelForm):
+    DEGREES = (
+        ('-1', ''),
+        ('MS', 'MS (Master of Science)'),
+        ('MA', 'MA (Master of Arts)'),
+        ('PhD', 'PhD (Doctor of Philosophy)'),
+        ('PsyD', 'PsyD (Doctor of Psychology)'),
+        ('SU', 'Student-Undergraduate'),
+        ('SM', 'Student-Masters'),
+        ('SPhD', 'Student-PhD'),
+        ('SPsyD', 'Studnet-PsyD')
+    )
+
+    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
                                  label='')
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
+    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
                                 label='')
-    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+    adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
                                label='')
-    credential = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Credential (advanced degree attained)',
-                                                               'class': 'form-control'}), label='')
+    credential = forms.ChoiceField(choices=DEGREES, required=True)
     program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
                                                             'class': 'form-control'}), label='')
-    biography = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Write a brief biography about yourself.',
+
+    biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
                                                         'class': 'form-control'}), label='')
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
@@ -138,18 +150,20 @@ class ContributorRequestForm(forms.ModelForm):
 
     class Meta:
         model = ContributorProfile
-        fields = ['first_name', 'last_name', 'username', 'credential', 'program', 'biography', 'cv']
+        fields = ['adviser_first_name', 'adviser_last_name', 'adviser_email', 'credential', 'program', 'biography', 'cv']
 
     def clean(self):
-        cleaned_data = super(ContributorRequestForm, self).clean()
+        cleaned_data = super(ContributorForm, self).clean()
         return self.cleaned_data
 
-    def save(self):
-        pass
-
-
-class ContributorForm(forms.ModelForm):
-    biography = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Write a brief biography of yourself.'}), label='')
+    def save(self, commit=True):
+        contributor = super(ContributorForm, self).save(commit=False)
+        contributor_profile = None
+        if commit:
+            contributor.save()
+            contributor_profile = ContributorProfile(user=contributor)
+            contributor_profile.save()
+            return contributor_profile
 
 
 class SubscribeForm(forms.ModelForm):

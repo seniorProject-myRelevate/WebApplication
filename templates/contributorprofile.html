@@ -2,10 +2,23 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div class="container">
-        <form action="{% url 'myrelevate:contributor_profile' %}" method="post">
-            {% csrf_token %}
-
-        </form>
+    <!--Displays the contributors profile-->
+    <div class="ContributorProfile" id="contributorProfile">
+        <div>
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            {{ contributorprofile.biography }}
+        </div>
+        <button type="button">Edit Profile</button>
     </div>
+
+    <!--Form to allow contributor to edit their profile-->
+    <div class="ContributorEditProfile" id="contibutorEdit" style="display: none">
+        <div class="container">
+            <form action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                {% csrf_token %}
+                {{ contributorForm.biography }}
+            </form>
+        </div>
+    </div>
+
 {% endblock %}
