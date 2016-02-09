@@ -89,3 +89,7 @@ def subscribe(request):
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
     else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
+
+
+def scribers(request):
+    return render(request, 'index.html', {'scribers': Subscriber.objects.all()})
