@@ -90,8 +90,7 @@ def subscribe(request):
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
-            Subscriber.objects.get(email=request.POST[''])
-            print request.POST
+            print request.POST['email']
             form.save()
         else:
             print form.errors
