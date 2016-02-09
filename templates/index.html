@@ -10,8 +10,11 @@
     <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
 
     {% if scribers %}
+        <ul>
         {% for s in scribers %}
-            <p> {{ s.email }} </p>
+            <li> {{ s.email }} </li>
         {% endfor %}
+        </ul>
+        <p>{{ scribers }}</p>
     {% endif %}
 {% endblock %}
