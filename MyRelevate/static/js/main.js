@@ -1,5 +1,3 @@
-var contributorsDiv = document.getElementById('profiles');
-var requestAccessDiv = document.getElementById('requestAccess');
 var requestBtn = document.getElementById('request');
 var emailInput = $('#id_email');
 
@@ -59,8 +57,19 @@ $("#form-subscribe").submit(function (event) {
 });
 
 function ContributorAccess() {
-    contributorsDiv.style.display = 'none';
-    requestAccessDiv.style.display = 'block';
+    $('#profiles').hide();
+    $('#requestAccess').show();
+
+    $("form select[name='credential']").change(function(){
+        var credentialVal = $("form select[name='credential']").val();
+        if(credentialVal == "SU" || credentialVal == "SM" || credentialVal == "SPhD" || credentialVal == "SPsyD"){
+            $('#studentAccess').show();
+        }
+        else {
+            $('#studentAccess').hide();
+        }
+    });
+
     requestBtn.onclick = function () {
     }
 }

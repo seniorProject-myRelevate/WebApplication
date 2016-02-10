@@ -15,29 +15,32 @@
 
     <div class="contributorAccess" id="requestAccess" style="display: none">
         <div class="container">
-            <div class="align-center">
-                <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
-                    {% csrf_token %}
-                    <p><h4>{{ user.first_name }}</h4></p>
-                    <p><h4>{{ user.last_name }}</h4></p>
-                    <p><h4>{{ user.username }}</h4></p>
-                    <p><h4>Credential/Dregree Completed: </h4> {{ contributorForm.credential }} </p>
-                    <p>{{ contributorForm.program }}</p>
-                    <p><h4>Upload your cv: </h4> {{ contributorForm.cv }} </p>
-                    <p>{{ contributorForm.biography }}</p>
-                    <p><h3>Terms and Conditions</h3> </p>
-                    <div>
-                        <p>
-                            Do not post bad things!
-                            <br>
-                            Be a good contributor!
-                        </p>
-                    </div>
-                    <p>I agree to terms and conditions: {{ contributorForm.accept_terms }}</p>
-                    <br/>
-                    <input type="submit" value="Request Access"/>
-                </form>
-            </div>
+            <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <p><h4>{{ user.first_name }}</h4></p>
+                <p><h4>{{ user.last_name }}</h4></p>
+                <p><h4>{{ user.username }}</h4></p>
+                <p><h4>Credential/Dregree Completed: </h4> {{ contributorForm.credential }} </p>
+                <div id="studentAccess" style="display: none">
+                    <p>{{ contributorForm.adviser_first_name }}</p>
+                    <p>{{ contributorForm.adviser_last_name }}</p>
+                    <p>{{ contributorForm.adviser_email }}</p>
+                </div>
+                <p>{{ contributorForm.program }}</p>
+                <p><h4>Upload your cv: </h4> {{ contributorForm.cv }} </p>
+                <p>{{ contributorForm.biography }}</p>
+                <p><h3>Terms and Conditions</h3> </p>
+                <div>
+                    <p>
+                        Do not post bad things!
+                        <br>
+                        Be a good contributor!
+                    </p>
+                </div>
+                <p>I agree to terms and conditions: {{ contributorForm.accept_terms }}</p>
+                <br/>
+                <input type="submit" class="btn btn-primary" value="Request Access"/>
+            </form>
         </div>
 
         <div class="container">

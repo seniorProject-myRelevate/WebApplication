@@ -128,14 +128,14 @@ class ContributorForm(forms.ModelForm):
         ('SU', 'Student-Undergraduate'),
         ('SM', 'Student-Masters'),
         ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Studnet-PsyD')
+        ('SPsyD', 'Student-PsyD')
     )
 
-    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
+    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name', 'class': 'form-control'}),
                                  label='')
-    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
+    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name', 'class': 'form-control'}),
                                 label='')
-    adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+    adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
                                label='')
     credential = forms.ChoiceField(choices=DEGREES, required=True)
     program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',

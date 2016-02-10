@@ -34,7 +34,7 @@ def register_user(request):
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         pass
-    return render(request, "register.html", {'form': RegistrationForm(), 'contribForm': ContributorForm()})
+    return render(request, "register.html", {'form': RegistrationForm(), 'contributorForm': ContributorForm()})
 
 
 def login_view(request):
@@ -83,10 +83,23 @@ def contributors(request):
 
 
 def contributor_profile(request):
-    contributorProfile = UserProfile.contributorProfile
-    contributorForm = ContributorForm()
-    return render(request, 'contributorprofile.html', {'contributorprofile': contributorProfile,
-                                                       'contributorForm': contributorForm})
+    if request.method == 'POST':
+        contributorForm = ContributorForm(request.POST)
+        if contributorForm.is_valid():
+            contributor_profile = ContributorProfile()
+            user = UserProfile.objects.get(user=request.user)
+            user.contributorProfile = contributor_profile
+            user.save()
+            contributorForm.save()
+            return HttpResponseRedirect(reverse('myrelevate:contributorprofile'))
+        else:
+            return HttpResponse(contributorForm.errors)
+    else:
+        #contributorProfile = UserProfile.contributorProfile
+        contributorForm = ContributorForm()
+    return render(request, 'contributorprofile.html', {'contributoForm': contributorForm})
+    #return render(request, 'contributorprofile.html', {'contributorprofile': contributorProfile,
+     #                                                  'contributorForm': contributorForm})
 
 
 def user_profile(request):

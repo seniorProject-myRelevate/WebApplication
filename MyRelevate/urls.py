@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^(?i)logout/$', views.logout_view, name="logout"),
     url(r'^(?i)contributors/$', views.contributors, name='contributors'),
     url(r'^(?i)userprofile/$', views.user_profile, name='user_profile'),
+    url(r'^(?i)contributorprofile', views.contributor_profile, name='contributor_profile')
 ]
