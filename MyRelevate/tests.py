@@ -5,7 +5,17 @@ import models
 import django.http
 from django.test import TestCase
 from django.test import Client
-from forms import SubscribeForm
+from forms import SubscribeForm, RegistrationForm, PasswordChangeForm
+from django.contrib.auth import get_user_model
+
+
+class TestRelevateUser(TestCase):
+    def setUp(self):
+        get_user_model().objects.create_user(email='test@test.com', password='MyR3l3v4t3',
+                                             first_name='my', last_name='relevate')
+
+    def test_createUser(self):
+        self.assertTrue(get_user_model().objects.get(email='test@test.com'))
 
 
 class TestSubscriberForm(TestCase):
@@ -17,19 +27,34 @@ class TestSubscriberForm(TestCase):
         self.assertFalse(SubscribeForm(data={'email': 'test.com', 'idea': 'This is my idea'}).is_valid())
 
         # Invalid Data
+        self.assertFalse(SubscribeForm(data={'email': None}).is_valid())
         self.assertFalse(SubscribeForm(data={'email': 'test.com'}).is_valid())
-        self.assertFalse(SubscribeForm(data={'email': 'notemail'}).is_valid())
+        self.assertFalse(SubscribeForm(data={'email': ''}).is_valid())
         self.assertFalse(SubscribeForm(data={'email': 'test.com', 'extrafield': True}).is_valid())
         self.assertFalse(SubscribeForm(data={'not': 'test@test.com'}).is_valid())
 
         # Emails are unique
-
         f = SubscribeForm(data={'email': 'test@test.com'})
         if f.is_valid():
             f.save()
         self.assertFalse(SubscribeForm(data={'email': 'test@test.com'}).is_valid())
 
 
+class TestPasswordChangeForm(TestCase):
+    def test_PasswordChangeForm(self):
+        # Valid Data
+        self.assertTrue(PasswordChangeForm(data={'username': 'test@test.com', 'first_name': 'My', 'last_name': 'relevate',
+                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}))
+
+
+class TestRegistrationForm(TestCase):
+    def test_RegistrationForm(self):
+        # Valid Data
+        self.assertTrue(RegistrationForm(data={'username': 'email', 'first_name': 'My', 'last_name': 'relevate',
+                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}))
+
+        # Invalid Data
+        pass
 
 
 # class UserModelTests(TestCase):

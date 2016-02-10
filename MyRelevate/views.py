@@ -1,14 +1,14 @@
 import os
 
 import sendgrid
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
-from .models import UserProfile, ContributorProfile, Subscriber
+from .models import ContributorProfile, Subscriber
 
 
 def index(request):
@@ -25,11 +25,11 @@ def register_user(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            user_profile = UserProfile.objects.get(user=request.user)
-            token = user_profile.generate_confirmation_token()
-            url = request.build_absolute_uri(reverse('myrelevate:confirm', kwargs={'token': token}))
-            send_email('Please Confirm Your Account', 'Click <a href="%s">here</a> to confirm your account' % url)
-            login(request, authenticate(username=request.POST['username'], password=request.POST['password1']))
+            # user_profile = UserProfile.objects.get(user=request.user)
+            # token = user_profile.generate_confirmation_token()
+            # url = request.build_absolute_uri(reverse('myrelevate:confirm', kwargs={'token': token}))
+            # send_email('Please Confirm Your Account', 'Click <a href="%s">here</a> to confirm your account' % url)
+            login(request, authenticate(username=request.POST['email'], password=request.POST['password1']))
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         pass
@@ -39,10 +39,10 @@ def register_user(request):
 def login_view(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('myrelevate:index'))
-    if request.method == 'POST':
-        username = request.POST['username']
+    if request.method == 'POST' and LoginForm(request.POST).is_valid():
+        email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
+        user = authenticate(email=email, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)

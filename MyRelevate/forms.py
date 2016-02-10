@@ -4,7 +4,8 @@ from django import forms
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
-from .models import User, UserProfile, ContributorProfile, Subscriber
+from .models import ContributorProfile, Subscriber
+from django.contrib.auth import get_user_model
 
 
 class ExtFileField(forms.FileField):
@@ -60,20 +61,20 @@ class SpecificFileField(forms.FileField):
 
 
 class LoginForm(forms.Form):
-    username = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
                                 label='')
     password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),
                              label='')
 
     class Meta:
-        fields = ['username', 'password']
+        fields = ['email', 'password']
 
 
 class RegistrationForm(forms.ModelForm):
     """
     Registration form, allows users to create accounts.
     """
-    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
                                label='')
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
                                  label='')
@@ -86,14 +87,14 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), label='')
 
     class Meta:
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
+        model = get_user_model()
+        fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
 
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if User.objects.filter(username=username).exists():
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if get_user_model().objects.filter(email=email).exists():
             raise forms.ValidationError("Email is already in use.")
-        return username
+        return email
 
     def clean(self):
         """
@@ -110,11 +111,49 @@ class RegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+        return user
+
+
+class PasswordChangeForm(forms.ModelForm):
+    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
+
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Old Password', 'class': 'form-control'}), label='')
+
+    password1 = PasswordField(widget=forms.PasswordInput(
+        attrs={'placeholder': 'Password', 'class': 'form-control'}), label='',
+        validators=[LengthValidator(min_length=6), ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
+
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), label='')
+
+    class Meta:
+        model = get_user_model()
+        fields = ['email', 'old_password', 'password1', 'password2']
+
+    def clean(self):
+        """
+        Verifies that the values entered into the password fields match
+
+        NOTE: Errors here will appear in ``non_field_errors()`` because it applies to more than one field.
+        """
+        cleaned_data = super(PasswordChangeForm, self).clean()
+        user = get_user_model().objects.get(email=self.cleaned_data['email'])
+        if user.check_password(self.cleaned_data['old_password']):
+            raise forms.ValidationError("Your password is incorrect.")
+        elif 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
+            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+                raise forms.ValidationError("Passwords don't match. Please enter both fields again.")
+        return self.cleaned_data
+
+    def save(self, commit=True):
+        user = super(PasswordChangeForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
         user_profile = None
         if commit:
             user.save()
-            user_profile = UserProfile(user=user)
-            user_profile.save()
         return user_profile
 
 
@@ -141,7 +180,8 @@ class SubscribeForm(forms.ModelForm):
         attrs={'required': True, 'placeholder': 'Email', 'class': 'form-control', 'data-toggle': 'popover',
                'data-placement': 'bottom', 'data-content': 'Please enter a valid email address.'}), label='')
 
-    # idea = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'What would you like to see?'}), label='')
+    idea = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'What would you like to see?'}), label='',
+                           required=False)
 
     class Meta:
         model = Subscriber
