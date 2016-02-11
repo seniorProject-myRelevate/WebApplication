@@ -47,12 +47,6 @@ class UserProfile(models.Model):
     contributorProfile = models.OneToOneField(ContributorProfile, null=True, blank=True)
     confirmed = models.BooleanField(default=False)
 
-    class Meta:
-        permissions = (
-            ("contributor_profile", "Can create Contributor Profile"),
-            ("post_articles", "Can post articles to their profile")
-        )
-
     def __unicode__(self):
         return self.user.username
 
