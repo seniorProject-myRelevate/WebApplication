@@ -9,13 +9,18 @@ from forms import SubscribeForm, RegistrationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 
 
-class TestRelevateUser(TestCase):
+class TestUserFunctions(TestCase):
     def setUp(self):
         get_user_model().objects.create_user(email='test@test.com', password='MyR3l3v4t3',
                                              first_name='my', last_name='relevate')
 
     def test_createUser(self):
         self.assertTrue(get_user_model().objects.get(email='test@test.com'))
+
+    def test_confirmUser(self):
+        user = get_user_model().objects.get(email='test@test.com')
+        token = user.generate_confirmation_token()
+        self.assertTrue(user.confirm(token))
 
 
 class TestSubscriberForm(TestCase):

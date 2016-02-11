@@ -5,6 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from SeniorProject import settings
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+import sendgrid
+import os
 
 
 class Subscriber(models.Model):
@@ -29,7 +31,7 @@ class ContributorProfile(models.Model):
     # articles = models.ForeignKey(Article, null=True, blank=True)
 
 
-class RelevateUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
 
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         """
@@ -72,7 +74,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_contributor = models.BooleanField(default=False)
     contributor_profile = models.OneToOneField(ContributorProfile, null=True, blank=True)
 
-    objects = RelevateUserManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -100,6 +102,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.confirmed = True
         self.save()
         return True
+
+    # Below are helper functions that are not associated with any particular route
+    def send_email(self, subject, html, sender='noreply@myrelevate.com'):
+        client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
+        message = sendgrid.Mail()
+
+        message.add_to(self.email)
+        message.set_from(sender)
+        message.set_subject(subject)
+        message.set_html(html)
+
+        client.send(message)
 
 
 # DemographicData Database Model
