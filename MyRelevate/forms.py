@@ -171,9 +171,6 @@ class ContributorRequestForm(forms.ModelForm):
         cleaned_data = super(ContributorRequestForm, self).clean()
         return self.cleaned_data
 
-    def save(self):
-        pass
-
 
 class SubscribeForm(forms.ModelForm):
     email = forms.CharField(widget=forms.EmailInput(

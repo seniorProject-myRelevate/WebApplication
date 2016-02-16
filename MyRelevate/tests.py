@@ -9,6 +9,7 @@ from forms import SubscribeForm, RegistrationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 
 
+# Model Tests
 class TestUserFunctions(TestCase):
     def setUp(self):
         get_user_model().objects.create_user(email='test@test.com', password='MyR3l3v4t3',
@@ -23,6 +24,13 @@ class TestUserFunctions(TestCase):
         self.assertTrue(user.confirm(token))
 
 
+# View Tests
+class TestViews(TestCase):
+    def setUp(self):
+        pass
+
+
+# Form Tests
 class TestSubscriberForm(TestCase):
     def test_ValidSubscribeForm(self):
         # Valid Data

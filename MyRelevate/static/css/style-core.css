@@ -1,5 +1,6 @@
 html, body {
     font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
+    height: 100%;
     margin: 0;
     position: relative;
 }
@@ -28,7 +29,9 @@ hr{
     background-color: #2BA2D9;
     display: inline-block;
     padding: 10px 15px;
-    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
 }
 
 .right, .title-bar .links-wrapper {
@@ -43,7 +46,7 @@ hr{
     color: #fff;
     font-size: medium;
     font-weight: 700;
-    margin: 0 20px 0 0;
+    margin: 0;
     padding: 0 10px 10px 0;
     text-decoration: none;
 }
