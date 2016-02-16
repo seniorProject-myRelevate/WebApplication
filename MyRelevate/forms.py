@@ -133,10 +133,10 @@ class ContributorForm(forms.ModelForm):
 
     adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name', 'class': 'form-control'}),
                                  label='')
-    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name', 'class': 'form-control'}),
-                                label='')
-    adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
-                               label='')
+    #adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name', 'class': 'form-control'}),
+    #                            label='')
+    #adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
+    #                           label='')
     credential = forms.ChoiceField(choices=DEGREES, required=True)
     program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
                                                             'class': 'form-control'}), label='')
@@ -150,7 +150,8 @@ class ContributorForm(forms.ModelForm):
 
     class Meta:
         model = ContributorProfile
-        fields = ['adviser_first_name', 'adviser_last_name', 'adviser_email', 'credential', 'program', 'biography', 'cv']
+        fields = ['adviser_first_name', 'credential', 'program', 'biography', 'cv']
+        #fields = ['adviser_first_name', 'adviser_last_name', 'adviser_email', 'credential', 'program', 'biography', 'cv']
 
     def clean(self):
         cleaned_data = super(ContributorForm, self).clean()
@@ -161,7 +162,8 @@ class ContributorForm(forms.ModelForm):
         contributor_profile = None
         if commit:
             contributor.save()
-            contributor_profile = ContributorProfile(user=contributor)
+            contributor_profile = ContributorProfile()
+            #contributor_profile = ContributorProfile(user=contributor)
             contributor_profile.save()
             return contributor_profile
 

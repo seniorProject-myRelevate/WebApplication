@@ -32,7 +32,10 @@ class ContributorProfile(models.Model):
     )
 
     credential = models.CharField(max_length=5, choices=DEGREES)
-    biography = models.CharField(max_length=255, null=True, blank=True)
+    adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
+    #adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
+    #adviser_email = models.EmailField(unique=True, null=False, blank=False)
+    biography = models.CharField(max_length=255, null=False, blank=False)
     # should be multichoice.
     area_of_expertise = models.CharField(max_length=255, choices=None, null=True, blank=True)
     # profile_image = models.ImageField(null=True, blank=True)
