@@ -22,7 +22,9 @@
                 <p><h4>{{ user.username }}</h4></p>
                 <p><h4>Credential/Dregree Completed: </h4> {{ contributorForm.credential }} </p>
                 <div id="studentAccess" style="display: none">
-
+                    <p>{{ contributorForm.adviser_first_name }}</p>
+                    <p>{{ contributorForm.adviser_last_name }}</p>
+                    <p>{{ contributorForm.adviser_email }}</p>
                 </div>
                 <p>{{ contributorForm.program }}</p>
                 <p><h4>Upload your cv: </h4> {{ contributorForm.cv }} </p>
