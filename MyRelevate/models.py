@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import User
-from django.contrib.auth.models import Permission
 
 from SeniorProject import settings
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -19,19 +18,6 @@ class Subscriber(models.Model):
 
 
 class ContributorProfile(models.Model):
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Studnet-PsyD')
-    )
-
-    credential = models.CharField(max_length=5, choices=DEGREES)
     biography = models.CharField(max_length=255, null=True, blank=True)
     # should be multichoice.
     area_of_expertise = models.CharField(max_length=255, choices=None, null=True, blank=True)
@@ -46,12 +32,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     contributorProfile = models.OneToOneField(ContributorProfile, null=True, blank=True)
     confirmed = models.BooleanField(default=False)
-
-    class Meta:
-        permissions = (
-            ("contributor_profile", "Can create Contributor Profile"),
-            ("post_articles", "Can post articles to their profile")
-        )
 
     def __unicode__(self):
         return self.user.username
