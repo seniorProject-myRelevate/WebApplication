@@ -63,7 +63,7 @@ class TestPasswordChangeForm(TestCase):
         user = get_user_model().objects.get(email='test@test.com')
 
         f = PasswordChangeForm(data={'email': user.email, 'old_password': 'MyR3l3v4t3',
-                                     'password1': 'new_MyR3l3v4t3', 'password2': 'new_MyR3l3v4t3'})
+                                     'password1': 'new_MyR3l3v4t3', 'password2': 'new_MyR3l3v4t3'}).is_valid()
 
         if f.is_valid():
             f.save()

@@ -8,7 +8,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
-from .models import UserProfile, ContributorProfile, Subscriber
+from .models import ContributorProfile, Subscriber
+from django.contrib.auth import get_user_model
 
 
 def index(request):
@@ -17,7 +18,7 @@ def index(request):
     else:
         confirmed = None
         if request.user.is_authenticated():
-            user_profile = UserProfile.objects.get(user=request.user)
+            user_profile = get_user_model().objects.get(user=request.user)
             if not user_profile.confirmed:
                 confirmed = user_profile.generate_confirmation_token()
         return render(request, 'index.html', {'user': request.user, 'token': confirmed})
@@ -68,7 +69,7 @@ def contributors(request):
         form = ContributorRequestForm(request.POST, request.FILES)
         if form.is_valid():
             contributor_profile = ContributorProfile(cv=request.FILES['cv'])
-            user = UserProfile.objects.get(user=request.user)
+            user = get_user_model().objects.get(user=request.user)
             contributor_profile.save()
             user.contributorProfile = contributor_profile
             user.save()
@@ -77,13 +78,13 @@ def contributors(request):
         else:
             return HttpResponse(form.errors)
     else:
-        contributors = UserProfile.objects.exclude(contributorProfile__isnull=True)
+        contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
         contribForm = ContributorRequestForm()
     return render(request, 'contributors.html', {'contributors': contributors, 'contribForm': contribForm})
 
 
 def user_profile(request):
-    profile = UserProfile.objects.all()
+    profile = get_user_model().objects.all()
     return render(request, 'userprofile.html', {'profile': profile})
 
 
@@ -103,7 +104,7 @@ def subscribe(request):
 
 @login_required()
 def confirm(request, token=None):
-    user = UserProfile.objects.get(user=request.user)
+    user = get_user_model().objects.get(user=request.user)
     if user.confirmed:
         return HttpResponseRedirect(reverse('myrelevate:index'))
     if user.confirm(token):
