@@ -69,6 +69,8 @@ def contributors(request):
         if contributorForm.is_valid():
             contributor_profile = ContributorProfile(credential=request.POST['credential'],
                 adviser_first_name=request.POST['adviser_first_name'],
+                adviser_last_name=request.POST['adviser_last_name'],
+                adviser_email=request.POST['adviser_email'],
                 biography=request.POST['biography'], cv=request.FILES['cv'])
             user = UserProfile.objects.get(user=request.user)
             contributor_profile.save()
@@ -86,10 +88,15 @@ def contributors(request):
 
 
 def contributor_profile(request):
+    #contributor =
     if request.method == 'POST':
         contributorForm = ContributorForm(request.POST)
         if contributorForm.is_valid():
-            contributor_profile = ContributorProfile()
+            contributor_profile = ContributorProfile(credential=request.POST['credential'],
+                adviser_first_name=request.POST['adviser_first_name'],
+                adviser_last_name=request.POST['adviser_last_name'],
+                adviser_email=request.POST['adviser_email'],
+                biography=request.POST['biography'], cv=request.FILES['cv'])
             user = UserProfile.objects.get(user=request.user)
             user.contributorProfile = contributor_profile
             user.save()

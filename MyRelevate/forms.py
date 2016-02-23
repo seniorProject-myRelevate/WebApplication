@@ -135,7 +135,7 @@ class ContributorForm(forms.ModelForm):
                                  label='')
     adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name', 'class': 'form-control'}),
                                 label='')
-    adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
+    adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
                                label='')
     credential = forms.ChoiceField(choices=DEGREES, required=True)
     program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',

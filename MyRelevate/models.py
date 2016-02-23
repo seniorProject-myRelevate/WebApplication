@@ -28,7 +28,7 @@ class ContributorProfile(models.Model):
         ('SU', 'Student-Undergraduate'),
         ('SM', 'Student-Masters'),
         ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Studnet-PsyD')
+        ('SPsyD', 'Student-PsyD')
     )
 
     credential = models.CharField(max_length=5, choices=DEGREES)

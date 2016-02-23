@@ -4,12 +4,26 @@
 {% block content %}
     <!--Displays the contributors profile-->
     <div class="ContributorProfile" id="contributorProfile">
-        <div>
-            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-            <p>{{ contributorProfile.credential }}</p>
-            <p>{{ contributorProfile.biography }}</p>
-            <p>{{ contributorProfile.cv }}</p>
+        <div class="text-center">
+            <h2>{{ user.first_name }} {{ user.last_name }}
+                {% if  contributorProfile.credential  == 'SU' %}
+                    Undergraduate Student
+                {% elif contributorProfile.credential == 'SM'%}
+                    Master Student
+                {% elif contributorProfile.credential == 'SPhD' %}
+                    PhD Student
+                {% elif contributorProfile.credential == 'SPsyD' %}
+                    PsyD Student
+                {% endif %}
+            </h2>
         </div>
+            <h3>Biography</h3>
+            <p>{{ contributorProfile.biography }}</p>
+            <h3>CV</h3>
+            <p>{{ contributorProfile.cv }}</p>
+            <h3>Adviser</h3>
+            <p>{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}</p>
+            <p>{{ contributorProfile.adviser_email }}</p>
         <button type="button">Edit Profile</button>
     </div>
 
