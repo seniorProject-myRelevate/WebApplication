@@ -34,7 +34,7 @@ def register_user(request):
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         pass
-    return render(request, "register.html", {'form': RegistrationForm(), 'contributorForm': ContributorForm()})
+    return render(request, "register.html", {'form': RegistrationForm(), 'contribForm': ContributorForm()})
 
 
 def login_view(request):
@@ -65,50 +65,28 @@ def logout_view(request):
 
 def contributors(request):
     if request.method == 'POST':
-        contributorForm = ContributorForm(request.POST, request.FILES)
-        if contributorForm.is_valid():
-            contributor_profile = ContributorProfile(credential=request.POST['credential'],
-                adviser_first_name=request.POST['adviser_first_name'],
-                adviser_last_name=request.POST['adviser_last_name'],
-                adviser_email=request.POST['adviser_email'],
-                biography=request.POST['biography'], cv=request.FILES['cv'])
+        form = ContributorForm(request.POST, request.FILES)
+        if form.is_valid():
+            contributor_profile = ContributorProfile(cv=request.FILES['cv'])
             user = UserProfile.objects.get(user=request.user)
             contributor_profile.save()
             user.contributorProfile = contributor_profile
             user.save()
-            contributorForm.save()
+            form.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
-            return HttpResponse(contributorForm.errors)
+            return HttpResponse(form.errors)
     else:
-        pass
-#        contributors = UserProfile.objects.exclude(contributorProfile__isnull=True)
-#        contributorForm = ContributorForm()
-    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': ContributorForm()})
+        contributors = UserProfile.objects.exclude(contributorProfile__isnull=True)
+        contributorForm = ContributorForm()
+    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
 
 def contributor_profile(request):
-    #contributor =
-    if request.method == 'POST':
-        contributorForm = ContributorForm(request.POST)
-        if contributorForm.is_valid():
-            contributor_profile = ContributorProfile(credential=request.POST['credential'],
-                adviser_first_name=request.POST['adviser_first_name'],
-                adviser_last_name=request.POST['adviser_last_name'],
-                adviser_email=request.POST['adviser_email'],
-                biography=request.POST['biography'], cv=request.FILES['cv'])
-            user = UserProfile.objects.get(user=request.user)
-            user.contributorProfile = contributor_profile
-            user.save()
-            contributorForm.save()
-            return HttpResponseRedirect(reverse('myrelevate:contributorprofile'))
-        else:
-            return HttpResponse(contributorForm.errors)
-    else:
-        user = UserProfile.objects.get(user=request.user)
-        contributorProfile = user.contributorProfile
-    return render(request, 'contributorprofile.html', {'contributorProfile': contributorProfile,
-                                                       'contributorForm': ContributorForm()})
+    contributorProfile = UserProfile.contributorProfile
+    contributorForm = ContributorForm()
+    return render(request, 'contributorprofile.html', {'contributorprofile': contributorProfile,
+                                                       'contributorForm': contributorForm})
 
 
 def user_profile(request):

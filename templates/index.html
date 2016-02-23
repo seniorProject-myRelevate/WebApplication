@@ -3,8 +3,8 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>{{ user.username }}</h1>
-        <a href="{% url 'myrelevate:confirm' token %}">Confirm account</a>
+        <h1>{{ user.email }}</h1>
+        <p>Confirmation status: {{ user.confirmed }}</p>
     {% else %}
         <h1>User is not logged in</h1>
     {% endif %}
