@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
-from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm
+from .forms import RegistrationForm, LoginForm, ContributorRequestForm, SubscribeForm
 from .models import UserProfile, ContributorProfile, Subscriber
 
 
@@ -34,7 +34,7 @@ def register_user(request):
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         pass
-    return render(request, "register.html", {'form': RegistrationForm(), 'contribForm': ContributorForm()})
+    return render(request, "register.html", {'form': RegistrationForm(), 'contribForm': ContributorRequestForm()})
 
 
 def login_view(request):
@@ -65,7 +65,7 @@ def logout_view(request):
 
 def contributors(request):
     if request.method == 'POST':
-        form = ContributorForm(request.POST, request.FILES)
+        form = ContributorRequestForm(request.POST, request.FILES)
         if form.is_valid():
             contributor_profile = ContributorProfile(cv=request.FILES['cv'])
             user = UserProfile.objects.get(user=request.user)
@@ -78,15 +78,8 @@ def contributors(request):
             return HttpResponse(form.errors)
     else:
         contributors = UserProfile.objects.exclude(contributorProfile__isnull=True)
-        contributorForm = ContributorForm()
-    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
-
-
-def contributor_profile(request):
-    contributorProfile = UserProfile.contributorProfile
-    contributorForm = ContributorForm()
-    return render(request, 'contributorprofile.html', {'contributorprofile': contributorProfile,
-                                                       'contributorForm': contributorForm})
+        contribForm = ContributorRequestForm()
+    return render(request, 'contributors.html', {'contributors': contributors, 'contribForm': contribForm})
 
 
 def user_profile(request):
@@ -99,7 +92,7 @@ def subscribe(request):
         form = SubscribeForm(request.POST)
         if form.is_valid():
             Subscriber.objects.get(email=request.POST[''])
-            print(request.POST)
+            print request.POST
             form.save()
         else:
             print form.errors

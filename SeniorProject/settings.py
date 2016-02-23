@@ -77,6 +77,8 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 
+AUTH_USER_MODEL = 'MyRelevate.User'
+
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

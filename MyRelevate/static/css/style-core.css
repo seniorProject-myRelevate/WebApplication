@@ -1,5 +1,6 @@
 html, body {
-    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', 'Arial', 'sans-serif';
+    height: 100%;
     margin: 0;
     position: relative;
 }
@@ -28,7 +29,9 @@ hr{
     background-color: #2BA2D9;
     display: inline-block;
     padding: 10px 15px;
-    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
 }
 
 .right, .title-bar .links-wrapper {
@@ -43,7 +46,7 @@ hr{
     color: #fff;
     font-size: medium;
     font-weight: 700;
-    margin: 0 20px 0 0;
+    margin: 0;
     padding: 0 10px 10px 0;
     text-decoration: none;
 }
@@ -200,7 +203,7 @@ img.logo3 {
     display: block;
 }
 
-/*header for popups*/
+/*header for menubar-dropdown*/
 .modal-header {
     background-color: #2BA2D9;
 }
@@ -212,6 +215,16 @@ img.logo3 {
     margin: 0 auto;
     right: 0;
     top: 0;
+}
+
+#alert-wrapper{
+    text-align: center;
+    font-size: medium;
+    font-weight: 700;
+}
+
+.relevate-alert{
+    border: 1px solid red;
 }
 
 /* Cloud CSS Copied from http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background*/

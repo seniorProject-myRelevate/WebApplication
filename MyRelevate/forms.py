@@ -118,52 +118,22 @@ class RegistrationForm(forms.ModelForm):
         return user_profile
 
 
-class ContributorForm(forms.ModelForm):
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Studnet-PsyD')
-    )
-
-    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
-                                 label='')
-    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
-                                label='')
-    adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
-                               label='')
-    credential = forms.ChoiceField(choices=DEGREES, required=True)
-    program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
-                                                            'class': 'form-control'}), label='')
-
-    biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
-                                                        'class': 'form-control'}), label='')
+class ContributorRequestForm(forms.ModelForm):
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
-                                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
 
     class Meta:
         model = ContributorProfile
-        fields = ['adviser_first_name', 'adviser_last_name', 'adviser_email', 'credential', 'program', 'biography', 'cv']
+        fields = ['cv']
 
     def clean(self):
-        cleaned_data = super(ContributorForm, self).clean()
+        cleaned_data = super(ContributorRequestForm, self).clean()
         return self.cleaned_data
 
-    def save(self, commit=True):
-        contributor = super(ContributorForm, self).save(commit=False)
-        contributor_profile = None
-        if commit:
-            contributor.save()
-            contributor_profile = ContributorProfile(user=contributor)
-            contributor_profile.save()
-            return contributor_profile
+    def save(self):
+        pass
 
 
 class SubscribeForm(forms.ModelForm):
