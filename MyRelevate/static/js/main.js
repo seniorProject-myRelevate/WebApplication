@@ -62,7 +62,7 @@ function ContributorAccess() {
 
     $("form select[name='credential']").change(function(){
         var credentialVal = $("form select[name='credential']").val();
-        if(credentialVal == "SU" || credentialVal == "SM" || credentialVal == "SPhD" || credentialVal == "SPsyD"){
+        if(credentialVal == "SU" || credentialVal == "SM"){
             $('#studentAccess').show();
         }
         else {
