@@ -54,10 +54,21 @@ class TestSubscriberForm(TestCase):
 
 
 class TestPasswordChangeForm(TestCase):
+    def setUp(self):
+        get_user_model().objects.create_user(email='test@test.com', password='MyR3l3v4t3',
+                                             first_name='my', last_name='relevate')
+
     def test_PasswordChangeForm(self):
         # Valid Data
-        self.assertTrue(PasswordChangeForm(data={'username': 'test@test.com', 'first_name': 'My', 'last_name': 'relevate',
-                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}))
+        user = get_user_model().objects.get(email='test@test.com')
+
+        f = PasswordChangeForm(data={'email': user.email, 'old_password': 'MyR3l3v4t3',
+                                     'password1': 'new_MyR3l3v4t3', 'password2': 'new_MyR3l3v4t3'})
+
+        if f.is_valid():
+            f.save()
+        print f.errors
+        self.assertTrue(user.check_password('new_MyR3l3v4t3'))
 
 
 class TestRegistrationForm(TestCase):

@@ -130,7 +130,7 @@ class PasswordChangeForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), label='')
 
     class Meta:
-        model = get_user_model()
+        # model = get_user_model()
         fields = ['email', 'old_password', 'password1', 'password2']
 
     def clean(self):
@@ -141,20 +141,21 @@ class PasswordChangeForm(forms.ModelForm):
         """
         cleaned_data = super(PasswordChangeForm, self).clean()
         user = get_user_model().objects.get(email=self.cleaned_data['email'])
-        if user.check_password(self.cleaned_data['old_password']):
+        if not user.check_password(self.cleaned_data['old_password']):
             raise forms.ValidationError("Your password is incorrect.")
         elif 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
-            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+            if self.cleaned_data['old_password'] == self.cleaned_data['password1']:
+                raise forms.ValidationError('Old and new passwords cannot be the same.')
+            elif self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError("Passwords don't match. Please enter both fields again.")
         return self.cleaned_data
 
     def save(self, commit=True):
         user = super(PasswordChangeForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        user_profile = None
         if commit:
             user.save()
-        return user_profile
+        return user
 
 
 class ContributorRequestForm(forms.ModelForm):
