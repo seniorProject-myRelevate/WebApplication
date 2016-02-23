@@ -51,19 +51,6 @@ hr{
     text-decoration: none;
 }
 
-.contributor-menu {
-    padding-top: 25px;
-    padding-left: 50px;
-}
-
-.container2 {
-    margin: 0 0 15px 0;
-}
-
-.text {
-
-}
-
 .container {
     margin: 0 0 15px 0;
 }
@@ -85,14 +72,6 @@ img.logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-img.logo_contributors {
-    height: auto;
-    width: auto;
-    max-height: 200px;
-    max-width: 200px;
-    display: block;
 }
 
 img.logo1 {

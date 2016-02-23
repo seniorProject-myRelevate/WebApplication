@@ -12,16 +12,15 @@ from .models import ContributorProfile, Subscriber
 from django.contrib.auth import get_user_model
 
 
-
 def index(request):
     if request.method == 'POST':
         login_view(request)
     else:
         confirmed = None
         if request.user.is_authenticated():
-            user_profile = get_user_model.objects.get(user=request.user)
-            if not user_profile.confirmed:
-                confirmed = user_profile.generate_confirmation_token()
+            user = get_user_model().objects.get(email=request.user.email)
+            if not user.confirmed:
+                confirmed = user.generate_confirmation_token()
         return render(request, 'index.html', {'user': request.user, 'token': confirmed})
 
 
@@ -70,7 +69,7 @@ def contributors(request):
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
             contributor_profile = ContributorProfile(cv=request.FILES['cv'])
-            user = get_user_model.objects.get(user=request.user)
+            user = get_user_model().objects.get(user=request.user)
             contributor_profile.save()
             user.contributorProfile = contributor_profile
             user.save()
@@ -79,7 +78,7 @@ def contributors(request):
         else:
             return HttpResponse(form.errors)
     else:
-        #contributors = get_user_model.objects.exclude(contributorProfile__isnull=True)
+        #contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
         contributorForm = ContributorForm()
     return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
@@ -93,7 +92,7 @@ def contributor_profile(request):
                 adviser_last_name=request.POST['adviser_last_name'],
                 adviser_email=request.POST['adviser_email'],
                 biography=request.POST['biography'], cv=request.FILES['cv'])
-            user = get_user_model.objects.get(user=request.user)
+            user = get_user_model().objects.get(user=request.user)
             user.contributorProfile = contributor_profile
             user.save()
             contributorForm.save()
@@ -101,13 +100,14 @@ def contributor_profile(request):
         else:
             return HttpResponse(contributorForm.errors)
     else:
-        user = get_user_model.objects.get(user=request.user)
+        user = get_user_model().objects.get(user=request.user)
         contributorProfile = user.contributorProfile
     return render(request, 'contributorprofile.html', {'contributorProfile': contributorProfile,
                                                        'contributorForm': ContributorForm()})
 
+
 def user_profile(request):
-    profile = get_user_model.objects.all()
+    profile = get_user_model().objects.all()
     return render(request, 'userprofile.html', {'profile': profile})
 
 
@@ -127,7 +127,7 @@ def subscribe(request):
 
 @login_required()
 def confirm(request, token=None):
-    user = get_user_model.objects.get(user=request.user)
+    user = get_user_model().objects.get(user=request.user)
     if user.confirmed:
         return HttpResponseRedirect(reverse('myrelevate:index'))
     if user.confirm(token):

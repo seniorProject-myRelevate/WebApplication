@@ -2,11 +2,12 @@
 {% load staticfiles %}
 
 {% block body %}
+    <div class='col-md-2' style='height: 100%; padding:0;'>
     <div class='title-bar'>
-        <div class='left'>
+        <div>
             <a href="{% url 'myrelevate:index' %}">MyRelevate</a>
         </div>
-        <div class='links-wrapper right'>
+        <div>
             <div>
                 <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
             </div>
@@ -19,7 +20,7 @@
                 </div>
             {% else %}
                 <div class="menu-wrapper">
-                    <a href="{% url 'myrelevate:user_profile' %}">My Profile</a>
+                    <a href="#">My Profile</a>
                     <ul id="dropdown-profile" class="dropdown-content">
                         <li><a href="#">Change Password</a></li>
                         <hr>
@@ -31,7 +32,10 @@
             {% endif %}
         </div>
     </div>
+    </div>
+    <div class="col-md-10">
     {% block content %}
         {{ block.super }}
     {% endblock %}
+    </div>
 {% endblock %}
