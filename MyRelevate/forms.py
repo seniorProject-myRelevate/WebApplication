@@ -87,12 +87,12 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), label='')
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        if User.objects.filter(username=username).exists():
+        if get_user_model().objects.filter(username=username).exists():
             raise forms.ValidationError("Email is already in use.")
         return username
 
@@ -114,9 +114,7 @@ class RegistrationForm(forms.ModelForm):
         user_profile = None
         if commit:
             user.save()
-            user_profile = UserProfile(user=user)
-            user_profile.save()
-        return user_profile
+        return user
 
 
 class PasswordChangeForm(forms.ModelForm):
@@ -133,7 +131,7 @@ class PasswordChangeForm(forms.ModelForm):
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), label='')
 
     class Meta:
-        # model = get_user_model()
+        model = get_user_model()
         fields = ['email', 'old_password', 'password1', 'password2']
 
     def clean(self):
@@ -182,8 +180,6 @@ class SubscribeForm(forms.ModelForm):
     email = forms.CharField(widget=forms.EmailInput(
         attrs={'required': True, 'placeholder': 'Email', 'class': 'form-control', 'data-toggle': 'popover',
                'data-placement': 'bottom', 'data-content': 'Please enter a valid email address.'}), label='')
-
-    idea = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'What would you like to see?'}), label='')
 
     class Meta:
         model = Subscriber
