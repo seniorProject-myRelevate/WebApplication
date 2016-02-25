@@ -67,7 +67,7 @@ class LoginForm(forms.Form):
                              label='')
 
     class Meta:
-        fields = ['username', 'password']
+        fields = ['email', 'password']
 
 
 class RegistrationForm(forms.ModelForm):
@@ -200,8 +200,8 @@ class ContributorForm(forms.ModelForm):
         contributor_profile = None
         if commit:
             contributor.save()
-            contributor_profile = ContributorProfile(user=contributor)
-            contributor_profile.save()
+            #contributor_profile = ContributorProfile(user=contributor)
+            #contributor_profile.save()
             return contributor_profile
 
 

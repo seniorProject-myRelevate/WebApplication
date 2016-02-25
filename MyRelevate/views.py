@@ -69,21 +69,15 @@ def contributors(request):
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
             contributor_profile = ContributorProfile(cv=request.FILES['cv'])
-            user = get_user_model().objects.get(user=request.user)
-            contributor_profile.save()
-            user.contributorProfile = contributor_profile
-            user.save()
             form.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
     else:
-        #contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
         contributorForm = ContributorForm()
     return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
 def contributor_profile(request):
-    #contributor =
     if request.method == 'POST':
         contributorForm = ContributorForm(request.POST)
         if contributorForm.is_valid():
@@ -92,7 +86,7 @@ def contributor_profile(request):
                 adviser_last_name=request.POST['adviser_last_name'],
                 adviser_email=request.POST['adviser_email'],
                 biography=request.POST['biography'], cv=request.FILES['cv'])
-            user = get_user_model().objects.get(user=request.user)
+            user = get_user_model().objects.get(email=request.user.email)
             user.contributorProfile = contributor_profile
             user.save()
             contributorForm.save()
@@ -100,8 +94,8 @@ def contributor_profile(request):
         else:
             return HttpResponse(contributorForm.errors)
     else:
-        user = get_user_model().objects.get(user=request.user)
-        contributorProfile = user.contributorProfile
+        user = get_user_model().objects.get(email=request.user.email)
+        contributorProfile = user.contributor_profile
     return render(request, 'contributorprofile.html', {'contributorProfile': contributorProfile,
                                                        'contributorForm': ContributorForm()})
 
