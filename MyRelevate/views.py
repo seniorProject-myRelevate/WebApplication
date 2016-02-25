@@ -31,7 +31,7 @@ def register_user(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            login(request, authenticate(username=request.POST['username'], password=request.POST['password1']))
+            login(request, authenticate(email=request.POST['email'], password=request.POST['password1']))
             return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         pass
@@ -42,7 +42,7 @@ def login_view(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('myrelevate:index'))
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['email']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:

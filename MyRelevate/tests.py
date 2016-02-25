@@ -78,7 +78,11 @@ class TestRegistrationForm(TestCase):
                                                'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
 
         # Invalid Data
-        pass
+        self.assertFalse(RegistrationForm(data={'username': 'test@test.com', 'first_name': 'My', 'last_name': 'relevate',
+                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
+
+        self.assertFalse(RegistrationForm(data={'email': 'test.com', 'first_name': 'My', 'last_name': 'relevate',
+                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
 
 
 # class UserModelTests(TestCase):
