@@ -74,8 +74,8 @@ class TestPasswordChangeForm(TestCase):
 class TestRegistrationForm(TestCase):
     def test_RegistrationForm(self):
         # Valid Data
-        self.assertTrue(RegistrationForm(data={'username': 'email', 'first_name': 'My', 'last_name': 'relevate',
-                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}))
+        self.assertTrue(RegistrationForm(data={'email': 'test@test.com', 'first_name': 'My', 'last_name': 'relevate',
+                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
 
         # Invalid Data
         pass
