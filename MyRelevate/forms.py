@@ -61,8 +61,8 @@ class SpecificFileField(forms.FileField):
 
 
 class LoginForm(forms.Form):
-    username = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
-                                label='')
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+                            label='')
     password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),
                              label='')
 
@@ -74,8 +74,7 @@ class RegistrationForm(forms.ModelForm):
     """
     Registration form, allows users to create accounts.
     """
-    username = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
-                               label='')
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
                                  label='')
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
@@ -88,10 +87,10 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
 
     def clean_username(self):
-        username = self.cleaned_data['username']
+        username = self.cleaned_data['email']
         if get_user_model().objects.filter(username=username).exists():
             raise forms.ValidationError("Email is already in use.")
         return username
