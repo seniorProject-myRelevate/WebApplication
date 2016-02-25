@@ -5,7 +5,7 @@ import models
 import django.http
 from django.test import TestCase
 from django.test import Client
-from forms import SubscribeForm, RegistrationForm, PasswordChangeForm
+from forms import SubscribeForm, RegistrationForm, PasswordChangeForm, ContributorForm
 from django.contrib.auth import get_user_model
 
 
@@ -83,6 +83,17 @@ class TestRegistrationForm(TestCase):
 
         self.assertFalse(RegistrationForm(data={'email': 'test.com', 'first_name': 'My', 'last_name': 'relevate',
                                                'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
+
+
+class TestContributorForm(TestCase):
+    def test_ContributorForm(self):
+        #Valid Data
+        #self.assertTrue(ContributorForm(data={'credential': 'MS', 'program': 'Software Engineer', 'cv': '',
+        #                              'biography': 'Some test biography', 'accept_terms': 'True'}).is_valid())
+
+        #Invalid Data
+        self.assertFalse(ContributorForm(data={'credential': 'MS', 'program': 'Software Engineer', 'cv': '',
+                              'biography': 'Some test biography', 'accept_terms': 'True'}).is_valid())
 
 
 # class UserModelTests(TestCase):

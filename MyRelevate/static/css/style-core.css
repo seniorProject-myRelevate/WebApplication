@@ -80,6 +80,14 @@ img.logo1 {
 
 }
 
+img.logo_contributors {
+    display: block;
+    height: auto;
+    width: auto;
+    max-height: 200px;
+    max-width: 200px;
+}
+
 img.logo2 {
     height: auto;
     width: auto;
