@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     #url(r'^$', views.subscribe, name="subscribe"),
-    url(r'^$', views.index, name="index"),
+    url(r'^$', views.subscribe, name="subscribe"),
     url(r'^(?i)index$', views.index, name="index"),
     url(r'^(?i)register/$', views.register_user, name="register_user"),
     url(r'^(?i)confirm/(?P<token>[\w\.]+)/$', views.confirm, name="confirm"),

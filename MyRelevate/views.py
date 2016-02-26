@@ -82,6 +82,7 @@ def contributors(request):
         contributorForm = ContributorForm()
     return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
+
 def contributor_profile(request):
     #contributor =
     if request.method == 'POST':
