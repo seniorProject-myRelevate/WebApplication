@@ -86,14 +86,17 @@ class TestRegistrationForm(TestCase):
 
 
 class TestContributorForm(TestCase):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+    file = SimpleUploadedFile("file.pdf", "Some Content")
+
     def test_ContributorForm(self):
         #Valid Data
-        #self.assertTrue(ContributorForm(data={'credential': 'MS', 'program': 'Software Engineer', 'cv': '',
-        #                              'biography': 'Some test biography', 'accept_terms': 'True'}).is_valid())
+        #self.assertTrue(ContributorForm(data={'credential': 'MS', 'program': 'Software Engineer', 'cv': 'file',
+        #                                      'biography': 'Some test biography', 'accept_terms': 'True'}).is_valid())
 
         #Invalid Data
         self.assertFalse(ContributorForm(data={'credential': 'MS', 'program': 'Software Engineer', 'cv': '',
-                              'biography': 'Some test biography', 'accept_terms': 'True'}).is_valid())
+                              'biography': 'Some test biography', 'accept_terms': ''}).is_valid())
 
 
 # class UserModelTests(TestCase):
