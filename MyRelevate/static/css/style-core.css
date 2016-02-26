@@ -64,6 +64,11 @@ ul.qualifications {
     text-align: center;
 }
 
+.col-md-10{
+    height: 100%;
+    overflow: auto;
+}
+
 img.logo {
     height: auto;
     width: auto;

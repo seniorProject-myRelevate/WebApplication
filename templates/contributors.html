@@ -17,6 +17,7 @@
         <div class="container">
             <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
+                <div class="text-center"><h2>Contributor Application</h2></div>
                 <p><h4>{{ user.first_name }}</h4></p>
                 <p><h4>{{ user.last_name }}</h4></p>
                 <p><h4>{{ user.username }}</h4></p>
@@ -98,7 +99,6 @@
                     </p>
 
                     <p class=3DMsoNormal><o:p>&nbsp;</o:p></p>
-
                 </div>
                 <p>I agree to terms and conditions: {{ contributorForm.accept_terms }}</p>
                 <br/>
