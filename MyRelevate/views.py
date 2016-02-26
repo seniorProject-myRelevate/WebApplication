@@ -69,7 +69,7 @@ def contributors(request):
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
             contributor_profile = ContributorProfile(cv=request.FILES['cv'])
-            user = get_user_model().objects.get(user=request.user)
+            user = get_user_model().objects.get(email=request.user.email)
             contributor_profile.save()
             user.contributorProfile = contributor_profile
             user.save()
