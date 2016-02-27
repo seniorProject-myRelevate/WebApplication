@@ -74,12 +74,13 @@ function ContributorAccess() {
     }
 }
 
-$('a').parent().hover(
-  function () {
-      if ($(this).children("ul") )
-        $(this).children("ul").show();
-  },
-  function () {
-    $(this).children("ul").hide();
-  }
-);
+$(document).ready(function() {
+    $( '.dropdown' ).hover(
+        function(){
+            $(this).children('.sub-menu').slideDown(200);
+        },
+        function(){
+            $(this).children('.sub-menu').slideUp(200);
+        }
+    );
+}); // end ready

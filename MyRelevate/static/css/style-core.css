@@ -6,11 +6,55 @@ html, body {
 }
 
 a {
-    text-decoration: none;
+    color: inherit !important;
 }
 
 hr{
     margin: 5px 0px !important;
+}
+
+nav {
+    background-color:rgb(255,100,100);
+    padding:10px 0;
+}
+nav ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+nav ul li {
+    color: #fff;
+    display:block;
+    font-size: medium;
+    font-weight: bold;
+    padding: 5px 15px;
+    position:relative;
+}
+
+/* sub navigation */
+nav li ul {
+    background-color: #fff;
+    position:absolute;
+    left:0;
+    top:30px; /* make this equal to the line-height of the links (specified below) */
+}
+nav li li {
+    color: #2BA2D9;
+    position:relative;
+    margin:0;
+    display:block;
+}
+nav li li ul {
+    position:absolute;
+    top:0;
+    left:200px; /* make this equal to the width of the sub nav above */
+    margin:0;
+}
+
+/* hide sub menu links */
+ul.sub-menu {
+    display:none;
+    width: 100%;
 }
 
 #main{
@@ -27,8 +71,10 @@ hr{
 
 .title-bar {
     background-color: #2BA2D9;
+    color: #fff;
     display: inline-block;
-    padding: 10px 15px;
+    height: 100%;
+    padding: 10px 0 !important;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -186,6 +232,7 @@ img.logo3 {
 
 .dropdown-content {
     display: none;
+    color: #2BA2D9;
     position: absolute;
     right: 0;
     background-color: #f9f9f9;

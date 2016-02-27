@@ -2,37 +2,40 @@
 {% load staticfiles %}
 
 {% block body %}
-    <div class='col-md-2' style='height: 100%; padding:0;'>
-    <div class='title-bar'>
-        <div>
+    <!--<div class='col-md-2' style='height: 100%; padding:0;'>-->
+    <nav class='title-bar col-md-2'>
+    <ul>
+        <li>
             <a href="{% url 'myrelevate:index' %}">MyRelevate</a>
-        </div>
-        <div>
-            <div>
-                <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
-            </div>
-            {% if not user.is_authenticated %}
-                <div>
-                    <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
-                </div>
-                <div>
-                    <a href="{% url 'myrelevate:login' %}">Sign In</a>
-                </div>
-            {% else %}
-                <div class="menu-wrapper">
-                    <a href="#">My Profile <span class="right glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
-                    <ul id="dropdown-profile" class="dropdown-content">
-                        <li><a href="#">Change Password</a></li>
-                        <hr>
-                        <li><a href="#">Contributor Application</a></li>
-                        <hr>
-                        <li><a href="{% url 'myrelevate:logout' %}">Logout</a></li>
-                    </ul>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    </div>
+        </li>
+        <hr>
+        <li>
+            <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
+        </li>
+        <hr>
+        {% if not user.is_authenticated %}
+            <li>
+                <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
+            </li>
+            <hr>
+            <li>
+                <a href="{% url 'myrelevate:login' %}">Sign In</a>
+            </li>
+        {% else %}
+            <li class="dropdown">
+                <a href="#">My Profile <span class="right glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+                <ul class="sub-menu">
+                    <li><a href="#">Change Password</a></li>
+                    <hr>
+                    <li><a href="#">Contributor Application</a></li>
+                    <hr>
+                    <li><a href="{% url 'myrelevate:logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        {% endif %}
+    </ul>
+    </nav>
+    <!--</div>-->
     <div class="col-md-10">
     {% block content %}
         {{ block.super }}
