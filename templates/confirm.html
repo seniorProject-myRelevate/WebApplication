@@ -1,0 +1,10 @@
+{% extends "cloud_template.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    {{ block.super }}
+    <div class="container">
+    You have not confirmed your email account. Please click the link in your email, or
+    click <a href="{% url 'myrelevate:confirm' %}">here</a> and we will resend you an email.
+    </div>
+{% endblock %}

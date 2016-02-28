@@ -128,13 +128,22 @@ def subscribe(request):
 
 @login_required()
 def confirm(request, token=None):
-    user = get_user_model().objects.get(user=request.user)
-    if user.confirmed:
+    if request.user.confirmed:
         return HttpResponseRedirect(reverse('myrelevate:index'))
-    if user.confirm(token):
+    if request.user.confirm(token):
         return HttpResponse("thank you for confirming your account")
     else:
         return HttpResponse("something went wrong")
+
+
+@login_required()
+def new_confirm(request, token=None):
+    if request.user.confirmed:
+        return HttpResponseRedirect(reverse('myrelevate:index'))
+    if request.user.confirm(token):
+        # alert('Thank you for confirming your email.')
+        return HttpResponseRedirect(reverse('myrelevate:index'))
+    return render(request, 'confirm.html', {'url': reverse('myrelevate:confirm')})
 
 
 # Below are helper functions that are not associated with any particular route
