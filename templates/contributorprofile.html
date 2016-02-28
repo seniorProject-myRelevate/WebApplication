@@ -1,29 +1,37 @@
-{% extends "base-titlebar.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 
 {% block content %}
     <!--The Contributor Profile Menu Bar-->
-    <div class="container2">
-    </div>
     <div class="contributor-menu">
         <img class="logo_contributors" src="{% static "images/logo.png" %}" alt="logo"/>
-        <div class="text">
-            <h2>Title</h2>
+        <div class="container">
+            <div class="text-center1">
+                <h2>
+                    {{ user.first_name }} {{ user.last_name }},
+                    {% if  contributorProfile.credential  == 'SU' %}
+                        Undergraduate Student
+                    {% elif contributorProfile.credential == 'SM'%}
+                        Master Student
+                    {% endif %}
+                </h2>
+                <h3>Approved Relevate Contributor</h3>
+            </div>
+            <div class="button-menu">
+                <button class="button" type="button">About Me</button>
+                &nbsp;
+                <button class="button" type="button">Content</button>
+                &nbsp;
+                <button class="button" type="button">Resources/Examples</button>
+                &nbsp;
+                <button class="button" type="button">Create New Post</button>
+                &nbsp;
+                <a href="{% url 'myrelevate:index' %}" class="button" type="button">Relevate Home Page</a>
+            </div>
         </div>
     </div>
     <!--Displays the contributors profile-->
     <div class="ContributorProfile" id="contributorProfile">
-        <div class="text-center">
-            <h2>
-                {{ user.first_name }} {{ user.last_name }},
-                {% if  contributorProfile.credential  == 'SU' %}
-                    Undergraduate Student
-                {% elif contributorProfile.credential == 'SM'%}
-                    Master Student
-                {% endif %}
-            </h2>
-            <h3>Approved Relevate Contributor</h3>
-        </div>
         <h3>Biography</h3>
         <p>{{ contributorProfile.biography }}</p>
         <h3>CV</h3>

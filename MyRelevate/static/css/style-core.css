@@ -69,6 +69,27 @@ ul.qualifications {
     overflow: auto;
 }
 
+.button-menu {
+    padding-top: 5%;
+}
+
+.text-center1 {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.button {
+    background-color: #e7e7e7;
+    border: none;
+    color: black;
+    padding: 15px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
 img.logo {
     height: auto;
     width: auto;
@@ -91,6 +112,9 @@ img.logo_contributors {
     width: auto;
     max-height: 200px;
     max-width: 200px;
+    margin-left: 60px;
+    margin-top: 30px;
+    float: left;
 }
 
 img.logo2 {
