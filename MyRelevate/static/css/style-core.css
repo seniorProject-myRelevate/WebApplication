@@ -80,6 +80,10 @@ ul.sub-menu {
     bottom: 0;
 }
 
+.center-text{
+    text-align: center;
+}
+
 .right, .title-bar .links-wrapper {
     float: right;
 }

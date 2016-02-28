@@ -5,8 +5,9 @@ import models
 import django.http
 from django.test import TestCase
 from django.test import Client
-from forms import SubscribeForm, RegistrationForm, PasswordChangeForm
+from forms import SubscribeForm, RegistrationForm #, PasswordChangeForm
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 # Model Tests
@@ -58,16 +59,15 @@ class TestPasswordChangeForm(TestCase):
         get_user_model().objects.create_user(email='test@test.com', password='MyR3l3v4t3',
                                              first_name='my', last_name='relevate')
 
-    # def test_PasswordChangeForm(self):
-    #     # Valid Data
-    #     user = get_user_model().objects.get(email='test@test.com')
-    #
-    #     f = PasswordChangeForm(data={'email': user.email, 'old_password': 'MyR3l3v4t3',
-    #                                  'password1': 'new_MyR3l3v4t3', 'password2': 'new_MyR3l3v4t3'}).is_valid()
-    #
-    #     if f.is_valid():
-    #         f.save()
-    #     print f.errors
+    def test_PasswordChangeForm(self):
+        # Valid Data
+        user = get_user_model().objects.get(email='test@test.com')
+
+        # f = PasswordChangeForm(data={'email': user.email, 'password': 'MyR3l3v4t3',
+        #                              'new_password1': 'new_MyR3l3v4t3', 'new_password2': 'new_MyR3l3v4t3'}, instance=user)
+        #
+        # if f.is_valid():
+        #     f.save()
         # self.assertTrue(user.check_password('new_MyR3l3v4t3'))
 
 
