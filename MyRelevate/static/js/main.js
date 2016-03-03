@@ -77,6 +77,28 @@ function ContributorAccess() {
     }
 }
 
+function ViewProfile() {
+    $('#viewContent').hide();
+    $('#createPost').hide();
+    $('#contributorProfile').show();
+}
+
+function ViewContent() {
+    $('#createPost').hide();
+    $('#contributorProfile').hide();
+    $('#viewContent').show();
+}
+
+function ViewResources() {
+
+}
+
+function CreatePost() {
+    $('#contributorProfile').hide();
+    $('#viewContent').hide();
+    $('#createPost').show();
+}
+
 $('a').parent().hover(
   function () {
       if ($(this).children("ul") )

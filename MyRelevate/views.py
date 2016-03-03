@@ -77,6 +77,7 @@ def contributors(request):
         pass
     return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': ContributorForm()})
 
+
 def contributor_profile(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST)
@@ -86,9 +87,9 @@ def contributor_profile(request):
                 adviser_last_name=request.POST['adviser_last_name'],
                 adviser_email=request.POST['adviser_email'],
                 biography=request.POST['biography'], cv=request.FILES['cv'])
-            user = get_user_model().objects.get(email=request.user.email)
-            user.contributorProfile = contributor_profile
-            user.save()
+            #user = get_user_model().objects.get(email=request.user.email)
+            #user.contributorProfile = contributor_profile
+            #user.save()
             form.save()
             return HttpResponseRedirect(reverse('myrelevate:contributorprofile'))
         else:

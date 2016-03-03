@@ -179,13 +179,13 @@ class ContributorForm(forms.ModelForm):
     credential = forms.ChoiceField(choices=DEGREES, required=True)
     program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
                                                             'class': 'form-control'}), label='')
-
     biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
                                                         'class': 'form-control'}), label='')
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
                                             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
+
 
     class Meta:
         model = ContributorProfile

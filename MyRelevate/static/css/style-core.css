@@ -69,9 +69,37 @@ ul.qualifications {
     overflow: auto;
 }
 
-.button-menu {
-    padding-top: 5%;
+.container2 {
+    margin-left: 100px;
+    overflow: auto;
 }
+
+.contributor-menu {
+    /*display: inline-block;
+    position: absolute;*/
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 30px;
+}
+
+.button-menu {
+    /*display: inline-block;*/
+    /*position: absolute;*/
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 2%;
+}
+
+.footer {
+    background-color: #0f0f0f;
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    /*display: inline-block;*/
+
+}
+
 
 .text-center1 {
     text-align: center;
@@ -88,6 +116,13 @@ ul.qualifications {
     display: inline-block;
     font-size: 18px;
     border-radius: 8px;
+    margin-right: 5px;
+    /*width: 285px;
+    height: 85px;*/
+}
+
+.name {
+    color: #ed7d31;
 }
 
 img.logo {
@@ -112,8 +147,6 @@ img.logo_contributors {
     width: auto;
     max-height: 200px;
     max-width: 200px;
-    margin-left: 60px;
-    margin-top: 30px;
     float: left;
 }
 
