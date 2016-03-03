@@ -3,6 +3,8 @@ var requestAccessDiv = document.getElementById('requestAccess');
 var requestBtn = document.getElementById('request');
 var emailInput = $('#id_email');
 
+console.log('dis on dis day, is da new location')
+
 function validate_email(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
