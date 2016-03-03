@@ -39,8 +39,8 @@ class ContributorProfile(models.Model):
     adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
     adviser_email = models.EmailField(unique=False, null=False, blank=False)
     biography = models.CharField(max_length=255, null=False, blank=False)
-    # should be multichoice.
-    area_of_expertise = models.CharField(max_length=255, choices=None, null=True, blank=True)
+    # research and clinical interests
+    interests = models.CharField(max_length=255, null=True, blank=True)
     # profile_image = models.ImageField(null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)

@@ -25,7 +25,7 @@
                             <button type="button" class="button" onclick="ViewContent()">Content</button>
                         </div>
                         <div class="btn-group" role="group" aria-label="Third group">
-                            <button type="button" class="button">Resources</button>
+                            <button type="button" class="button" onclick="ViewResources()">Resources</button>
                         </div>
                         <div class="btn-group" role="group" aria-label="Fourth group">
                             <button type="button" class="button" id="post-article" href="#" onclick="CreatePost()">
@@ -41,68 +41,80 @@
     </div>
 
     <div class="container2">
-        <!--Displays the contributors profile-->
-        <div class="ContributorProfile" id="contributorProfile">
-            <div>
-                <h3>Biography</h3>
-                <p>{{ contributorProfile.biography }}</p>
+            <!--Displays the contributors profile-->
+            <div class="ContributorProfile" id="contributorProfile">
+                <div>
+                    <h2 class="name">{{ user.first_name }} {{ user.last_name }}</h2>
+                    <h4>Credentials</h4>
+                </div>
+                <div>
+                    <h2 class="name2">Biography</h2>
+                    <p>{{ contributorProfile.biography }}</p>
+                </div>
+                <div>
+                    <h2 class="name2">Research and Clinical Interests</h2>
+                    <p></p>
+                </div>
+                <div>
+                    <h2 class="name2">Contact and additional information</h2>
+                    <p></p>
+                </div>
+                <div>
+                    <h2 class="name2">CV</h2>
+                    <p>{{ contributorProfile.cv }}</p>
+                </div>
+                <div>
+                    <h2 class="name2">Adviser</h2>
+                    <p>{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}</p>
+                    <p>{{ contributorProfile.adviser_email }}</p>
+                </div>
+                <button type="button">Edit Profile</button>
             </div>
-            <div>
-                <h3>CV</h3>
-                <p>{{ contributorProfile.cv }}</p>
-            </div>
-            <div>
-                <h3>Adviser</h3>
-                <p>{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}</p>
-                <p>{{ contributorProfile.adviser_email }}</p>
-            </div>
-            <button type="button">Edit Profile</button>
-        </div>
 
-        <!--Displays the content and contributor posts history-->
-        <div id="viewContent" style="display:none">
-            <div class="container">
+            <!--Displays the content and contributor posts history-->
+            <div id="viewContent" style="display:none">
                 <h2 class="name">{{ user.first_name }} {{ user.last_name }}</h2>
                 <h4>Post to date</h4>
             </div>
-        </div>
 
-        <!--Shows the forms to allow contributor to create post an article-->
-        <div class="CreatePost" id="createPost" style="display: none">
-            <div class="container">
-                <h1>Post an Article</h1>
+            <!--Displays the resources for contributors-->
+            <div id="viewResources" style="display:none">
+                <h2>Resources</h2>
+            </div>
+
+            <!--Shows the forms to allow contributor to create post an article-->
+            <div class="CreatePost" id="createPost" style="display: none">
+                <h2>Post an Article</h2>
+            </div>
+
+            <!--Form to allow contributor to edit their profile-->
+            <div class="ContributorEditProfile" id="contibutorEdit" style="display: none">
+                <div class="container">
+                    <form action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                        {% csrf_token %}
+                        {{ contributorForm.biography }}
+                    </form>
+                </div>
             </div>
         </div>
 
-        <!--Form to allow contributor to edit their profile-->
-        <div class="ContributorEditProfile" id="contibutorEdit" style="display: none">
-            <div class="container">
-                <form action="{% url 'myrelevate:contributor_profile' %}" method="post">
-                    {% csrf_token %}
-                    {{ contributorForm.biography }}
-                </form>
+        <!--The footer-->
+        <div class="footer">
+            <div class="social-icon hover-facebook">
+                <a href="https://www.facebook.com/MyRelevate" target="_blank"><i
+                        class="fa fa-facebook-square fa-3x"></i></a>
+            </div>
+            <div class="social-icon hover-twitter">
+                <a href="https://twitter.com/MyRelevate/" target="_blank"><i
+                        class="fa fa-twitter-square fa-3x"></i></a>
+            </div>
+            <div class="social-icon hover-pinterest">
+                <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i
+                        class="fa fa-pinterest-square fa-3x"></i></a>
+            </div>
+            <div class="social-icon hover-youtube">
+                <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
+                        class="fa fa-youtube-square fa-3x"></i></a>
             </div>
         </div>
-    </div>
-
-
-    <!--The footer-->
-    <div class="footer">
-        <div class="social-icon hover-facebook">
-            <a href="https://www.facebook.com/MyRelevate" target="_blank"><i
-                    class="fa fa-facebook-square fa-3x"></i></a>
-        </div>
-        <div class="social-icon hover-twitter">
-            <a href="https://twitter.com/MyRelevate/" target="_blank"><i
-                    class="fa fa-twitter-square fa-3x"></i></a>
-        </div>
-        <div class="social-icon hover-pinterest">
-            <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i
-                    class="fa fa-pinterest-square fa-3x"></i></a>
-        </div>
-        <div class="social-icon hover-youtube">
-            <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
-                    class="fa fa-youtube-square fa-3x"></i></a>
-        </div>
-    </div>
 {% endblock %}

@@ -84,18 +84,23 @@ function ViewProfile() {
 }
 
 function ViewContent() {
-    $('#createPost').hide();
     $('#contributorProfile').hide();
+    $('#viewResources').hide();
+    $('#createPost').hide();
     $('#viewContent').show();
 }
 
 function ViewResources() {
-
+    $('#contributorProfile').hide();
+    $('#viewContent').hide();
+    $('#createPost').hide();
+    $('#viewResources').show();
 }
 
 function CreatePost() {
     $('#contributorProfile').hide();
     $('#viewContent').hide();
+    $('#viewResources').hide();
     $('#createPost').show();
 }
 

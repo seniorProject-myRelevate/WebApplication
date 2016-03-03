@@ -181,6 +181,8 @@ class ContributorForm(forms.ModelForm):
                                                             'class': 'form-control'}), label='')
     biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
                                                         'class': 'form-control'}), label='')
+    interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
+                                                             'class': 'form-control'}), label='')
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
                                             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))

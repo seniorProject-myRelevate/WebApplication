@@ -100,7 +100,6 @@ ul.qualifications {
 
 }
 
-
 .text-center1 {
     text-align: center;
     margin-top: 60px;
@@ -123,6 +122,10 @@ ul.qualifications {
 
 .name {
     color: #ed7d31;
+}
+
+.name2 {
+    color: #00b0f0;
 }
 
 img.logo {
