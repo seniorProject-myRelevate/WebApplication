@@ -1,6 +1,8 @@
 branch-defaults:
   aws-dev:
     environment: WebApplication-dev
+  aws-mod:
+    environment: relevate
   development-lb:
     environment: WebApplication-dev
   jr-dev:
