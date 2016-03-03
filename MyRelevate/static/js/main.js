@@ -81,6 +81,15 @@ function ViewProfile() {
     $('#viewContent').hide();
     $('#createPost').hide();
     $('#contributorProfile').show();
+    $('#editInterests').onclick = function() {
+        $('#interests-paragraph').hide();
+        $('#interestsForm').show();
+    }
+}
+
+function EditInterests() {
+    $('#interests-paragraph').hide();
+    $('#interestsForm').show();
 }
 
 function ViewContent() {

@@ -100,9 +100,21 @@ ul.qualifications {
 
 }
 
+.form {
+    margin-right: 100px;
+}
+
 .text-center1 {
     text-align: center;
     margin-top: 60px;
+}
+
+.btn-black {
+    background-color: #0f0f0f;
+}
+
+.glyphicon-pencil {
+    color: #ffffff;
 }
 
 .button {

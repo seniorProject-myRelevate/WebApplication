@@ -82,11 +82,12 @@ def contributor_profile(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST)
         if form.is_valid():
-            contributor_profile = ContributorProfile(credential=request.POST['credential'],
-                adviser_first_name=request.POST['adviser_first_name'],
-                adviser_last_name=request.POST['adviser_last_name'],
-                adviser_email=request.POST['adviser_email'],
-                biography=request.POST['biography'], cv=request.FILES['cv'])
+            contributor_profile = ContributorProfile(cv=request.FILES['cv'])
+            #contributor_profile = ContributorProfile(credential=request.POST['credential'],
+                #adviser_first_name=request.POST['adviser_first_name'],
+                #adviser_last_name=request.POST['adviser_last_name'],
+                #adviser_email=request.POST['adviser_email'],
+                #biography=request.POST['biography'], cv=request.FILES['cv'])
             #user = get_user_model().objects.get(email=request.user.email)
             #user.contributorProfile = contributor_profile
             #user.save()
