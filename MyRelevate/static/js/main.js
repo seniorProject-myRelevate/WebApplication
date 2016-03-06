@@ -66,9 +66,9 @@ function ContributorAccess() {
             $('#studentAccess').show();
         }
         else {
-            $('#id_adviser_first_name').val('');
-            $('#id_adviser_last_name').val('');
-            $('#id_adviser_email').val('');
+            $('#id_email').val('');
+            $('#id_first_name').val('');
+            $('#id_last_name').val('');
             $('#studentAccess').hide();
         }
     });

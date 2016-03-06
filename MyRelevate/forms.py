@@ -4,7 +4,7 @@ from django import forms
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
-from .models import ContributorProfile, Subscriber
+from .models import ContributorProfile, Subscriber, Advisers
 from django.contrib.auth import get_user_model
 
 
@@ -157,6 +157,28 @@ class PasswordChangeForm(forms.ModelForm):
         return user
 
 
+class AdviserForm(forms.ModelForm):
+    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
+                               label='', required=False)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name', 'class': 'form-control'}),
+                                 label='', required=False)
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name', 'class': 'form-control'}),
+                                label='', required=False)
+    class Meta:
+        model = Advisers
+        fields = ['email', 'first_name', 'last_name']
+
+    def clean(self):
+        cleaned_data = super(AdviserForm, self).clean()
+        return self.cleaned_data
+
+    def save(self, commit=True):
+        adviser = super(AdviserForm, self).save(commit=False)
+        if commit:
+            adviser.save()
+            return adviser
+
+
 class ContributorForm(forms.ModelForm):
     DEGREES = (
         ('-1', ''),
@@ -170,28 +192,21 @@ class ContributorForm(forms.ModelForm):
         ('SPsyD', 'Studnet-PsyD')
     )
 
-    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name', 'class': 'form-control'}),
-                                 label='', required=False)
-    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name', 'class': 'form-control'}),
-                                label='', required=False)
-    adviser_email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
-                               label='', required=False)
     credential = forms.ChoiceField(choices=DEGREES, required=True)
     program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
                                                             'class': 'form-control'}), label='')
     biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
                                                         'class': 'form-control'}), label='')
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
-                                                             'class': 'form-control'}), label='')
+                                                             'class': 'form-control'}), label='', required=False)
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
                                             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
 
-
     class Meta:
         model = ContributorProfile
-        fields = ['adviser_first_name', 'adviser_last_name', 'adviser_email', 'credential', 'program', 'biography', 'cv']
+        fields = ['credential', 'program', 'biography', 'cv']
 
     def clean(self):
         cleaned_data = super(ContributorForm, self).clean()
@@ -199,10 +214,10 @@ class ContributorForm(forms.ModelForm):
 
     def save(self, commit=True):
         contributor = super(ContributorForm, self).save(commit=False)
-        contributor_profile = None
+        #contributor_profile = None
         if commit:
             contributor.save()
-            return contributor_profile
+            return contributor
 
 
 class SubscribeForm(forms.ModelForm):

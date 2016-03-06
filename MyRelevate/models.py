@@ -21,32 +21,6 @@ class Subscriber(models.Model):
 #     updateDate = models.DateField()
 
 
-class ContributorProfile(models.Model):
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Student-PsyD')
-    )
-
-    credential = models.CharField(max_length=5, choices=DEGREES)
-    adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
-    adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
-    adviser_email = models.EmailField(unique=False, null=False, blank=False)
-    biography = models.CharField(max_length=255, null=False, blank=False)
-    # research and clinical interests
-    interests = models.CharField(max_length=255, null=True, blank=True)
-    # profile_image = models.ImageField(null=True, blank=True)
-    website_url = models.URLField(null=True, blank=True)
-    cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
-    approved = models.BooleanField(default=False)
-    # articles = models.ForeignKey(Article, null=True, blank=True)
-
 class UserManager(BaseUserManager):
 
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
@@ -88,7 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     confirmed = models.BooleanField(default=False)
 
     is_contributor = models.BooleanField(default=False)
-    contributor_profile = models.OneToOneField(ContributorProfile, null=True, blank=True)
+    #contributor_profile = models.OneToOneField(ContributorProfile, null=True, blank=True)
 
     objects = UserManager()
 
@@ -130,6 +104,37 @@ class User(AbstractBaseUser, PermissionsMixin):
         message.set_html(html)
 
         client.send(message)
+
+
+class ContributorProfile(models.Model):
+    DEGREES = (
+        ('-1', ''),
+        ('MS', 'MS (Master of Science)'),
+        ('MA', 'MA (Master of Arts)'),
+        ('PhD', 'PhD (Doctor of Philosophy)'),
+        ('PsyD', 'PsyD (Doctor of Psychology)'),
+        ('SU', 'Student-Undergraduate'),
+        ('SM', 'Student-Masters'),
+        ('SPhD', 'Student-PhD'),
+        ('SPsyD', 'Student-PsyD')
+    )
+    user = models.OneToOneField(User, primary_key=True)
+    credential = models.CharField(max_length=5, choices=DEGREES)
+    biography = models.CharField(max_length=255, null=False, blank=False)
+    # research and clinical interests
+    interests = models.CharField(max_length=255, null=True, blank=True)
+    # profile_image = models.ImageField(null=True, blank=True)
+    website_url = models.URLField(null=True, blank=True)
+    cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
+    approved = models.BooleanField(default=False)
+    # articles = models.ForeignKey(Article, null=True, blank=True)
+
+
+class Advisers(models.Model):
+    user = models.ForeignKey(ContributorProfile)
+    email = models.EmailField(unique=True, null=False, blank=False)
+    first_name = models.CharField(max_length=255, null=False, blank=False)
+    last_name = models.CharField(max_length=255, null=False, blank=False)
 
 
 # DemographicData Database Model
