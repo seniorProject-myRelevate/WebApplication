@@ -78,6 +78,9 @@ def contributors(request):
             #form = ContributorForm(request.POST, request.FILES, instance=profile.user)
             adviser.user = profile
             adviser.user_id = profile.user_id
+            print "adviser is", adviser
+            print "adviser.user_id =", adviser.user_id
+            print "profile.user_id =", profile.user_id
             #user.contributorProfile = contributor_profile
             #user.save()
             form.save()
@@ -97,7 +100,7 @@ def contributor_profile(request):
         if form.is_valid():
             user = get_user_model().objects.get(email=request.user.email)
             profile = ContributorProfile(credential=request.POST['credential'],
-                biography=request.POST['biography'], cv=request.FILES['cv'])
+                                         biography=request.POST['biography'], cv=request.FILES['cv'])
             #form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
             profile.user = user
             #user.contributorProfile = contributor_profile
@@ -108,7 +111,7 @@ def contributor_profile(request):
             return HttpResponse(form.errors)
     else:
         profile = ContributorProfile.objects.get(user=get_user_model().objects.get(email=request.user.email))
-        adviser = Advisers.objects.get(profile)
+        adviser = Advisers.user
     return render(request,  'contributorprofile.html', {'contributorProfile': profile, 'adviser': adviser,
                                                         'contributorForm': ContributorForm()})
 

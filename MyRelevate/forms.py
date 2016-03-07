@@ -158,12 +158,15 @@ class PasswordChangeForm(forms.ModelForm):
 
 
 class AdviserForm(forms.ModelForm):
-    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
-                               label='', required=False)
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name', 'class': 'form-control'}),
-                                 label='', required=False)
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name', 'class': 'form-control'}),
-                                label='', required=False)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email',
+                                                            'class': 'form-control'}), label='', required=False)
+
+    #email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email',
+     #                                                      'class': 'form-control'}), label='', required=False)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name',
+                                                               'class': 'form-control'}), label='', required=False)
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
+                                                              'class': 'form-control'}), label='', required=False)
     class Meta:
         model = Advisers
         fields = ['email', 'first_name', 'last_name']

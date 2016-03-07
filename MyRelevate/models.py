@@ -131,8 +131,9 @@ class ContributorProfile(models.Model):
 
 
 class Advisers(models.Model):
-    user = models.ForeignKey(ContributorProfile)
-    email = models.EmailField(unique=True, null=False, blank=False)
+    user = models.ForeignKey(ContributorProfile, null=True, blank=True)
+    email = models.EmailField(max_length=254, unique=True, null=False, blank=False)
+    #email = models.EmailField(unique=True, null=False, blank=False)
     first_name = models.CharField(max_length=255, null=False, blank=False)
     last_name = models.CharField(max_length=255, null=False, blank=False)
 
