@@ -81,15 +81,18 @@ function ViewProfile() {
     $('#viewContent').hide();
     $('#createPost').hide();
     $('#contributorProfile').show();
-    $('#editInterests').onclick = function() {
+
+    if($('#interests-paragraph').val() == ""){
         $('#interests-paragraph').hide();
         $('#interestsForm').show();
     }
-}
 
-function EditInterests() {
-    $('#interests-paragraph').hide();
-    $('#interestsForm').show();
+    /*
+    $('#editInterests').onclick = function() {
+        //$('#interests-paragraph').hide();
+        //$('#interestsForm').show();
+    }
+    */
 }
 
 function ViewContent() {
@@ -111,6 +114,16 @@ function CreatePost() {
     $('#viewContent').hide();
     $('#viewResources').hide();
     $('#createPost').show();
+}
+
+function EditInterests() {
+    $('#interests-paragraph').hide();
+    $('#interestsForm').show();
+}
+
+function EditBiography() {
+    $('#biography-paragraph').hide();
+    $('#biographyForm').show();
 }
 
 $('a').parent().hover(

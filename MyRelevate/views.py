@@ -99,6 +99,7 @@ def contributors(request):
 def contributor_profile(request):
     if request.method == 'POST':
         user = get_user_model().objects.get(email=request.user.email)
+        profile = user.get_contributor_profile()
         form = ContributorForm(request.POST, request.FILES, user.contributor_profile)
         if form.is_valid():
             profile = ContributorProfile(credential=request.POST['credential'],

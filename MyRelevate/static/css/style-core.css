@@ -69,6 +69,11 @@ ul.qualifications {
     overflow: auto;
 }
 
+.ContributorProfile {
+    height: 100%;
+    overflow: auto;
+}
+
 .container2 {
     margin-left: 100px;
     overflow: auto;

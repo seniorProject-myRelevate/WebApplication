@@ -58,6 +58,13 @@
                     <form class="form" id="biographyForm" style="display: none"
                           action="{% url 'myrelevate:contributor_profile' %}" method="post">
                         {% csrf_token %}
+                        <div style="display: none">
+                            {{ contributorForm.credential }}
+                            {{ contributorForm.program }}
+                            {{ contributorForm.cv }}
+                            {{ contributorForm.interests }}
+                            {{ contributorForm.accept_terms }}
+                        </div>
                         {{ contributorForm.biography }}
                         <input type="submit" class="btn btn-primary" value="Save"/>
                     </form>
@@ -73,6 +80,13 @@
                     <form class="form" id="interestsForm" style="display: none"
                           action="{% url 'myrelevate:contributor_profile' %}" method="post">
                         {% csrf_token %}
+                        <div style="display: none">
+                            {{ contributorForm.credential }}
+                            {{ contributorForm.program }}
+                            {{ contributorForm.cv }}
+                            {{ contributorForm.biography }}
+                            {{ contributorForm.accept_terms }}
+                        </div>
                         {{ contributorForm.interests }}
                         <input type="submit" class="btn btn-primary" value="Save"/>
                     </form>

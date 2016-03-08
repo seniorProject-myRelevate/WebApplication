@@ -62,7 +62,7 @@ class SpecificFileField(forms.FileField):
 
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
-                            label='')
+                             label='')
     password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),
                              label='')
 
@@ -167,6 +167,7 @@ class AdviserForm(forms.ModelForm):
                                                                'class': 'form-control'}), label='', required=False)
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
                                                               'class': 'form-control'}), label='', required=False)
+
     class Meta:
         model = Advisers
         fields = ['email', 'first_name', 'last_name']
@@ -199,17 +200,18 @@ class ContributorForm(forms.ModelForm):
     program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
                                                             'class': 'form-control'}), label='')
     biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
-                                                        'class': 'form-control'}), label='')
+                                                             'class': 'form-control'}), label='')
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
                                                              'class': 'form-control'}), label='', required=False)
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
-                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                               ))
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
 
     class Meta:
         model = ContributorProfile
-        fields = ['credential', 'program', 'biography', 'cv']
+        fields = ['credential', 'program', 'biography', 'interests', 'cv', 'accept_terms']
 
     def clean(self):
         cleaned_data = super(ContributorForm, self).clean()

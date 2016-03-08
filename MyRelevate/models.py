@@ -36,12 +36,14 @@ class ContributorProfile(models.Model):
     #user = models.OneToOneField(User, primary_key=True)
     #adviser = models.ForeignKey(Advisers, null=True, blank=True)
     credential = models.CharField(max_length=5, choices=DEGREES)
+    program = models.CharField(max_length=255, null=False, blank=False)
     biography = models.CharField(max_length=255, null=False, blank=False)
     # research and clinical interests
     interests = models.CharField(max_length=255, null=True, blank=True)
     # profile_image = models.ImageField(null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
+    accept_terms = models.BooleanField(default=False)
     approved = models.BooleanField(default=False)
     # articles = models.ForeignKey(Article, null=True, blank=True)
 
