@@ -192,7 +192,7 @@ class ContributorForm(forms.ModelForm):
         ('SU', 'Student-Undergraduate'),
         ('SM', 'Student-Masters'),
         ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Studnet-PsyD')
+        ('SPsyD', 'Student-PsyD')
     )
 
     credential = forms.ChoiceField(choices=DEGREES, required=True)
@@ -204,7 +204,7 @@ class ContributorForm(forms.ModelForm):
                                                              'class': 'form-control'}), label='', required=False)
     cv = SpecificFileField(label='Specific MIME type',
                            mimetype_whitelist=("application/pdf", "application/msword",
-                                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
 
     class Meta:
@@ -215,11 +215,14 @@ class ContributorForm(forms.ModelForm):
         cleaned_data = super(ContributorForm, self).clean()
         return self.cleaned_data
 
-    def save(self, commit=True):
+    def save(self, commit=True, email=None):
         contributor = super(ContributorForm, self).save(commit=False)
-        #contributor_profile = None
         if commit:
             contributor.save()
+            user = get_user_model().objects.get(email=email)
+            user.contributor_profile = contributor
+            user.is_contributor = True
+            user.save()
             return contributor
 
 

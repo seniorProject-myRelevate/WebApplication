@@ -11,9 +11,11 @@
             <div>
                 <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
             </div>
-            <div>
-                <a href="{% url 'myrelevate:contributor_profile' %}">Contributor Profile</a>
-            </div>
+            {% if user.is_contributor %}
+                <div>
+                    <a href="{% url 'myrelevate:contributor_profile' %}">Contributor Profile</a>
+                </div>
+            {% endif %}
             {% if not user.is_authenticated %}
                 <div>
                     <a href="{% url 'myrelevate:register_user' %}">Create Account</a>

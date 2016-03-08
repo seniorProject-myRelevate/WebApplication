@@ -67,24 +67,26 @@ def logout_view(request):
 def contributors(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
-        adviser_form = AdviserForm(request.POST)
-        if form.is_valid() and adviser_form.is_valid():
-            user = get_user_model().objects.get(email=request.user.email)
-            profile = ContributorProfile(credential=request.POST['credential'],
-                                         biography=request.POST['biography'], cv=request.FILES['cv'])
-            adviser = Advisers(email=request.POST['email'], first_name=request.POST['first_name'],
-                               last_name=request.POST['last_name'])
-            profile.user = user
+        #adviser_form = AdviserForm(request.POST)
+        if form.is_valid():
+            #user = request.user
+            #user = get_user_model().objects.get(email=request.user.email)
+            #profile = ContributorProfile(credential=request.POST['credential'],
+            #                             biography=request.POST['biography'], cv=request.FILES['cv'])
+            #adviser = Advisers(email=request.POST['email'], first_name=request.POST['first_name'],
+            #                   last_name=request.POST['last_name'])
+            #user.contributor_profile = profile
+            #print "this is th profile in contributor", user.contributor_profile
+            #profile.user = user
             #form = ContributorForm(request.POST, request.FILES, instance=profile.user)
-            adviser.user = profile
-            adviser.user_id = profile.user_id
-            print "adviser is", adviser
-            print "adviser.user_id =", adviser.user_id
-            print "profile.user_id =", profile.user_id
+            #adviser.user = user
+            #adviser.user_id = profile.user_id
+            #print "adviser is", adviser
+            #print "adviser.user_id =", adviser.user_id
+            #print "profile.user_id =", profile.user_id
             #user.contributorProfile = contributor_profile
-            #user.save()
-            form.save()
-            adviser_form.save()
+            form.save(email=request.user.email)
+            #adviser_form.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
@@ -96,24 +98,26 @@ def contributors(request):
 
 def contributor_profile(request):
     if request.method == 'POST':
-        form = ContributorForm(request.POST, request.FILES)
+        user = get_user_model().objects.get(email=request.user.email)
+        form = ContributorForm(request.POST, request.FILES, user.contributor_profile)
         if form.is_valid():
-            user = get_user_model().objects.get(email=request.user.email)
             profile = ContributorProfile(credential=request.POST['credential'],
                                          biography=request.POST['biography'], cv=request.FILES['cv'])
-            #form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
-            profile.user = user
             #user.contributorProfile = contributor_profile
-            #user.save()
-            form.save()
+            form.save(email=request.user.email)
             return HttpResponseRedirect(reverse('myrelevate:contributorprofile'))
         else:
             return HttpResponse(form.errors)
     else:
-        profile = ContributorProfile.objects.get(user=get_user_model().objects.get(email=request.user.email))
-        adviser = Advisers.user
-    return render(request,  'contributorprofile.html', {'contributorProfile': profile, 'adviser': adviser,
-                                                        'contributorForm': ContributorForm()})
+        #profile = ContributorProfile.objects.get(user=request.user)
+        user = get_user_model().objects.get(email=request.user.email)
+        profile = user.get_contributor_profile()
+        print "the profile is", profile
+        print "the user is", user
+        #adviser = profile.adviser
+    return render(request, 'contributorprofile.html', {'contributorProfile': profile,
+                                                       'contributorForm':
+                                                           ContributorForm(instance=user.contributor_profile)})
 
 
 def user_profile(request):
