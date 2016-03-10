@@ -36,14 +36,14 @@
     </ul>
     </nav>
     <!--</div>-->
-    <div class="col-md-10">
+    <div class="col-md-10" style="padding: 0;">
     {% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
+        <div class="messages">
+            {% for message in messages %}
+                <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
+            {% endfor %}
+        </div>
+    {% endif %}
     {% block content %}
         {{ block.super }}
     {% endblock %}

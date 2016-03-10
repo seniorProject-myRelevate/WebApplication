@@ -17,12 +17,11 @@ def index(request):
     if request.method == 'POST':
         login_view(request)
     else:
-        confirmed = None
-        if request.user.is_authenticated():
-            user = get_user_model().objects.get(email=request.user.email)
-            if not user.confirmed:
-                confirmed = user.generate_confirmation_token()
-        return render(request, 'index.html', {'user': request.user, 'token': confirmed})
+        messages.success(request, 'Success Message')
+        messages.info(request, 'Info Message')
+        messages.warning(request, 'Warning Message')
+        messages.error(request, 'Error Message')
+        return render(request, 'index.html', {'user': request.user})
 
 
 def register_user(request):
@@ -49,6 +48,7 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                messages.success(request, "Your account has been created!")
                 return HttpResponseRedirect(reverse('myrelevate:index'))
             else:
                 return HttpResponse('%s\'s account is deactivated.')
@@ -150,7 +150,7 @@ def confirm(request):
         return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         get_user_model().objects.get(email=request.user.email).new_confirm()
-        messages.info(request, 'Thank you for confirming your account!')
+        messages.success(request, 'Thank you for confirming your account!')
         return HttpResponseRedirect(reverse('myrelevate:index'))
 
 

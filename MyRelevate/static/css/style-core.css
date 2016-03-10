@@ -286,8 +286,30 @@ img.logo3 {
     text-align: center;
 }
 
-#confirm-text div:before, #confirm-text a:before, #confirm-text div:after, #confirm-text a:after{
+#confirm-text *:before, #confirm-text *:after{
     content: "\00a0";
+}
+
+.messages{
+    text-align: center;
+    color: #fff;
+    font-weight: 500;
+}
+
+.success{
+    background-color: #449D44;
+}
+
+.info{
+    background-color: #31B0D5;
+}
+
+.warning{
+    background-color: #EC971F;
+}
+
+.error{
+    background-color: #C9302C;
 }
 
 /* Cloud CSS Copied from http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background*/
