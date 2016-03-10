@@ -7,8 +7,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
-from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm, AdviserForm
-from .models import ContributorProfile, Subscriber, Advisers
+from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm
+from .models import ContributorProfile, Subscriber
 from django.contrib.auth import get_user_model
 
 
@@ -67,55 +67,29 @@ def logout_view(request):
 def contributors(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
-        #adviser_form = AdviserForm(request.POST)
         if form.is_valid():
-            #user = request.user
-            #user = get_user_model().objects.get(email=request.user.email)
-            #profile = ContributorProfile(credential=request.POST['credential'],
-            #                             biography=request.POST['biography'], cv=request.FILES['cv'])
-            #adviser = Advisers(email=request.POST['email'], first_name=request.POST['first_name'],
-            #                   last_name=request.POST['last_name'])
-            #user.contributor_profile = profile
-            #print "this is th profile in contributor", user.contributor_profile
-            #profile.user = user
-            #form = ContributorForm(request.POST, request.FILES, instance=profile.user)
-            #adviser.user = user
-            #adviser.user_id = profile.user_id
-            #print "adviser is", adviser
-            #print "adviser.user_id =", adviser.user_id
-            #print "profile.user_id =", profile.user_id
-            #user.contributorProfile = contributor_profile
+            profile = ContributorProfile(cv=request.FILES['cv'])
             form.save(email=request.user.email)
-            #adviser_form.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
     else:
         pass
-    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': ContributorForm(),
-                                                 'adviserForm': AdviserForm()})
+    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': ContributorForm()})
 
 
 def contributor_profile(request):
     if request.method == 'POST':
-        user = get_user_model().objects.get(email=request.user.email)
-        profile = user.get_contributor_profile()
-        form = ContributorForm(request.POST, request.FILES, user.contributor_profile)
+        form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
-            profile = ContributorProfile(credential=request.POST['credential'],
-                                         biography=request.POST['biography'], cv=request.FILES['cv'])
-            #user.contributorProfile = contributor_profile
+            profile = ContributorProfile(cv=request.FILES['cv'])
             form.save(email=request.user.email)
             return HttpResponseRedirect(reverse('myrelevate:contributorprofile'))
         else:
             return HttpResponse(form.errors)
     else:
-        #profile = ContributorProfile.objects.get(user=request.user)
         user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
-        print "the profile is", profile
-        print "the user is", user
-        #adviser = profile.adviser
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
                                                        'contributorForm':
                                                            ContributorForm(instance=user.contributor_profile)})

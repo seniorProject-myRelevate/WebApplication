@@ -46,6 +46,10 @@
                 <div>
                     <h2 class="name">{{ user.first_name }} {{ user.last_name }}</h2>
                     <h4>Credentials</h4>
+                    <p id="credentials">
+                        {{ contributorProfile.institution }}
+                        {{ contributorProfile.address }}
+                    </p>
                 </div>
                 <div>
                     <h2 class="name2">Biography
@@ -60,6 +64,8 @@
                         {% csrf_token %}
                         <div style="display: none">
                             {{ contributorForm.credential }}
+                            {{ contributorForm.institution }}
+                            {{ contributorForm.address }}
                             {{ contributorForm.program }}
                             {{ contributorForm.cv }}
                             {{ contributorForm.interests }}
@@ -82,6 +88,8 @@
                         {% csrf_token %}
                         <div style="display: none">
                             {{ contributorForm.credential }}
+                            {{ contributorForm.institution }}
+                            {{ contributorForm.address }}
                             {{ contributorForm.program }}
                             {{ contributorForm.cv }}
                             {{ contributorForm.biography }}
@@ -99,6 +107,7 @@
                     <p>
                         <h4> {{ user.email }} </h4>
                     </p>
+
                 </div>
                 <div>
                     <h2 class="name2">CV</h2>
@@ -106,8 +115,8 @@
                 </div>
                 <div>
                     <h2 class="name2">Adviser</h2>
-                    <p>{{ adviser.first_name }} {{ adviser.last_name }}</p>
-                    <p>{{ adviser.email }}</p>
+                    <p>{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}</p>
+                    <p>{{ contributorProfile.adviser_email }}</p>
                 </div>
             </div>
 

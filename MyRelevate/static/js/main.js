@@ -66,9 +66,9 @@ function ContributorAccess() {
             $('#studentAccess').show();
         }
         else {
-            $('#id_email').val('');
-            $('#id_first_name').val('');
-            $('#id_last_name').val('');
+            $('#id_adviser_email').val('');
+            $('#id_adviser_first_name').val('');
+            $('#id_adviser_last_name').val('');
             $('#studentAccess').hide();
         }
     });
@@ -82,7 +82,7 @@ function ViewProfile() {
     $('#createPost').hide();
     $('#contributorProfile').show();
 
-    if($('#interests-paragraph').val() == ""){
+    if($('#id_interests').val() == ""){
         $('#interests-paragraph').hide();
         $('#interestsForm').show();
     }

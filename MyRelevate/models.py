@@ -33,9 +33,12 @@ class ContributorProfile(models.Model):
         ('SPhD', 'Student-PhD'),
         ('SPsyD', 'Student-PsyD')
     )
-    #user = models.OneToOneField(User, primary_key=True)
-    #adviser = models.ForeignKey(Advisers, null=True, blank=True)
     credential = models.CharField(max_length=5, choices=DEGREES)
+    adviser_email = models.EmailField(max_length=254, unique=True, null=False, blank=False)
+    adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
+    adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
+    institution = models.CharField(max_length=255, null=False, blank=False)
+    address = models.CharField(max_length=255, null=False, blank=False)
     program = models.CharField(max_length=255, null=False, blank=False)
     biography = models.CharField(max_length=255, null=False, blank=False)
     # research and clinical interests
@@ -130,15 +133,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         message.set_html(html)
 
         client.send(message)
-
-
-class Advisers(models.Model):
-    #user = models.ForeignKey(ContributorProfile, null=True, blank=True)
-    user = models.ForeignKey(User, null=True, blank=True)
-    email = models.EmailField(max_length=254, unique=True, null=False, blank=False)
-    #email = models.EmailField(unique=True, null=False, blank=False)
-    first_name = models.CharField(max_length=255, null=False, blank=False)
-    last_name = models.CharField(max_length=255, null=False, blank=False)
 
 
 # DemographicData Database Model
