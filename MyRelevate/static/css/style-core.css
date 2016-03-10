@@ -278,6 +278,18 @@ img.logo3 {
     border: 1px solid red;
 }
 
+#confirm-text{
+    min-height:300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#confirm-text div:before, #confirm-text a:before, #confirm-text div:after, #confirm-text a:after{
+    content: "\00a0";
+}
+
 /* Cloud CSS Copied from http://thecodeplayer.com/walkthrough/pure-css3-animated-clouds-background*/
 /*Lets start with the cloud formation rather*/
 

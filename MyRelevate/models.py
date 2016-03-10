@@ -119,6 +119,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.save()
         return True
 
+    def new_confirm(self):
+        if self.confirmed:
+            return True
+        self.confirmed = True
+        self.save()
+        return True
+
     # Below are helper functions that are not associated with any particular route
     def send_email(self, subject, html, sender='noreply@myrelevate.com'):
         client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])

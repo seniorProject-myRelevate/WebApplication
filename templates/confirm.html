@@ -3,8 +3,7 @@
 
 {% block content %}
     {{ block.super }}
-    <div class="container">
-    You have not confirmed your email account. Please click the link in your email, or
-    click <a href="{% url 'myrelevate:confirm' %}">here</a> and we will resend you an email.
+    <div id="confirm-text" class="container"> It looks like the email you signed up with hasn't been confirmed.
+        If <div class="relevate-blue">{{ user.email }}</div> is the correct email please click <a href="{% url 'myrelevate:confirm' %}">here</a>.
     </div>
 {% endblock %}
