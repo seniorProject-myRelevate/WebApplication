@@ -3,6 +3,7 @@ import os
 import sendgrid
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
@@ -149,7 +150,8 @@ def confirm(request):
         return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
         get_user_model().objects.get(email=request.user.email).new_confirm()
-        return HttpResponse("thank you for confirming your account")
+        messages.info(request, 'Thank you for confirming your account!')
+        return HttpResponseRedirect(reverse('myrelevate:index'))
 
 
 # Below are helper functions that are not associated with any particular route
