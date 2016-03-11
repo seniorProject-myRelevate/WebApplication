@@ -66,10 +66,14 @@ def logout_view(request):
 
 def contributors(request):
     if request.method == 'POST':
-        form = ContributorForm(request.POST, request.FILES)
+        user = get_user_model().objects.get(email=request.user.email)
+        form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
-            profile = ContributorProfile(cv=request.FILES['cv'])
             form.save(email=request.user.email)
+            profile = ContributorProfile(cv=request.FILES['cv'])
+            user.contributor_profile = profile
+            profile.save()
+            user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)

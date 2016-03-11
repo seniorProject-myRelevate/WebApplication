@@ -34,7 +34,7 @@ class ContributorProfile(models.Model):
         ('SPsyD', 'Student-PsyD')
     )
     credential = models.CharField(max_length=5, choices=DEGREES)
-    adviser_email = models.EmailField(max_length=254, unique=True, null=False, blank=False)
+    adviser_email = models.EmailField(max_length=254, unique=False, null=False, blank=False)
     adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
     adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
     institution = models.CharField(max_length=255, null=False, blank=False)
