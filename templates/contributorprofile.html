@@ -9,10 +9,24 @@
             <div class="text-center1">
                 <h1 class="orange">
                     {{ user.first_name }} {{ user.last_name }},
-                    {% if  contributorProfile.credential  == 'SU' %}
+                    {% if  contributorProfile.credential  == 'MS' %}
+                        Master of Science
+                    {% elif  contributorProfile.credential  == 'MA' %}
+                        Master of Arts
+                    {% elif  contributorProfile.credential  == 'PhD' %}
+                        Doctor of Philosophy
+                    {% elif  contributorProfile.credential  == 'PsyD' %}
+                        Doctor of Psychology
+                    {% elif  contributorProfile.credential  == 'PsyD' %}
+                        Doctor of Psychology
+                    {% elif  contributorProfile.credential  == 'SU' %}
                         Undergraduate Student
                     {% elif contributorProfile.credential == 'SM'%}
                         Master Student
+                     {% elif contributorProfile.credential == 'SPhD'%}
+                        Doctor of Philosophy Student
+                    {% elif contributorProfile.credential == 'SPsyD'%}
+                        Doctor of Psychology Student
                     {% endif %}
                 </h1>
                 <h3>Approved Relevate Contributor</h3>
@@ -40,7 +54,7 @@
         </div>
     </div>
 
-    <div class="container2" style="height: 50%; overflow: auto">
+    <div class="container2">
         <!--Displays the contributors profile-->
         <div class="ContributorProfile" id="contributorProfile">
             <div>
@@ -110,7 +124,7 @@
             </div>
             <div>
                 <h2 class="blue">CV</h2>
-                <p>{{ contributorForm.cv }}</p>
+                <p>{{ contributorProfile.cv }}</p>
             </div>
             <div>
                 <h2 class="blue">Adviser</h2>

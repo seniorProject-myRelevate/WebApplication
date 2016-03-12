@@ -76,8 +76,6 @@ ul.qualifications {
 
 .container2 {
     margin-left: 100px;
-    height: 100%;
-    overflow: auto;
 }
 
 .contributor-menu {
@@ -144,12 +142,6 @@ ul.qualifications {
 
 .blue {
     color: #00b0f0;
-}
-
-.carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img {
-    display: block;
-    max-width: 100%;
-    height: auto;
 }
 
 img.logo {
