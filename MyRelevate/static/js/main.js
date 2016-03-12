@@ -56,6 +56,11 @@ $("#form-subscribe").submit(function (event) {
     //post_data();
 });
 
+$('#contributorPage').click(function(){
+    ContributorAccess();
+    return false;
+});
+
 function ContributorAccess() {
     $('#profiles').hide();
     $('#requestAccess').show();
