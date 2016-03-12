@@ -187,10 +187,10 @@ class ContributorForm(forms.ModelForm):
                                                              'class': 'form-control'}), label='')
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
                                                              'class': 'form-control'}), label='', required=False)
-    cv = SpecificFileField(label='Specific MIME type',
-                           mimetype_whitelist=("application/pdf", "application/msword",
-                                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                               ))
+    cv = forms.FileField(label='Specific MIME type')
+                           # mimetype_whitelist=("application/pdf", "application/msword",
+                           #                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                           #                     ))
 
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
 

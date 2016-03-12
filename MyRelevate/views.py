@@ -86,7 +86,7 @@ def contributor_profile(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
-            profile = ContributorProfile(cv=request.FILES['cv'])
+            # profile = ContributorProfile(cv=request.FILES['cv'])
             form.save(email=request.user.email)
             return HttpResponseRedirect(reverse('myrelevate:contributorprofile'))
         else:
