@@ -76,6 +76,7 @@ ul.qualifications {
 
 .container2 {
     margin-left: 100px;
+    height: 100%;
     overflow: auto;
 }
 
@@ -137,12 +138,18 @@ ul.qualifications {
     height: 85px;*/
 }
 
-.name {
+.orange {
     color: #ed7d31;
 }
 
-.name2 {
+.blue {
     color: #00b0f0;
+}
+
+.carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
 img.logo {
@@ -163,10 +170,10 @@ img.logo1 {
 
 img.logo_contributors {
     display: block;
-    height: auto;
-    width: auto;
-    max-height: 200px;
-    max-width: 200px;
+    height: 300px;
+    width: 300px;
+    max-height: 500px;
+    max-width: 500px;
     float: left;
 }
 

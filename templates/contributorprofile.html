@@ -7,7 +7,7 @@
         <img class="logo_contributors" src="{% static "images/logo.png" %}" alt="logo"/>
         <div class="container">
             <div class="text-center1">
-                <h1 class="name">
+                <h1 class="orange">
                     {{ user.first_name }} {{ user.last_name }},
                     {% if  contributorProfile.credential  == 'SU' %}
                         Undergraduate Student
@@ -40,120 +40,99 @@
         </div>
     </div>
 
-    <div class="container2">
-            <!--Displays the contributors profile-->
-            <div class="ContributorProfile" id="contributorProfile">
-                <div>
-                    <h2 class="name">{{ user.first_name }} {{ user.last_name }}</h2>
-                    <h4>Credentials</h4>
-                    <p id="credentials">
-                        {{ contributorProfile.institution }}
-                        {{ contributorProfile.address }}
-                    </p>
-                </div>
-                <div>
-                    <h2 class="name2">Biography
-                        <button id="editBiography" type="button" class="btn btn-black" onclick="EditBiography()">
-                            <span class="glyphicon glyphicon-pencil"></span></button>
-                    </h2>
-                    <p id="biography-paragraph">
-                        <span>{{ contributorProfile.biography }}</span>
-                    </p>
-                    <form class="form" id="biographyForm" style="display: none"
-                          action="{% url 'myrelevate:contributor_profile' %}" method="post">
-                        {% csrf_token %}
-                        <div style="display: none">
-                            {{ contributorForm.credential }}
-                            {{ contributorForm.institution }}
-                            {{ contributorForm.address }}
-                            {{ contributorForm.program }}
-                            {{ contributorForm.cv }}
-                            {{ contributorForm.interests }}
-                            {{ contributorForm.accept_terms }}
-                        </div>
-                        {{ contributorForm.biography }}
-                        <input type="submit" class="btn btn-primary" value="Save"/>
-                    </form>
-                </div>
-                <div>
-                    <h2 class="name2">Research and Clinical Interests
-                        <button id="editInterests" type="button" class="btn btn-black" onclick="EditInterests()">
-                            <span class="glyphicon glyphicon-pencil"></span></button>
-                    </h2>
-                    <p id="interests-paragraph">
-                        <span>{{ contributorProfile.interests }}</span>
-                    </p>
-                    <form class="form" id="interestsForm" style="display: none"
-                          action="{% url 'myrelevate:contributor_profile' %}" method="post">
-                        {% csrf_token %}
-                        <div style="display: none">
-                            {{ contributorForm.credential }}
-                            {{ contributorForm.institution }}
-                            {{ contributorForm.address }}
-                            {{ contributorForm.program }}
-                            {{ contributorForm.cv }}
-                            {{ contributorForm.biography }}
-                            {{ contributorForm.accept_terms }}
-                        </div>
+    <div class="container2" style="height: 50%; overflow: auto">
+        <!--Displays the contributors profile-->
+        <div class="ContributorProfile" id="contributorProfile">
+            <div>
+                <h2 class="orange">{{ user.first_name }} {{ user.last_name }}</h2>
+                <h4>Credentials</h4>
+                <p id="credentials">
+                    {{ contributorProfile.institution }}
+                    {{ contributorProfile.address }}
+                </p>
+            </div>
+            <div>
+                <h2 class="blue">Biography
+                    <button id="editBiography" type="button" class="btn btn-black" onclick="EditBiography()">
+                        <span class="glyphicon glyphicon-pencil"></span></button>
+                </h2>
+                <p id="biography-paragraph">
+                    <span>{{ contributorProfile.biography }}</span>
+                </p>
+                <form class="form" id="biographyForm" style="display: none"
+                      action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                    {% csrf_token %}
+                    <div style="display: none">
+                        {{ contributorForm.credential }}
+                        {{ contributorForm.institution }}
+                        {{ contributorForm.address }}
+                        {{ contributorForm.program }}
                         {{ contributorForm.interests }}
-                        <input type="submit" class="btn btn-primary" value="Save"/>
-                    </form>
-                </div>
-                <div>
-                    <h2 class="name2">Contact and additional information
-                        <button id="editContactInfo" type="button" class="btn btn-black">
-                            <span class="glyphicon glyphicon-pencil"></span></button>
-                    </h2>
-                    <p>
-                        <h4> {{ user.email }} </h4>
-                    </p>
-
-                </div>
-                <div>
-                    <h2 class="name2">CV</h2>
-                    <p>{{ contributorProfile.cv }}</p>
-                </div>
-                <div>
-                    <h2 class="name2">Adviser</h2>
-                    <p>{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}</p>
-                    <p>{{ contributorProfile.adviser_email }}</p>
-                </div>
+                        {{ contributorForm.accept_terms }}
+                    </div>
+                    {{ contributorForm.biography }}
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </form>
             </div>
-
-            <!--Displays the content and contributor posts history-->
-            <div id="viewContent" style="display:none">
-                <h2 class="name">{{ user.first_name }} {{ user.last_name }}</h2>
-                <h4>Post to date</h4>
+            <div>
+                <h2 class="blue">Research and Clinical Interests
+                    <button id="editInterests" type="button" class="btn btn-black" onclick="EditInterests()">
+                        <span class="glyphicon glyphicon-pencil"></span></button>
+                </h2>
+                <p id="interests-paragraph">
+                    <span>{{ contributorProfile.interests }}</span>
+                </p>
+                <form class="form" id="interestsForm" style="display: none"
+                      action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                    {% csrf_token %}
+                    <div style="display: none">
+                        {{ contributorForm.credential }}
+                        {{ contributorForm.institution }}
+                        {{ contributorForm.address }}
+                        {{ contributorForm.program }}
+                        {{ contributorForm.cv }}
+                        {{ contributorForm.biography }}
+                        {{ contributorForm.accept_terms }}
+                    </div>
+                    {{ contributorForm.interests }}
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </form>
             </div>
+            <div>
+                <h2 class="blue">Contact and additional information
+                    <button id="editContactInfo" type="button" class="btn btn-black">
+                        <span class="glyphicon glyphicon-pencil"></span></button>
+                </h2>
+                <p>
+                    <h4> {{ user.email }} </h4>
+                </p>
 
-            <!--Displays the resources for contributors-->
-            <div id="viewResources" style="display:none">
-                <h2>Resources</h2>
             </div>
-
-            <!--Shows the forms to allow contributor to create post an article-->
-            <div class="CreatePost" id="createPost" style="display: none">
-                <h2>Post an Article</h2>
+            <div>
+                <h2 class="blue">CV</h2>
+                <p>{{ contributorForm.cv }}</p>
+            </div>
+            <div>
+                <h2 class="blue">Adviser</h2>
+                <p>{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}</p>
+                <p>{{ contributorProfile.adviser_email }}</p>
             </div>
         </div>
 
-        <!--The footer-->
-        <div class="footer">
-            <div class="social-icon hover-facebook">
-                <a href="https://www.facebook.com/MyRelevate" target="_blank"><i
-                        class="fa fa-facebook-square fa-3x"></i></a>
-            </div>
-            <div class="social-icon hover-twitter">
-                <a href="https://twitter.com/MyRelevate/" target="_blank"><i
-                        class="fa fa-twitter-square fa-3x"></i></a>
-            </div>
-            <div class="social-icon hover-pinterest">
-                <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i
-                        class="fa fa-pinterest-square fa-3x"></i></a>
-            </div>
-            <div class="social-icon hover-youtube">
-                <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
-                        class="fa fa-youtube-square fa-3x"></i></a>
-            </div>
+        <!--Displays the content and contributor posts history-->
+        <div id="viewContent" style="display:none">
+            <h2 class="orange">{{ user.first_name }} {{ user.last_name }}</h2>
+            <h4>Post to date</h4>
         </div>
+
+        <!--Displays the resources for contributors-->
+        <div id="viewResources" style="display:none">
+            <h2>Resources</h2>
+        </div>
+
+        <!--Shows the forms to allow contributor to create post an article-->
+        <div class="CreatePost" id="createPost" style="display: none">
+            <h2>Post an Article</h2>
+        </div>
+    </div>
 {% endblock %}
