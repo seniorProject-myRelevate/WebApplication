@@ -1,12 +1,12 @@
 import os
 
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserChangeForm, ReadOnlyPasswordHashField
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
 from .models import ContributorProfile, Subscriber
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserChangeForm, ReadOnlyPasswordHashField
 
 
 class ExtFileField(forms.FileField):
@@ -121,10 +121,10 @@ class RegistrationForm(forms.ModelForm):
 class PasswordChangeForm(UserChangeForm):
     email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
 
-    password = ReadOnlyPasswordHashField(label= ("Password"),
-        help_text= ("Raw passwords are not stored, so there is no way to see "
-                    "this user's password, but you can change the password "
-                    "using <a href=\"password/\">this form</a>."))
+    password = ReadOnlyPasswordHashField(label=("Password"),
+                                         help_text=("Raw passwords are not stored, so there is no way to see "
+                                                    "this user's password, but you can change the password "
+                                                    "using <a href=\"password/\">this form</a>."))
 
     old_password = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Old Password', 'class': 'form-control'}), label='')

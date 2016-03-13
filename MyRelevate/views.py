@@ -1,16 +1,16 @@
 import os
 
 import sendgrid
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm
-from .models import ContributorProfile, Subscriber
-from django.contrib.auth import get_user_model
+from .models import Subscriber
 
 
 def index(request):
@@ -77,7 +77,7 @@ def contributors(request):
         else:
             return HttpResponse(form.errors)
     else:
-        #contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
+        # contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
         contributorForm = ContributorForm()
     return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 

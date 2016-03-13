@@ -56,7 +56,7 @@ $("#form-subscribe").submit(function (event) {
     //post_data();
 });
 
-$('#contributorPage').click(function(){
+$('#contributorPage').click(function () {
     ContributorAccess();
     return false;
 });
@@ -82,12 +82,12 @@ function ContributorAccess() {
     }
 }
 
-$(document).ready(function() {
-    $( '.dropdown' ).hover(
-        function(){
+$(document).ready(function () {
+    $('.dropdown').hover(
+        function () {
             $(this).children('.sub-menu').slideDown(200);
         },
-        function(){
+        function () {
             $(this).children('.sub-menu').slideUp(200);
         }
     );

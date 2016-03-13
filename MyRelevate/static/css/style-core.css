@@ -14,46 +14,50 @@ hr{
 }
 
 nav {
-    background-color:rgb(255,100,100);
-    padding:10px 0;
+    background-color: rgb(255, 100, 100);
+    padding: 10px 0;
 }
+
 nav ul {
-    list-style-type:none;
-    margin:0;
-    padding:0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
+
 nav ul li {
     color: #fff;
-    display:block;
+    display: block;
     font-size: medium;
     font-weight: bold;
     padding: 5px 15px;
-    position:relative;
+    position: relative;
 }
 
 /* sub navigation */
 nav li ul {
     background-color: #fff;
-    position:absolute;
-    left:0;
-    top:30px; /* make this equal to the line-height of the links (specified below) */
+    position: absolute;
+    left: 0;
+    top: 30px; /* make this equal to the line-height of the links (specified below) */
 }
+
 nav li li {
     color: #2BA2D9;
-    position:relative;
-    margin:0;
-    display:block;
+    position: relative;
+    margin: 0;
+    display: block;
 }
+
 nav li li ul {
-    position:absolute;
-    top:0;
-    left:200px; /* make this equal to the width of the sub nav above */
-    margin:0;
+    position: absolute;
+    top: 0;
+    left: 200px; /* make this equal to the width of the sub nav above */
+    margin: 0;
 }
 
 /* hide sub menu links */
 ul.sub-menu {
-    display:none;
+    display: none;
     width: 100%;
 }
 
@@ -80,7 +84,7 @@ ul.sub-menu {
     bottom: 0;
 }
 
-.center-text{
+.center-text {
     text-align: center;
 }
 
@@ -367,37 +371,37 @@ img.logo3 {
     border: 1px solid red;
 }
 
-#confirm-text{
-    min-height:300px;
+#confirm-text {
+    min-height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
-#confirm-text *:before, #confirm-text *:after{
+#confirm-text *:before, #confirm-text *:after {
     content: "\00a0";
 }
 
-.messages{
+.messages {
     text-align: center;
     color: #fff;
     font-weight: 500;
 }
 
-.success{
+.success {
     background-color: #449D44;
 }
 
-.info{
+.info {
     background-color: #31B0D5;
 }
 
-.warning{
+.warning {
     background-color: #EC971F;
 }
 
-.error{
+.error {
     background-color: #C9302C;
 }
 
