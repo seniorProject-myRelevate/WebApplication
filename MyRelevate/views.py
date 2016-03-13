@@ -3,6 +3,7 @@ import os
 import sendgrid
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
@@ -16,12 +17,11 @@ def index(request):
     if request.method == 'POST':
         login_view(request)
     else:
-        confirmed = None
-        if request.user.is_authenticated():
-            user = get_user_model().objects.get(email=request.user.email)
-            if not user.confirmed:
-                confirmed = user.generate_confirmation_token()
-        return render(request, 'index.html', {'user': request.user, 'token': confirmed})
+        messages.success(request, 'Success Message')
+        messages.info(request, 'Info Message')
+        messages.warning(request, 'Warning Message')
+        messages.error(request, 'Error Message')
+        return render(request, 'index.html', {'user': request.user})
 
 
 def register_user(request):
@@ -66,8 +66,6 @@ def logout_view(request):
 
 def contributors(request):
     if request.method == 'POST':
-        # user = get_user_model().objects.get(email=request.user.email)
-        # form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(email=request.user.email)
@@ -79,11 +77,13 @@ def contributors(request):
         else:
             return HttpResponse(form.errors)
     else:
-        pass
-    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': ContributorForm()})
+        #contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
+        contributorForm = ContributorForm()
+    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
 
 def contributor_profile(request):
+    #contributor =
     if request.method == 'POST':
         user = get_user_model().objects.get(email=request.user.email)
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
@@ -122,14 +122,20 @@ def subscribe(request):
 
 
 @login_required()
-def confirm(request, token=None):
-    user = get_user_model().objects.get(user=request.user)
-    if user.confirmed:
+def new_confirm(request):
+    if request.user.confirmed:
         return HttpResponseRedirect(reverse('myrelevate:index'))
-    if user.confirm(token):
-        return HttpResponse("thank you for confirming your account")
+    return render(request, 'confirm.html', {'user': request.user})
+
+
+@login_required()
+def confirm(request):
+    if request.user.confirmed:
+        return HttpResponseRedirect(reverse('myrelevate:index'))
     else:
-        return HttpResponse("something went wrong")
+        get_user_model().objects.get(email=request.user.email).new_confirm()
+        messages.success(request, 'Thank you for confirming your account!')
+        return HttpResponseRedirect(reverse('myrelevate:index'))
 
 
 # Below are helper functions that are not associated with any particular route

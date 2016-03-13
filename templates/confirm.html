@@ -1,0 +1,9 @@
+{% extends "cloud_template.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    {{ block.super }}
+    <div id="confirm-text" class="container"> It looks like the email you signed up with hasn't been confirmed.
+        If <div class="relevate-blue">{{ user.email }}</div> is the correct email please click <a href="{% url 'myrelevate:confirm' %}">here</a>.
+    </div>
+{% endblock %}
