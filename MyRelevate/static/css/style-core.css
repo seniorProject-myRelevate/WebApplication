@@ -383,10 +383,8 @@ img.logo3 {
     content: "\00a0";
 }
 
-.messages {
+#messages {
     text-align: center;
-    color: #fff;
-    font-weight: 500;
 }
 
 .success {

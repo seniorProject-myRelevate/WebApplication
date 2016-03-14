@@ -17,10 +17,6 @@ def index(request):
     if request.method == 'POST':
         login_view(request)
     else:
-        messages.success(request, 'Success Message')
-        messages.info(request, 'Info Message')
-        messages.warning(request, 'Warning Message')
-        messages.error(request, 'Error Message')
         return render(request, 'index.html', {'user': request.user})
 
 

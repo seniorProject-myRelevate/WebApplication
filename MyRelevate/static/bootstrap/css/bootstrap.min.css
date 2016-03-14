@@ -5412,11 +5412,12 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
     color: #333
 }
 
+/*editing styling*/
 .alert {
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 5px; /*padding: 15px*/
+    /*margin-bottom: 20px;*/
     border: 1px solid transparent;
-    border-radius: 4px
+    /*border-radius: 4px*/
 }
 
 .alert h4 {
@@ -5489,17 +5490,18 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
     color: #66512c
 }
 
-.alert-danger {
+/*changed class from danger to error, to conform to django's message tag -lb*/
+.alert-danger, .alert-error {
     color: #a94442;
     background-color: #f2dede;
     border-color: #ebccd1
 }
 
-.alert-danger hr {
+.alert-danger hr, .alert-error hr {
     border-top-color: #e4b9c0
 }
 
-.alert-danger .alert-link {
+.alert-djanger .alert-link, .alert-error .alert-link {
     color: #843534
 }
 
