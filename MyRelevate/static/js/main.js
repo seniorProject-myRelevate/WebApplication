@@ -157,3 +157,5 @@ function addMessage(tag, message) {
     <span aria-hidden='true'>×</span></button>" + message + "</div>";
     $('#messages').append(str);
 }
+
+$('#myLink').click(function(){ addMessage('info', 'test'); return false; });

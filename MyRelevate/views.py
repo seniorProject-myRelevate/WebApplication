@@ -28,7 +28,10 @@ def register_user(request):
         if form.is_valid():
             form.save()
             login(request, authenticate(email=request.POST['email'], password=request.POST['password1']))
+            messages.success(request, 'Your account has been created!')
             return HttpResponseRedirect(reverse('myrelevate:index'))
+        else:
+            messages.error(request, 'Your account could not be created, please try again.')
     else:
         pass
     return render(request, "register.html", {'form': RegistrationForm(), 'contribForm': ContributorForm()})
@@ -57,6 +60,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
+    messages.success(request, 'You have logged out.')
     return HttpResponseRedirect(reverse('myrelevate:index'))
 
 
