@@ -1,14 +1,14 @@
 var requestBtn = document.getElementById('request');
 var emailInput = $('#id_email');
 
-function validate_email(email) {
+function validateEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
-function subscribe_validate() {
+function subscribeValidate() {
     var textbox = $('#subscription-inputs');
-    var isValid = validate_email(emailInput.val());
+    var isValid = validateEmail(emailInput.val());
 
     if (isValid) {
         textbox.removeClass('has-error');
@@ -24,7 +24,7 @@ function subscribe_validate() {
 }
 
 function post_data() {
-    if (validate_email(emailInput.val())) {
+    if (validateEmail(emailInput.val())) {
         $.ajax({
             url: $("#form-subscribe").attr('action'),
             type: "POST", // http method
@@ -43,7 +43,7 @@ function post_data() {
 }
 
 emailInput.blur(function () {
-    subscribe_validate()
+    subscribeValidate()
 });
 
 emailInput.focus(function () {
@@ -52,7 +52,7 @@ emailInput.focus(function () {
 
 $("#form-subscribe").submit(function (event) {
     //event.preventDefault();
-    //subscribe_validate();
+    //subscribeValidate();
     //post_data();
 });
 
@@ -150,3 +150,10 @@ $('a').parent().hover(
     $(this).children("ul").hide();
   }
 );
+
+function addMessage(tag, message) {
+    var str = "<div class='alert alert-" + tag + " alert-dismissible fade in' role='alert'>\
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
+    <span aria-hidden='true'>×</span></button>" + message + "</div>";
+    $('#messages').append(str);
+}
