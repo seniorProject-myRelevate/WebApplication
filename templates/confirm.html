@@ -3,9 +3,13 @@
 
 {% block content %}
     {{ block.super }}
-    <div id="confirm-text" class="container"> It looks like the email you signed up with hasn't been confirmed.
+    <div id="confirm-text" class="container"><div class="row"> It looks like the email you signed up with hasn't been confirmed.
         If
         <div class="relevate-blue">{{ user.email }}</div>
-        is the correct email please click <a href="{% url 'myrelevate:confirm' %}">here</a>.
+        is the correct email please click the button below.
+        </div>
+        <div class="row">
+    <a href="{% url 'myrelevate:confirm' %}" class="btn btn-success btn-lg active" role="button" style="color: #fff !important">Confirm</a>
+    </div>
     </div>
 {% endblock %}
