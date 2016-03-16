@@ -14,6 +14,7 @@ from .models import Subscriber
 
 
 def index(request):
+    send_template()
     if request.method == 'POST':
         login_view(request)
     else:
@@ -148,4 +149,29 @@ def send_email():
     message.set_subject("Test email from MyRelevate")
     message.set_html("Using sendgrid we are able to send you emails... pretty cool eh?")
 
-    client.send(message)
+    print client.send(message)
+
+
+def send_template():
+    client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
+    message = sendgrid.Mail()
+    message.set_from("noreply@myrelevate.com")
+    message.add_to("lbreck93@gmail.com")
+
+    message.smtpapi.data = {
+        "filters": {
+            "templates": {
+                "settings": {
+                    "enable": 1,
+                    "template_id": "c08e86d4-00ac-4513-b53e-68ec373ef3d9"
+                }
+            }
+        }
+    }
+    print client.send(message)
+
+
+def get_unsubscribes():
+    client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
+    l = sendgrid.SendGridAPIClient(apikey=os.environ['SendGridApiKey']).suppressions
+    print l.get()
