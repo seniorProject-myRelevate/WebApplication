@@ -14,7 +14,6 @@ from .models import Subscriber
 
 
 def index(request):
-    send_template()
     if request.method == 'POST':
         login_view(request)
     else:
@@ -155,19 +154,15 @@ def send_email():
 def send_template():
     client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
     message = sendgrid.Mail()
+    message.set_subject('App Recieved')
+    message.set_html('Body')
+    message.set_text('Body')
+    message.add_substitution('Body', '')
     message.set_from("noreply@myrelevate.com")
     message.add_to("lbreck93@gmail.com")
+    message.add_filter('templates', 'enable', 1)
+    message.add_filter('templates', 'template_id', 'c08e86d4-00ac-4513-b53e-68ec373ef3d9')
 
-    message.smtpapi.data = {
-        "filters": {
-            "templates": {
-                "settings": {
-                    "enable": 1,
-                    "template_id": "c08e86d4-00ac-4513-b53e-68ec373ef3d9"
-                }
-            }
-        }
-    }
     print client.send(message)
 
 
