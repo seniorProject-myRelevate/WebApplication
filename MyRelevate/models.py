@@ -21,20 +21,23 @@ from django.contrib.auth.models import User
 #         return self.email
 
 class Subscriber(models.Model):
-    db_table = "myrelevate_subscriber"
     email = models.EmailField(unique=True, null=False, blank=False)
+
+    class Meta:
+        db_table = "myrelevate_subscriber"
 
 
 class Article(models.Model):
-    db_table = "myrelevate_article"
     title = models.CharField(max_length=100)
     content = models.TextField()  # check if this requires bounding for security purposes
     publishDate = models.DateField()
     updateDate = models.DateField()
 
+    class Meta:
+        db_table = "myrelevate_article"
+
 
 class ContributorProfile(models.Model):
-    db_table = "myrelevate_contributorprofile"
     biography = models.CharField(max_length=255, null=True, blank=True)
     # should be multichoice.
     area_of_expertise = models.CharField(max_length=255, choices=None, null=True, blank=True)
@@ -43,19 +46,22 @@ class ContributorProfile(models.Model):
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
     articles = models.ForeignKey(Article, null=True, blank=True)
 
+    class Meta:
+        db_table = "myrelevate_contributorprofile"
 
 class UserProfile(models.Model):
-    db_table = "myrelevate_userprofile"
     user = models.OneToOneField(User)
     contributorProfile = models.OneToOneField(ContributorProfile, null=True)
 
     def __unicode__(self):
         return self.user.username
 
+    class Meta:
+        db_table = "myrelevate_userprofile"
+
 
 # DemographicData Database Model
 class DemographicData(models.Model):
-    db_table = "myrelevate_demographicdata"
     EDUCATION = (
         (-1, ''),
         (0, 'Completed high school/GED'),
@@ -203,15 +209,22 @@ class DemographicData(models.Model):
     currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
     gettingDivorced = models.NullBooleanField()
 
+    class Meta:
+        db_table = "myrelevate_demographicdata"
+
 
 # table of tags for use in adding new tags
 class Tag(models.Model):
-    db_table = "myrelevate_tag"
     tagName = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = "myrelevate_tag"
 
 
 # table for linking tags to articles
 class TagTable(models.Model):
-    db_table = "myrelevate_tagtable"
     article = models.ForeignKey(Article)
     tag = models.ForeignKey(Tag)
+
+    class Meta:
+        db_table = "myrelevate_tagtable"

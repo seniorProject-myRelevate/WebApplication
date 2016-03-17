@@ -8,7 +8,7 @@ branch-defaults:
   jr-dev:
     environment: WebApplication-dev
   master:
-    environment: relevate
+    environment: relevate-dev
   master-dev:
     environment: MyRelevate
 global:
