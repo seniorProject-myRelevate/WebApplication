@@ -23,20 +23,25 @@ function subscribeValidate() {
     return isValid;
 }
 
-function post_data() {
+function postData() {
     if (validateEmail(emailInput.val())) {
+        var textbox = $('#subscription-inputs');
         $.ajax({
             url: $("#form-subscribe").attr('action'),
             type: "POST", // http method
-            data: {the_post: emailInput.val()}, // data sent with the post request
+            dataType: "json",
+            data: {email: emailInput.val()}, // data sent with the post request
 
             // handle a successful response
-            success: function (json) {
-                $('#form-subscribe').hide();
-                $('#subscribe-success').removeClass('hidden').fadeIn();
-                $('#welcomeModal').modal('show');
+            success: function (data) {
+                textbox.removeClass('has-error');
+                textbox.addClass('has-success');
+                addMessage('success', 'Thank you for subscribing!');
             },
-            error: function () {
+            error: function (data) {
+                textbox.removeClass('has-success');
+                textbox.addClass('has-error');
+                addMessage('error', data.responseJSON.email_errs)
             }
         });
     }
@@ -51,9 +56,9 @@ emailInput.focus(function () {
 });
 
 $("#form-subscribe").submit(function (event) {
-    //event.preventDefault();
-    //subscribeValidate();
-    //post_data();
+    event.preventDefault();
+    subscribeValidate();
+    postData();
 });
 
 $('#contributorPage').click(function () {

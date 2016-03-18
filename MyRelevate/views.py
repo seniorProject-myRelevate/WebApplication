@@ -6,11 +6,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm
-from .models import Subscriber
 
 
 def index(request):
@@ -108,15 +107,18 @@ def user_profile(request):
 
 
 def subscribe(request):
-    if request.method == 'POST':
+    if request.is_ajax() and request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
-            Subscriber.objects.get(email=request.POST[''])
-            print request.POST
             form.save()
+            return JsonResponse(status=200, data={})
         else:
-            print form.errors
-        return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
+            t = dict(form.errors.items())
+            return JsonResponse(data={'email_errs': t['email'][0]}, status=400)
+    elif request.method == 'POST':
+        form = SubscribeForm(request.POST)
+        if form.is_valid():
+            form.save()
     else:
         return render(request, 'subscribe.html', {'subscribeForm': SubscribeForm()})
 
