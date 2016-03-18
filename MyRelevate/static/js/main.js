@@ -36,12 +36,12 @@ function postData() {
             success: function (data) {
                 textbox.removeClass('has-error');
                 textbox.addClass('has-success');
-                addMessage('success', 'Thank you for subscribing!');
+                addMessage('success', data.responseJSON.message);
             },
             error: function (data) {
                 textbox.removeClass('has-success');
                 textbox.addClass('has-error');
-                addMessage('error', data.responseJSON.email_errs)
+                addMessage('error', data.responseJSON.message)
             }
         });
     }
