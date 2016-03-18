@@ -148,7 +148,7 @@ def subscribe(request):
     :param request:
     :return: returns json data, or renders the subscribe page.
     """
-    if request.is_ajax() and request.method == 'POST':
+    if request.is_ajax() and request.method == 'POST' and request.user.is_anonymous():
         form = SubscribeForm(request.POST)
         if form.is_valid():
             form.save()
