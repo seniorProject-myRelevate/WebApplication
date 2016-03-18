@@ -111,6 +111,7 @@ def subscribe(request):
         form = SubscribeForm(request.POST)
         if form.is_valid():
             form.save()
+            send_email('Thank you for subscribing', '5642c87f-4552-4a00-8b95-f17857ae9e88', dict, form.cleaned_data['email'],)
             return JsonResponse(status=200, data={})
         else:
             t = dict(form.errors.items())
@@ -141,19 +142,7 @@ def confirm(request):
 
 
 # Below are helper functions that are not associated with any particular route
-def send_email():
-    client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
-    message = sendgrid.Mail()
-
-    message.add_to("lbreck93@gmail.com")
-    message.set_from("noreply@myrelevate.com")
-    message.set_subject("Test email from MyRelevate")
-    message.set_html("Using sendgrid we are able to send you emails... pretty cool eh?")
-
-    print client.send(message)
-
-
-def send_template():
+def send_template(toEmail, fromEmail, subject, templateID, substitution):
     client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
     message = sendgrid.Mail()
     message.set_subject('App Recieved')
@@ -164,6 +153,22 @@ def send_template():
     message.add_to("lbreck93@gmail.com")
     message.add_filter('templates', 'enable', 1)
     message.add_filter('templates', 'template_id', 'c08e86d4-00ac-4513-b53e-68ec373ef3d9')
+
+    print client.send(message)
+
+
+def send_email(subject, template_id, substitution, to_email):
+    client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
+    message = sendgrid.Mail()
+    message.set_subject(subject)
+    message.set_from('noreply@myrelevate.com')
+    message.add_to(to_email)
+    if template_id:
+        message.set_html('Body')
+        message.set_text('Body')
+        message.add_substitution('Body', '')
+        message.add_filter('templates', 'enable', 1)
+        message.add_filter('templates', 'template_id', template_id)
 
     print client.send(message)
 
