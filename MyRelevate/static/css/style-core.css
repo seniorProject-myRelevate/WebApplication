@@ -129,11 +129,23 @@ ul.qualifications {
 
 .ContributorProfile {
     height: 100%;
+    width: 100%;
     overflow: auto;
 }
 
 .container2 {
     margin-left: 100px;
+}
+
+.contributors-menu-bar {
+    background-color: #1b6d85;
+    display: block;
+    padding-top: 75px;
+    vertical-align: text-top;
+}
+
+.navbar {
+
 }
 
 .contributor-menu {
@@ -150,6 +162,24 @@ ul.qualifications {
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 2%;
+}
+
+#studentAccess{
+    border: 1px solid #808080;
+}
+
+.register {
+    color: white;
+    display: block;
+
+    /*text-align: right;*/
+    margin-right: 30px;
+
+    /*margin-top: -60px;*/
+    /*padding-top: -30px;*/
+    /*vertical-align: text-top;*/
+    /*padding-top: 15px*/
+    /*padding: 0 30px;*/
 }
 
 .footer {
@@ -216,10 +246,13 @@ img.logo {
     margin-right: auto;
 }
 
+img.logo-background {
+
+}
+
 img.logo1 {
     display: block;
     float: right;
-
 }
 
 img.logo_contributors {
@@ -252,11 +285,6 @@ img.logo3 {
 .center-block {
     margin: 0 auto;
     float: none;
-}
-
-.register {
-    text-align: right;
-    padding: 0 30px;
 }
 
 .name {
