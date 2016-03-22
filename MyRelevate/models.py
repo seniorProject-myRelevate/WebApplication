@@ -23,8 +23,8 @@ class Subscriber(models.Model):
 #     publishDate = models.DateField()
 #     updateDate = models.DateField()
 
-    class Meta:
-        db_table = "myrelevate_article"
+#    class Meta:
+#        db_table = "myrelevate_article"
 
 
 class ContributorProfile(models.Model):
@@ -82,12 +82,15 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
         return self._create_user(email, password, True, True,
                                  **extra_fields)
+    class Meta:
+        db_table = "myrelevate_usermanager"
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+        db_table = "myrelevate_user"
 
     email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=254)
@@ -148,10 +151,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         message.set_html(html)
 
         client.send(message)
-
-    class Meta:
-        db_table = "myrelevate_userprofile"
-
 
 # DemographicData Database Model
 # class DemographicData(models.Model):
@@ -313,5 +312,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 #     article = models.ForeignKey(Article)
 #     tag = models.ForeignKey(Tag)
 
-    class Meta:
-        db_table = "myrelevate_tagtable"
+#    class Meta:
+#        db_table = "myrelevate_tagtable"

@@ -5,6 +5,8 @@ branch-defaults:
     environment: relevate
   development-lb:
     environment: WebApplication-dev
+  development-master:
+    environment: relevate-dev
   jr-dev:
     environment: WebApplication-dev
   master:
