@@ -13,12 +13,18 @@ from SeniorProject import settings
 class Subscriber(models.Model):
     email = models.EmailField(unique=True, null=False, blank=False)
 
+    class Meta:
+        db_table = "myrelevate_subscriber"
+
 
 # class Article(models.Model):
 #     title = models.CharField(max_length=100)
 #     content = models.TextField()  # check if this requires bounding for security purposes
 #     publishDate = models.DateField()
 #     updateDate = models.DateField()
+
+    class Meta:
+        db_table = "myrelevate_article"
 
 
 class ContributorProfile(models.Model):
@@ -50,6 +56,8 @@ class ContributorProfile(models.Model):
     approved = models.BooleanField(default=False)
     # articles = models.ForeignKey(Article, null=True, blank=True)
 
+    class Meta:
+        db_table = "myrelevate_contributorprofile"
 
 class UserManager(BaseUserManager):
 
@@ -140,6 +148,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         message.set_html(html)
 
         client.send(message)
+
+    class Meta:
+        db_table = "myrelevate_userprofile"
 
 
 # DemographicData Database Model
@@ -301,3 +312,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 # class TagTable(models.Model):
 #     article = models.ForeignKey(Article)
 #     tag = models.ForeignKey(Tag)
+
+    class Meta:
+        db_table = "myrelevate_tagtable"

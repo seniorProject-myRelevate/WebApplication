@@ -1,12 +1,14 @@
 branch-defaults:
   aws-dev:
     environment: WebApplication-dev
+  aws-mod:
+    environment: relevate
   development-lb:
     environment: WebApplication-dev
   jr-dev:
     environment: WebApplication-dev
   master:
-    environment: MyRelevate-test
+    environment: relevate-dev
   master-dev:
     environment: MyRelevate
 global:
@@ -14,5 +16,5 @@ global:
   default_ec2_keyname: relevate-eb
   default_platform: Python 2.7
   default_region: us-west-2
-  profile: eb-cli
+  profile: null
   sc: git
