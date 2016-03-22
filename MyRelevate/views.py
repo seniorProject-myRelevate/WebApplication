@@ -158,6 +158,7 @@ def subscribe(request):
         else:
             t = dict(form.errors.items())
             return JsonResponse(status=406, data={'message': t['email'][0]})
+
     elif request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
