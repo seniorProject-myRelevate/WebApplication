@@ -77,13 +77,19 @@ def contributors(request):
         else:
             return HttpResponse(form.errors)
     else:
-        # contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
+      # contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
+        contributors = get_user_model().objects.all()
         contributorForm = ContributorForm()
+        if 'q' in request.GET and request.GET['q']:
+            q = request.GET['q']
+           # profiles = get_user_model().objects.filter(first_name__icontains=q)
+            profiles = contributors.filter(first_name__icontains=q)
+            return render(request, 'contributors.html', {'contributors': contributors, 'profiles': profiles, 'query': q,
+                                                         'contributorForm': contributorForm})
     return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
 
 def contributor_profile(request):
-    #contributor =
     if request.method == 'POST':
         user = get_user_model().objects.get(email=request.user.email)
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)

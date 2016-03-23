@@ -40,9 +40,9 @@ class ContributorProfile(models.Model):
     institution = models.CharField(max_length=255, null=False, blank=False)
     address = models.CharField(max_length=255, null=False, blank=False)
     program = models.CharField(max_length=255, null=False, blank=False)
-    biography = models.CharField(max_length=255, null=False, blank=False)
+    biography = models.TextField(null=False, blank=False)
     # research and clinical interests
-    interests = models.CharField(max_length=255, null=True, blank=True)
+    interests = models.TextField(null=True, blank=True)
     # profile_image = models.ImageField(null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)

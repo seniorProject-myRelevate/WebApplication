@@ -42,7 +42,7 @@
         </ul>
     </nav>
     <!--</div>-->
-    <div class="col-md-10" style="padding: 0;">
+    <div class="col-md-10 overflow" style="padding: 0;">
             <div id="messages">
                 {% for message in messages %}
                     <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade in" role="alert">

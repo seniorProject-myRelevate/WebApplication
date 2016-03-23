@@ -122,14 +122,8 @@ ul.qualifications {
     text-align: center;
 }
 
-.col-md-10 {
+.overflow {
     height: 100%;
-    overflow: auto;
-}
-
-.ContributorProfile {
-    height: 100%;
-    width: 100%;
     overflow: auto;
 }
 
@@ -139,29 +133,23 @@ ul.qualifications {
 
 .contributors-menu-bar {
     background-color: #1b6d85;
-    display: block;
-    padding-top: 75px;
-    vertical-align: text-top;
-}
-
-.navbar {
-
+    /*display: block;*/
+    padding-top: 25px;
+    /*vertical-align: text-top;*/
 }
 
 .contributor-menu {
-    /*display: inline-block;
-    position: absolute;*/
-    margin-left: 60px;
-    margin-right: 60px;
-    margin-top: 30px;
+    background-color: #2b542c;
+    padding-top: 25px;
 }
 
 .button-menu {
-    /*display: inline-block;*/
-    /*position: absolute;*/
+    padding-left: 150px;
+    /*display: inline-block;
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 2%;
+    */
 }
 
 #studentAccess{
@@ -169,31 +157,9 @@ ul.qualifications {
 }
 
 .register {
-    color: white;
+    color: #0f0f0f;
     display: block;
-
-    /*text-align: right;*/
     margin-right: 30px;
-
-    /*margin-top: -60px;*/
-    /*padding-top: -30px;*/
-    /*vertical-align: text-top;*/
-    /*padding-top: 15px*/
-    /*padding: 0 30px;*/
-}
-
-.footer {
-    background-color: #fff;
-    /*width: 100%;
-    height: 80px;
-    position: absolute;
-    bottom: 0;
-    display: inline-block;*/
-    position: relative;
-    height: 150px;
-    clear:both;
-    padding-top:20px;
-
 }
 
 .form {
@@ -236,6 +202,10 @@ ul.qualifications {
     color: #00b0f0;
 }
 
+.white {
+    color: #ffffff;
+}
+
 img.logo {
     height: auto;
     width: auto;
@@ -257,10 +227,10 @@ img.logo1 {
 
 img.logo_contributors {
     display: block;
-    height: 300px;
-    width: 300px;
-    max-height: 500px;
-    max-width: 500px;
+    height: auto;
+    width: auto;
+    max-height: 200px;
+    max-width: 200px;
     float: left;
 }
 
