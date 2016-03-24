@@ -62,7 +62,7 @@ $('#contributorPage').click(function () {
 
 function ContributorAccess() {
     $('#profiles').hide();
-    $('#requestAccess').show();
+    $('#contributorApplication').show();
 
     $("form select[name='credential']").change(function(){
         var credentialVal = $("form select[name='credential']").val();
@@ -143,6 +143,11 @@ function EditInterests() {
 function EditBiography() {
     $('#biography-paragraph').hide();
     $('#biographyForm').show();
+}
+
+function EditContactInformation() {
+    $('#contact_list').hide();
+    $('#contactInfoForm').show();
 }
 
 $('a').parent().hover(

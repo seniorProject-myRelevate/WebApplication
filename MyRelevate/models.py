@@ -39,6 +39,9 @@ class ContributorProfile(models.Model):
     adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
     institution = models.CharField(max_length=255, null=False, blank=False)
     address = models.CharField(max_length=255, null=False, blank=False)
+    city = models.CharField(max_length=255, null=False, blank=False)
+    state = models.CharField(max_length=255, null=False, blank=False)
+    zipcode = models.CharField(max_length=5, null=False, blank=False)
     program = models.CharField(max_length=255, null=False, blank=False)
     biography = models.TextField(null=False, blank=False)
     # research and clinical interests

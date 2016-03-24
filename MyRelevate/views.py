@@ -89,6 +89,19 @@ def contributors(request):
     return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
 
+def application(request):
+    if request.method == 'POST':
+        form = ContributorForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(email=request.user.email)
+            return HttpResponseRedirect(reverse('myrelevate:index'))
+        else:
+            return HttpResponse(form.errors)
+    else:
+        contributorForm = ContributorForm()
+    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
+
+
 def contributor_profile(request):
     if request.method == 'POST':
         user = get_user_model().objects.get(email=request.user.email)

@@ -152,6 +152,11 @@ ul.qualifications {
     */
 }
 
+#contributorApplication {
+    background-color: #f5f5f5;
+    /*background-color: #dff0d8;*/
+}
+
 #studentAccess{
     border: 1px solid #808080;
 }

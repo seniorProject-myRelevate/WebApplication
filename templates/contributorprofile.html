@@ -57,10 +57,7 @@
             <div>
                 <h2 class="orange">{{ user.first_name }} {{ user.last_name }}</h2>
                 <h4>Credentials</h4>
-                <p id="credentials">
-                    {{ contributorProfile.institution }}
-                    {{ contributorProfile.address }}
-                </p>
+                <p id="credentials">{{ contributorProfile.institution }}</p>
             </div>
             <div>
                 <h2 class="blue">Biography
@@ -77,6 +74,10 @@
                         {{ contributorForm.credential }}
                         {{ contributorForm.institution }}
                         {{ contributorForm.address }}
+                        {{ contributorForm.city }}
+                        {{ contributorForm.state }}
+                        {{ contributorForm.zipcode }}
+                        {{ contributorForm.website_url }}
                         {{ contributorForm.program }}
                         {{ contributorForm.interests }}
                         {{ contributorForm.accept_terms }}
@@ -100,6 +101,10 @@
                         {{ contributorForm.credential }}
                         {{ contributorForm.institution }}
                         {{ contributorForm.address }}
+                        {{ contributorForm.city }}
+                        {{ contributorForm.state }}
+                        {{ contributorForm.zipcode }}
+                        {{ contributorForm.website_url }}
                         {{ contributorForm.program }}
                         {{ contributorForm.cv }}
                         {{ contributorForm.biography }}
@@ -112,10 +117,42 @@
             <div>
                 <h2 class="blue">
                     Contact and additional information
-                    <button id="editContactInfo" type="button" class="btn btn-black">
+                    <button id="editContactInfo" type="button" class="btn btn-black" onclick="EditContactInformation()">
                         <span class="glyphicon glyphicon-pencil"></span></button>
                 </h2>
-                <h4> {{ user.email }} </h4>
+                <ul class="list-unstyled" id="contact_list">
+                    <li>{{ user.email }}</li>
+                    <li>{{ contributorProfile.address }}</li>
+                    <li>{{ contributorProfile.city }}, {{ contributorProfile.state }}
+                        {{ contributorProfile.zipcode }}
+                    </li>
+                    <li>{{ contributorProfile.website_url }}</li>
+                </ul>
+                <form class="form" id="contactInfoForm" style="display: none"
+                      action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                    {% csrf_token %}
+                    <div style="display: none">
+                        {{ contributorForm.credential }}
+                        {{ contributorForm.institution }}
+                        {{ contributorForm.address }}
+                        {{ contributorForm.city }}
+                        {{ contributorForm.state }}
+                        {{ contributorForm.zipcode }}
+                        {{ contributorForm.website_url }}
+                        {{ contributorForm.program }}
+                        {{ contributorForm.cv }}
+                        {{ contributorForm.biography }}
+                        {{ contributorForm.interests }}
+                        {{ contributorForm.accept_terms }}
+                    </div>
+                    {{ contributorForm.address }}
+                    {{ contributorForm.city }}
+                    {{ contributorForm.state }}
+                    {{ contributorForm.zipcode }}
+                    {{ contributorForm.website_url }}
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </form>
             </div>
             <div>
                 <h2 class="blue">CV</h2>
