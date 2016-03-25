@@ -65,28 +65,41 @@ def logout_view(request):
 
 
 def contributors(request):
-    if request.method == 'POST':
-        form = ContributorForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save(email=request.user.email)
+    users = get_user_model().objects.all()
+    contributor_profiles = get_user_model().objects.all()
+    if request.method == 'GET':
+        if 'q' in request.GET and request.GET['q']:
+            q = request.GET['q']
+            profiles = users.filter(first_name__icontains=q)
+            return render(request, 'contributors.html', {'profiles': profiles, 'query': q})
+        else:
+            pass
+    else:
+        pass
+    return render(request, 'contributors.html', {'contributors': contributor_profiles})
+
+    # if request.method == 'POST':
+    #    form = ContributorForm(request.POST, request.FILES)
+    #    if form.is_valid():
+    #        form.save(email=request.user.email)
             # profile = ContributorProfile(cv=request.FILES['cv'])
             # user.contributor_profile = profile
             # profile.save()
             # user.save()
-            return HttpResponseRedirect(reverse('myrelevate:index'))
-        else:
-            return HttpResponse(form.errors)
-    else:
+    #        return HttpResponseRedirect(reverse('myrelevate:index'))
+    #    else:
+    #        return HttpResponse(form.errors)
+    #else:
       # contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
-        contributors = get_user_model().objects.all()
-        contributorForm = ContributorForm()
-        if 'q' in request.GET and request.GET['q']:
-            q = request.GET['q']
+    #    contributors = get_user_model().objects.all()
+    #    contributorForm = ContributorForm()
+    #    if 'q' in request.GET and request.GET['q']:
+    #        q = request.GET['q']
            # profiles = get_user_model().objects.filter(first_name__icontains=q)
-            profiles = contributors.filter(first_name__icontains=q)
-            return render(request, 'contributors.html', {'contributors': contributors, 'profiles': profiles, 'query': q,
-                                                         'contributorForm': contributorForm})
-    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
+    #        profiles = contributors.filter(first_name__icontains=q)
+    #        return render(request, 'contributors.html', {'contributors': contributors, 'profiles': profiles, 'query': q,
+    #                                                     'contributorForm': contributorForm})
+    #return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
 
 def application(request):
@@ -99,7 +112,7 @@ def application(request):
             return HttpResponse(form.errors)
     else:
         contributorForm = ContributorForm()
-    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
+    return render(request, 'application.html', {'contributors': contributors, 'contributorForm': contributorForm})
 
 
 def contributor_profile(request):

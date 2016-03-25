@@ -14,11 +14,67 @@ class Subscriber(models.Model):
     email = models.EmailField(unique=True, null=False, blank=False)
 
 
-# class Article(models.Model):
-#     title = models.CharField(max_length=100)
-#     content = models.TextField()  # check if this requires bounding for security purposes
-#     publishDate = models.DateField()
-#     updateDate = models.DateField()
+class Topic(models.Model):
+    TOPICS = (
+        ('Physical, emotional, and sexual violence'),
+        ('Substance use & Addiction'),
+        ('Infertility, Adoption & Foster care'),
+        ('Breaking Up'),
+        ('Cohabitation'),
+        ('Commitment'),
+        ('Communication & conflict'),
+        ('Ex-partners'),
+        ('Multi-cultural and/or Multi-racial couples & families'),
+        ('Dating, Courtship, and Relationship Development'),
+        ('Death, grief, & loss'),
+        ('Decision making in relationships'),
+        ('Disabilities & Chronic illness'),
+        ('Discrimination'),
+        ('Separation and Divorce'),
+        ('Socioeconomic context'),
+        ('Racial, ethnic, and cultural variations'),
+        ('Social pressure and support'),
+        ('Impact of childhood family processes on offspring romantic relationships'),
+        ('Finances in Relationships'),
+        ('Forgiveness'),
+        ('Gender identity and roles'),
+        ('Human development'),
+        ('Maintaining Self'),
+        ('Incarceration'),
+        ('Infidelity'),
+        ('LGBTQ'),
+        ('Long-distance relationships'),
+        ('Marriage'),
+        ('Mate selection'),
+        ('Media & technology'),
+        ('Mental health & personal development'),
+        ('Military families'),
+        ('Parenting/Transition to Parenthood'),
+        ('Physical health'),
+        ('Preventing relationship distress and instability'),
+        ('Relationship education'),
+        ('Relationship maintenance'),
+        ('Spirituality & Religion'),
+        ('Re-partnering & Remarriage'),
+        ('Risky behaviors'),
+        ('Sexuality'),
+        ('Stepfamilies'),
+        ('Stress, Resilience, & Coping'),
+        ('Therapy'),
+        ('Life Transitions'),
+        ('Trauma'),
+        ('Values'),
+        ('Work/school-life balance')
+    )
+    topic = models.CharField(max_length=75, choices=TOPICS)
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()  # check if this requires bounding for security purposes
+    publishDate = models.DateField()
+    updateDate = models.DateField()
+    topic = models.ManyToManyField(Topic)
 
 
 class ContributorProfile(models.Model):
@@ -51,7 +107,7 @@ class ContributorProfile(models.Model):
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
     accept_terms = models.BooleanField(default=False)
     approved = models.BooleanField(default=False)
-    # articles = models.ForeignKey(Article, null=True, blank=True)
+    articles = models.ForeignKey(Article, null=True, blank=True)
 
 
 class UserManager(BaseUserManager):

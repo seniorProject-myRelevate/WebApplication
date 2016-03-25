@@ -60,9 +60,25 @@ $('#contributorPage').click(function () {
     return false;
 });
 
+$("form select[name='credential']").change(function(){
+        var credentialVal = $("form select[name='credential']").val();
+        var email = $('#id_adviser_email');
+        var firstName = $('#id_adviser_first_name');
+        var lastName = $('#id_adviser_last_name');
+        if(credentialVal == "SU" || credentialVal == "SM"){
+            $('#studentAccess').show();
+        }
+        else {
+            email.val('');
+            firstName.val('');
+            lastName.val('');
+            $('#studentAccess').hide();
+        }
+    });
+
 function ContributorAccess() {
-    $('#profiles').hide();
-    $('#contributorApplication').show();
+    //$('#profiles').hide();
+    //$('#contributorApplication').show();
 
     $("form select[name='credential']").change(function(){
         var credentialVal = $("form select[name='credential']").val();

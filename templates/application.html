@@ -2,9 +2,9 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div id="contributorApplication" style="background-image: url({% static "images/logo.png" %})">
+    <div id="contributorApplication">
         <div class="container">
-            <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
+            <form action="{% url 'myrelevate:application' %}" method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
                 <div class="text-center">
                     <h1>Contributor Application</h1>
