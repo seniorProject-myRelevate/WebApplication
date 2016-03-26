@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm
+from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm, ArticleForm
 
 
 def index(request):
@@ -157,7 +157,7 @@ def subscribe(request):
             return JsonResponse(status=200, data={'message': 'Thank you for subscribing'})
         else:
             t = dict(form.errors.items())
-            return JsonResponse(status=400, data={'message': t['email'][0]})
+            return JsonResponse(status=406, data={'message': t['email'][0]})
     elif request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
@@ -191,6 +191,18 @@ def confirm(request):
         get_user_model().objects.get(email=request.user.email).new_confirm()
         messages.success(request, 'Thank you for confirming your account!')
         return HttpResponseRedirect(reverse('myrelevate:index'))
+
+
+@login_required()
+def articles(request):
+    if not request.user.is_contributor:
+        return HttpResponseRedirect(reverse('myrelevate:index'))
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Article Posted!')
+            form.save()
+    return render(request, 'articles.html', {'form': ArticleForm()})
 
 
 # Below are helper functions that are not associated with any particular route

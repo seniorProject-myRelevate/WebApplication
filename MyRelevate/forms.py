@@ -6,7 +6,9 @@ from django.contrib.auth.forms import UserChangeForm, ReadOnlyPasswordHashField
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
-from .models import ContributorProfile, Subscriber
+from django.utils.translation import ugettext_lazy as _
+
+from .models import *
 
 
 class ExtFileField(forms.FileField):
@@ -217,11 +219,9 @@ class ContributorForm(forms.ModelForm):
     def save(self, commit=True, email=None):
         contributor = super(ContributorForm, self).save(commit=False)
         if commit:
-            contributor.save()
             user = get_user_model().objects.get(email=email)
-            user.contributor_profile = contributor
             user.is_contributor = True
-            user.save()
+            c = user.contributor_profile_set.create(contributor)
             return contributor
 
 
@@ -233,3 +233,18 @@ class SubscribeForm(forms.ModelForm):
     class Meta:
         model = Subscriber
         fields = ['email']
+
+
+class ArticleForm(forms.ModelForm):
+
+    class Meta:
+        model = Article
+        fields = ('title', 'content', 'isPublished')
+        labels = {
+            'isPublished': _('Publish'),
+        }
+
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Title'}),
+            'content': forms.TextInput(attrs={'placeholder': 'Article'}),
+            }

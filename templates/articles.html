@@ -1,0 +1,13 @@
+{% extends "base-titlebar.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <form  class="col-md-3" action="{% url 'myrelevate:articles' %}" method="post">
+    {% csrf_token %}
+    {{ form.title }}
+    {{ form.content }}
+    <br>
+    {{ form.isPublished.label }}{{ form.isPublished }}
+    <input class='form-control' type="submit" value="Post"/>
+    </form>
+{% endblock %}

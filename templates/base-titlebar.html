@@ -22,12 +22,16 @@
                     <a href="{% url 'myrelevate:login' %}">Sign In</a>
                 </li>
             {% else %}
+                {% if user.is_contributor %}
+                    <li><a href="{% url 'myrelevate:articles' %}">Contributor Articles</a></li>
+                {% else %}
+                    <li><a href="#">Contributor Application</a></li>
+                {% endif %}
+                <hr>
                 <li class="dropdown">
                     <a href="#">My Profile <span class="right glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
                     <ul class="sub-menu">
                         <li><a href="#">Change Information</a></li>
-                        <hr>
-                        <li><a href="#">Contributor Application</a></li>
                         <hr>
                         <li><a href="{% url 'myrelevate:logout' %}">Logout</a></li>
                     </ul>
