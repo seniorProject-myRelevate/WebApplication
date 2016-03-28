@@ -44,17 +44,29 @@
                         <button onclick="ContributorSearch()" type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <h4 class="register">
+                        <li class="register">
                             Interested in becoming a contributor?
                             <a id="contributorRegistration" title="Access" href="{% url 'myrelevate:application' %}">
                                 Get contributor access here.</a>
-                        </h4>
+                        </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
 
+
         <h2 class="orange">Meet Our Contributors</h2>
+        <p>
+            <span>
+                Our contributors at Relevate are scholars and practitioners with expert knowledge to share about
+                romantic relationships. Our contributors range from University professors, graduate students, certified
+                therapists and relationship educators, and undergraduate students studying relationships under
+                mentorship. Each contributor has been vetted by the Relevate team to ensure that all content is
+                trustworthy and grounded in romantic relationship theory and research in order to ensure that everyone
+                has access to the cutting edge knowledge and skills they need to elevate current and future romantic
+                relationships.
+            </span>
+        </p>
         <div id="allContributors">
             {{ contributors }}
         </div>

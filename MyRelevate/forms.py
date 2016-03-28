@@ -188,7 +188,7 @@ class ContributorForm(forms.ModelForm):
                                                                        'class': 'form-control'}), label='', required=False)
     adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
                                                                       'class': 'form-control'}), label='', required=False)
-    program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
+    program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Field of study/specialization',
                                                             'class': 'form-control'}), label='')
     institution = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
                                                                 'class': 'form-control'}), label='')
@@ -239,3 +239,16 @@ class SubscribeForm(forms.ModelForm):
     class Meta:
         model = Subscriber
         fields = ['email']
+
+
+#class ArticleForm(forms.ModelForm):
+ #   title = forms.CharField(widget=forms.TextInput(attrs={'required': True, 'placeholder': 'Title',
+ #                                                         'class': 'form-control'}), label='')
+    #content = forms.FileField
+    #publishDate =
+    #updateDate =
+
+#    class Meta:
+        #model = Article
+        #fields = ['title']
+
