@@ -19,7 +19,6 @@ class Article(models.Model):
     content = models.TextField()  # check if this requires bounding for security purposes
     publishDate = models.DateField()
     updateDate = models.DateField()
-    #topic = models.ManyToManyField(Topic)
 
 
 class ContributorProfile(models.Model):

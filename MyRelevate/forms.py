@@ -239,16 +239,3 @@ class SubscribeForm(forms.ModelForm):
     class Meta:
         model = Subscriber
         fields = ['email']
-
-
-#class ArticleForm(forms.ModelForm):
- #   title = forms.CharField(widget=forms.TextInput(attrs={'required': True, 'placeholder': 'Title',
- #                                                         'class': 'form-control'}), label='')
-    #content = forms.FileField
-    #publishDate =
-    #updateDate =
-
-#    class Meta:
-        #model = Article
-        #fields = ['title']
-
