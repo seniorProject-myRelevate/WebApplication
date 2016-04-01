@@ -13,6 +13,12 @@
                 <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
             </li>
             <hr>
+            {% if user.is_contributor %}
+                <li>
+                    <a href="{% url 'myrelevate:contributor_profile' %}">Contributor Profile</a>
+                </li>
+            {% endif %}
+            <hr>
             {% if not user.is_authenticated %}
                 <li>
                     <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
@@ -27,7 +33,7 @@
                     <ul class="sub-menu">
                         <li><a href="#">Change Information</a></li>
                         <hr>
-                        <li><a href="#">Contributor Application</a></li>
+                        <li><a href="{% url 'myrelevate:application' %}">Contributor Application</a></li>
                         <hr>
                         <li><a href="{% url 'myrelevate:logout' %}">Logout</a></li>
                     </ul>
@@ -36,7 +42,7 @@
         </ul>
     </nav>
     <!--</div>-->
-    <div class="col-md-10" style="padding: 0;">
+    <div class="col-md-10 overflow" style="padding: 0;">
         <div id="messages">
             {% for message in messages %}
                 <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade in" role="alert">

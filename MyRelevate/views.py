@@ -87,32 +87,51 @@ def logout_view(request):
 
 def contributors(request):
     """
-    jeremy plz document
+    Displays list of all contributors.
+    Allows a person to search contributors based on a set of given topics
     :param request:
-    :return:
+    :return: The requested searched data
+    """
+    users = get_user_model().objects.all()
+    contributor_profiles = get_user_model().objects.all()
+    if request.method == 'GET':
+        if 'q' in request.GET and request.GET['q']:
+            q = request.GET['q']
+            profiles = users.filter(first_name__icontains=q)
+            return render(request, 'contributors.html', {'profiles': profiles, 'query': q})
+        else:
+            pass
+    else:
+        pass
+    return render(request, 'contributors.html', {'contributors': contributor_profiles})
+
+
+@login_required
+def application(request):
+    """
+    Allows user to apply to get become a contributor
+    :param request:
+    :return: redirect to index page
     """
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(email=request.user.email)
-            # profile = ContributorProfile(cv=request.FILES['cv'])
-            # user.contributor_profile = profile
-            # profile.save()
-            # user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
     else:
-        # contributors = get_user_model().objects.exclude(contributorProfile__isnull=True)
         contributorForm = ContributorForm()
-    return render(request, 'contributors.html', {'contributors': contributors, 'contributorForm': contributorForm})
+    return render(request, 'application.html', {'contributors': contributors, 'contributorForm': contributorForm})
+
 
 
 def contributor_profile(request):
     """
-    jeremy plz document
+    Allows a user with contributor access to edit their contributor profile page
+    Allows a contributor to post new articles
     :param request:
-    :return:
+    :return: a redirect to contributor profile page
     """
     if request.method == 'POST':
         user = get_user_model().objects.get(email=request.user.email)
