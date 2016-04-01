@@ -106,7 +106,6 @@ def contributors(request):
     return render(request, 'contributors.html', {'contributors': contributor_profiles})
 
 
-@login_required
 def application(request):
     """
     Allows user to apply to get become a contributor
@@ -123,7 +122,6 @@ def application(request):
     else:
         contributorForm = ContributorForm()
     return render(request, 'application.html', {'contributors': contributors, 'contributorForm': contributorForm})
-
 
 
 def contributor_profile(request):
