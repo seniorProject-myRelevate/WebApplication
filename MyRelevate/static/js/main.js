@@ -1,4 +1,3 @@
-var requestBtn = document.getElementById('request');
 var emailInput = $('#id_email');
 
 function validateEmail(email) {
@@ -66,25 +65,46 @@ $('#contributorPage').click(function () {
     return false;
 });
 
-function ContributorAccess() {
-    $('#profiles').hide();
-    $('#requestAccess').show();
-
-    $("form select[name='credential']").change(function(){
+$("form select[name='credential']").change(function(){
         var credentialVal = $("form select[name='credential']").val();
+        var email = $('#id_adviser_email');
+        var firstName = $('#id_adviser_first_name');
+        var lastName = $('#id_adviser_last_name');
         if(credentialVal == "SU" || credentialVal == "SM"){
             $('#studentAccess').show();
         }
         else {
-            $('#id_adviser_email').val('');
-            $('#id_adviser_first_name').val('');
-            $('#id_adviser_last_name').val('');
+            email.val('');
+            firstName.val('');
+            lastName.val('');
             $('#studentAccess').hide();
         }
     });
 
-    requestBtn.onclick = function () {
-    }
+function ContributorAccess() {
+    //$('#profiles').hide();
+    //$('#contributorApplication').show();
+
+    $("form select[name='credential']").change(function(){
+        var credentialVal = $("form select[name='credential']").val();
+        var email = $('#id_adviser_email');
+        var firstName = $('#id_adviser_first_name');
+        var lastName = $('#id_adviser_last_name');
+        if(credentialVal == "SU" || credentialVal == "SM"){
+            $('#studentAccess').show();
+        }
+        else {
+            email.val('');
+            firstName.val('');
+            lastName.val('');
+            $('#studentAccess').hide();
+        }
+    });
+}
+
+function ContributorSearch() {
+    $('#allContributors').hide();
+    $('#searchedContributors').show();
 }
 
 $(document).ready(function () {
@@ -144,6 +164,11 @@ function EditInterests() {
 function EditBiography() {
     $('#biography-paragraph').hide();
     $('#biographyForm').show();
+}
+
+function EditContactInformation() {
+    $('#contact_list').hide();
+    $('#contactInfoForm').show();
 }
 
 $('a').parent().hover(

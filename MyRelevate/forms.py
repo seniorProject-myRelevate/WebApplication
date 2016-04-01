@@ -188,12 +188,18 @@ class ContributorForm(forms.ModelForm):
                                                                        'class': 'form-control'}), label='', required=False)
     adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
                                                                       'class': 'form-control'}), label='', required=False)
-    program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Program and/or current affiliation',
+    program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Field of study/specialization',
                                                             'class': 'form-control'}), label='')
     institution = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
                                                                 'class': 'form-control'}), label='')
     address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Address', 'class': 'form-control'}),
                               label='')
+    city = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}), label='')
+    state = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}), label='')
+    zipcode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Zipcode', 'class': 'form-control'}),
+                              label='')
+    website_url = forms.URLField(widget=forms.URLInput(attrs={'placeholder': 'Website URL', 'class': 'form-control'}),
+                                 label='')
     biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
                                                              'class': 'form-control'}), label='')
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
@@ -208,7 +214,7 @@ class ContributorForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['credential', 'adviser_email', 'adviser_first_name', 'adviser_last_name', 'program', 'institution',
-                  'biography', 'interests', 'address', 'cv', 'accept_terms']
+                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
 
     def clean(self):
         cleaned_data = super(ContributorForm, self).clean()
