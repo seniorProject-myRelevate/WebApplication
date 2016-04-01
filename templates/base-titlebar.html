@@ -17,8 +17,8 @@
                 <li>
                     <a href="{% url 'myrelevate:contributor_profile' %}">Contributor Profile</a>
                 </li>
+                <hr>
             {% endif %}
-            <hr>
             {% if not user.is_authenticated %}
                 <li>
                     <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
