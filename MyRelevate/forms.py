@@ -213,8 +213,8 @@ class ContributorForm(forms.ModelForm):
 
     class Meta:
         model = ContributorProfile
-        fields = ['credential', 'adviser_email', 'adviser_first_name', 'adviser_last_name', 'program', 'institution',
-                  'biography', 'interests', 'address', "city", 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
+        fields = ["credential", "adviser_email", "adviser_first_name", "adviser_last_name", "program", "institution",
+                  "biography", "interests", "address", "city", "state", "zipcode", "cv", "accept_terms", "website_url"]
 
     def clean(self):
         cleaned_data = super(ContributorForm, self).clean()
