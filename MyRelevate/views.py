@@ -200,8 +200,10 @@ def articles(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
+            form.save(email=request.user.email)
             messages.success(request, 'Article Posted!')
-            form.save()
+        else:
+            messages.ERROR(request, 'Article NOT posted!')
     return render(request, 'articles.html', {'form': ArticleForm()})
 
 

@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from . import views
 
@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^(?i)userprofile/$', views.user_profile, name='user_profile'),
     url(r'^(?i)contributorprofile', views.contributor_profile, name='contributor_profile'),
     url(r'^(?i)articles', views.articles, name='articles'),
+
+    # moving to a more modular setup in the near future
+    # url(r'^articles/', include('MyRelevate.articles.urls', namespace='articles')),
+
 ]

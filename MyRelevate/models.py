@@ -16,15 +16,6 @@ class Subscriber(models.Model):
     email = models.EmailField(unique=True, null=False, blank=False)
 
 
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()  # check if this requires bounding for security purposes
-    isPublished = models.BooleanField(default=False)
-    createdDate = models.DateField(default=datetime.now)
-    publishDate = models.DateField(blank=True)
-    updateDate = models.DateField(default=datetime.now)
-
-
 class ContributorProfile(models.Model):
     DEGREES = (
         ('-1', ''),
@@ -37,8 +28,6 @@ class ContributorProfile(models.Model):
         ('SPhD', 'Student-PhD'),
         ('SPsyD', 'Student-PsyD')
     )
-
-    articles = models.ForeignKey(Article, null=True, blank=True, on_delete=models.CASCADE)
 
     accept_terms = models.BooleanField(default=False)
     address = models.CharField(max_length=255, null=False, blank=False)
