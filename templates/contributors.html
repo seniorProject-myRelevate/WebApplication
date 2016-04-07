@@ -15,7 +15,7 @@
 
     <div class="contributorAccess" id="requestAccess" style="display: none">
         <div class="container">
-            <form action="{% url 'myrelevate:contributors' %}" method="post" enctype='multipart/form-data'>
+            <form action="{% url 'myrelevate:contributor:contributors' %}" method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
                 <div class="text-center"><h2>Contributor Application</h2></div>
                 <h4>{{ user.first_name }}</h4>

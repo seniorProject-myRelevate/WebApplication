@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 
-from ..models import ContributorProfile
+from ..Contributor.models import ContributorProfile
 
 
 class Article(models.Model):

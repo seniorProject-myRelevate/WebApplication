@@ -12,7 +12,20 @@ from django.shortcuts import render
 from forms import ArticleForm
 
 
-def display(request):
+# @login_required()
+# def Articles(request):
+#     if not request.user.is_contributor:
+#         return HttpResponseRedirect(reverse('myrelevate:index'))
+#     if request.method == 'POST':
+#         form = ArticleForm(request.POST)
+#         if form.is_valid():
+#             form.save(email=request.user.email)
+#             messages.success(request, 'Article Posted!')
+#         else:
+#             messages.ERROR(request, 'Article NOT posted!')
+#     return render(request, 'Articles.html', {'form': ArticleForm()})
+
+def index(request):
     if not request.user.is_contributor:
         return HttpResponseRedirect(reverse('myrelevate:index'))
     return render(request, 'articles.html', {'form': ArticleForm()})
