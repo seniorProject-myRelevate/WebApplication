@@ -6,8 +6,7 @@ from django.contrib.auth.forms import UserChangeForm, ReadOnlyPasswordHashField
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
-from .models import ContributorProfile, Subscriber
-from datetime import datetime
+from .models import Subscriber
 
 
 class ExtFileField(forms.FileField):
