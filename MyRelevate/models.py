@@ -7,55 +7,12 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
-from datetime import datetime
-
 from Contributor.models import ContributorProfile
-
 from SeniorProject import settings
 
 
 class Subscriber(models.Model):
     email = models.EmailField(unique=True, null=False, blank=False)
-
-
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()  # check if this requires bounding for security purposes
-    publishDate = models.DateField()
-    updateDate = models.DateField()
-
-
-class ContributorProfile(models.Model):
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Student-PsyD')
-    )
-    credential = models.CharField(max_length=5, choices=DEGREES)
-    adviser_email = models.EmailField(max_length=254, unique=False, null=False, blank=False)
-    adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
-    adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
-    institution = models.CharField(max_length=255, null=False, blank=False)
-    address = models.CharField(max_length=255, null=False, blank=False)
-    city = models.CharField(max_length=255, null=False, blank=False)
-    state = models.CharField(max_length=255, null=False, blank=False)
-    zipcode = models.CharField(max_length=5, null=False, blank=False)
-    program = models.CharField(max_length=255, null=False, blank=False)
-    biography = models.TextField(null=False, blank=False)
-    # research and clinical interests
-    interests = models.TextField(null=True, blank=True)
-    # profile_image = models.ImageField(null=True, blank=True)
-    website_url = models.URLField(null=True, blank=True)
-    cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
-    accept_terms = models.BooleanField(default=False)
-    approved = models.BooleanField(default=False)
-    articles = models.ForeignKey(Article, null=True, blank=True)
 
 
 class UserManager(BaseUserManager):

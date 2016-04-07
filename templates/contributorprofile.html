@@ -68,7 +68,7 @@
                     <span>{{ contributorProfile.biography }}</span>
                 </p>
                 <form class="form" id="biographyForm" style="display: none"
-                      action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                      action="{% url 'myrelevate:contributor:contributor_profile' %}" method="post">
                     {% csrf_token %}
                     <div style="display: none">
                         {{ contributorForm.credential }}
@@ -95,7 +95,7 @@
                     <span>{{ contributorProfile.interests }}</span>
                 </p>
                 <form class="form" id="interestsForm" style="display: none"
-                      action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                      action="{% url 'myrelevate:contributor:contributor_profile' %}" method="post">
                     {% csrf_token %}
                     <div style="display: none">
                         {{ contributorForm.credential }}
@@ -129,7 +129,7 @@
                     <li>{{ contributorProfile.website_url }}</li>
                 </ul>
                 <form class="form" id="contactInfoForm" style="display: none"
-                      action="{% url 'myrelevate:contributor_profile' %}" method="post">
+                      action="{% url 'myrelevate:contributor:contributor_profile' %}" method="post">
                     {% csrf_token %}
                     <div style="display: none">
                         {{ contributorForm.credential }}
