@@ -23,7 +23,7 @@
                 </li>
             {% else %}
                 {% if user.is_contributor %}
-                    <li><a href="{% url 'myrelevate:articles' %}">Contributor Articles</a></li>
+                    <li><a href="{% url 'myrelevate:articles:display' %}">Contributor Articles</a></li>
                 {% else %}
                     <li><a href="#">Contributor Application</a></li>
                 {% endif %}

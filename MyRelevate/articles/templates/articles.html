@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
-    <form  class="col-md-3" action="{% url 'myrelevate:articles' %}" method="post">
+    <form  class="col-md-3" action="{% url 'myrelevate:articles:create' %}" method="post">
     {% csrf_token %}
     {{ form.title }}
     {{ form.content }}

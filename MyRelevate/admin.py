@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import ContributorProfile, Subscriber
 
 
-# Register your models here.
+# Register your models.py here.
 
 class SubscriberAdmin(admin.ModelAdmin):
     list_display = ('email',)

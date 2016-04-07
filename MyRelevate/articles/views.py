@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 
+from forms import ArticleForm
+
 
 def display(request):
     if not request.user.is_contributor:
@@ -16,13 +18,16 @@ def display(request):
     return render(request, 'articles.html', {'form': ArticleForm()})
 
 
+@login_required()
 def create(request):
     pass
 
 
+@login_required()
 def update(request):
     pass
 
 
+@login_required()
 def remove(request):
     pass

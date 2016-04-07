@@ -6,9 +6,9 @@ from django.contrib.auth.forms import UserChangeForm, ReadOnlyPasswordHashField
 from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
-from .models import Article
-
 from datetime import datetime
+
+from .models import Article
 
 
 class ArticleForm(forms.ModelForm):
