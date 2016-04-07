@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from .forms import RegistrationForm, LoginForm, ContributorForm, SubscribeForm
+from .forms import RegistrationForm, LoginForm, SubscribeForm
 
 
 def index(request):
@@ -176,7 +176,7 @@ def subscribe(request):
             return JsonResponse(status=200, data={'message': 'Thank you for subscribing'})
         else:
             t = dict(form.errors.items())
-            return JsonResponse(status=400, data={'message': t['email'][0]})
+            return JsonResponse(status=406, data={'message': t['email'][0]})
     elif request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
