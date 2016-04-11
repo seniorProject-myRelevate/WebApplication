@@ -60,6 +60,49 @@
                 <p id="credentials">{{ contributorProfile.institution }}</p>
             </div>
             <div>
+                <h2 class="blue">Area Of Expertise
+                    <button id="editExpertise" type="button" class="btn btn-black">
+                        <span class="glyphicon glyphicon-pencil white"></span></button>
+                </h2>
+                <div id="topic_list">
+                    {{ contributorProfile.expertise_topics }}
+                </div>
+                <form class="form" id="expertise_topic_form" style="display: none"
+                      action="{% url 'myrelevate:contributor:update' %}" method="post">
+                    {% csrf_token %}
+                    <div style="display: none">
+                        {{ contributorForm.credential }}
+                        {{ contributorForm.institution }}
+                        {{ contributorForm.address }}
+                        {{ contributorForm.city }}
+                        {{ contributorForm.state }}
+                        {{ contributorForm.zipcode }}
+                        {{ contributorForm.website_url }}
+                        {{ contributorForm.program }}
+                        {{ contributorForm.biography }}
+                        {{ contributorForm.interests }}
+                        {{ contributorForm.accept_terms }}
+                    </div>
+                    <!--Code for Tag form-->
+                    <div class="btn-group-vertical">
+                        <button id="add_right_arrow" type="button" class="btn btn-black">
+                            <span class="glyphicon glyphicon-arrow-right white"></span>
+                        </button>
+                        <button id="remove_left_arrow" type="button" class="btn btn-black">
+                            <span class="glyphicon glyphicon-arrow-left white"></span>
+                        </button>
+                    </div>
+                    {{ contributorForm.expertise_topics }}
+                    <!--
+                    <select class="select-box-size" multiple="multiple" name="selected_topics" id="id_selected_topics">
+                        <option>option</option>
+                    </select>
+                    -->
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </form>
+            </div>
+            <div>
                 <h2 class="blue">Biography
                     <button id="editBiography" type="button" class="btn btn-black" onclick="EditBiography()">
                         <span class="glyphicon glyphicon-pencil"></span></button>

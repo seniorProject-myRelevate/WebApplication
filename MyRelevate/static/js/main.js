@@ -81,6 +81,45 @@ $("form select[name='credential']").change(function(){
         }
     });
 
+/*
+ Remove selected topic from option list and add it to selected list
+*/
+//$('#add_right_arrow').click(function(){
+
+//    $("form select[name='expertise_topics']").selected().each(function(){
+//        $('#id_my_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
+//        $(this).remove();
+//    });
+
+    /*
+   $('#id_expertise_topics option:selected').each(function(){
+       $('#id_my_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
+       $(this).remove();
+       */
+       /*
+       $('#id_selected_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
+       $(this).remove();
+       */
+   //});
+//});
+
+/*
+ Remove selected topic from select list and add it back to the options list
+*/
+//$('#remove_left_arrow').click(function(){
+//    $('#id_my_topics option:selected').each(function(){
+//        $('#id_expertise_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
+//        $(this).remove();
+//   });
+    /*
+    $('#id_selected_topics option:selected').each(function(){
+        $('#id_expertise_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
+        $(this).remove();
+   });
+   */
+//});
+
+
 function ContributorAccess() {
     //$('#profiles').hide();
     //$('#contributorApplication').show();
@@ -156,14 +195,19 @@ function CreatePost() {
     $('#createPost').show();
 }
 
-function EditInterests() {
-    $('#interests-paragraph').hide();
-    $('#interestsForm').show();
-}
+$('#editExpertise').click(function(){
+    $('#topic_list').hide();
+    $('#expertise_topic_form').show();
+});
 
 function EditBiography() {
     $('#biography-paragraph').hide();
     $('#biographyForm').show();
+}
+
+function EditInterests() {
+    $('#interests-paragraph').hide();
+    $('#interestsForm').show();
 }
 
 function EditContactInformation() {
