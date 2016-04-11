@@ -15,7 +15,21 @@ def index(request):
 
 @login_required()
 def create(request):
-    pass
+    """
+    Allows user to apply to get become a contributor
+    :param request:
+    :return: redirect to index page
+    """
+    if request.method == 'POST':
+        form = ContributorForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(email=request.user.email)
+            return HttpResponseRedirect(reverse('myrelevate:index'))
+        else:
+            return HttpResponse(form.errors)
+    else:
+        contributorForm = ContributorForm()
+    return render(request, 'application.html', {'contributorForm': contributorForm})
 
 
 @login_required()
@@ -68,4 +82,6 @@ def contributors(request):
     else:
         pass
     return render(request, 'contributors.html', {'contributors': contributor_profiles})
+
+
 

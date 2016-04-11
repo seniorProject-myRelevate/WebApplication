@@ -10,8 +10,6 @@ urlpatterns = [
     url(r'^(?i)confirm/$', views.confirm, name="confirm"),
     url(r'^(?i)login/$', views.login_view, name="login"),
     url(r'^(?i)logout/$', views.logout_view, name="logout"),
-    url(r'^(?i)application/$', views.application, name='application'),
-
     url(r'^(?i)userprofile/$', views.user_profile, name='user_profile'),
 
     # moving to a more modular setup in the near future

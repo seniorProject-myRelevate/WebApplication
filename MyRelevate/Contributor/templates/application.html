@@ -4,7 +4,7 @@
 {% block content %}
     <div id="contributorApplication">
         <div class="container">
-            <form action="{% url 'myrelevate:application' %}" method="post" enctype='multipart/form-data' novalidate>
+            <form action="{% url 'myrelevate:contributor:create' %}" method="post" enctype='multipart/form-data' novalidate>
                 {% csrf_token %}
                 <div class="text-center">
                     <h1>Contributor Application</h1>
