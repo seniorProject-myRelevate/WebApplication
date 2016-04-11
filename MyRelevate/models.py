@@ -259,7 +259,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 # # table of tags for use in adding new tags
 # class Tag(models.py.Model):
 #     tagName = models.py.CharField(max_length=100)
-#
+#     tagDescription = models.py.CharField(max_length=255)
 #
 # # table for linking tags to Articles
 # class TagTable(models.py.Model):

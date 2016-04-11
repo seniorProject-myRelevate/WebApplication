@@ -46,11 +46,14 @@ class ContributorForm(forms.ModelForm):
                            #                     ))
 
     accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
+    # expertise_topics = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
+    expertise_topics = forms.MultipleChoiceField(required=False, widget=forms.SelectMultiple)
 
     class Meta:
         model = ContributorProfile
         fields = ['credential', 'adviser_email', 'adviser_first_name', 'adviser_last_name', 'program', 'institution',
-                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
+                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url',
+                  'expertise_topics']
 
     def clean(self):
         cleaned_data = super(ContributorForm, self).clean()
