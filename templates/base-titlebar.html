@@ -23,7 +23,7 @@
                 </li>
             {% else %}
                 {% if user.is_contributor %}
-                    <li><a href="{% url 'myrelevate:contributor:contributor_profile' %}">Contributor Profile</a></li>
+                    <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
                     <hr>
                     <li><a href="{% url 'myrelevate:articles:display' %}">Contributor Articles</a></li>
                 {% else %}

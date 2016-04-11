@@ -20,7 +20,28 @@ def create(request):
 
 @login_required()
 def update(request):
-    pass
+    """
+    Allows a user with contributor access to edit their contributor profile page
+    Allows a contributor to post new articles
+    :param request:
+    :return: a redirect to contributor profile page
+    """
+    if request.method == 'POST':
+        user = get_user_model().objects.get(email=request.user.email)
+        form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
+        if form.is_valid():
+            # profile = ContributorProfile(cv=request.FILES['cv'])
+            form.save(email=request.user.email)
+            # return HttpResponseRedirect(reverse('myrelevate:index'))
+            return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
+        else:
+            return HttpResponse(form.errors)
+    else:
+        user = get_user_model().objects.get(email=request.user.email)
+        profile = user.get_contributor_profile()
+    return render(request, 'contributorprofile.html', {'contributorProfile': profile,
+                                                       'contributorForm':
+                                                           ContributorForm(instance=user.contributor_profile)})
 
 
 @login_required()
@@ -48,27 +69,3 @@ def contributors(request):
         pass
     return render(request, 'contributors.html', {'contributors': contributor_profiles})
 
-
-def contributor_profile(request):
-    """
-    Allows a user with contributor access to edit their contributor profile page
-    Allows a contributor to post new articles
-    :param request:
-    :return: a redirect to contributor profile page
-    """
-    if request.method == 'POST':
-        user = get_user_model().objects.get(email=request.user.email)
-        form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
-        if form.is_valid():
-            # profile = ContributorProfile(cv=request.FILES['cv'])
-            form.save(email=request.user.email)
-            # return HttpResponseRedirect(reverse('myrelevate:index'))
-            return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
-        else:
-            return HttpResponse(form.errors)
-    else:
-        user = get_user_model().objects.get(email=request.user.email)
-        profile = user.get_contributor_profile()
-    return render(request, 'contributorprofile.html', {'contributorProfile': profile,
-                                                       'contributorForm':
-                                                           ContributorForm(instance=user.contributor_profile)})
