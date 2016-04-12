@@ -256,10 +256,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 #     gettingDivorced = models.py.NullBooleanField()
 
 
-# # table of tags for use in adding new tags
+# table of tags for use in adding new tags
 # class Tag(models.py.Model):
 #     tagName = models.py.CharField(max_length=100)
 #     tagDescription = models.py.CharField(max_length=255)
+#     may need two more charfields to hold selected tagName and tagDescription
 #
 # # table for linking tags to Articles
 # class TagTable(models.py.Model):
