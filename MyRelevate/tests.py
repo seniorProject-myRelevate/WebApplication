@@ -1,12 +1,8 @@
-import datetime
-import re
-import random
-import models
-import django.http
-from django.test import TestCase
-from django.test import Client
-from forms import SubscribeForm, RegistrationForm, PasswordChangeForm, ContributorForm
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+
+from forms import SubscribeForm, RegistrationForm
+from .Contributor.forms import ContributorForm
 
 
 # Model Tests

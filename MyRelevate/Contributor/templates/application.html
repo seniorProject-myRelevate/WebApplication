@@ -4,7 +4,7 @@
 {% block content %}
     <div id="contributorApplication">
         <div class="container">
-            <form action="{% url 'myrelevate:application' %}" method="post" enctype='multipart/form-data'>
+            <form action="{% url 'myrelevate:contributor:create' %}" method="post" enctype='multipart/form-data' novalidate>
                 {% csrf_token %}
                 <div class="text-center">
                     <h1>Contributor Application</h1>
@@ -26,8 +26,19 @@
                 <p>{{ contributorForm.zipcode }}</p>
                 <p>{{ contributorForm.website_url }}</p>
                 <p><h4>Upload your cv/resume: </h4> {{ contributorForm.cv }} </p>
-                <p>{{ contributorForm.biography }}</p>
-                <p><h3>Terms and Conditions</h3> </p>
+                <p>
+                    <span>
+                        In this section, tell us about yourself. What are your special interests (research topics
+                        and/or clinical populations)? Also, tell why you want to contribute to Relevate.
+                        Include anything else you think should be known about you.
+                        <br>
+                        Please take notice! You are writing this biography as though you are speaking directly to
+                        the users of Relevate who are exploring your profile, so write with user-friendly language.
+                        Thanks!
+                    </span>
+                    {{ contributorForm.biography }}
+                </p>
+                <p><h3>Terms and Conditions</h3></p>
 
                 <div class=3DWordSection1>
                     <p class=3DMsoNormal style=3D'margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>

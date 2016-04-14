@@ -7,60 +7,13 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
+from Contributor.models import ContributorProfile
 from SeniorProject import settings
 
 
 class Subscriber(models.Model):
     email = models.EmailField(unique=True, null=False, blank=False)
 
-    class Meta:
-        db_table = "myrelevate_subscriber"
-
-
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()  # check if this requires bounding for security purposes
-    publishDate = models.DateField()
-    updateDate = models.DateField()
-
-#    class Meta:
-#        db_table = "myrelevate_article"
-
-
-class ContributorProfile(models.Model):
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Student-PsyD')
-    )
-    credential = models.CharField(max_length=5, choices=DEGREES)
-    adviser_email = models.EmailField(max_length=254, unique=False, null=False, blank=False)
-    adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
-    adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
-    institution = models.CharField(max_length=255, null=False, blank=False)
-    address = models.CharField(max_length=255, null=False, blank=False)
-    city = models.CharField(max_length=255, null=False, blank=False)
-    state = models.CharField(max_length=255, null=False, blank=False)
-    zipcode = models.CharField(max_length=5, null=False, blank=False)
-    program = models.CharField(max_length=255, null=False, blank=False)
-    biography = models.TextField(null=False, blank=False)
-    # research and clinical interests
-    interests = models.TextField(null=True, blank=True)
-    # profile_image = models.ImageField(null=True, blank=True)
-    website_url = models.URLField(null=True, blank=True)
-    cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
-    accept_terms = models.BooleanField(default=False)
-    approved = models.BooleanField(default=False)
-    articles = models.ForeignKey(Article, null=True, blank=True)
-
-    class Meta:
-        db_table = "myrelevate_contributorprofile"
 
 class UserManager(BaseUserManager):
 
@@ -85,15 +38,12 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
         return self._create_user(email, password, True, True,
                                  **extra_fields)
-    class Meta:
-        db_table = "myrelevate_usermanager"
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        db_table = "myrelevate_user"
 
     email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=254)
@@ -155,8 +105,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         client.send(message)
 
+
 # DemographicData Database Model
-# class DemographicData(models.Model):
+# class DemographicData(models.py.Model):
 #     EDUCATION = (
 #         (-1, ''),
 #         (0, 'Completed high school/GED'),
@@ -219,7 +170,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 #         ('m', 'men'),
 #         ('b', 'men and women'),
 #         ('w', 'women'),
-#         ('o', 'otheruser = models.ForeignKey(User)'),
+#         ('o', 'otheruser = models.py.ForeignKey(User)'),
 #     )
 #
 #     RELIGION = (
@@ -254,66 +205,64 @@ class User(AbstractBaseUser, PermissionsMixin):
 #     )
 #
 #     # birthday to derive age
-#     birthday = models.DateField(auto_now=False)
-#     education = models.IntegerField(choices=EDUCATION)
-#     employmentStatus = models.CharField(max_length=1, choices=EMPLOYMENT_STATUS)
-#     familySize = models.IntegerField()
-#     gender = models.CharField(max_length=1, choices=SEX)
-#     # sex = models.CharField(max_length=1)
-#     relationshipStatus = models.CharField(max_length=1, choices=RELATIONSHIP_STATUS)
+#     birthday = models.py.DateField(auto_now=False)
+#     education = models.py.IntegerField(choices=EDUCATION)
+#     employmentStatus = models.py.CharField(max_length=1, choices=EMPLOYMENT_STATUS)
+#     familySize = models.py.IntegerField()
+#     gender = models.py.CharField(max_length=1, choices=SEX)
+#     # sex = models.py.CharField(max_length=1)
+#     relationshipStatus = models.py.CharField(max_length=1, choices=RELATIONSHIP_STATUS)
 #
 #     # postal code to derive location
-#     postalCode = models.CharField(max_length=32)
-#     race = models.CharField(max_length=2)
-#     salary = models.IntegerField(choices=SALARY)
-#     sexual_orientation = models.CharField(max_length=1)
+#     postalCode = models.py.CharField(max_length=32)
+#     race = models.py.CharField(max_length=2)
+#     salary = models.py.IntegerField(choices=SALARY)
+#     sexual_orientation = models.py.CharField(max_length=1)
 #
 #     FAMILYSIZE = ((i for i in range(101)),)
 #
-#     user = models.ForeignKey(User)
+#     user = models.py.ForeignKey(User)
 #     # birthday to derive age
-#     sex = models.CharField(max_length=1, choices=SEX, default=-1)
-#     sexualPreference = models.CharField(max_length=1, choices=SEXUAL_PREFERENCE, default=-1)
+#     sex = models.py.CharField(max_length=1, choices=SEX, default=-1)
+#     sexualPreference = models.py.CharField(max_length=1, choices=SEXUAL_PREFERENCE, default=-1)
 #
-#     religion = models.CharField(max_length=1, choices=RELIGION, default=-1)
-#     religiousInfluence = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
+#     religion = models.py.CharField(max_length=1, choices=RELIGION, default=-1)
+#     religiousInfluence = models.py.CharField(max_length=1, choices=AGREEMENT, default=-1)
 #
 #     # personal relationship experiences
-#     addictive = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     violence = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     breakups = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     verbalEmotionalAbuse = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     infidelity = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     addictive = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     violence = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     breakups = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     verbalEmotionalAbuse = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     infidelity = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
 #
 #     # Others relationship experiences
-#     addictiveOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     violenceOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     breakupsOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     verbalEmotionalAbuseOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
-#     infidelityOther = models.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     addictiveOther = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     violenceOther = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     breakupsOther = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     verbalEmotionalAbuseOther = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
+#     infidelityOther = models.py.CharField(max_length=1, choices=FREQUENCY, default=-1)
 #
 #     # metrics
-#     cyclicRelationships = models.BooleanField(default=-1)
-#     timesCycled = models.IntegerField(default=-1)
-#     timesMarried = models.IntegerField(default=-1)  # needs bounding options set
-#     biologicalChildren = models.IntegerField(default=-1)
-#     adoptedChildren = models.IntegerField(default=-1)
-#     stepChildren = models.IntegerField(default=-1)
-#     lengthOfCurrentRelationship = models.IntegerField(default=-1)
+#     cyclicRelationships = models.py.BooleanField(default=-1)
+#     timesCycled = models.py.IntegerField(default=-1)
+#     timesMarried = models.py.IntegerField(default=-1)  # needs bounding options set
+#     biologicalChildren = models.py.IntegerField(default=-1)
+#     adoptedChildren = models.py.IntegerField(default=-1)
+#     stepChildren = models.py.IntegerField(default=-1)
+#     lengthOfCurrentRelationship = models.py.IntegerField(default=-1)
 #
-#     currentRelationshipHappiness = models.CharField(max_length=1, choices=AGREEMENT, default=-1)
-#     gettingDivorced = models.NullBooleanField()
+#     currentRelationshipHappiness = models.py.CharField(max_length=1, choices=AGREEMENT, default=-1)
+#     gettingDivorced = models.py.NullBooleanField()
 
 
-# # table of tags for use in adding new tags
-# class Tag(models.Model):
-#     tagName = models.CharField(max_length=100)
+# table of tags for use in adding new tags
+# class Tag(models.py.Model):
+#     tagName = models.py.CharField(max_length=100)
+#     tagDescription = models.py.CharField(max_length=255)
+#     may need two more charfields to hold selected tagName and tagDescription
 #
-#
-# # table for linking tags to articles
-# class TagTable(models.Model):
-#     article = models.ForeignKey(Article)
-#     tag = models.ForeignKey(Tag)
-
-#    class Meta:
-#        db_table = "myrelevate_tagtable"
+# # table for linking tags to Articles
+# class TagTable(models.py.Model):
+#     article = models.py.ForeignKey(Article)
+#     tag = models.py.ForeignKey(Tag)

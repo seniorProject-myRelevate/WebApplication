@@ -10,15 +10,9 @@
             </li>
             <hr>
             <li>
-                <a href="{% url 'myrelevate:contributors' %}">Contributors</a>
+                <a href="{% url 'myrelevate:contributor:contributors' %}">Contributors</a>
             </li>
             <hr>
-            {% if user.is_contributor %}
-                <li>
-                    <a href="{% url 'myrelevate:contributor_profile' %}">Contributor Profile</a>
-                </li>
-                <hr>
-            {% endif %}
             {% if not user.is_authenticated %}
                 <li>
                     <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
@@ -28,12 +22,18 @@
                     <a href="{% url 'myrelevate:login' %}">Sign In</a>
                 </li>
             {% else %}
+                {% if user.is_contributor %}
+                    <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
+                    <hr>
+                    <li><a href="{% url 'myrelevate:articles:display' %}">Contributor Articles</a></li>
+                {% else %}
+                    <li><a href="{% url 'myrelevate:contributor:create' %}">Contributor Application</a></li>
+                {% endif %}
+                <hr>
                 <li class="dropdown">
                     <a href="#">My Profile <span class="right glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
                     <ul class="sub-menu">
                         <li><a href="#">Change Information</a></li>
-                        <hr>
-                        <li><a href="{% url 'myrelevate:application' %}">Contributor Application</a></li>
                         <hr>
                         <li><a href="{% url 'myrelevate:logout' %}">Logout</a></li>
                     </ul>
