@@ -13,3 +13,6 @@ class Article(models.Model):
     createdDate = models.DateField(default=datetime.now)
     publishDate = models.DateField(null=True, blank=True)
     updateDate = models.DateField(default=datetime.now)
+
+    class Meta:
+        db_table = 'article'
