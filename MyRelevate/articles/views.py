@@ -13,7 +13,7 @@ from forms import ArticleForm
 
 
 # @login_required()
-# def Articles(request):
+# def articles(request):
 #     if not request.user.is_contributor:
 #         return HttpResponseRedirect(reverse('myrelevate:index'))
 #     if request.method == 'POST':
@@ -23,7 +23,7 @@ from forms import ArticleForm
 #             messages.success(request, 'Article Posted!')
 #         else:
 #             messages.ERROR(request, 'Article NOT posted!')
-#     return render(request, 'Articles.html', {'form': ArticleForm()})
+#     return render(request, 'articles.html', {'form': ArticleForm()})
 
 def index(request):
     if not request.user.is_contributor:
