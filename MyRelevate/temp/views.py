@@ -1,12 +1,6 @@
-import os
-
-import sendgrid
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from forms import ArticleForm
