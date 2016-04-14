@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^(?i)userprofile/$', views.user_profile, name='user_profile'),
 
     # moving to a more modular setup in the near future
-    url(r'^(?i)articles', include('MyRelevate.Articles.urls', namespace='articles')),
-    url(r'^(?i)contributor', include('MyRelevate.Contributor.urls', namespace='contributor')),
+    url(r'^(?i)articles/', include('MyRelevate.Articles.urls', namespace='articles')),
+    url(r'^(?i)contributor/', include('MyRelevate.Contributor.urls', namespace='contributor')),
 
 ]
