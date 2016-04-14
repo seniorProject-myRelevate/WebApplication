@@ -112,7 +112,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 #DemographicData Database Model
-class DemographicData(models.py.Model):
+class DemographicData(models.Model):
     EDUCATION = (
         (-1, ''),
         (0, 'Completed high school/GED'),
@@ -262,12 +262,12 @@ class DemographicData(models.py.Model):
 
 
 #table of tags for use in adding new tags
-class Tag(models.py.Model):
+class Tag(models.Model):
     tagName = models.py.CharField(max_length=100)
     tagDescription = models.py.CharField(max_length=255)
 #    may need two more charfields to hold selected tagName and tagDescription
 
 # table for linking tags to Articles
-class TagTable(models.py.Model):
+class TagTable(models.Model):
     article = models.py.ForeignKey(ArtMod.Article)
     tag = models.py.ForeignKey(Tag)
