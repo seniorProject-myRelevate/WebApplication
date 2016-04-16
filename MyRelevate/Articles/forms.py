@@ -20,8 +20,8 @@ class ArticleForm(forms.ModelForm):
     def save(self, commit=True, email=None):
         article = super(ArticleForm, self).save(commit=False)
         if commit:
+            article.contributor_id = get_user_model().objects.get(email=email).contributor_profile.pk
             if article.isPublished:
-                article.publishDate = datetime.now
-            user = get_user_model().objects.get(email=email)
-            user.contributor_profile.article_set.set(article)
+                article.publishDate = datetime.now()
+            article.save()
             return article
