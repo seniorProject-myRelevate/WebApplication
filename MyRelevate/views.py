@@ -197,6 +197,8 @@ class JSONResponse(HttpResponse):
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
+
+#pattern for request is http://www.myrelevate.com/user/<email>/
 @api_view(['GET', 'PUT', 'DELETE'])
 def user_detail(request, email):
     """
