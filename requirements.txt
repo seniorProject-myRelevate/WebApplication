@@ -2,5 +2,6 @@ Django==1.8.4
 django-passwords==0.3.4
 itsdangerous==0.24
 MySQL-python==1.2.3
+rest_framework==3.3.3
 sendgrid==1.5.20
 wheel==0.24.0

@@ -11,6 +11,13 @@ from django.shortcuts import render
 
 from .Contributor.forms import ContributorForm
 from .forms import RegistrationForm, LoginForm, SubscribeForm
+from MyRelevate.models import User
+from MyRelevate.serializers import UserSerializer
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 def index(request):
@@ -180,3 +187,37 @@ def get_unsubscribes():
     client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
     l = sendgrid.SendGridAPIClient(apikey=os.environ['SendGridApiKey']).suppressions
     print l.get()
+
+class JSONResponse(HttpResponse):
+    """
+    An HttpResponse that renders its content into JSON.
+    """
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def user_detail(request, email):
+    """
+    Retrieve, update or delete a USER.
+    """
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

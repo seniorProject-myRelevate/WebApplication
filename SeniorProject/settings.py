@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'MyRelevate',
     'MyRelevate.Articles',
     'MyRelevate.Contributor',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
