@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^(?i)articles/', include('MyRelevate.Articles.urls', namespace='articles')),
     url(r'^(?i)contributor/', include('MyRelevate.Contributor.urls', namespace='contributor')),
 
+    url(r'^user/(?P<email>[/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+])/$', views.user_detail),
+
 ]
