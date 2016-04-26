@@ -83,7 +83,7 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = 'SeniorProject.wsgi.application'
 
-AUTH_USER_MODEL = 'MyRelevate.User'
+AUTH_USER_MODEL = 'User.User'
 
 
 # Database
