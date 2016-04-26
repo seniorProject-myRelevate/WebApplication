@@ -146,7 +146,7 @@ def confirm(request):
         messages.success(request, 'Thank you for confirming your account!')
         return HttpResponseRedirect(reverse('myrelevate:index'))
 
-
+#
 # Below are helper functions that are not associated with any particular route
 def send_email(subject, template_id, substitution, to_email):
     """
