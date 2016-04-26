@@ -12,5 +12,6 @@ class ConfirmedMiddleware(object):
         :return:
         """
         if request.user.is_authenticated() and not request.user.confirmed and \
-                (request.path != reverse('myrelevate:new_confirm') and request.path != reverse('myrelevate:confirm')):
-            return HttpResponseRedirect(reverse('myrelevate:new_confirm'))
+                (request.path != reverse('myrelevate:auth:new_confirm') and
+                         request.path != reverse('myrelevate:auth:confirm')):
+            return HttpResponseRedirect(reverse('myrelevate:auth:new_confirm'))

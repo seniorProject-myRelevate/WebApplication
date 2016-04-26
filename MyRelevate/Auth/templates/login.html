@@ -5,7 +5,7 @@
     <img class="logo" src="{% static "images/logo.png" %}" alt="logo"/>
     <div class="visible" id="login">
         {% if form %}
-            <form action="{% url 'myrelevate:login' %}" method="post">
+            <form action="{% url 'myrelevate:auth:login' %}" method="post">
                 {% csrf_token %}
                 <div class="align-center createAccount col-md-6 col-md-offset-3">
                     {{ form.email }}

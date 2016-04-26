@@ -11,9 +11,8 @@ from models import Article
 def index(request):
     if not request.user.is_contributor:
         return HttpResponseRedirect(reverse('myrelevate:index'))
-    articles = Article.objects.filter(contributor_id=request.user.contributor_profile.pk)
-    print articles
-    return render(request, 'articles.html', {'articles': articles})
+    return render(request, 'articles.html',
+                  {'articles': Article.objects.filter(contributor_id=request.user.contributor_profile.pk)})
 
 
 @login_required()

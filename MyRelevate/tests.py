@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from forms import SubscribeForm, RegistrationForm
+from forms import SubscribeForm
 from .Contributor.forms import ContributorForm
 
 
@@ -18,12 +18,6 @@ class TestUserFunctions(TestCase):
         user = get_user_model().objects.get(email='test@test.com')
         token = user.generate_confirmation_token()
         self.assertTrue(user.confirm(token))
-
-
-# View Tests
-class TestViews(TestCase):
-    def setUp(self):
-        pass
 
 
 # Form Tests
@@ -65,20 +59,6 @@ class TestPasswordChangeForm(TestCase):
     #         f.save()
     #     print f.errors
         # self.assertTrue(user.check_password('new_MyR3l3v4t3'))
-
-
-class TestRegistrationForm(TestCase):
-    def test_RegistrationForm(self):
-        # Valid Data
-        self.assertTrue(RegistrationForm(data={'email': 'test@test.com', 'first_name': 'My', 'last_name': 'relevate',
-                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
-
-        # Invalid Data
-        self.assertFalse(RegistrationForm(data={'username': 'test@test.com', 'first_name': 'My', 'last_name': 'relevate',
-                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
-
-        self.assertFalse(RegistrationForm(data={'email': 'test.com', 'first_name': 'My', 'last_name': 'relevate',
-                                               'password1': 'MyR3l3v4t3', 'password2': 'MyR3l3v4t3'}).is_valid())
 
 
 class TestContributorForm(TestCase):

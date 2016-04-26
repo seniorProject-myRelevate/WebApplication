@@ -15,11 +15,11 @@
             <hr>
             {% if not user.is_authenticated %}
                 <li>
-                    <a href="{% url 'myrelevate:register_user' %}">Create Account</a>
+                    <a href="{% url 'myrelevate:auth:register_user' %}">Create Account</a>
                 </li>
                 <hr>
                 <li>
-                    <a href="{% url 'myrelevate:login' %}">Sign In</a>
+                    <a href="{% url 'myrelevate:auth:login' %}">Sign In</a>
                 </li>
             {% else %}
                 {% if user.is_contributor %}
@@ -35,7 +35,7 @@
                     <ul class="sub-menu">
                         <li><a href="#">Change Information</a></li>
                         <hr>
-                        <li><a href="{% url 'myrelevate:logout' %}">Logout</a></li>
+                        <li><a href="{% url 'myrelevate:auth:logout' %}">Logout</a></li>
                     </ul>
                 </li>
             {% endif %}

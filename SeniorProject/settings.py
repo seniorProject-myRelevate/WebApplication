@@ -39,7 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'MyRelevate',
     'MyRelevate.Articles',
+    'MyRelevate.Auth',
     'MyRelevate.Contributor',
+    'MyRelevate.User',
 )
 
 MIDDLEWARE_CLASSES = (
