@@ -111,8 +111,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         client.send(message)
 
 
-#DemographicData Database Model
+# DemographicData Database Model
 class DemographicData(models.Model):
+
+    class Meta:
+        db_table = "demographicdata"
+
     EDUCATION = (
         (-1, ''),
         (0, 'Completed high school/GED'),
@@ -260,13 +264,22 @@ class DemographicData(models.Model):
     gettingDivorced = models.NullBooleanField()
 
 
-#table of tags for use in adding new tags
+# table of tags for use in adding new tags
 class Tag(models.Model):
+
+    class Meta:
+        db_table = "tag"
+
     tagName = models.CharField(max_length=100)
     tagDescription = models.CharField(max_length=255)
 #    may need two more charfields to hold selected tagName and tagDescription
 
+
 # table for linking tags to Articles
 class TagTable(models.Model):
+
+    class Meta:
+        db_table = "tagtable"
+
     article = models.ForeignKey(ArtMod.Article)
     tag = models.ForeignKey(Tag)
