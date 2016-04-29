@@ -3,58 +3,89 @@
 
 {% block body %}
     <!--<div class='col-md-2' style='height: 100%; padding:0;'>-->
-    <nav class='title-bar col-md-2'>
-        <ul>
-            <li>
-                <a href="{% url 'myrelevate:index' %}">MyRelevate</a>
-            </li>
-            <hr>
-            <li>
-                <a href="{% url 'myrelevate:contributor:contributors' %}">Contributors</a>
-            </li>
-            <hr>
-            {% if not user.is_authenticated %}
-                <li>
-                    <a href="{% url 'myrelevate:auth:register_user' %}">Create Account</a>
-                </li>
-                <hr>
-                <li>
-                    <a href="{% url 'myrelevate:auth:login' %}">Sign In</a>
-                </li>
-            {% else %}
-                {% if user.is_contributor %}
-                    <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
-                    <hr>
-                    <li><a href="{% url 'myrelevate:articles:display' %}">Contributor Articles</a></li>
-                {% else %}
-                    <li><a href="{% url 'myrelevate:contributor:create' %}">Contributor Application</a></li>
-                {% endif %}
-                <hr>
-                <li class="dropdown">
-                    <a href="#">My Profile <span class="right glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
-                    <ul class="sub-menu">
-                        <li><a href="#">Change Information</a></li>
-                        <hr>
-                        <li><a href="{% url 'myrelevate:auth:logout' %}">Logout</a></li>
+    <nav class="uk-width-1-1 title-bar-2">
+        <div class="uk-clearfix uk-hidden-small">
+            <div class="uk-float-left">
+                <div class="uk-panel">
+                    <ul class="uk-subnav">
+                        <li>
+                            <a href="#submenu" id="title-text" data-uk-offcanvas>
+                                <i class="uk-icon-navicon uk-icon-small"></i>&nbsp;Relevate
+                            </a>
+                        </li>
                     </ul>
-                </li>
-            {% endif %}
-        </ul>
+                </div>
+            </div>
+            <div class="uk-float-right">
+                <div class="uk-panel">
+                    <ul class="uk-subnav">
+                        <li><a class="uk-icon-hover uk-icon-facebook uk-icon-small" target="_blank"
+                               href="https://www.facebook.com/MyRelevate"></a></li>
+                        <li><a class="uk-icon-hover uk-icon-twitter uk-icon-small" target="_blank"
+                               href="https://twitter.com/MyRelevate/"></a></li>
+                        <li><a class="uk-icon-hover uk-icon-pinterest uk-icon-small" target="_blank"
+                               href="https://in.pinterest.com/MyRelevate/"></a></li>
+                        <li><a class="uk-icon-hover uk-icon-youtube uk-icon-small" target="_blank"
+                               href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uk-navbar-center">
+                <img style="max-height: 40px" src="{% static 'images/favicon.png' %}">
+            </div>
+        </div>
     </nav>
+
+    <div id="submenu" class="uk-offcanvas">
+        <div class="uk-offcanvas-bar">
+            {% url 'myrelevate:index' as index %}
+
+            <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
+                <li><a href="{% url 'myrelevate:index' %}">Home</a></li>
+                <li><a href="{% url 'myrelevate:contributor:contributors' %}">Contributors</a></li>
+                {% if not user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'myrelevate:auth:register_user' %}">Create Account</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'myrelevate:auth:login' %}">Sign In</a>
+                    </li>
+                {% else %}
+                    {% if user.is_contributor %}
+                        <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
+                        <li><a href="{% url 'myrelevate:articles:display' %}">Contributor Articles</a></li>
+                    {% else %}
+                        <li><a href="{% url 'myrelevate:contributor:create' %}">Contributor Application</a></li>
+                    {% endif %}
+                    <li class="uk-parent">
+                        <a href="#">My Profile</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="{% url 'myrelevate:user:profile' %}">Change Information</a></li>
+                            <li><a href="{% url 'myrelevate:auth:logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <br>
+
+
     <!--</div>-->
-    <div class="col-md-10 overflow" style="padding: 0;">
+    <div class="uk-container" style="padding: 0;">
         <div id="messages">
             {% for message in messages %}
-                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade in" role="alert">
+                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade in"
+                     role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span></button>
                     {{ message }}
                 </div>
             {% endfor %}
         </div>
-    <div class="row">
-    {% block content %}
-        {{ block.super }}
-    {% endblock %}
-    </div>
+        <div class="uk-container">
+            {% block content %}
+                {{ block.super }}
+            {% endblock %}
+        </div>
 {% endblock %}

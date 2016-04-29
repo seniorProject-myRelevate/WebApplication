@@ -1,12 +1,12 @@
 html, body {
-    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', 'Arial', 'sans-serif';
     height: 100%;
     margin: 0;
     position: relative;
 }
 
-a {
-    color: inherit !important;
+a, a:link, a:visited, a:hover {
+    color: inherit;
+    text-decoration: none !important;
 }
 
 hr{
@@ -25,7 +25,7 @@ nav ul {
 }
 
 nav ul li {
-    color: #fff;
+    /*color: #fff;*/
     display: block;
     font-size: medium;
     font-weight: bold;
@@ -86,6 +86,22 @@ ul.sub-menu {
     position: absolute;
     top: 0;
     bottom: 0;
+}
+
+.title-bar-2 {
+    background: #fff;
+    color: #999;
+    box-shadow: 0 1px 1px #2BA2D9;
+    padding: 10px 40px;
+
+}
+
+#title-text {
+    color: #999;
+}
+
+.title-bar-2 ul > li:hover, #title-text:hover {
+    color: #55595d;
 }
 
 .center-text {
@@ -432,7 +448,7 @@ img.logo3 {
 
 body {
     /*To hide the horizontal scroller appearing during the animation*/
-    overflow: hidden;
+
 }
 
 #clouds {
@@ -579,3 +595,14 @@ body {
 }
 
 /* END CLOUD CSS */
+
+#submenu {
+}
+
+.uk-nav.uk-nav-offcanvas > li > a {
+    color: #fff
+}
+
+#index-slider {
+    display: block !important;
+}

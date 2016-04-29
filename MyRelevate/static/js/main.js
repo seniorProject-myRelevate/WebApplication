@@ -233,3 +233,6 @@ function addMessage(tag, message) {
 }
 
 $('#myLink').click(function(){ addMessage('info', 'test'); return false; });
+
+UIkit.offcanvas.show('#submenu');
+UIkit.offcanvas.hide([force = false]);

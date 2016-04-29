@@ -5,9 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel='stylesheet' type='text/css' href=' {% static 'css/style-core.css' %}'>
-    <link rel="stylesheet" href='{% static 'bootstrap/css/bootstrap.min.css' %}'>
+    <link rel="stylesheet" href="{% static 'uikit/css/uikit.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/uikit.almost-flat.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/uikit.gradient.min.css' %}"/>
+    <!--<link rel="stylesheet" href='{% static 'bootstrap/css/bootstrap.min.css' %}'>-->
     <link rel="stylesheet" href='{% static 'font-awesome/css/font-awesome.min.css' %}'>
     <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'uikit/js/uikit.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/WearProtection.js' %}"></script>
     <link rel='icon' type='images/png'
@@ -22,7 +26,7 @@
 </head>
 <body>
 {% block body %}
-    <div class='body-content'>
+    <div class='uk-container'>
         {% block content %}
         {% endblock %}
     </div>
@@ -31,27 +35,6 @@
 <footer class="footer">
     {% block footer %}
     {% endblock %}
-    <div class="row">
-        <div class='container center-text'>
-            <div>Follow us on social media!</div>
-            <div class="social-icon hover-facebook">
-                <a href="https://www.facebook.com/MyRelevate" target="_blank"><i
-                        class="fa fa-facebook-square fa-3x"></i></a>
-            </div>
-            <div class="social-icon hover-twitter">
-                <a href="https://twitter.com/MyRelevate/" target="_blank"><i
-                        class="fa fa-twitter-square fa-3x"></i></a>
-            </div>
-            <div class="social-icon hover-pinterest">
-                <a href="https://in.pinterest.com/MyRelevate/" target="_blank"><i
-                        class="fa fa-pinterest-square fa-3x"></i></a>
-            </div>
-            <div class="social-icon hover-youtube">
-                <a href="https://www.youtube.com/channel/UCEh98DlXgjw_ZuNEEnEbLtA" target="_blank"><i
-                        class="fa fa-youtube-square fa-3x"></i></a>
-            </div>
-        </div>
-    </div>
     <script src="{% static 'js/main.js' %}"></script>
 </footer>
 </html>

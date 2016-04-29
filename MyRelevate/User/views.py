@@ -1,5 +1,6 @@
-from django.contrib.auth import get_user_model
 from django.shortcuts import render
+
+from forms import UserDataForm
 
 
 def profile(request):
@@ -8,5 +9,10 @@ def profile(request):
     :param request:
     :return:
     """
-    profile = get_user_model().objects.all()
-    return render(request, 'userprofile.html', {'profile': profile})
+    if request.method == 'POST':
+        form = UserDataForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print form.errors
+    return render(request, 'userprofile.html', {'userdata': UserDataForm(instance=request.user)})

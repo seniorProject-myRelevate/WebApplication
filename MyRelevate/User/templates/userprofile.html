@@ -2,7 +2,21 @@
 
 {% block content %}
     <h1 class="name">
-        {{ user.first_name }}
-        {{ user.last_name }}
+        Edit user profile
     </h1>
+    <div class="col-md-6 ">
+        <form action="{% url 'myrelevate:user:profile' %}" method="post" novalidate>
+            {% csrf_token %}
+            {{ userdata.email }}
+            {{ userdata.first_name }}
+            {{ userdata.last_name }}
+            <hr>
+            {{ userdata.new_password1 }}
+            {{ userdata.new_password2 }}
+            <hr>
+            {{ userdata.curr_password }}
+            <br>
+            <input type="submit" class="btn btn-primary" value="Update"/>
+        </form>
+    </div>
 {% endblock %}
