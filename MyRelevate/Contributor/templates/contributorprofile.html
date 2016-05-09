@@ -1,9 +1,19 @@
 {% extends "base-titlebar.html" %}
 {% load staticfiles %}
 
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.almost-flat.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
+
+    <script src="{% static 'uikit/js/components/accordion.min.js' %}"></script>
+
+{% endblock %}
+
 {% block content %}
     <!--The Contributor Profile Menu Bar-->
-    <div class="contributor-menu">
+    <div>
         <img class="logo_contributors" src="{% static "images/logo.png" %}" alt="logo"/>
         <div class="container">
             <div class="text-center">
@@ -21,7 +31,7 @@
                         Doctor of Psychology
                     {% elif contributorProfile.credential  == 'SU' %}
                         Undergraduate Student
-                    {% elif contributorProfile.credential == 'SM'%}
+                    {% elif contributorProfile.credential == 'SM' %}
                         Master Student
                     {% elif contributorProfile.credential == 'SPhD' %}
                         Doctor of Philosophy Student
@@ -30,182 +40,60 @@
                     {% endif %}
                 </h1>
                 <h3 class="blue">Approved Relevate Contributor</h3>
-                <div class="container">
-                    <div class="btn-toolbar button-menu" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group" role="group" aria-label="First group">
-                            <button type="button" class="button" onclick="ViewProfile()">About Me</button>
-                        </div>
-                        <div class="btn-group" role="group" aria-label="Second group">
-                            <button type="button" class="button" onclick="ViewContent()">Content</button>
-                        </div>
-                        <div class="btn-group" role="group" aria-label="Third group">
-                            <button type="button" class="button" onclick="ViewResources()">Resources</button>
-                        </div>
-                        <div class="btn-group" role="group" aria-label="Fourth group">
-                            <button type="button" class="button" onclick="CreatePost()">
-                                Create New Post</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
 
+    </div>
+    <br><br><br>
+    <div class="uk-container">
+        <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#my-id'}">
+            <li class="uk-active"><a onclick="ViewProfile()">About Me</a></li>
+            <li><a onclick="ViewContent()">Content</a></li>
+            <li><a onclick="ViewResources()">Content</a></li>
+            <li><a onclick="CreatePost()">Create Post</a></li>
+        </ul>
+    </div>
     <div class="container">
         <!--Displays the contributors profile-->
+
         <div class="ContributorProfile" id="contributorProfile">
-            <div>
-                <h2 class="orange">{{ user.first_name }} {{ user.last_name }}</h2>
-                <h4>Credentials</h4>
-                <p id="credentials">{{ contributorProfile.institution }}</p>
-            </div>
-            <div>
-                <h2 class="blue">Area Of Expertise
-                    <button id="editExpertise" type="button" class="btn btn-black">
-                        <span class="glyphicon glyphicon-pencil white"></span></button>
-                </h2>
-                <div id="topic_list">
-                    {{ contributorProfile.expertise_topics }}
+            <div class="uk-accordion" data-uk-accordion>
+
+                <h3 class="uk-accordion-title">Credentials</h3>
+                <div class="uk-accordion-content">{{ contributorProfile.institution }}</div>
+                <h3 class="uk-accordion-title">Area Of Expertise</h3>
+                <div class="uk-accordion-content">{{ contributorProfile.expertise_topics }}</div>
+
+                <h3 class="uk-accordion-title">Biography</h3>
+                <div class="uk-accordion-content">{{ contributorProfile.biography }}</div>
+
+                <h3 class="uk-accordion-title">Research Area and Clinical Interest</h3>
+                <div class="uk-accordion-content">{{ contributorProfile.interests }}</div>
+
+                <h3 class="uk-accordion-title">Contact Information</h3>
+                <div class="uk-accordion-content">
+                    {{ contributorProfile.address }}
+                    <br>
+                    {{ contributorProfile.city }}, {{ contributorProfile.state }}
+
+                    {{ contributorProfile.zipcode }}
+                    <br>
+                    {{ contributorProfile.website_url }}
                 </div>
-                <form class="form" id="expertise_topic_form" style="display: none"
-                      action="{% url 'myrelevate:contributor:update' %}" method="post">
-                    {% csrf_token %}
-                    <div style="display: none">
-                        {{ contributorForm.credential }}
-                        {{ contributorForm.institution }}
-                        {{ contributorForm.address }}
-                        {{ contributorForm.city }}
-                        {{ contributorForm.state }}
-                        {{ contributorForm.zipcode }}
-                        {{ contributorForm.website_url }}
-                        {{ contributorForm.program }}
-                        {{ contributorForm.biography }}
-                        {{ contributorForm.interests }}
-                        {{ contributorForm.accept_terms }}
-                    </div>
-                    <!--Code for Tag form-->
-                    <div class="btn-group-vertical">
-                        <button id="add_right_arrow" type="button" class="btn btn-black">
-                            <span class="glyphicon glyphicon-arrow-right white"></span>
-                        </button>
-                        <button id="remove_left_arrow" type="button" class="btn btn-black">
-                            <span class="glyphicon glyphicon-arrow-left white"></span>
-                        </button>
-                    </div>
-                    {{ contributorForm.expertise_topics }}
-                    <br>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
-                </form>
-            </div>
-            <div>
-                <h2 class="blue">Biography
-                    <button id="editBiography" type="button" class="btn btn-black" onclick="EditBiography()">
-                        <span class="glyphicon glyphicon-pencil"></span></button>
-                </h2>
-                <p id="biography-paragraph">
-                    <span>{{ contributorProfile.biography }}</span>
-                </p>
-                <form class="form" id="biographyForm" style="display: none"
-                      action="{% url 'myrelevate:contributor:update' %}" method="post">
-                    {% csrf_token %}
-                    <div style="display: none">
-                        {{ contributorForm.credential }}
-                        {{ contributorForm.institution }}
-                        {{ contributorForm.address }}
-                        {{ contributorForm.city }}
-                        {{ contributorForm.state }}
-                        {{ contributorForm.zipcode }}
-                        {{ contributorForm.website_url }}
-                        {{ contributorForm.program }}
-                        {{ contributorForm.interests }}
-                        {{ contributorForm.accept_terms }}
-                    </div>
-                    {{ contributorForm.biography }}
-                    <input type="submit" class="btn btn-primary" value="Save"/>
-                </form>
-            </div>
-            <div>
-                <h2 class="blue">Research and Clinical Interests
-                    <button id="editInterests" type="button" class="btn btn-black" onclick="EditInterests()">
-                        <span class="glyphicon glyphicon-pencil"></span></button>
-                </h2>
-                <p id="interests-paragraph">
-                    <span>{{ contributorProfile.interests }}</span>
-                </p>
-                <form class="form" id="interestsForm" style="display: none"
-                      action="{% url 'myrelevate:contributor:update' %}" method="post">
-                    {% csrf_token %}
-                    <div style="display: none">
-                        {{ contributorForm.credential }}
-                        {{ contributorForm.institution }}
-                        {{ contributorForm.address }}
-                        {{ contributorForm.city }}
-                        {{ contributorForm.state }}
-                        {{ contributorForm.zipcode }}
-                        {{ contributorForm.website_url }}
-                        {{ contributorForm.program }}
-                        {{ contributorForm.cv }}
-                        {{ contributorForm.biography }}
-                        {{ contributorForm.accept_terms }}
-                    </div>
-                    {{ contributorForm.interests }}
-                    <input type="submit" class="btn btn-primary" value="Save"/>
-                </form>
-            </div>
-            <div>
-                <h2 class="blue">
-                    Contact and additional information
-                    <button id="editContactInfo" type="button" class="btn btn-black" onclick="EditContactInformation()">
-                        <span class="glyphicon glyphicon-pencil"></span></button>
-                </h2>
-                <ul class="list-unstyled" id="contact_list">
-                    <li>{{ user.email }}</li>
-                    <li>{{ contributorProfile.address }}</li>
-                    <li>{{ contributorProfile.city }}, {{ contributorProfile.state }}
-                        {{ contributorProfile.zipcode }}
-                    </li>
-                    <li>{{ contributorProfile.website_url }}</li>
-                </ul>
-                <form class="form" id="contactInfoForm" style="display: none"
-                      action="{% url 'myrelevate:contributor:update' %}" method="post">
-                    {% csrf_token %}
-                    <div style="display: none">
-                        {{ contributorForm.credential }}
-                        {{ contributorForm.institution }}
-                        {{ contributorForm.address }}
-                        {{ contributorForm.city }}
-                        {{ contributorForm.state }}
-                        {{ contributorForm.zipcode }}
-                        {{ contributorForm.website_url }}
-                        {{ contributorForm.program }}
-                        {{ contributorForm.cv }}
-                        {{ contributorForm.biography }}
-                        {{ contributorForm.interests }}
-                        {{ contributorForm.accept_terms }}
-                    </div>
-                    {{ contributorForm.address }}
-                    {{ contributorForm.city }}
-                    {{ contributorForm.state }}
-                    {{ contributorForm.zipcode }}
-                    {{ contributorForm.website_url }}
-                    <br>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
-                </form>
+
+                <h3 class="uk-accordion-title">Advisor</h3>
+                <div class="uk-accordion-content">{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}
+                    {{ contributorProfile.adviser_email }}
+                </div>
             </div>
             <div>
                 <h2 class="blue">CV</h2>
                 <p>{{ contributorProfile.cv }}</p>
             </div>
-            <div>
-                <h2 class="blue">Adviser</h2>
-                <p>{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}</p>
-                <p>{{ contributorProfile.adviser_email }}</p>
-            </div>
         </div>
 
         <!--Displays the content and contributor posts history-->
         <div id="viewContent" style="display:none">
-            <h2 class="orange">{{ user.first_name }} {{ user.last_name }}</h2>
             <h4>Post to date</h4>
         </div>
 
