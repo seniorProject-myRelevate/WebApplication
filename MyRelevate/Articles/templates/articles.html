@@ -1,15 +1,21 @@
 {% extends "base-titlebar.html" %}
 {% load staticfiles %}
 
+{% block head %}
+    {{ block.super }}
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     {% if form %}
-    <form  class="col-md-3" action="{% url 'myrelevate:articles:create' %}" method="post">
+        <form class="uk-form" action="{% url 'myrelevate:articles:create' %}" method="post">
     {% csrf_token %}
     {{ form.title }}
+            <br><br>
     {{ form.content }}
     <br>
     {{ form.isPublished.label }}{{ form.isPublished }}
-    <input class='form-control' type="submit" value="Post"/>
+            <input class='uk-button' type="submit" value="Post"/>
     </form>
     {% elif articles %}
         {% for a in articles %}
@@ -19,4 +25,13 @@
         {% endfor %}
     {% endif %}
 
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('id_content');
+    </script>
 {% endblock %}

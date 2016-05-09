@@ -13,8 +13,8 @@ class ArticleForm(forms.ModelForm):
         fields = ['title', 'content', 'isPublished']
 
         widgets = {
-            'title': forms.Textarea(attrs={'placeholder': 'Title'}),
-            'content': forms.Textarea(attrs={'placeholder': 'Article'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Title'}),
+            'content': forms.Textarea(),
             }
 
     def save(self, commit=True, email=None):
