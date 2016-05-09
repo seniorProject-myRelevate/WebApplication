@@ -6,9 +6,9 @@ from passwords.validators import LengthValidator, ComplexityValidator
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}),
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}),
                              label='')
-    password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),
+    password = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
                              label='')
 
     class Meta:
@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
 
 
 class PasswordChangeForm(UserChangeForm):
-    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
+    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
 
     password = ReadOnlyPasswordHashField(label=("Password"),
                                          help_text=("Raw passwords are not stored, so there is no way to see "
@@ -24,14 +24,14 @@ class PasswordChangeForm(UserChangeForm):
                                                     "using <a href=\"password/\">this form</a>."))
 
     old_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Old Password', 'class': 'form-control'}), label='')
+        widget=forms.PasswordInput(attrs={'placeholder': 'Old Password'}), label='')
 
     new_password1 = PasswordField(widget=forms.PasswordInput(
         attrs={'placeholder': 'Password', 'class': 'form-control'}), label='',
         validators=[LengthValidator(min_length=6), ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
 
     new_password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), label='')
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}), label='')
 
     class Meta:
         model = get_user_model()
@@ -69,12 +69,12 @@ class RegistrationForm(forms.ModelForm):
     """
     Registration form, allows users to create accounts.
     """
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'form-control'}), label='')
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': 'form-control'}),
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='')
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}),
                                  label='')
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': 'form-control'}),
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
                                 label='')
-    password1 = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),
+    password1 = PasswordField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
                               label='', validators=[LengthValidator(min_length=6),
                                                     ComplexityValidator(complexities=dict(UPPER=1, LOWER=1, DIGITS=1))])
     password2 = forms.CharField(

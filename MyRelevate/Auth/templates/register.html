@@ -2,20 +2,17 @@
 {% load staticfiles %}
 
 {% block content %}
-    <br/>
-    <br/>
-    <form action="{% url 'myrelevate:auth:register_user' %}" method="post">
+    <form action="{% url 'myrelevate:auth:register_user' %}" method="post" class="uk-form">
         {% csrf_token %}
-        <div class="createAccount col-md-6 col-md-offset-3">
+        <div class="createAccount ">
             {{ form.email }}
-            {{ form.first_name }}
-            {{ form.last_name }}
             {{ form.password1 }}
             {{ form.password2 }}
-            <input class='form-control' type="submit" value="Sign Up"/>
+            <br><br>
+            {{ form.first_name }}
+            {{ form.last_name }}
+            <br><br>
+            <input class='uk-button' type="submit" value="Sign Up"/>
         </div>
     </form>
-    <div class="container">
-        <img src="{% static "images/logo.png" %}" alt="logo"/>
-    </div>
 {% endblock %}

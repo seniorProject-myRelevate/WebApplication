@@ -4,19 +4,19 @@
     <h1 class="name">
         Edit user profile
     </h1>
-    <div class="col-md-6 ">
-        <form action="{% url 'myrelevate:user:profile' %}" method="post" novalidate>
+    <div class="">
+        <form action="{% url 'myrelevate:user:profile' %}" method="post" class="uk-form" novalidate>
             {% csrf_token %}
             {{ userdata.email }}
             {{ userdata.first_name }}
             {{ userdata.last_name }}
-            <hr>
+            <br>
             {{ userdata.new_password1 }}
             {{ userdata.new_password2 }}
-            <hr>
+            <br>
             {{ userdata.curr_password }}
             <br>
-            <input type="submit" class="btn btn-primary" value="Update"/>
+            <input type="submit" class="uk-button" value="Update"/>
         </form>
     </div>
 {% endblock %}

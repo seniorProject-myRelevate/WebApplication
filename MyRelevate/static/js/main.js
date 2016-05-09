@@ -10,14 +10,12 @@ function subscribeValidate() {
     var isValid = validateEmail(emailInput.val());
 
     if (isValid) {
-        textbox.removeClass('has-error');
-        textbox.addClass('has-success');
-        emailInput.popover('destroy');
+        emailInput.removeClass('uk-form-danger');
+        emailInput.addClass('uk-form-success');
     }
     else {
-        textbox.removeClass('has-success');
-        textbox.addClass('has-error');
-        emailInput.popover('show');
+        emailInput.removeClass('uk-form-success');
+        emailInput.addClass('uk-form-danger');
     }
     return isValid;
 }
@@ -33,14 +31,15 @@ function postData() {
 
             // handle a successful response
             success: function (data) {
-                textbox.removeClass('has-error');
-                textbox.addClass('has-success');
-                addMessage('success', data.responseJSON.message);
+                console.log(data);
+                emailInput.removeClass('uk-form-danger');
+                emailInput.addClass('uk-form-success');
+                addMessage('success', data['message']);
             },
             error: function (data) {
-                textbox.removeClass('has-success');
-                textbox.addClass('has-error');
-                addMessage('error', data.responseJSON.message)
+                emailInput.removeClass('uk-form-success');
+                emailInput.addClass('uk-form-danger');
+                addMessage('danger', data.responseJSON.message);
             }
         });
     }
@@ -226,9 +225,9 @@ $('a').parent().hover(
 );
 
 function addMessage(tag, message) {
-    var str = "<div class='alert alert-" + tag + " alert-dismissible fade in' role='alert'>\
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>\
-    <span aria-hidden='true'>×</span></button>" + message + "</div>";
+    var str = "<div class=\"uk-alert uk-alert-" + tag + "\" data-uk-alert><a href=\"\" class=\"uk-alert-close uk-close\"></a> "
+        + message + " </div>";
+
     $('#messages').append(str);
 }
 

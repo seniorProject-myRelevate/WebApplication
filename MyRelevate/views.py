@@ -27,9 +27,9 @@ def subscribe(request):
         form = SubscribeForm(request.POST)
         if form.is_valid():
             form.save()
-            send_email('Thank you for subscribing', '5642c87f-4552-4a00-8b95-f17857ae9e88', dict,
-                       form.cleaned_data['email'],)
-            return JsonResponse(status=200, data={'message': 'Thank you for subscribing'})
+            # send_email('Thank you for subscribing', '5642c87f-4552-4a00-8b95-f17857ae9e88', dict,
+            #           form.cleaned_data['email'])
+            return JsonResponse(status=200, data={'message': 'Thank you for subscribing!'})
         else:
             t = dict(form.errors.items())
             return JsonResponse(status=406, data={'message': t['email'][0]})
