@@ -57,28 +57,51 @@
         <!--Displays the contributors profile-->
 
         <div class="ContributorProfile" id="contributorProfile">
-            <div class="uk-accordion" data-uk-accordion>
+            <div class="uk-accordion" data-uk-accordion="{collapse: false}">
 
                 <h3 class="uk-accordion-title">Credentials</h3>
-                <div class="uk-accordion-content">{{ contributorProfile.institution }}</div>
+                <div class="uk-accordion-content">
+                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateCredentials' %}">
+                        {% csrf_token %}
+                        {{ credenrialForm }}
+                        <input class="uk-button" type="submit" value="Update">
+                    </form>
+                </div>
                 <h3 class="uk-accordion-title">Area Of Expertise</h3>
-                <div class="uk-accordion-content">{{ contributorProfile.expertise_topics }}</div>
+                <div class="uk-accordion-content">
+                    <form class="uk-form" method="post"
+                          action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
+                        {% csrf_token %}
+                        {{ expertiseForm }}
+                        <input class="uk-button" type="submit" value="Update">
+                    </form>
+                </div>
 
                 <h3 class="uk-accordion-title">Biography</h3>
-                <div class="uk-accordion-content">{{ contributorProfile.biography }}</div>
+                <div class="uk-accordion-content">
+                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateBiography' %}">
+                        {% csrf_token %}
+                        {{ biographyForm }}
+                        <input class="uk-button" type="submit" value="Update">
+                    </form>
+                </div>
 
                 <h3 class="uk-accordion-title">Research Area and Clinical Interest</h3>
-                <div class="uk-accordion-content">{{ contributorProfile.interests }}</div>
+                <div class="uk-accordion-content">
+                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateInterest' %}">
+                        {% csrf_token %}
+                        {{ interestForm }}
+                        <input class="uk-button" type="submit" value="Update">
+                    </form>
+                </div>
 
                 <h3 class="uk-accordion-title">Contact Information</h3>
                 <div class="uk-accordion-content">
-                    {{ contributorProfile.address }}
-                    <br>
-                    {{ contributorProfile.city }}, {{ contributorProfile.state }}
-
-                    {{ contributorProfile.zipcode }}
-                    <br>
-                    {{ contributorProfile.website_url }}
+                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateContact' %}">
+                        {% csrf_token %}
+                        {{ contactForm }}
+                        <input class="uk-button" type="submit" value="Update">
+                    </form>
                 </div>
 
                 <h3 class="uk-accordion-title">Advisor</h3>

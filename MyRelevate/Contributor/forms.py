@@ -68,3 +68,33 @@ class ContributorForm(forms.ModelForm):
             user.is_contributor = True
             user.save()
             return contributor
+
+
+class CredentialForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = ['credential']
+
+
+class AreaOfExpertiseForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = []  # ['expertise_topics'] apparently this has not been added in the model yet.
+
+
+class BiographyForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = ['biography']
+
+
+class InterestForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = ['interests']
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = ['address', 'city', 'state', 'zipcode']

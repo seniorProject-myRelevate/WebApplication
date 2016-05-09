@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
-from .forms import ContributorForm
+from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm
 
 
 def index(request):
@@ -54,8 +54,67 @@ def update(request):
         user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
-                                                       'contributorForm':
-                                                           ContributorForm(instance=user.contributor_profile)})
+                                                       'contributorForm': ContributorForm(instance=profile),
+                                                       'credenrialForm': CredentialForm(instance=profile),
+                                                       'expertiseForm': AreaOfExpertiseForm(instance=profile),
+                                                       'biographyForm': BiographyForm(instance=profile),
+                                                       'interestForm': InterestForm(instance=profile),
+                                                       'contactForm': ContactForm(instance=profile)})
+
+
+@login_required()
+def updateCredentials(request):
+    if request.method == 'POST':
+        form = CredentialForm(request.POST, instance=request.user.contributor_profile)
+        if form.is_valid:
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
+
+
+@login_required()
+def updateAreaOfExpertise(request):
+    if request.method == 'POST':
+        form = AreaOfExpertiseForm(request.POST, instance=request.user.contributor_profile)
+        if form.is_valid:
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
+
+
+@login_required()
+def updateBiography(request):
+    if request.method == 'POST':
+        form = BiographyForm(request.POST, instance=request.user.contributor_profile)
+        if form.is_valid:
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
+
+
+@login_required()
+def updateInterest(request):
+    if request.method == 'POST':
+        form = InterestForm(request.POST, instance=request.user.contributor_profile)
+        if form.is_valid:
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
+
+
+@login_required()
+def updateContact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST, instance=request.user.contributor_profile)
+        if form.is_valid:
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
 
 
 @login_required()
