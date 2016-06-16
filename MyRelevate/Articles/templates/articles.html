@@ -7,16 +7,17 @@
 {% endblock %}
 
 {% block content %}
+    {{ form.title }}
     {% if form %}
         <form class="uk-form" action="{% url 'myrelevate:articles:create' %}" method="post">
-    {% csrf_token %}
-    {{ form.title }}
+            {% csrf_token %}
+            {{ form.title }}
             <br><br>
-    {{ form.content }}
-    <br>
-    {{ form.isPublished.label }}{{ form.isPublished }}
+            {{ form.content }}
+             <br>
+            {{ form.isPublished.label }}{{ form.isPublished }}
             <input class='uk-button' type="submit" value="Post"/>
-    </form>
+        </form>
     {% elif articles %}
         {% for a in articles %}
             <p>{{ a.title }}</p>
