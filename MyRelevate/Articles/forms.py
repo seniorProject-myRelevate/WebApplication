@@ -7,6 +7,7 @@ from .models import Article
 
 
 class ArticleForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Title'}))
 
     class Meta:
         model = Article
