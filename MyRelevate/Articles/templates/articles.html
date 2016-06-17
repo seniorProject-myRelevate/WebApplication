@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block content %}
-    {{ form.title }}
     {% if form %}
         <form class="uk-form" action="{% url 'myrelevate:articles:create' %}" method="post">
             {% csrf_token %}
@@ -21,7 +20,7 @@
     {% elif articles %}
         {% for a in articles %}
             <p>{{ a.title }}</p>
-            <p>{{ a.content }}</p>
+            <p>{{ a.content|safe }}</p>
             <hr>
         {% endfor %}
     {% endif %}

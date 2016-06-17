@@ -24,9 +24,10 @@ def create(request):
         if form.is_valid():
             form.save(email=request.user.email)
             # messages.SUCCESS(request, 'Article posted!')
-            # return HttpResponseRedirect(reverse('myrelevate:articles:display'))
+            # return HttpResponseRedirect(reverse('myrelevate:articles:index'))
         else:
-            messages.ERROR(request, form.errors)
+            pass
+            # messages.ERROR(request, form.errors)
     return render(request, 'articles.html', {'form': ArticleForm()})
 
 
