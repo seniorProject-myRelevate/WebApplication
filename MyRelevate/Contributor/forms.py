@@ -97,7 +97,7 @@ class CredentialForm(forms.ModelForm):
 class AreaOfExpertiseForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
-        fields = ['expertise_topics']  # ['expertise_topics'] apparently this has not been added in the model yet.
+        fields = ['expertise_topics']
 
 
 class BiographyForm(forms.ModelForm):
