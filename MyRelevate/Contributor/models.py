@@ -30,4 +30,4 @@ class ContributorProfile(models.Model):
     website_url = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
     accept_terms = models.BooleanField(default=False)
-    # expertise_topics = models.CharField(max_length=255, null=False, blank=False)
+    expertise_topics = models.ManyToManyField('MyRelevate.Topics')

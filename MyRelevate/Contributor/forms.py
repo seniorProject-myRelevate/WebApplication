@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from .models import ContributorProfile
+from ..models import Topics
 
 
 class ContributorForm(forms.ModelForm):
@@ -46,8 +47,8 @@ class ContributorForm(forms.ModelForm):
                            #                     ))
 
     # accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
-    # expertise_topics = forms.ModelMultipleChoiceField(queryset=Tag.objects.all())
-    expertise_topics = forms.MultipleChoiceField(required=False, widget=forms.SelectMultiple)
+    expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple,
+                                                      queryset=Topics.objects.all().values_list('topicName', flat=True))
 
     class Meta:
         model = ContributorProfile
@@ -96,7 +97,7 @@ class CredentialForm(forms.ModelForm):
 class AreaOfExpertiseForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
-        fields = []  # ['expertise_topics'] apparently this has not been added in the model yet.
+        fields = ['expertise_topics']  # ['expertise_topics'] apparently this has not been added in the model yet.
 
 
 class BiographyForm(forms.ModelForm):

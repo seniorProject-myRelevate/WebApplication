@@ -24,6 +24,11 @@ class Subscriber(models.Model):
         client.send(message)
 
 
+class Topics(models.Model):
+    topicName = models.CharField(max_length=100, null=False, blank=False)
+    topicDescription = models.CharField(max_length=255, null=False, blank=False)
+
+
 # DemographicData Database Model
 # class DemographicData(models.py.Model):
 #     EDUCATION = (
