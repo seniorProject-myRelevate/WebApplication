@@ -29,6 +29,12 @@ class Topics(models.Model):
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
 
 
+class Adviser(models.Model):
+    adviser_email = models.EmailField(max_length=254, unique=False, null=False, blank=False)
+    adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
+    adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
+
+
 # DemographicData Database Model
 # class DemographicData(models.py.Model):
 #     EDUCATION = (
