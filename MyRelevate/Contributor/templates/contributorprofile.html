@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
 
     <script src="{% static 'uikit/js/components/accordion.min.js' %}"></script>
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
 
 {% endblock %}
 
@@ -131,4 +132,14 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('id_biography');
+        CKEDITOR.replace('id_interests');
+    </script>
 {% endblock %}

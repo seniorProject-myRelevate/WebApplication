@@ -39,8 +39,8 @@ class ContributorForm(forms.ModelForm):
     #                              label='')
     # biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
     #                                                          'class': 'form-control'}), label='')
-    # interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
-    #                                                          'class': 'form-control'}), label='', required=False)
+    interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
+                                                             'class': 'form-control'}), label='', required=False)
     cv = forms.FileField(label='Specific MIME type', required=False)
                            # mimetype_whitelist=("application/pdf", "application/msword",
                            #                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -68,8 +68,8 @@ class ContributorForm(forms.ModelForm):
             'website_url': forms.URLInput(attrs={'placeholder': 'Website URL', 'class': 'form-control'}),
             'biography': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
                                                'class': 'form-control'}),
-            'interests': forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
-                                               'class': 'form-control'}),
+            # 'interests': forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
+            #                                    'class': 'form-control'}),
             'accept_terms': forms.CheckboxInput()
         }
 

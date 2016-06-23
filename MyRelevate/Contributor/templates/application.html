@@ -1,6 +1,12 @@
 {% extends "base-titlebar.html" %}
 {% load staticfiles %}
 
+{% block head %}
+    {{ block.super }}
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+
+{% endblock %}
+
 {% block content %}
     <div id="contributorApplication">
         <div class="container">
@@ -124,4 +130,13 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('id_biography');
+    </script>
 {% endblock %}
