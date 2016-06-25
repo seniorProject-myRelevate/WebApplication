@@ -3,7 +3,7 @@ import os
 from django import forms
 
 from .models import Subscriber
-from .models import Adviser
+# from .models import Adviser
 
 
 class ExtFileField(forms.FileField):
