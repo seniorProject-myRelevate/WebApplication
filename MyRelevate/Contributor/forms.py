@@ -19,12 +19,12 @@ class ContributorForm(forms.ModelForm):
     )
 
     credential = forms.ChoiceField(choices=DEGREES, required=True)
-    # adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
-    #                                  label='', required=False)
-    # adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name',
-    #                                                                    'class': 'form-control'}), label='', required=False)
-    # adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
-    #                                                                   'class': 'form-control'}), label='', required=False)
+    adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
+                                     label='', required=False)
+    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name',
+                                                                       'class': 'form-control'}), label='', required=False)
+    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
+                                                                      'class': 'form-control'}), label='', required=False)
     # program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Field of study/specialization',
     #                                                         'class': 'form-control'}), label='')
     # institution = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
@@ -52,7 +52,7 @@ class ContributorForm(forms.ModelForm):
 
     class Meta:
         model = ContributorProfile
-        fields = ['credential', 'program', 'institution',
+        fields = ['credential', 'program', 'institution', 'adviser_email', 'adviser_first_name', 'adviser_last_name',
                   'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url',
                   'expertise_topics']
         widgets = {

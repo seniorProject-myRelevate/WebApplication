@@ -68,17 +68,17 @@ class SubscribeForm(forms.ModelForm):
         fields = ['email']
 
 
-class AdviserForm(forms.ModelForm):
-    adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
-                                     label='', required=False)
-    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name',
-                                                                       'class': 'form-control'}), label='', required=False)
-    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
-                                                                      'class': 'form-control'}), label='', required=False)
-
-    class Meta:
-        model = Adviser
-        fields = {'adviser_email', 'adviser_first_name', 'adviser_last_name'}
+# class AdviserForm(forms.ModelForm):
+#     adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
+#                                      label='', required=False)
+#     adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name',
+#                                                                        'class': 'form-control'}), label='', required=False)
+#     adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
+#                                                                       'class': 'form-control'}), label='', required=False)
+#
+#     class Meta:
+#         model = Adviser
+#         fields = {'adviser_email', 'adviser_first_name', 'adviser_last_name'}
 
     # def save(self, commit=True, email=None):
     #     adviser = super(AdviserForm, self).save(commit=False)
