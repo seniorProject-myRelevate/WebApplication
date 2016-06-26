@@ -47,7 +47,9 @@ class ContributorForm(forms.ModelForm):
                            #                     ))
 
     # accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
-    expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple,
+    # expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(),
+    #                                                   queryset=Topics.objects.all().values_list('topicName', flat=True))
+    expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(), label='',
                                                       queryset=Topics.objects.all().values_list('topicName', flat=True))
 
     class Meta:

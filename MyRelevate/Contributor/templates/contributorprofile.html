@@ -73,7 +73,13 @@
                     <form class="uk-form" method="post"
                           action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
                         {% csrf_token %}
-                        {{ expertiseForm }}
+                        {% for field in expertiseForm %}
+                            <div class="fieldWrapper">
+                                {{ field.errors }}
+                                <!--{{ field.label_tag }} {{ field }}-->
+                            </div>
+                        {% endfor %}
+                        <!--{{ expertiseForm }}-->
                         <input class="uk-button" type="submit" value="Update">
                     </form>
                 </div>
