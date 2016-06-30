@@ -46,7 +46,6 @@ def update(request):
         if form.is_valid():
             # profile = ContributorProfile(cv=request.FILES['cv'])
             form.save(email=request.user.email)
-            # return HttpResponseRedirect(reverse('myrelevate:index'))
             return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
         else:
             return HttpResponse(form.errors)

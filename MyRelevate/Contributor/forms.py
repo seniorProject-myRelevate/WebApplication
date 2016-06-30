@@ -48,9 +48,10 @@ class ContributorForm(forms.ModelForm):
 
     # accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
     # expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(),
-    #                                                   queryset=Topics.objects.all().values_list('topicName', flat=True))
-    expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(), label='',
-                                                      queryset=Topics.objects.all().values_list('topicName', flat=True))
+    #                                                   queryset=Topics.objects.all().values_list('id', flat=True)
+    # )
+    # expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(), label='',
+    #                                                   queryset=Topics.objects.raw('SELECT * FROM MyRelevate_topics'))
 
     class Meta:
         model = ContributorProfile
@@ -72,6 +73,7 @@ class ContributorForm(forms.ModelForm):
                                                'class': 'form-control'}),
             # 'interests': forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
             #                                    'class': 'form-control'}),
+            'expertise_topics': forms.CheckboxSelectMultiple(),
             'accept_terms': forms.CheckboxInput()
         }
 
@@ -97,9 +99,16 @@ class CredentialForm(forms.ModelForm):
 
 
 class AreaOfExpertiseForm(forms.ModelForm):
+    # expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(),
+    #                                                   queryset=Topics.objects.all().values_list('topicName', flat=True))
+
     class Meta:
         model = ContributorProfile
         fields = ['expertise_topics']
+        widgets = {
+            'expertise_topics': forms.CheckboxSelectMultiple()
+
+        }
 
 
 class BiographyForm(forms.ModelForm):
