@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
-from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm
+from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
+    ApprovalContributorForm, ApprovalUpdateUserForm
 
 
 def index(request):
@@ -141,5 +142,23 @@ def contributors(request):
         pass
     return render(request, 'contributors.html', {'contributors': contributor_profiles})
 
+@login_required()
+def approve(request,id):
+    user = get_user_model().objects.get(email=id)
+    if request.method == 'POST':
+        form = ApprovalContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
+        form2 = ApprovalUpdateUserForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save(email=request.user.email)
+            return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
+        else:
+            return HttpResponse(form.errors)
+    else:
+        user = get_user_model().objects.get(email=id)
+        profile = user.get_contributor_profile()
+    return render(request, 'approvalcontributorprofile.html', {'contributorProfile': profile,
+                                                       'approvalContributorForm': ApprovalContributorForm(instance=profile),
+                                                       'approvalUpdateUserForm': ApprovalUpdateUserForm(instance=profile),
+                                                               })
 
 

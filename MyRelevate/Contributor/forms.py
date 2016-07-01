@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from .models import ContributorProfile
+from MyRelevate.User.models import User
 from ..models import Topics
 
 
@@ -126,3 +127,16 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['address', 'city', 'state', 'zipcode']
+
+class ApprovalContributorForm(forms.ModelForm):
+
+    class Meta:
+        model = ContributorProfile
+        fields = ['credential', 'program', 'institution', 'adviser_email', 'adviser_first_name', 'adviser_last_name',
+                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
+
+class ApprovalUpdateUserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['is_contributor']
