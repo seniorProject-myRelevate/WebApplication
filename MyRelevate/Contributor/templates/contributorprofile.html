@@ -81,8 +81,18 @@
                                 </label>
                             </li>
                         </ul>
-                        {{ expertiseForm }}
-                        <!--{{ contributorForm.expertise_topics }}-->
+                        <ul id="id_expertise_topics">
+                            {% for topic in topics %}
+                                <li>
+                                    <label>
+                                        <input id="id_expertise_topics_{{ topic.id }}" name="expertise_topics" type="checkbox"
+                                               value="{{ topic.id }}">
+                                        {{ topic.topicName }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <!--{{ expertiseForm }}-->
                         <input class="uk-button" type="submit" value="Update">
                     </form>
                 </div>

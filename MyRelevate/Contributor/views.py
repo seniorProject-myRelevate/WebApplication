@@ -7,6 +7,8 @@ from django.shortcuts import render
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalContributorForm, ApprovalUpdateUserForm
 
+from ..models import Topics
+
 
 def index(request):
     if not request.user.is_contributor:
@@ -47,13 +49,16 @@ def update(request):
         if form.is_valid():
             # profile = ContributorProfile(cv=request.FILES['cv'])
             form.save(email=request.user.email)
+
             return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
         else:
             return HttpResponse(form.errors)
     else:
         user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
+        topics = Topics.objects.all()
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
+                                                       'topics': topics,
                                                        'contributorForm': ContributorForm(instance=profile),
                                                        'credenrialForm': CredentialForm(instance=profile),
                                                        'expertiseForm': AreaOfExpertiseForm(instance=profile),
