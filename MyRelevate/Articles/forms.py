@@ -4,10 +4,12 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from .models import Article
+# from ..models import Topics
 
 
 class ArticleForm(forms.ModelForm):
-    # title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Title'}))
+    # article_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(), label='',
+    #                                                 queryset=Topics.objects.all().values_list('topicName', flat=True))
 
     class Meta:
         model = Article

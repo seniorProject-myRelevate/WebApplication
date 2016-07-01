@@ -73,6 +73,14 @@
                     <form class="uk-form" method="post"
                           action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
                         {% csrf_token %}
+                        <ul id="id_expertise_topics">
+                            <li>
+                                <label for="id_expertise_topics_0">
+                                    <input id="id_expertise_topics_0" name="expertise_topics" type="checkbox" value="1">
+                                    First Option
+                                </label>
+                            </li>
+                        </ul>
                         {{ expertiseForm }}
                         <!--{{ contributorForm.expertise_topics }}-->
                         <input class="uk-button" type="submit" value="Update">

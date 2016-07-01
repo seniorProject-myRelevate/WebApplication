@@ -3,6 +3,7 @@ from datetime import datetime
 from django.db import models
 
 from ..Contributor.models import ContributorProfile
+from ..models import Topics
 
 
 class Article(models.Model):
@@ -13,3 +14,4 @@ class Article(models.Model):
     createdDate = models.DateField(default=datetime.now)
     publishDate = models.DateField(null=True, blank=True)
     updateDate = models.DateField(default=datetime.now)
+    # article_topics = models.ManyToManyField(Topics)

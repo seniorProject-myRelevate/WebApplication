@@ -56,8 +56,7 @@ class ContributorForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['credential', 'program', 'institution', 'adviser_email', 'adviser_first_name', 'adviser_last_name',
-                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url',
-                  'expertise_topics']
+                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
         widgets = {
             # 'adviser_email': forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
             # 'adviser_first_name': forms.TextInput(attrs={'placeholder': 'Adviser First Name', 'class': 'form-control'}),
@@ -73,7 +72,6 @@ class ContributorForm(forms.ModelForm):
                                                'class': 'form-control'}),
             # 'interests': forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
             #                                    'class': 'form-control'}),
-            'expertise_topics': forms.CheckboxSelectMultiple(),
             'accept_terms': forms.CheckboxInput()
         }
 
@@ -105,6 +103,7 @@ class AreaOfExpertiseForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['expertise_topics']
+
         widgets = {
             'expertise_topics': forms.CheckboxSelectMultiple()
 
