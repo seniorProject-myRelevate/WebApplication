@@ -98,7 +98,7 @@ class CredentialForm(forms.ModelForm):
 
 
 class AreaOfExpertiseForm(forms.ModelForm):
-    # expertise_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(),
+    # expertise_topics = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(),
     #                                                   queryset=Topics.objects.all().values_list('topicName', flat=True))
 
     class Meta:
@@ -128,12 +128,14 @@ class ContactForm(forms.ModelForm):
         model = ContributorProfile
         fields = ['address', 'city', 'state', 'zipcode']
 
+
 class ApprovalContributorForm(forms.ModelForm):
 
     class Meta:
         model = ContributorProfile
         fields = ['credential', 'program', 'institution', 'adviser_email', 'adviser_first_name', 'adviser_last_name',
                   'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
+
 
 class ApprovalUpdateUserForm(forms.ModelForm):
 

@@ -74,25 +74,23 @@
                           action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
                         {% csrf_token %}
                         <ul id="id_expertise_topics">
-                            <li>
-                                <label for="id_expertise_topics_0">
-                                    <input id="id_expertise_topics_0" name="expertise_topics" type="checkbox" value="1">
-                                    First Option
-                                </label>
-                            </li>
-                        </ul>
-                        <ul id="id_expertise_topics">
                             {% for topic in topics %}
                                 <li>
                                     <label>
-                                        <input id="id_expertise_topics_{{ topic.id }}" name="expertise_topics" type="checkbox"
-                                               value="{{ topic.id }}">
+                                        <input id="id_expertise_topics_{{ topic.id }}"
+                                                {% if topic.selected %} checked="checked" {% endif %}
+                                               name="expertise_topics" type="checkbox" value="{{ topic.id }}">
                                         {{ topic.topicName }}
                                     </label>
+                                    <div class="data-uk-dropdown">
+                                        <div class="uk-dropdown">
+
+                                        </div>
+                                    </div>
                                 </li>
                             {% endfor %}
                         </ul>
-                        <!--{{ expertiseForm }}-->
+                        {{ expertiseForm }}
                         <input class="uk-button" type="submit" value="Update">
                     </form>
                 </div>
