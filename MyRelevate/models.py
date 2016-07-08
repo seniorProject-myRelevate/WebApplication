@@ -25,17 +25,13 @@ class Subscriber(models.Model):
 
 
 class Topics(models.Model):
-    class Meta:
-        db_table = 'topic'
     topicName = models.CharField(max_length=100, null=False, blank=False)
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
 
 
 class ContributorTopics(models.Model):
-    class Meta:
-        db_table = 'contributortopics'
-    contributor_profile = models.ForeignKey(ContributorProfile, blank=True, unique=True)
-    topic_choices = models.ForeignKey(Topics)
+    contributor_profile = models.ForeignKey(ContributorProfile, on_delete=models.CASCADE)
+    topics = models.ForeignKey(Topics, on_delete=models.CASCADE)
 
 
 # class Adviser(models.Model):

@@ -78,7 +78,7 @@
                                 <li>
                                     <label>
                                         <input id="id_expertise_topics_{{ topic.id }}"
-                                                {% if topic.selected %} checked="checked" {% endif %}
+                                                {% if contributortopics.pk == topic.pk %} checked="checked" {% endif %}
                                                name="expertise_topics" type="checkbox" value="{{ topic.id }}">
                                         {{ topic.topicName }}
                                     </label>
