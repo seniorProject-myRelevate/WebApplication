@@ -2,6 +2,8 @@ from django.db import models
 
 
 class ContributorProfile(models.Model):
+    class Meta:
+        db_table = 'contributor_profile'
     DEGREES = (
         ('-1', ''),
         ('MS', 'MS (Master of Science)'),
@@ -30,6 +32,7 @@ class ContributorProfile(models.Model):
     website_url = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
     accept_terms = models.BooleanField(default=False)
-    # expertise_topics = models.ManyToManyField('MyRelevate.Topics')
-    expertise_topics = models.ManyToManyField('MyRelevate.Topics', through='MyRelevate.ContributorTopics')
+    expertise_topics = models.ManyToManyField('MyRelevate.Topics')
+    # expertise_topics = models.ManyToManyField('MyRelevate.Topics', through='MyRelevate.ContributorTopics',
+    #                                           through_fields=('contributor_profile', 'topics'))
     # adviser = models.ForeignKey(to='MyRelevate.Adviser')

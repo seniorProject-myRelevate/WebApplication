@@ -7,6 +7,8 @@ from ..models import Topics
 
 
 class Article(models.Model):
+    class Meta:
+        db_table = 'article'
     contributor = models.ForeignKey(ContributorProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.CharField(max_length=400)
