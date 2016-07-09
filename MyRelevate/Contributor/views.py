@@ -58,10 +58,8 @@ def update(request):
         user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
         topics = Topics.objects.all()
-        # contibutor_topics = ContributorProfile().expertise_topics.all()
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
                                                        'topics': topics,
-                                                       # 'contributortopics': contibutor_topics,
                                                        'contributorForm': ContributorForm(instance=profile),
                                                        'credenrialForm': CredentialForm(instance=profile),
                                                        'expertiseForm': AreaOfExpertiseForm(instance=profile),

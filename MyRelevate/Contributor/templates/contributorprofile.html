@@ -78,7 +78,9 @@
                                 <li>
                                     <label>
                                         <input id="id_expertise_topics_{{ topic.id }}"
-                                                {% if contributortopics.pk == topic.pk %} checked="checked" {% endif %}
+                                               {% for expertise_topic in contributorProfile.expertise_topics.all %}
+                                                   {% if expertise_topic.id == topic.id %} checked="checked" {% endif %}
+                                               {% endfor %}
                                                name="expertise_topics" type="checkbox" value="{{ topic.id }}">
                                         {{ topic.topicName }}
                                     </label>
@@ -90,7 +92,6 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                        {{ contributorProfile.expertise_topics }}
                         <input class="uk-button" type="submit" value="Update">
                     </form>
                 </div>
