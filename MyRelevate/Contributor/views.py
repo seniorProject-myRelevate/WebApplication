@@ -3,12 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from reportlab.pdfgen import canvas
 
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalContributorForm, ApprovalUpdateUserForm
 
 from ..models import Topics
-from .models import ContributorProfile
 
 
 def index(request):

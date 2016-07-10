@@ -50,7 +50,7 @@
         <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#my-id'}">
             <li class="uk-active"><a onclick="ViewProfile()">About Me</a></li>
             <li><a onclick="ViewContent()">Content</a></li>
-            <li><a onclick="ViewResources()">Content</a></li>
+            <li><a onclick="ViewResources()">Resources</a></li>
             <li><a onclick="CreatePost()">Create Post</a></li>
         </ul>
     </div>
@@ -73,7 +73,7 @@
                     <form class="uk-form" method="post"
                           action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
                         {% csrf_token %}
-                        <ul id="id_expertise_topics">
+                        <ul id="id_expertise_topics" class="uk-list uk-column-1-2" >
                             {% for topic in topics %}
                                 <li>
                                     <label>
@@ -84,10 +84,11 @@
                                                name="expertise_topics" type="checkbox" value="{{ topic.id }}">
                                         {{ topic.topicName }}
                                     </label>
-                                    <div class="data-uk-dropdown">
-                                        <div class="uk-dropdown">
-
-                                        </div>
+                                    <button type="button" class="uk-accordion-title">
+                                        <i class="uk-icon-question"></i>
+                                    </button>
+                                    <div class="uk-panel-box-primary uk-accordion-content">
+                                        {{ topic.topicDescription }}
                                     </div>
                                 </li>
                             {% endfor %}
@@ -123,14 +124,15 @@
                     </form>
                 </div>
 
-                <h3 class="uk-accordion-title">Advisor</h3>
+                <h3 class="uk-accordion-title">Adviser</h3>
                 <div class="uk-accordion-content">{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}
                     {{ contributorProfile.adviser_email }}
                 </div>
-            </div>
-            <div>
-                <h2 class="blue">CV</h2>
-                <p>{{ contributorProfile.cv }}</p>
+
+                <h2 class="uk-accordion-title">CV</h2>
+                <div class="uk-accordion-content">
+                    {{ contributorProfile.cv }}
+                </div>
             </div>
         </div>
 

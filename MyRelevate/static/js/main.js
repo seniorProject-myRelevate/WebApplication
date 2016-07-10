@@ -78,45 +78,7 @@ $("form select[name='credential']").change(function(){
             lastName.val('');
             $('#studentAccess').hide();
         }
-    });
-
-/*
- Remove selected topic from option list and add it to selected list
-*/
-//$('#add_right_arrow').click(function(){
-
-//    $("form select[name='expertise_topics']").selected().each(function(){
-//        $('#id_my_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-//        $(this).remove();
-//    });
-
-    /*
-   $('#id_expertise_topics option:selected').each(function(){
-       $('#id_my_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-       $(this).remove();
-       */
-       /*
-       $('#id_selected_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-       $(this).remove();
-       */
-   //});
-//});
-
-/*
- Remove selected topic from select list and add it back to the options list
-*/
-//$('#remove_left_arrow').click(function(){
-//    $('#id_my_topics option:selected').each(function(){
-//        $('#id_expertise_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-//        $(this).remove();
-//   });
-    /*
-    $('#id_selected_topics option:selected').each(function(){
-        $('#id_expertise_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-        $(this).remove();
-   });
-   */
-//});
+});
 
 
 function ContributorAccess() {
