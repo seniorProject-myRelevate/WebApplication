@@ -51,6 +51,7 @@
             <li class="uk-active"><a onclick="ViewProfile()">About Me</a></li>
             <li><a onclick="ViewContent()">Content</a></li>
             <li><a onclick="ViewResources()">Resources</a></li>
+{#            <li><a href="{% url 'myrelevate:articles:create' %}">Create Post</a></li>#}
             <li><a onclick="CreatePost()">Create Post</a></li>
         </ul>
     </div>
@@ -132,6 +133,7 @@
                 <h2 class="uk-accordion-title">CV</h2>
                 <div class="uk-accordion-content">
                     {{ contributorProfile.cv }}
+                    {{ response }}
                 </div>
             </div>
         </div>

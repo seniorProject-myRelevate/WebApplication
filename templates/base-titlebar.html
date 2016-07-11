@@ -53,7 +53,13 @@
                 {% else %}
                     {% if user.is_contributor %}
                         <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
-                        <li><a href="{% url 'myrelevate:articles:display' %}">Contributor Articles</a></li>
+                        <li class="uk-parent">
+                            <a href="#">Contributor Articles</a>
+                            <ul class="uk-nav-sub">
+                                <li><a href="{% url 'myrelevate:articles:display' %}">Posts To Date</a></li>
+                                <li><a href="{% url 'myrelevate:articles:create' %}">Create Post</a></li>
+                            </ul>
+                        </li>
                     {% else %}
                         <li><a href="{% url 'myrelevate:contributor:create' %}">Contributor Application</a></li>
                     {% endif %}
