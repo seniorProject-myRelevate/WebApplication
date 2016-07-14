@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.http import HttpResponse
 
-from forms import ArticleForm
+from forms import ArticleForm, ArticleTopicForm
 from models import Article
+from .models import Topics
 
 
 def index(request):
@@ -20,15 +22,28 @@ def create(request):
     if not request.user.is_contributor:
         return HttpResponseRedirect(reverse('myelevate:index'))
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            form.save(email=request.user.email)
+        form1 = ArticleForm(request.POST)
+        if form1.is_valid():
+            form1.save(email=request.user.email)
             # messages.SUCCESS(request, 'Article posted!')
-            # return HttpResponseRedirect(reverse('myrelevate:articles:index'))
+            return HttpResponseRedirect(reverse('myrelevate:articles:create'))
         else:
-            pass
+            return HttpResponse(form1.errors)
             # messages.ERROR(request, form.errors)
-    return render(request, 'articles.html', {'form': ArticleForm()})
+    else:
+        topics = Topics.objects.all()
+    return render(request, 'articles.html', {'form': ArticleForm(), 'topics': topics})
+
+
+@login_required()
+def articleTopics(request):
+    if request.method == 'POST':
+        form = ArticleTopicForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:article:create'))
 
 
 @login_required()

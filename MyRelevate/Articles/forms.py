@@ -4,16 +4,12 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from .models import Article
-# from ..models import Topics
 
 
 class ArticleForm(forms.ModelForm):
-    # article_topics = forms.ModelMultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple(), label='',
-    #                                                 queryset=Topics.objects.all().values_list('topicName', flat=True))
-
     class Meta:
         model = Article
-        fields = ['title', 'content', 'isPublished']
+        fields = ['title', 'content', 'isPublished', 'article_topics']
 
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title'}),
@@ -28,3 +24,9 @@ class ArticleForm(forms.ModelForm):
                 article.publishDate = datetime.now()
             article.save()
             return article
+
+
+class ArticleTopicForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = {'article_topics'}

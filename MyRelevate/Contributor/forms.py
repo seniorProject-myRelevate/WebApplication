@@ -98,17 +98,9 @@ class CredentialForm(forms.ModelForm):
 
 
 class AreaOfExpertiseForm(forms.ModelForm):
-    # expertise_topics = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(),
-    #                                                   queryset=Topics.objects.all().values_list('topicName', flat=True))
-
     class Meta:
         model = ContributorProfile
         fields = ['expertise_topics']
-
-        widgets = {
-            'expertise_topics': forms.CheckboxSelectMultiple()
-
-        }
 
 
 class BiographyForm(forms.ModelForm):

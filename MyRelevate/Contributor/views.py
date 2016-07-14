@@ -58,11 +58,18 @@ def update(request):
         user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
         topics = Topics.objects.all()
+        response = HttpResponse(content_type='application/pdf')
+        response[
+            'Content-Disposition'] = 'attachment; filename="user_profiles/cv/test_cv_resume_pzU2Ar4.pdf"'
+        p = canvas.Canvas(response)
+        p.showPage()
+        p.save()
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
                                                        'topics': topics,
+                                                       # 'response': response,
                                                        'contributorForm': ContributorForm(instance=profile),
                                                        'credenrialForm': CredentialForm(instance=profile),
-                                                       'expertiseForm': AreaOfExpertiseForm(instance=profile),
+                                                       # 'expertiseForm': AreaOfExpertiseForm(instance=profile),
                                                        'biographyForm': BiographyForm(instance=profile),
                                                        'interestForm': InterestForm(instance=profile),
                                                        'contactForm': ContactForm(instance=profile)})
@@ -126,6 +133,16 @@ def updateContact(request):
 @login_required()
 def remove(request):
     pass
+
+@login_required()
+def showpdf(request):
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="user_profiles/cv/test_cv_resume_pzU2Ar4.pdfuser_profiles/cv/test_cv_resume_pzU2Ar4.pdf"'
+    p = canvas.Canvas(response)
+    p.showPage()
+    p.save()
+    return response
 
 
 def contributors(request):
