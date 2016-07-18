@@ -59,15 +59,8 @@ def update(request):
         user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
         topics = Topics.objects.all()
-        response = HttpResponse(content_type='application/pdf')
-        response[
-            'Content-Disposition'] = 'attachment; filename="user_profiles/cv/test_cv_resume_pzU2Ar4.pdf"'
-        p = canvas.Canvas(response)
-        p.showPage()
-        p.save()
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
                                                        'topics': topics,
-                                                       # 'response': response,
                                                        'contributorForm': ContributorForm(instance=profile),
                                                        'credenrialForm': CredentialForm(instance=profile),
                                                        # 'expertiseForm': AreaOfExpertiseForm(instance=profile),
@@ -138,14 +131,16 @@ def remove(request):
 @login_required()
 def showpdf(request):
     user = get_user_model().objects.get(email=request.user.email)
-    # profile = user.get_contributor_profile()
-    profile = ContributorProfile.objects.get(user=user)
+    pro = user.get_contributor_profile()
+    profile = ContributorProfile.objects.get(id=user.contributor_profile.pk)
     filepath = profile.cv.path
-    # response = HttpResponse(content_type='application/pdf')
-    # response['Content-Disposition'] = 'attachment; filename="test_cv_resume_pzU2Ar4.pdf"'
+    filename = profile.cv.name
+    fp = pro.cv.path
+    # response = HttpResponse(open(filepath, 'rb'), content_type='application/pdf')
+    # response['Content-Disposition'] = 'inline; filename="test_cv_resume_BYRIncf.pdf"'
     # p = canvas.Canvas(response)
-    # p.drawString(100, 100, "Hello world.")
-    # # p.getpdfdata()
+    # # p.drawString(100, 100, "Hello world.")
+    # p.getpdfdata()
     # p.showPage()
     # p.save()
     # with open(filename, 'wb') as pdf:
@@ -153,12 +148,13 @@ def showpdf(request):
     #     response['Content-Disposition'] = 'filename="test_cv_resume_BYRIncf.pdf"'
     #     p = canvas.Canvas(response)
     #     pdf.write(p.getpdfdata())
-    with open("C:\Users\Jeremy\PycharmProjects\WebApplication\media\user_profiles\cv\test_cv_resume_BYRIncf.pdf", 'rb') as pdf:
+    with open(filepath, 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'filename="test_cv_resume_BYRIncf.pdf"'
+        response['Content-Disposition'] = 'inline; filename="test_cv_resume_BYRIncf.pdf"'
+        # p = canvas.Canvas(response)
+        # p.showPage()
+        # p.save()
     return response
-    # pdf = open("C:\Users\Jeremy\PycharmProjects\WebApplication\media\user_profiles\cv\test_cv_resume_BYRIncf.pdf", "r").read()
-    # return HttpResponse(pdf, content_type='application/pdf')
 
 
 def contributors(request):
