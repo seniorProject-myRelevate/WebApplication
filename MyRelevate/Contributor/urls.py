@@ -17,5 +17,6 @@ urlpatterns = [
     url(r'^(?i)contributors/$', views.contributors, name='contributors'),
     # url(r'^(?i)contributorprofile', views.contributor_profile, name='contributor_profile'),
     # url(r'^(?i)application/$', views.application, name='application'),
+    url(r'^(?i)showpdf/$', views.showpdf, name='showpdf'),
 
 ]

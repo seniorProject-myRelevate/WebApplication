@@ -132,8 +132,8 @@
 
                 <h2 class="uk-accordion-title">CV</h2>
                 <div class="uk-accordion-content">
-                    {{ contributorProfile.cv }}
-                    {{ response }}
+                    <p>{{ contributorProfile.cv.path }}</p>
+                    <a href="{% url 'myrelevate:contributor:showpdf' %}">{{ contributorProfile.cv }}</a>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, Biograp
     ApprovalContributorForm, ApprovalUpdateUserForm
 
 from ..models import Topics
+from models import ContributorProfile
 
 
 def index(request):
@@ -136,13 +137,28 @@ def remove(request):
 
 @login_required()
 def showpdf(request):
-
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="user_profiles/cv/test_cv_resume_pzU2Ar4.pdfuser_profiles/cv/test_cv_resume_pzU2Ar4.pdf"'
-    p = canvas.Canvas(response)
-    p.showPage()
-    p.save()
+    user = get_user_model().objects.get(email=request.user.email)
+    # profile = user.get_contributor_profile()
+    profile = ContributorProfile.objects.get(user=user)
+    filepath = profile.cv.path
+    # response = HttpResponse(content_type='application/pdf')
+    # response['Content-Disposition'] = 'attachment; filename="test_cv_resume_pzU2Ar4.pdf"'
+    # p = canvas.Canvas(response)
+    # p.drawString(100, 100, "Hello world.")
+    # # p.getpdfdata()
+    # p.showPage()
+    # p.save()
+    # with open(filename, 'wb') as pdf:
+    #     response = HttpResponse(content_type='application/pdf')
+    #     response['Content-Disposition'] = 'filename="test_cv_resume_BYRIncf.pdf"'
+    #     p = canvas.Canvas(response)
+    #     pdf.write(p.getpdfdata())
+    with open("C:\Users\Jeremy\PycharmProjects\WebApplication\media\user_profiles\cv\test_cv_resume_BYRIncf.pdf", 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="test_cv_resume_BYRIncf.pdf"'
     return response
+    # pdf = open("C:\Users\Jeremy\PycharmProjects\WebApplication\media\user_profiles\cv\test_cv_resume_BYRIncf.pdf", "r").read()
+    # return HttpResponse(pdf, content_type='application/pdf')
 
 
 def contributors(request):

@@ -22,13 +22,17 @@ def create(request):
     if not request.user.is_contributor:
         return HttpResponseRedirect(reverse('myelevate:index'))
     if request.method == 'POST':
-        form1 = ArticleForm(request.POST)
-        if form1.is_valid():
-            form1.save(email=request.user.email)
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save(commit=False, email=request.user.email)
+            form.save(email=request.user.email)
+            # temp = form.save(commit=False, email=request.user.email)
+            # temp.save()
+            # form.save_m2m()
             # messages.SUCCESS(request, 'Article posted!')
             return HttpResponseRedirect(reverse('myrelevate:articles:create'))
         else:
-            return HttpResponse(form1.errors)
+            return HttpResponse(form.errors)
             # messages.ERROR(request, form.errors)
     else:
         topics = Topics.objects.all()
