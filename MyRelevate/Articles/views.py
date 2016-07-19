@@ -29,15 +29,11 @@ def create(request):
         if form.is_valid():
             article = form.save(commit=False)
             article.contributor_id = get_user_model().objects.get(email=request.user.email).contributor_profile.pk
-            # if article.is_published:
-            #     article.publishDate = datetime.now()
+            if article.isPublished:
+                article.publishDate = datetime.now()
             article.save()
             form.save_m2m()
-            # form.save(commit=False, email=request.user.email)
-            # form.save(email=request.user.email)
-            # temp = form.save(commit=False, email=request.user.email)
-            # temp.save()
-            # form.save_m2m()
+
             # messages.SUCCESS(request, 'Article posted!')
             return HttpResponseRedirect(reverse('myrelevate:articles:create'))
         else:
