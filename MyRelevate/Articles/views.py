@@ -1,5 +1,8 @@
 from django.contrib import messages
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -24,8 +27,14 @@ def create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            form.save(commit=False, email=request.user.email)
-            form.save(email=request.user.email)
+            article = form.save(commit=False)
+            article.contributor_id = get_user_model().objects.get(email=request.user.email).contributor_profile.pk
+            # if article.is_published:
+            #     article.publishDate = datetime.now()
+            article.save()
+            form.save_m2m()
+            # form.save(commit=False, email=request.user.email)
+            # form.save(email=request.user.email)
             # temp = form.save(commit=False, email=request.user.email)
             # temp.save()
             # form.save_m2m()

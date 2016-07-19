@@ -43,7 +43,7 @@
             <p>{{ a.title }}</p>
             <p>
                 {% for article_topic in a.article_topics.all %}
-                    {{ article_topic.id }}
+                    <p>{{ article_topic.id }}, {{ article_topic.topicName }}</p>
                 {% endfor %}
             </p>
             <p>{{ a.content|safe }}</p>
