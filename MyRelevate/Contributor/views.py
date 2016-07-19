@@ -28,7 +28,12 @@ def create(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(email=request.user.email)
+            # form.save(email=request.user.email)
+            user = get_user_model().objects.get(email=request.user.email)
+            contributor_profile = form.save()
+            user.contributor_profile = contributor_profile
+            user.is_contributor = True
+            user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
@@ -50,8 +55,8 @@ def update(request):
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
             # profile = ContributorProfile(cv=request.FILES['cv'])
-            form.save(email=request.user.email)
-
+            # form.save(email=request.user.email)
+            form.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
         else:
             return HttpResponse(form.errors)

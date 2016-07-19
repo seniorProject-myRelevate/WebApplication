@@ -76,19 +76,19 @@ class ContributorForm(forms.ModelForm):
             'accept_terms': forms.CheckboxInput()
         }
 
-    def clean(self):
-        cleaned_data = super(ContributorForm, self).clean()
-        return self.cleaned_data
-
-    def save(self, commit=True, email=None):
-        contributor = super(ContributorForm, self).save(commit=False)
-        if commit:
-            contributor.save()
-            user = get_user_model().objects.get(email=email)
-            user.contributor_profile = contributor
-            user.is_contributor = True
-            user.save()
-            return contributor
+    # def clean(self):
+    #     cleaned_data = super(ContributorForm, self).clean()
+    #     return self.cleaned_data
+    #
+    # def save(self, commit=True, email=None):
+    #     contributor = super(ContributorForm, self).save(commit=False)
+    #     if commit:
+    #         contributor.save()
+    #         user = get_user_model().objects.get(email=email)
+    #         user.contributor_profile = contributor
+    #         user.is_contributor = True
+    #         user.save()
+    #         return contributor
 
 
 class CredentialForm(forms.ModelForm):
