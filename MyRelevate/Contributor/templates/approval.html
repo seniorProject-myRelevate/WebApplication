@@ -19,22 +19,26 @@
             <div class="uk-acordion" data-uk-accordion="{collapse: false}">
                 <h3 class="uk-accordion-title">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</h3>
                 <div class="uk-accordion-content">
-                    stuff
+                    {% for profile in profiles %}
+                        {% if user.contributor_profile_id == profile.id %}
+                            <p>{{ profile.credential }}</p>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}
-        {% for profile in profiles.all %}
-            {% for pen in pending %}
-                {% if pen.id == profile.id %}
-                    <div class="uk-accordion" data-uk-accordion="{collapse: false}">
-                       <h3 class="uk-accordion-title">User {{ pen.id }}</h3>
-                        <div class="uk-accordion-content">
-                            <p>{{ profile.credential }}</p>
-                            {{ user.id }}
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endfor %}
+{#        {% for profile in profiles.all %}#}
+{#            {% for pen in pending %}#}
+{#                {% if pen.id == profile.id %}#}
+{#                    <div class="uk-accordion" data-uk-accordion="{collapse: false}">#}
+{#                       <h3 class="uk-accordion-title">User {{ pen.id }}</h3>#}
+{#                        <div class="uk-accordion-content">#}
+{#                            <p>{{ profile.credential }}</p>#}
+{#                            {{ user.id }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+{#        {% endfor %}#}
     </div>
 {% endblock %}

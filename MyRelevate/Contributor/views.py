@@ -192,9 +192,9 @@ def contributors(request):
 @login_required()
 def approve(request):
     pending_ids = Pending.objects.values_list('needApproval_id', flat=True)
-
+    profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
     users = User.objects.filter(id__in=pending_ids)
-    profiles = ContributorProfile.objects.all()
+    profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     return render(request, 'approval.html', {'pending': pending_ids, 'profiles': profiles, 'users': users})
 
 
