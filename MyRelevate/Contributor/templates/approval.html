@@ -93,6 +93,8 @@
                     <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:approve' %}">
                         {% csrf_token %}
                         Approve contributor:
+                        <label for="id_user"></label>
+                        <input id="id_user" name="user_id" value="{{ user.id }}">
                         <label for="id_is_contributor_{{ user.id }}"></label>
                         <input id="id_is_contributor_{{ user.id }}" name="is_contributor" type="checkbox">
                         <br><br>
