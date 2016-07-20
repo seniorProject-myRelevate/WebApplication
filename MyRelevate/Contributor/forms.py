@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from .models import ContributorProfile
-from MyRelevate.User.models import User
+from ..models import User
 from ..models import Topics
 
 

@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from reportlab.pdfgen import canvas
+from django.forms import formset_factory
 
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalContributorForm, ApprovalUpdateUserForm
@@ -195,7 +196,28 @@ def approve(request):
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
     users = User.objects.filter(id__in=pending_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
-    return render(request, 'approval.html', {'pending': pending_ids, 'profiles': profiles, 'users': users})
+    user = User.objects.get(id=2)
+    if request.method == 'POST':
+        form = ApprovalUpdateUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('myrelevate:contributor:index'))
+        else:
+            print form.errors
+    else:
+        form = ApprovalUpdateUserForm()
+    return render(request, 'approval.html', {'profiles': profiles, 'users': users, 'form': form})
+
+
+@login_required()
+def update_user_contributor(request):
+    if request.method == 'POST':
+        form = ApprovalUpdateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:contributor:approval'))
 
 
 # @login_required()
