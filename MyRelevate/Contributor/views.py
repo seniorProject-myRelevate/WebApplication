@@ -153,13 +153,14 @@ def showpdf(request):
     #     response['Content-Disposition'] = 'filename="test_cv_resume_BYRIncf.pdf"'
     #     p = canvas.Canvas(response)
     #     pdf.write(p.getpdfdata())
-    with open(filepath, 'rb') as pdf:
-        response = HttpResponse(pdf.read(), content_type='application/pdf')
-        response['Content-Disposition'] = 'inline; filename="test_cv_resume_BYRIncf.pdf"'
+    # with open(filepath, 'rb') as pdf:
+    #     response = HttpResponse(pdf.read(), content_type='application/pdf')
+    #     response['Content-Disposition'] = 'inline; filename="test_cv_resume_BYRIncf.pdf"'
         # p = canvas.Canvas(response)
         # p.showPage()
         # p.save()
-    return response
+    pdf_data = open(filepath, 'rb').read()
+    return HttpResponse(pdf_data, content_type="application/pdf")
 
 
 def contributors(request):
