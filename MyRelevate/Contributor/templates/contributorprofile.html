@@ -47,32 +47,31 @@
     </div>
     <br><br><br>
     <div class="uk-container">
-        <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#my-id'}">
-            <li class="uk-active"><a onclick="ViewProfile()">About Me</a></li>
-            <li><a onclick="ViewContent()">Content</a></li>
-            <li><a onclick="ViewResources()">Resources</a></li>
-{#            <li><a href="{% url 'myrelevate:articles:create' %}">Create Post</a></li>#}
-            <li><a onclick="CreatePost()">Create Post</a></li>
+        <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#profileContent'}">
+            <li class="uk-active"><a onclick="ViewProfile()">Credentials</a></li>
+            <li><a href="">Area Of Expertise</a></li>
+            <li><a href="">Biography</a></li>
+            <li><a href="">Research Area/Clinical Interest</a></li>
+            <li><a href="">Contact Information</a></li>
+            <li><a href="">Adviser</a></li>
+            <li><a href="">CV/Resume</a></li>
         </ul>
     </div>
     <div class="container">
         <!--Displays the contributors profile-->
 
-        <div class="ContributorProfile" id="contributorProfile">
-            <div class="uk-accordion" data-uk-accordion="{collapse: false}">
-
-                <h3 class="uk-accordion-title">Credentials</h3>
-                <div class="uk-accordion-content">
-                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateCredentials' %}">
-                        {% csrf_token %}
-                        {{ credenrialForm }}
-                        <input class="uk-button" type="submit" value="Update">
-                    </form>
-                </div>
-                <h3 class="uk-accordion-title">Area Of Expertise</h3>
-                <div class="uk-accordion-content">
-                    <form class="uk-form" method="post"
-                          action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
+        <ul id="profileContent" class="uk-switcher">
+            <li>
+                <br><br>
+                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateCredentials' %}">
+                    {% csrf_token %}
+                    {{ credenrialForm }}
+                    <input class="uk-button" type="submit" value="Update">
+                </form>
+            </li>
+            <li>
+                <div class="uk-accordion" data-uk-accordion>
+                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
                         {% csrf_token %}
                         <ul id="id_expertise_topics" class="uk-list uk-column-1-3" >
                             {% for topic in topics %}
@@ -85,11 +84,11 @@
                                                name="expertise_topics" type="checkbox" value="{{ topic.id }}">
                                         {{ topic.topicName }}
                                     </label>
-                                    <button type="button" class="uk-accordion-title">
-                                        <i class="uk-icon-question"></i>
-                                    </button>
-                                    <div class="uk-panel-box-primary uk-accordion-content">
-                                        {{ topic.topicDescription }}
+                                    <div class="uk-button-dropdown" data-uk-dropdown="{pos:'bottom-center', mode:'click'}">
+                                        <i class="uk-icon-caret-down"></i>
+                                        <div class="uk-dropdown-blank uk-panel-box-primary uk-dropdown-bottom">
+                                            {{ topic.topicDescription }}
+                                        </div>
                                     </div>
                                 </li>
                             {% endfor %}
@@ -97,62 +96,38 @@
                         <input class="uk-button" type="submit" value="Update">
                     </form>
                 </div>
-
-                <h3 class="uk-accordion-title">Biography</h3>
-                <div class="uk-accordion-content">
-                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateBiography' %}">
-                        {% csrf_token %}
-                        {{ biographyForm }}
-                        <input class="uk-button" type="submit" value="Update">
-                    </form>
-                </div>
-
-                <h3 class="uk-accordion-title">Research Area and Clinical Interest</h3>
-                <div class="uk-accordion-content">
-                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateInterest' %}">
-                        {% csrf_token %}
-                        {{ interestForm }}
-                        <input class="uk-button" type="submit" value="Update">
-                    </form>
-                </div>
-
-                <h3 class="uk-accordion-title">Contact Information</h3>
-                <div class="uk-accordion-content">
-                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateContact' %}">
-                        {% csrf_token %}
-                        {{ contactForm }}
-                        <input class="uk-button" type="submit" value="Update">
-                    </form>
-                </div>
-
-                <h3 class="uk-accordion-title">Adviser</h3>
-                <div class="uk-accordion-content">{{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}
+            </li>
+            <li>
+                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateBiography' %}">
+                    {% csrf_token %}
+                    {{ biographyForm }}
+                    <input class="uk-button" type="submit" value="Update">
+                </form>
+            </li>
+            <li>
+                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateInterest' %}">
+                    {% csrf_token %}
+                    {{ interestForm }}
+                    <input class="uk-button" type="submit" value="Update">
+                </form>
+            </li>
+            <li>
+                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateContact' %}">
+                    {% csrf_token %}
+                    {{ contactForm }}
+                    <input class="uk-button" type="submit" value="Update">
+                </form>
+            </li>
+            <li>
+                {{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}
                     {{ contributorProfile.adviser_email }}
-                </div>
-
-                <h2 class="uk-accordion-title">CV</h2>
-                <div class="uk-accordion-content">
-                    <object data="{{ contributorProfile.cv.path }}" type="application/pdf" width="300" height="200">
-                        alt: <a href="{% url 'myrelevate:contributor:showpdf' %}">{{ contributorProfile.cv }}</a>
-                    </object>
-                </div>
-            </div>
-        </div>
-
-        <!--Displays the content and contributor posts history-->
-        <div id="viewContent" style="display:none">
-            <h4>Post to date</h4>
-        </div>
-
-        <!--Displays the resources for contributors-->
-        <div id="viewResources" style="display:none">
-            <h2>Resources</h2>
-        </div>
-
-        <!--Shows the forms to allow contributor to create post an article-->
-        <div class="CreatePost" id="createPost" style="display: none">
-            <h2>Post an Article</h2>
-        </div>
+            </li>
+            <li>
+                <object data="{{ contributorProfile.cv.path }}" type="application/pdf" width="300" height="200">
+                    alt: <a href="{% url 'myrelevate:contributor:showpdf' %}">{{ contributorProfile.cv }}</a>
+                </object>
+            </li>
+        </ul>
     </div>
 
 {% endblock %}
