@@ -36,3 +36,4 @@ class ContributorProfile(models.Model):
     # expertise_topics = models.ManyToManyField('MyRelevate.Topics', through='MyRelevate.ContributorTopics',
     #                                           through_fields=('contributor_profile', 'topics'))
     # adviser = models.ForeignKey(to='MyRelevate.Adviser')
+

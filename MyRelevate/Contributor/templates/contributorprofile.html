@@ -57,7 +57,7 @@
             <li><a href="">CV/Resume</a></li>
         </ul>
     </div>
-    <div class="container">
+    <div class="uk-container">
         <!--Displays the contributors profile-->
 
         <ul id="profileContent" class="uk-switcher">
@@ -73,7 +73,7 @@
                 <div class="uk-accordion" data-uk-accordion>
                     <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
                         {% csrf_token %}
-                        <ul id="id_expertise_topics" class="uk-list uk-column-1-3" >
+                        <ul id="id_expertise_topics" class="uk-list uk-column-1-2" >
                             {% for topic in topics %}
                                 <li>
                                     <label>

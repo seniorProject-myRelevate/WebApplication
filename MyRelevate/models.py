@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
 from Contributor.models import ContributorProfile
+from User.models import User
 
 
 class Subscriber(models.Model):
@@ -31,6 +32,18 @@ class Topics(models.Model):
         db_table = 'topics'
     topicName = models.CharField(max_length=100, null=False, blank=False)
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
+
+
+class Pending(models.Model):
+    class Meta:
+        db_table = 'pending_contributors'
+    needApproval = models.ForeignKey(User, null=True, blank=True)
+
+
+class Denied(models.Model):
+    class Meta:
+        db_table = 'denied_contributors'
+    deniedContributors = models.ForeignKey(ContributorProfile, null=True, blank=True)
 
 
 # class ContributorTopics(models.Model):

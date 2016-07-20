@@ -8,8 +8,9 @@ from reportlab.pdfgen import canvas
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalContributorForm, ApprovalUpdateUserForm
 
-from ..models import Topics
+from ..models import Topics, Pending
 from models import ContributorProfile
+from ..models import User
 
 
 def index(request):
@@ -30,9 +31,13 @@ def create(request):
         if form.is_valid():
             # form.save(email=request.user.email)
             user = get_user_model().objects.get(email=request.user.email)
+            pending = Pending()
             contributor_profile = form.save()
             user.contributor_profile = contributor_profile
-            user.is_contributor = True
+            pending.needApproval = user
+            pending.save()
+            # user.has_applied = True
+            # user.is_contributor = True
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
@@ -185,22 +190,31 @@ def contributors(request):
 
 
 @login_required()
-def approve(request,id):
-    user = get_user_model().objects.get(email=id)
-    if request.method == 'POST':
-        form = ApprovalContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
-        form2 = ApprovalUpdateUserForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save(email=request.user.email)
-            return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
-        else:
-            return HttpResponse(form.errors)
-    else:
-        user = get_user_model().objects.get(email=id)
-        profile = user.get_contributor_profile()
-    return render(request, 'approvalcontributorprofile.html', {'contributorProfile': profile,
-                                                       'approvalContributorForm': ApprovalContributorForm(instance=profile),
-                                                       'approvalUpdateUserForm': ApprovalUpdateUserForm(instance=profile),
-                                                               })
+def approve(request):
+    pending_ids = Pending.objects.values_list('needApproval_id', flat=True)
+
+    users = User.objects.filter(id__in=pending_ids)
+    profiles = ContributorProfile.objects.all()
+    return render(request, 'approval.html', {'pending': pending_ids, 'profiles': profiles, 'users': users})
+
+
+# @login_required()
+# def approve(request,id):
+#     user = get_user_model().objects.get(email=id)
+#     if request.method == 'POST':
+#         form = ApprovalContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
+#         form2 = ApprovalUpdateUserForm(request.POST, request.FILES, instance=user)
+#         if form.is_valid():
+#             form.save(email=request.user.email)
+#             return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
+#         else:
+#             return HttpResponse(form.errors)
+#     else:
+#         user = get_user_model().objects.get(email=id)
+#         profile = user.get_contributor_profile()
+#     return render(request, 'approvalcontributorprofile.html', {'contributorProfile': profile,
+#                                                        'approvalContributorForm': ApprovalContributorForm(instance=profile),
+#                                                        'approvalUpdateUserForm': ApprovalUpdateUserForm(instance=profile),
+#                                                                })
 
 

@@ -1,0 +1,40 @@
+{% extends "base-titlebar.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.almost-flat.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
+{##}
+    <script src="{% static 'uikit/js/components/accordion.min.js' %}"></script>
+{#    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>#}
+{##}
+{% endblock %}
+
+{% block content %}
+    <div class="uk-container">
+        <h1>Contributors Needing Approval</h1>
+        {% for user in users.all %}
+            <div class="uk-acordion" data-uk-accordion="{collapse: false}">
+                <h3 class="uk-accordion-title">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</h3>
+                <div class="uk-accordion-content">
+                    stuff
+                </div>
+            </div>
+        {% endfor %}
+        {% for profile in profiles.all %}
+            {% for pen in pending %}
+                {% if pen.id == profile.id %}
+                    <div class="uk-accordion" data-uk-accordion="{collapse: false}">
+                       <h3 class="uk-accordion-title">User {{ pen.id }}</h3>
+                        <div class="uk-accordion-content">
+                            <p>{{ profile.credential }}</p>
+                            {{ user.id }}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}

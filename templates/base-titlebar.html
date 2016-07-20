@@ -60,6 +60,9 @@
                                 <li><a href="{% url 'myrelevate:articles:create' %}">Create Post</a></li>
                             </ul>
                         </li>
+                        {% if user.is_staff %}
+                            <li><a href="{% url 'myrelevate:contributor:approve' %}">Contributor Approval</a></li>
+                        {% endif %}
                     {% else %}
                         <li><a href="{% url 'myrelevate:contributor:create' %}">Contributor Application</a></li>
                     {% endif %}

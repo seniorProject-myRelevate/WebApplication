@@ -48,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)
     confirmed = models.BooleanField(default=False)
     is_contributor = models.BooleanField(default=False)
+    # has_applied = models.BooleanField(default=False)
     contributor_profile = models.OneToOneField(ContributorProfile, null=True, blank=True)
 
     objects = UserManager()
