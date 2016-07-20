@@ -16,8 +16,10 @@
     <div class="uk-container">
         <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:approve' %}">
             {% csrf_token %}
-            {{ form }}
-            <input class="uk-button" type="button" value="Approve">
+            {% for f in form %}
+                {{ f }}
+            {% endfor %}
+            <input class="uk-button" type="submit" value="Approve">
         </form>
         <h1>Contributors Needing Approval</h1>
         {% for user in users.all %}
@@ -91,11 +93,10 @@
                     <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:approve' %}">
                         {% csrf_token %}
                         Approve contributor:
-                        <label>
-                            <input id="id_is_contributor_{{ user.id }}" name="is_contributor" type="checkbox">
-                        </label>
+                        <label for="id_is_contributor_{{ user.id }}"></label>
+                        <input id="id_is_contributor_{{ user.id }}" name="is_contributor" type="checkbox">
                         <br><br>
-                        <input class="uk-button" type="button" value="Approve">
+                        <input class="uk-button" type="submit" value="Approve">
                     </form>
                     <br>
                 </div>

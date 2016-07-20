@@ -198,10 +198,10 @@ def approve(request):
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     user = User.objects.get(id=2)
     if request.method == 'POST':
-        form = ApprovalUpdateUserForm(request.POST, instance=user)
+        form = ApprovalUpdateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('myrelevate:contributor:index'))
+            return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
             print form.errors
     else:
