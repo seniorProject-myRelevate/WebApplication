@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from reportlab.pdfgen import canvas
-from django.forms import formset_factory
+from django.forms import modelformset_factory
 
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalContributorForm, ApprovalUpdateUserForm
@@ -196,18 +196,26 @@ def approve(request):
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
     users = User.objects.filter(id__in=pending_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
+    ApproveFormSet = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
+    data = {
+        'form-TOTAL_FORMS': pending_ids.count(),
+        'form-INITIAL_FORMS': '0',
+        'form-MAX_NUM_FORMS': '',
+    }
     if request.method == 'POST':
-        user_id = request.POST.get('user_id')
-        user = User.objects.get(id=user_id)
-        form = ApprovalUpdateUserForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
+        formset = ApproveFormSet(request.POST, queryset=users)
+        # user_id = request.POST.get('user_id')
+        # user = User.objects.get(id=user_id)
+        # form = ApprovalUpdateUserForm(request.POST, instance=user)
+        if formset.is_valid():
+            formset.save()
+            # form.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
-            print form.errors
+            print formset.errors
     else:
-        form = ApprovalUpdateUserForm()
-    return render(request, 'approval.html', {'profiles': profiles, 'users': users, 'form': form})
+        formset = ApproveFormSet(queryset=users)
+    return render(request, 'approval.html', {'profiles': profiles, 'users': users, 'formset': formset})
 
 
 @login_required()
