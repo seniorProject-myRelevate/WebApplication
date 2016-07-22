@@ -3,7 +3,7 @@ from django.db import models
 
 class ContributorProfile(models.Model):
     class Meta:
-        db_table = 'contributor_profile'
+        db_table = 'contributorprofile'
     DEGREES = (
         ('-1', ''),
         ('MS', 'MS (Master of Science)'),

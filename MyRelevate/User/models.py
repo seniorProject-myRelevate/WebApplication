@@ -11,7 +11,7 @@ from ..Contributor.models import ContributorProfile
 class UserManager(BaseUserManager):
 
     class Meta:
-        db_table = 'user_manager'
+        db_table = 'usermanager'
 
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         """
