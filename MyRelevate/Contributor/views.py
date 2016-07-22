@@ -215,7 +215,8 @@ def approve(request):
             print formset.errors
     else:
         formset = ApproveFormSet(queryset=users)
-    return render(request, 'approval.html', {'profiles': profiles, 'users': users, 'formset': formset})
+        users_forms = zip(users, formset)
+    return render(request, 'approval.html', {'profiles': profiles, 'users_forms': users_forms, 'users': users, 'formset': formset})
 
 
 @login_required()
