@@ -9,6 +9,10 @@ from ..Contributor.models import ContributorProfile
 
 
 class UserManager(BaseUserManager):
+
+    class Meta:
+        db_table = 'user_manager'
+
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         """
         Creates and saves a User with the given email and password.
