@@ -7,7 +7,7 @@ from reportlab.pdfgen import canvas
 from django.forms import modelformset_factory
 
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
-    ApprovalContributorForm, ApprovalUpdateUserForm
+    ApprovalUpdateUserForm
 
 from ..models import Topics, Pending
 from models import ContributorProfile
@@ -30,14 +30,12 @@ def create(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
-            # form.save(email=request.user.email)
             user = get_user_model().objects.get(email=request.user.email)
             pending = Pending()
             contributor_profile = form.save()
             user.contributor_profile = contributor_profile
-            pending.needApproval = user
+            pending.user = user
             pending.save()
-            # user.has_applied = True
             # user.is_contributor = True
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
@@ -61,7 +59,6 @@ def update(request):
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
             # profile = ContributorProfile(cv=request.FILES['cv'])
-            # form.save(email=request.user.email)
             form.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
         else:
@@ -192,24 +189,18 @@ def contributors(request):
 
 @login_required()
 def approve(request):
-    pending_ids = Pending.objects.values_list('needApproval_id', flat=True)
+    pending_ids = Pending.objects.values_list('user_id', flat=True)
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
     users = User.objects.filter(id__in=pending_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     ApproveFormSet = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
-    data = {
-        'form-TOTAL_FORMS': pending_ids.count(),
-        'form-INITIAL_FORMS': '0',
-        'form-MAX_NUM_FORMS': '',
-    }
+    for user in users:
+        if user.is_contributor:
+            Pending.objects.filter(user_id=user.id).delete()
     if request.method == 'POST':
         formset = ApproveFormSet(request.POST, queryset=users)
-        # user_id = request.POST.get('user_id')
-        # user = User.objects.get(id=user_id)
-        # form = ApprovalUpdateUserForm(request.POST, instance=user)
         if formset.is_valid():
             formset.save()
-            # form.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
             print formset.errors
@@ -217,17 +208,6 @@ def approve(request):
         formset = ApproveFormSet(queryset=users)
         users_forms = zip(users, formset)
     return render(request, 'approval.html', {'profiles': profiles, 'users_forms': users_forms, 'users': users, 'formset': formset})
-
-
-@login_required()
-def update_user_contributor(request):
-    if request.method == 'POST':
-        form = ApprovalUpdateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            print form.errors
-    return HttpResponseRedirect(reverse('myrelevate:contributor:approval'))
 
 
 # @login_required()

@@ -37,13 +37,18 @@ class Topics(models.Model):
 class Pending(models.Model):
     class Meta:
         db_table = 'pending_contributors'
-    needApproval = models.ForeignKey(User, null=True, blank=True)
+    user = models.ForeignKey(User, null=True, blank=True)
 
 
 class Denied(models.Model):
     class Meta:
         db_table = 'denied_contributors'
-    deniedContributors = models.ForeignKey(ContributorProfile, null=True, blank=True)
+    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
+    reason1 = models.TextField(null=False, blank=False)
+    reason2 = models.TextField(null=False, blank=False)
+    reason3 = models.TextField(null=False, blank=False)
+    reason4 = models.TextField(null=False, blank=False)
+    reason5 = models.TextField(null=False, blank=False)
 
 
 # class ContributorTopics(models.Model):
