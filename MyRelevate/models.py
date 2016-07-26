@@ -34,34 +34,17 @@ class Topics(models.Model):
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
 
 
-class Pending(models.Model):
+class Advisers(models.Model):
     class Meta:
-        db_table = 'pending_contributors'
-    user = models.ForeignKey(User, null=True, blank=True)
+        db_table = 'advisers'
+    userAdviser = models.ForeignKey(User, null=True, blank=True)
+    number_advisee = models.IntegerField()
 
 
-class Denied(models.Model):
+class AvailableAdvisers(models.Model):
     class Meta:
-        db_table = 'denied_contributors'
-    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
-    reason1 = models.TextField(null=False, blank=False)
-    reason2 = models.TextField(null=False, blank=False)
-    reason3 = models.TextField(null=False, blank=False)
-    reason4 = models.TextField(null=False, blank=False)
-    reason5 = models.TextField(null=False, blank=False)
-
-
-# class ContributorTopics(models.Model):
-#     class Meta:
-#         db_table = 'contributor_topics'
-#     contributor_profile = models.ForeignKey(ContributorProfile, on_delete=models.CASCADE)
-#     topics = models.ForeignKey(Topics, on_delete=models.CASCADE)
-
-
-# class Adviser(models.Model):
-#     adviser_email = models.EmailField(max_length=254, unique=False, null=False, blank=False)
-#     adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
-#     adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
+        db_table = 'available_advisers'
+    adviser = models.ForeignKey(Advisers)
 
 
 # DemographicData Database Model

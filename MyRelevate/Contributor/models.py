@@ -1,4 +1,5 @@
 from django.db import models
+from ..models import User
 
 
 class ContributorProfile(models.Model):
@@ -33,7 +34,21 @@ class ContributorProfile(models.Model):
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
     accept_terms = models.BooleanField(default=False)
     expertise_topics = models.ManyToManyField('MyRelevate.Topics')
-    # expertise_topics = models.ManyToManyField('MyRelevate.Topics', through='MyRelevate.ContributorTopics',
-    #                                           through_fields=('contributor_profile', 'topics'))
-    # adviser = models.ForeignKey(to='MyRelevate.Adviser')
+    adviser = models.ForeignKey('MyRelevate.Advisers')
 
+
+class Pending(models.Model):
+    class Meta:
+        db_table = 'pending_contributors'
+    user = models.ForeignKey(User, null=True, blank=True)
+
+
+class Denied(models.Model):
+    class Meta:
+        db_table = 'denied_contributors'
+    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
+    reason1 = models.TextField(null=False, blank=False)
+    reason2 = models.TextField(null=False, blank=False)
+    reason3 = models.TextField(null=False, blank=False)
+    reason4 = models.TextField(null=False, blank=False)
+    reason5 = models.TextField(null=False, blank=False)

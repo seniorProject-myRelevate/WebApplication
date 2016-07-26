@@ -9,8 +9,8 @@ from django.forms import modelformset_factory
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalUpdateUserForm
 
-from ..models import Topics, Pending
-from models import ContributorProfile
+from ..models import Topics
+from models import ContributorProfile, Pending
 from ..models import User
 
 
