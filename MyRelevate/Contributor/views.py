@@ -9,8 +9,8 @@ from django.forms import modelformset_factory
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalUpdateUserForm
 
-from ..models import Topics
-from models import ContributorProfile, Pending
+from ..models import Topics, Advisers, AvailableAdvisers, Pending
+from models import ContributorProfile
 from ..models import User
 
 
@@ -27,6 +27,10 @@ def create(request):
     :param request:
     :return: redirect to index page
     """
+    available_advisers_ids = AvailableAdvisers.objects.values_list('adviser_id', flat=True)
+    adviser_users = User.objects.filter(id__in=available_advisers_ids)
+    advisers = Advisers.objects.all()
+
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -36,14 +40,13 @@ def create(request):
             user.contributor_profile = contributor_profile
             pending.user = user
             pending.save()
-            # user.is_contributor = True
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
     else:
         contributorForm = ContributorForm()
-    return render(request, 'application.html', {'contributorForm': contributorForm})
+    return render(request, 'application.html', {'contributorForm': contributorForm, 'adviser_users': adviser_users})
 
 
 @login_required()
@@ -71,7 +74,6 @@ def update(request):
                                                        'topics': topics,
                                                        'contributorForm': ContributorForm(instance=profile),
                                                        'credenrialForm': CredentialForm(instance=profile),
-                                                       # 'expertiseForm': AreaOfExpertiseForm(instance=profile),
                                                        'biographyForm': BiographyForm(instance=profile),
                                                        'interestForm': InterestForm(instance=profile),
                                                        'contactForm': ContactForm(instance=profile)})
@@ -189,6 +191,11 @@ def contributors(request):
 
 @login_required()
 def approve(request):
+    """
+
+    :param request:
+    :return:
+    """
     pending_ids = Pending.objects.values_list('user_id', flat=True)
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
     users = User.objects.filter(id__in=pending_ids)

@@ -47,6 +47,23 @@ class AvailableAdvisers(models.Model):
     adviser = models.ForeignKey(Advisers)
 
 
+class Pending(models.Model):
+    class Meta:
+        db_table = 'pending_contributors'
+    user = models.ForeignKey(User, null=True, blank=True)
+
+
+class Denied(models.Model):
+    class Meta:
+        db_table = 'denied_contributors'
+    contributor = models.ForeignKey(User, null=True, blank=True)
+    reason1 = models.TextField(null=False, blank=False)
+    reason2 = models.TextField(null=False, blank=False)
+    reason3 = models.TextField(null=False, blank=False)
+    reason4 = models.TextField(null=False, blank=False)
+    reason5 = models.TextField(null=False, blank=False)
+
+
 # DemographicData Database Model
 # class DemographicData(models.py.Model):
 #     EDUCATION = (

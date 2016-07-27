@@ -1,5 +1,5 @@
 from django.db import models
-from ..models import User
+# from ..models import User
 
 
 class ContributorProfile(models.Model):
@@ -36,19 +36,3 @@ class ContributorProfile(models.Model):
     expertise_topics = models.ManyToManyField('MyRelevate.Topics')
     adviser = models.ForeignKey('MyRelevate.Advisers')
 
-
-class Pending(models.Model):
-    class Meta:
-        db_table = 'pending_contributors'
-    user = models.ForeignKey(User, null=True, blank=True)
-
-
-class Denied(models.Model):
-    class Meta:
-        db_table = 'denied_contributors'
-    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
-    reason1 = models.TextField(null=False, blank=False)
-    reason2 = models.TextField(null=False, blank=False)
-    reason3 = models.TextField(null=False, blank=False)
-    reason4 = models.TextField(null=False, blank=False)
-    reason5 = models.TextField(null=False, blank=False)

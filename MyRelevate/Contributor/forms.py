@@ -49,7 +49,8 @@ class ContributorForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['credential', 'program', 'institution', 'adviser_email', 'adviser_first_name', 'adviser_last_name',
-                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
+                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url',
+                  'adviser']
 
 
 class CredentialForm(forms.ModelForm):
