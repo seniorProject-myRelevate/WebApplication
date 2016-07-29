@@ -3,13 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from reportlab.pdfgen import canvas
 from django.forms import modelformset_factory
 
 from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalUpdateUserForm
 
-from ..models import Topics, Advisers, AvailableAdvisers, Pending
+from ..models import Topics, Pending
 from models import ContributorProfile
 from ..models import User
 
@@ -27,10 +26,9 @@ def create(request):
     :param request:
     :return: redirect to index page
     """
-    available_advisers_ids = AvailableAdvisers.objects.values_list('adviser_id', flat=True)
-    adviser_users = User.objects.filter(id__in=available_advisers_ids)
-    advisers = Advisers.objects.all()
-
+    # available_advisers_ids = AvailableAdvisers.objects.values_list('adviser_id', flat=True)
+    # available_advisers = User.objects.filter(id__in=available_advisers_ids)
+    # adviser_ids = Advisers.objects.values_list('userAdviser_id', flat=True)
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -45,8 +43,8 @@ def create(request):
         else:
             return HttpResponse(form.errors)
     else:
-        contributorForm = ContributorForm()
-    return render(request, 'application.html', {'contributorForm': contributorForm, 'adviser_users': adviser_users})
+        contributor_form = ContributorForm()
+    return render(request, 'application.html', {'contributorForm': contributor_form})
 
 
 @login_required()
@@ -80,7 +78,7 @@ def update(request):
 
 
 @login_required()
-def updateCredentials(request):
+def update_credentials(request):
     if request.method == 'POST':
         form = CredentialForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -91,7 +89,7 @@ def updateCredentials(request):
 
 
 @login_required()
-def updateAreaOfExpertise(request):
+def update_area_of_expertise(request):
     if request.method == 'POST':
         form = AreaOfExpertiseForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -102,7 +100,7 @@ def updateAreaOfExpertise(request):
 
 
 @login_required()
-def updateBiography(request):
+def update_biography(request):
     if request.method == 'POST':
         form = BiographyForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -113,7 +111,7 @@ def updateBiography(request):
 
 
 @login_required()
-def updateInterest(request):
+def update_interest(request):
     if request.method == 'POST':
         form = InterestForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -124,7 +122,7 @@ def updateInterest(request):
 
 
 @login_required()
-def updateContact(request):
+def update_contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -138,33 +136,21 @@ def updateContact(request):
 def remove(request):
     pass
 
+
 @login_required()
-def showpdf(request):
+def show_resume(request):
+    """
+    Show the contributors cv/resume
+    :param request:
+    :return: The cv/resume
+    """
     user = get_user_model().objects.get(email=request.user.email)
-    pro = user.get_contributor_profile()
     profile = ContributorProfile.objects.get(id=user.contributor_profile.pk)
-    filepath = profile.cv.path
-    filename = profile.cv.name
-    fp = pro.cv.path
-    # response = HttpResponse(open(filepath, 'rb'), content_type='application/pdf')
-    # response['Content-Disposition'] = 'inline; filename="test_cv_resume_BYRIncf.pdf"'
-    # p = canvas.Canvas(response)
-    # # p.drawString(100, 100, "Hello world.")
-    # p.getpdfdata()
-    # p.showPage()
-    # p.save()
-    # with open(filename, 'wb') as pdf:
-    #     response = HttpResponse(content_type='application/pdf')
-    #     response['Content-Disposition'] = 'filename="test_cv_resume_BYRIncf.pdf"'
-    #     p = canvas.Canvas(response)
-    #     pdf.write(p.getpdfdata())
+    file_path = profile.cv.path
     # with open(filepath, 'rb') as pdf:
     #     response = HttpResponse(pdf.read(), content_type='application/pdf')
     #     response['Content-Disposition'] = 'inline; filename="test_cv_resume_BYRIncf.pdf"'
-        # p = canvas.Canvas(response)
-        # p.showPage()
-        # p.save()
-    pdf_data = open(filepath, 'rb').read()
+    pdf_data = open(file_path, 'rb').read()
     return HttpResponse(pdf_data, content_type="application/pdf")
 
 
@@ -192,48 +178,33 @@ def contributors(request):
 @login_required()
 def approve(request):
     """
-
+    Displays list of all users that have applied for contributor access
+    Displays application from user for contributor access
+    Allows staff member to approve user for contributor access
     :param request:
-    :return:
+    :return: The contributor profile from application, the users being evaluated, and
+    formset: a list of forms for each user
     """
     pending_ids = Pending.objects.values_list('user_id', flat=True)
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
     users = User.objects.filter(id__in=pending_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
-    ApproveFormSet = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
+    approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
     for user in users:
         if user.is_contributor:
-            Pending.objects.filter(user_id=user.id).delete()
+            instance = Pending.objects.get(user_id=user.id)
+            instance.delete()
+            # Pending.objects.filter(user_id=user.id).delete()
     if request.method == 'POST':
-        formset = ApproveFormSet(request.POST, queryset=users)
+        formset = approve_form_set(request.POST, queryset=users)
         if formset.is_valid():
-            formset.save()
+            user = formset.save()
+            instance = Pending.objects.get(user_id=user.id)
+            instance.delete()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
             print formset.errors
     else:
-        formset = ApproveFormSet(queryset=users)
-        users_forms = zip(users, formset)
-    return render(request, 'approval.html', {'profiles': profiles, 'users_forms': users_forms, 'users': users, 'formset': formset})
-
-
-# @login_required()
-# def approve(request,id):
-#     user = get_user_model().objects.get(email=id)
-#     if request.method == 'POST':
-#         form = ApprovalContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
-#         form2 = ApprovalUpdateUserForm(request.POST, request.FILES, instance=user)
-#         if form.is_valid():
-#             form.save(email=request.user.email)
-#             return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
-#         else:
-#             return HttpResponse(form.errors)
-#     else:
-#         user = get_user_model().objects.get(email=id)
-#         profile = user.get_contributor_profile()
-#     return render(request, 'approvalcontributorprofile.html', {'contributorProfile': profile,
-#                                                        'approvalContributorForm': ApprovalContributorForm(instance=profile),
-#                                                        'approvalUpdateUserForm': ApprovalUpdateUserForm(instance=profile),
-#                                                                })
-
-
+        formset = approve_form_set(queryset=users)
+    return render(request, 'approval.html', {'profiles': profiles, 'users_forms': zip(users, formset),
+                                             'formset': formset})

@@ -1,6 +1,7 @@
 from django import forms
 from .models import ContributorProfile
 from ..models import User
+from MyRelevate.models import Denied
 
 
 class ContributorForm(forms.ModelForm):
@@ -23,20 +24,20 @@ class ContributorForm(forms.ModelForm):
                                                                        'class': 'form-control'}), label='', required=False)
     adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
                                                                       'class': 'form-control'}), label='', required=False)
-    program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Field of study/specialization',
-                                                            'class': 'form-control'}), label='')
-    institution = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
-                                                                'class': 'form-control'}), label='')
-    address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Address', 'class': 'form-control'}),
-                              label='')
-    city = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}), label='')
-    state = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}), label='')
-    zipcode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Zipcode', 'class': 'form-control'}),
-                              label='')
-    website_url = forms.URLField(widget=forms.URLInput(attrs={'placeholder': 'Website URL', 'class': 'form-control'}),
-                                 label='')
-    biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
-                                                             'class': 'form-control'}), label='')
+    # program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Field of study/specialization',
+    #                                                         'class': 'form-control'}), label='')
+    # institution = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
+    #                                                             'class': 'form-control'}), label='')
+    # address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Address', 'class': 'form-control'}),
+    #                           label='')
+    # city = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}), label='')
+    # state = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}), label='')
+    # zipcode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Zipcode', 'class': 'form-control'}),
+    #                           label='')
+    # website_url = forms.URLField(widget=forms.URLInput(attrs={'placeholder': 'Website URL', 'class': 'form-control'}),
+    #                              label='')
+    # biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
+    #                                                          'class': 'form-control'}), label='')
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
                                                              'class': 'form-control'}), label='', required=False)
     cv = forms.FileField(label='Specific MIME type', required=False)
@@ -49,8 +50,28 @@ class ContributorForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['credential', 'program', 'institution', 'adviser_email', 'adviser_first_name', 'adviser_last_name',
-                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url',
-                  'adviser']
+                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
+        widgets = {
+            'program': forms.TextInput(attrs={'placeholder': 'Field of study/specialization', 'class': 'form-control'}),
+            'institution': forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
+                                                  'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'placeholder': 'Address', 'class': 'form-control'}),
+            'city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
+            'zipcode': forms.TextInput(attrs={'placeholder': 'Zipcode', 'class': 'form-control'}),
+            'website_url': forms.URLInput(attrs={'placeholder': 'Website URL', 'class': 'form-control'}),
+            'biography': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
+                                               'class': 'form-control'}),
+        }
+        labels = {
+            'program': '',
+            'institution': '',
+            'address': '',
+            'city': '',
+            'state': '',
+            'zipcode': '',
+            'website_url': '',
+            'biography': '',
+        }
 
 
 class CredentialForm(forms.ModelForm):
@@ -84,8 +105,31 @@ class ContactForm(forms.ModelForm):
 
 
 class ApprovalUpdateUserForm(forms.ModelForm):
-    is_contributor = forms.BooleanField(widget=forms.CheckboxInput(), label='')
-
     class Meta:
         model = User
         fields = ['is_contributor']
+        labels = {
+            'is_contributor': 'Approve Contributor',
+        }
+
+
+# class DeniedContributorUserForm(forms.ModelForm):
+#     reason1 = forms.CharField(widget=forms.Textarea(
+#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
+#                'class': 'form-control'}), label='')
+#     reason2 = forms.CharField(widget=forms.Textarea(
+#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
+#                'class': 'form-control'}), label='')
+#     reason3 = forms.CharField(widget=forms.Textarea(
+#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
+#                'class': 'form-control'}), label='')
+#     reason4 = forms.CharField(widget=forms.Textarea(
+#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
+#                'class': 'form-control'}), label='')
+#     reason5 = forms.CharField(widget=forms.Textarea(
+#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
+#                'class': 'form-control'}), label='')
+#
+#     class Meta:
+#         model = Denied
+#         fields = ['user, reason1, reason2, reason3, reason4, reason5']

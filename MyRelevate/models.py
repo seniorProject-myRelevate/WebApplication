@@ -13,7 +13,6 @@ class Subscriber(models.Model):
         db_table = 'subscriber'
     email = models.EmailField(unique=True, null=False, blank=False)
 
-
     # Below are helper functions that are not associated with any particular route
     def send_email(self, subject, html, sender='noreply@myrelevate.com'):
         client = sendgrid.SendGridClient(os.environ['SendGridApiKey'])
@@ -56,7 +55,7 @@ class Pending(models.Model):
 class Denied(models.Model):
     class Meta:
         db_table = 'denied_contributors'
-    contributor = models.ForeignKey(User, null=True, blank=True)
+    user = models.ForeignKey(User, null=True, blank=True)
     reason1 = models.TextField(null=False, blank=False)
     reason2 = models.TextField(null=False, blank=False)
     reason3 = models.TextField(null=False, blank=False)

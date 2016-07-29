@@ -34,5 +34,5 @@ class ContributorProfile(models.Model):
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
     accept_terms = models.BooleanField(default=False)
     expertise_topics = models.ManyToManyField('MyRelevate.Topics')
-    adviser = models.ForeignKey('MyRelevate.Advisers')
+    # adviser = models.ForeignKey('MyRelevate.Advisers')
 
