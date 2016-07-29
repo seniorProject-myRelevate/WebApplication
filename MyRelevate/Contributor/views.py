@@ -185,9 +185,9 @@ def approve(request):
     :return: The contributor profile from application, the users being evaluated, and
     formset: a list of forms for each user
     """
-    pending_ids = Pending.objects.values_list('user_id', flat=True)
+    pending_user_ids = Pending.objects.values_list('user_id', flat=True)
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
-    users = User.objects.filter(id__in=pending_ids)
+    users = User.objects.filter(id__in=pending_user_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
     for user in users:
@@ -215,8 +215,9 @@ def show_approve_cv_resume(request):
     :param request:
     :return:
     """
-    pending_ids = Pending.objects.values_list('user_id', flat=True)
+    # check to see if i can trim the query down on User to only get contributor_profiles from pending users
+    pending_user_ids = Pending.objects.values_list('user_id', flat=True)
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
-    users = User.objects.filter(id__in=pending_ids)
+    users = User.objects.filter(id__in=pending_user_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     pass
