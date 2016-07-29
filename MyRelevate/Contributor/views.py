@@ -192,15 +192,13 @@ def approve(request):
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
     for user in users:
         if user.is_contributor:
-            instance = Pending.objects.get(user_id=user.id)
-            instance.delete()
-            # Pending.objects.filter(user_id=user.id).delete()
+            # instance = Pending.objects.get(user_id=user.id)
+            # instance.delete()
+            Pending.objects.filter(user_id=user.id).delete()
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
         if formset.is_valid():
-            user = formset.save()
-            instance = Pending.objects.get(user_id=user.id)
-            instance.delete()
+            formset.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
             print formset.errors
@@ -208,3 +206,17 @@ def approve(request):
         formset = approve_form_set(queryset=users)
     return render(request, 'approval.html', {'profiles': profiles, 'users_forms': zip(users, formset),
                                              'formset': formset})
+
+
+@login_required()
+def show_approve_cv_resume(request):
+    """
+
+    :param request:
+    :return:
+    """
+    pending_ids = Pending.objects.values_list('user_id', flat=True)
+    profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
+    users = User.objects.filter(id__in=pending_ids)
+    profiles = ContributorProfile.objects.filter(id__in=profile_ids)
+    pass
