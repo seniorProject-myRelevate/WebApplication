@@ -192,8 +192,6 @@ def approve(request):
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
     for user in users:
         if user.is_contributor:
-            # instance = Pending.objects.get(user_id=user.id)
-            # instance.delete()
             Pending.objects.filter(user_id=user.id).delete()
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
