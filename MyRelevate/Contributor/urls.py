@@ -19,5 +19,6 @@ urlpatterns = [
     # url(r'^(?i)contributorprofile', views.contributor_profile, name='contributor_profile'),
     # url(r'^(?i)application/$', views.application, name='application'),
     url(r'^(?i)resume/$', views.show_resume, name='showResume'),
+    url(r'^(?i)resumes/$', views.show_approve_cv_resume, name='showApproveResume')
 
 ]

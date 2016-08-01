@@ -136,7 +136,8 @@
                                         </p>
 
                                         <h3>CV/Resume</h3>
-{#                                         <a href="{% url 'myrelevate:contributor:showResume' %}">{{ profile.cv}}</a>#}
+                                        <object data="{{ profile.cv.path }}" type="application/pdf"
+                                                width="1100" height="1000"></object>
 
                                         <h3>Biography</h3>
                                         <div class="uk-scrollable-box">

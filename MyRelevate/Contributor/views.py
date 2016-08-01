@@ -218,4 +218,10 @@ def show_approve_cv_resume(request):
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
     users = User.objects.filter(id__in=pending_user_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
-    pass
+    file_paths = []
+    for user in users:
+        for profile in profiles:
+            if user.contributor_profile_id == profile.id:
+                file_paths.insert(profile.cv.path)
+    file_data = {path: open(path, 'rp') for path in file_paths}
+    return HttpResponse(file_data, content_type="application/pdf")

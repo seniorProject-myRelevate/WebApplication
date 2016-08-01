@@ -123,9 +123,8 @@
                     {{ contributorProfile.adviser_email }}
             </li>
             <li>
-                <object data="{{ contributorProfile.cv.path }}" type="application/pdf" width="300" height="200">
-                    alt: <a href="{% url 'myrelevate:contributor:showResume' %}"><i class="uk-icon-file-pdf-o"></i></a>
-                </object>
+                <object data="{% url 'myrelevate:contributor:showResume' %}" type="application/pdf"
+                        width="1100" height="1000"></object>
             </li>
         </ul>
     </div>
