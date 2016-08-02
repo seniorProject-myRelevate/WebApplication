@@ -123,7 +123,10 @@
                     {{ contributorProfile.adviser_email }}
             </li>
             <li>
-                <object data="{% url 'myrelevate:contributor:showResume' %}" type="application/pdf"
+{#                <object data="{% url 'myrelevate:contributor:showResume' %}" type="application/pdf"#}
+{#                        width="1100" height="1000"></object>#}
+                {{ contributorProfile.cv.url }}
+                <object data="{{ MEDIA_URL }}{{ contributorProfile.cv.url }}" type="application/pdf"
                         width="1100" height="1000"></object>
             </li>
         </ul>
