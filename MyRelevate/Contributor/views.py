@@ -207,21 +207,6 @@ def approve(request):
 
 
 @login_required()
-def show_approve_cv_resume(request):
-    """
-
-    :param request:
-    :return:
-    """
-    # check to see if i can trim the query down on User to only get contributor_profiles from pending users
-    pending_user_ids = Pending.objects.values_list('user_id', flat=True)
-    profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
-    users = User.objects.filter(id__in=pending_user_ids)
-    profiles = ContributorProfile.objects.filter(id__in=profile_ids)
-    file_paths = []
-    for user in users:
-        for profile in profiles:
-            if user.contributor_profile_id == profile.id:
-                file_paths.insert(profile.cv.path)
-    file_data = {path: open(path, 'rp') for path in file_paths}
-    return HttpResponse(file_data, content_type="application/pdf")
+def denied(request):
+    
+    pass
