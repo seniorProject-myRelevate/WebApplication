@@ -161,8 +161,9 @@ def contributors(request):
     :param request:
     :return: The requested searched data
     """
-    users = get_user_model().objects.all()
-    contributor_profiles = get_user_model().objects.all()
+    users = User.objects.filter(is_contributor=True)
+    profiles_ids = User.objects.values_list('contributor_profile_id', flat=True)
+    contributor_profiles = ContributorProfile.objects.filter(id__in=profiles_ids)
     if request.method == 'GET':
         if 'q' in request.GET and request.GET['q']:
             q = request.GET['q']
@@ -208,5 +209,5 @@ def approve(request):
 
 @login_required()
 def denied(request):
-    
+
     pass
