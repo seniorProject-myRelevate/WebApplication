@@ -173,7 +173,7 @@ def contributors(request):
             pass
     else:
         pass
-    return render(request, 'contributors.html', {'contributors': contributor_profiles})
+    return render(request, 'contributors.html', {'contributors': contributor_profiles, 'users': users})
 
 
 @login_required()

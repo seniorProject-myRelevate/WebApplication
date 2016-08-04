@@ -117,59 +117,11 @@ $(document).ready(function () {
         }
     );
 }); // end ready
-function ViewProfile() {
-    $('#viewContent').hide();
-    $('#createPost').hide();
-    $('#contributorProfile').show();
-
-    if($('#id_interests').val() == ""){
-        $('#interests-paragraph').hide();
-        $('#interestsForm').show();
-    }
-
-    /*
-    $('#editInterests').onclick = function() {
-        //$('#interests-paragraph').hide();
-        //$('#interestsForm').show();
-    }
-    */
-}
-
-function ViewContent() {
-    $('#contributorProfile').hide();
-    $('#viewResources').hide();
-    $('#createPost').hide();
-    $('#viewContent').show();
-}
-
-function ViewResources() {
-    $('#contributorProfile').hide();
-    $('#viewContent').hide();
-    $('#createPost').hide();
-    $('#viewResources').show();
-}
-
-function CreatePost() {
-    $('#contributorProfile').hide();
-    $('#viewContent').hide();
-    $('#viewResources').hide();
-    $('#createPost').show();
-}
 
 $('#editExpertise').click(function(){
     $('#topic_list').hide();
     $('#expertise_topic_form').show();
 });
-
-function EditBiography() {
-    $('#biography-paragraph').hide();
-    $('#biographyForm').show();
-}
-
-function EditInterests() {
-    $('#interests-paragraph').hide();
-    $('#interestsForm').show();
-}
 
 function EditContactInformation() {
     $('#contact_list').hide();
