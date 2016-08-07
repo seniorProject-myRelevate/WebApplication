@@ -33,19 +33,6 @@ class Topics(models.Model):
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
 
 
-class Advisers(models.Model):
-    class Meta:
-        db_table = 'advisers'
-    userAdviser = models.ForeignKey(User, null=True, blank=True)
-    number_advisee = models.IntegerField()
-
-
-class AvailableAdvisers(models.Model):
-    class Meta:
-        db_table = 'available_advisers'
-    adviser = models.ForeignKey(Advisers)
-
-
 class Pending(models.Model):
     class Meta:
         db_table = 'pending_contributors'

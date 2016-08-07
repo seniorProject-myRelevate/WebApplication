@@ -3,7 +3,7 @@ import os
 from django import forms
 
 from .models import Subscriber
-# from .models import Adviser
+# from .models import Advisers
 
 
 class ExtFileField(forms.FileField):
@@ -69,15 +69,15 @@ class SubscribeForm(forms.ModelForm):
 
 
 # class AdviserForm(forms.ModelForm):
-#     adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
+#     adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Advisers Email', 'class': 'form-control'}),
 #                                      label='', required=False)
-#     adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name',
+#     adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Advisers First Name',
 #                                                                        'class': 'form-control'}), label='', required=False)
-#     adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
+#     adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Advisers Last Name',
 #                                                                       'class': 'form-control'}), label='', required=False)
 #
 #     class Meta:
-#         model = Adviser
+#         model = Advisers
 #         fields = {'adviser_email', 'adviser_first_name', 'adviser_last_name'}
 
     # def save(self, commit=True, email=None):

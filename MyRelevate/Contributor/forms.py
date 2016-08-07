@@ -18,29 +18,9 @@ class ContributorForm(forms.ModelForm):
     )
 
     credential = forms.ChoiceField(choices=DEGREES, required=True)
-    adviser_email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Adviser Email', 'class': 'form-control'}),
-                                     label='', required=False)
-    adviser_first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser First Name',
-                                                                       'class': 'form-control'}), label='', required=False)
-    adviser_last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Adviser Last Name',
-                                                                      'class': 'form-control'}), label='', required=False)
-    # program = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Field of study/specialization',
-    #                                                         'class': 'form-control'}), label='')
-    # institution = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
-    #                                                             'class': 'form-control'}), label='')
-    # address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Address', 'class': 'form-control'}),
-    #                           label='')
-    # city = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}), label='')
-    # state = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}), label='')
-    # zipcode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Zipcode', 'class': 'form-control'}),
-    #                           label='')
-    # website_url = forms.URLField(widget=forms.URLInput(attrs={'placeholder': 'Website URL', 'class': 'form-control'}),
-    #                              label='')
-    # biography = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
-    #                                                          'class': 'form-control'}), label='')
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
                                                              'class': 'form-control'}), label='', required=False)
-    cv = forms.FileField(label='Specific MIME type', required=False)
+    cv = forms.FileField(label='Specific MIME type', required=True)
                            # mimetype_whitelist=("application/pdf", "application/msword",
                            #                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                            #                     ))
@@ -102,6 +82,12 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['address', 'city', 'state', 'zipcode']
+
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = ['avatar']
 
 
 class ApprovalUpdateUserForm(forms.ModelForm):
