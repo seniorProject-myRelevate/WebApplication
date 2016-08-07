@@ -137,23 +137,6 @@ def remove(request):
     pass
 
 
-@login_required()
-def show_resume(request):
-    """
-    Show the contributors cv/resume
-    :param request:
-    :return: The cv/resume
-    """
-    user = get_user_model().objects.get(email=request.user.email)
-    profile = ContributorProfile.objects.get(id=user.contributor_profile.pk)
-    file_path = profile.cv.path
-    # with open(filepath, 'rb') as pdf:
-    #     response = HttpResponse(pdf.read(), content_type='application/pdf')
-    #     response['Content-Disposition'] = 'inline; filename="test_cv_resume_BYRIncf.pdf"'
-    pdf_data = open(file_path, 'rb').read()
-    return HttpResponse(pdf_data, content_type="application/pdf")
-
-
 def contributors(request):
     """
     Displays list of all contributors.
