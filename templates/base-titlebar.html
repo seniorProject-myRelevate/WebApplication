@@ -43,6 +43,7 @@
 
             <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
                 <li><a href="{% url 'myrelevate:index' %}">Home</a></li>
+                <li><a href="{% url 'myrelevate:advisers:advisers' %}">Advisers</a> </li>
                 <li><a href="{% url 'myrelevate:contributor:contributors' %}">Contributors</a></li>
                 {% if not user.is_authenticated %}
                     <li>
@@ -53,6 +54,7 @@
                     </li>
                 {% else %}
                     {% if user.is_contributor %}
+                        <li><a href="{% url 'myrelevate:advisers:create' %}">Adviser Application</a> </li>
                         <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
                         <li class="uk-parent">
                             <a href="#">Contributor Articles</a>

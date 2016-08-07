@@ -29,8 +29,8 @@ class ContributorForm(forms.ModelForm):
 
     class Meta:
         model = ContributorProfile
-        fields = ['credential', 'program', 'institution', 'adviser_email', 'adviser_first_name', 'adviser_last_name',
-                  'biography', 'interests', 'address', 'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url']
+        fields = ['credential', 'program', 'institution', 'biography', 'interests', 'address', 'city', 'state',
+                  'zipcode', 'cv', 'accept_terms', 'website_url']
         widgets = {
             'program': forms.TextInput(attrs={'placeholder': 'Field of study/specialization', 'class': 'form-control'}),
             'institution': forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',

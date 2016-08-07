@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
+from .forms import AdviserApplicationForm, UpdateAvailableForm
+
 from models import Advisers
 
 
@@ -14,6 +16,7 @@ def index(request):
 
 @login_required()
 def advisers(request):
+    advisers = Advisers.objects.all()
     return render(request, 'advisers.html')
 
 
@@ -24,9 +27,24 @@ def approve(request):
 
 @login_required()
 def create(request):
-    pass
+    if request.method == 'POST':
+        form = AdviserApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('myrelevate:index'))
+        else:
+            return HttpResponse(form.errors)
+    else:
+        adviser_form = AdviserApplicationForm()
+    return render(request, 'adviser_application.html', {'adviser_form': adviser_form})
 
 
 @login_required()
 def update(request):
-    pass
+    if request.method == 'POST':
+        form = UpdateAvailableForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            pass
+    return HttpResponseRedirect(reverse('myrelevate:advisers:update'))
