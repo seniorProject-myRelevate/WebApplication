@@ -31,6 +31,7 @@ def approve(request):
     users = User.objects.filter(id__in=pending_adviser_ids)
     # contributor_profile_ids
     # contributor_profiles = ContributorProfile.objects.filter(id__in=contributor_profile_ids)
+    contributor_profiles = ContributorProfile.objects.all()
     approve_form_set = modelformset_factory(User, form=ApproveAdviserForm, extra=0)
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
@@ -41,7 +42,8 @@ def approve(request):
             return HttpResponse(formset.errors)
     else:
         formset = approve_form_set(queryset=users)
-    return render(request, 'approve_adviser.html', {'user_forms': zip(users, formset), 'formset': formset})
+    return render(request, 'approve_adviser.html', {'users_forms': zip(users, formset), 'formset': formset,
+                                                    'profiles': contributor_profiles})
 
 
 @login_required()
