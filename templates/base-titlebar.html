@@ -64,7 +64,13 @@
                             </ul>
                         </li>
                         {% if user.is_staff %}
-                            <li><a href="{% url 'myrelevate:contributor:approve' %}">Contributor Approval</a></li>
+                            <li class="uk-parent">
+                                <a href="#">Approve</a>
+                                <ul class="uk-nav-sub">
+                                    <li><a href="{% url 'myrelevate:advisers:approve' %}">Adviser</a> </li>
+                                    <li><a href="{% url 'myrelevate:contributor:approve' %}">Contributor</a></li>
+                                </ul>
+                            </li>
                         {% endif %}
                     {% else %}
                         <li><a href="{% url 'myrelevate:contributor:create' %}">Contributor Application</a></li>

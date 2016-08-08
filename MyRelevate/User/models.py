@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from SeniorProject import settings
+from ..Advisers.models import Advisers
 from ..Contributor.models import ContributorProfile
 
 
@@ -47,7 +48,9 @@ class User(AbstractBaseUser, PermissionsMixin):
                             help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
     date_joined = models.DateTimeField(default=timezone.now)
     confirmed = models.BooleanField(default=False)
+    is_adviser = models.BooleanField(default=False)
     is_contributor = models.BooleanField(default=False)
+    adviser_profile = models.OneToOneField(Advisers, null=True, blank=True)
     contributor_profile = models.OneToOneField(ContributorProfile, null=True, blank=True)
 
     objects = UserManager()

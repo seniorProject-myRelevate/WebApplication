@@ -8,5 +8,20 @@
 {% block content %}
     <div class="uk-container">
         <h1>Adviser Application</h1>
+        <br>
+        <div class="uk-scrollable-box">
+            These are the responsibilities of being an adviser
+        </div>
+        <h3>Terms and Conditions</h3>
+        <div class="uk-scrollable-box">
+            <span>
+                These are the terms and conditions for being an adviser
+            </span>
+        </div>
+        <form class="uk-form" method="post" action="{% url 'myrelevate:advisers:create' %}">
+            {% csrf_token %}
+            Accept terms: {{ adviser_form.accept_terms }}
+            <input class="uk-button" type="submit" value="Apply">
+        </form>
     </div>
 {% endblock %}
