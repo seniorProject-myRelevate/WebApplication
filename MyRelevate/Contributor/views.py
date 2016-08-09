@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.forms import modelformset_factory
 
-from .forms import ContributorForm, CredentialForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
+from .forms import ContributorForm, DegreeForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
     ApprovalUpdateUserForm
 
 from ..models import Topics, Pending
@@ -71,16 +71,16 @@ def update(request):
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
                                                        'topics': topics,
                                                        'contributorForm': ContributorForm(instance=profile),
-                                                       'credenrialForm': CredentialForm(instance=profile),
+                                                       'credenrialForm': DegreeForm(instance=profile),
                                                        'biographyForm': BiographyForm(instance=profile),
                                                        'interestForm': InterestForm(instance=profile),
                                                        'contactForm': ContactForm(instance=profile)})
 
 
 @login_required()
-def update_credentials(request):
+def update_degree(request):
     if request.method == 'POST':
-        form = CredentialForm(request.POST, instance=request.user.contributor_profile)
+        form = DegreeForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
             form.save()
         else:

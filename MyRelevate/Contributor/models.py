@@ -16,8 +16,7 @@ class ContributorProfile(models.Model):
         ('SPhD', 'Student-PhD'),
         ('SPsyD', 'Student-PsyD')
     )
-    degree_completed = models.CharField(max_length=5, choices=DEGREES)
-    degree_description = models.CharField(max_length=255)
+    degree = models.CharField(max_length=5, choices=DEGREES)
     institution = models.CharField(max_length=255, null=False, blank=False)
     address = models.CharField(max_length=255, null=False, blank=False)
     city = models.CharField(max_length=255, null=False, blank=False)

@@ -64,18 +64,18 @@ $('#contributorPage').click(function () {
     return false;
 });
 
-$("form select[name='credential']").change(function(){
-        var credentialVal = $("form select[name='credential']").val();
-        var email = $('#id_adviser_email');
-        var firstName = $('#id_adviser_first_name');
-        var lastName = $('#id_adviser_last_name');
-        if(credentialVal == "SU" || credentialVal == "SM"){
+$("form select[name='degree_completed']").change(function(){
+        var degreeCompletedVal = $("form select[name='degree_completed']").val();
+        // var email = $('#id_adviser_email');
+        // var firstName = $('#id_adviser_first_name');
+        // var lastName = $('#id_adviser_last_name');
+        if(degreeCompletedVal == "SU" || degreeCompletedVal == "SM"){
             $('#studentAccess').show();
         }
         else {
-            email.val('');
-            firstName.val('');
-            lastName.val('');
+            // email.val('');
+            // firstName.val('');
+            // lastName.val('');
             $('#studentAccess').hide();
         }
 });
@@ -85,18 +85,18 @@ function ContributorAccess() {
     //$('#profiles').hide();
     //$('#contributorApplication').show();
 
-    $("form select[name='credential']").change(function(){
-        var credentialVal = $("form select[name='credential']").val();
-        var email = $('#id_adviser_email');
-        var firstName = $('#id_adviser_first_name');
-        var lastName = $('#id_adviser_last_name');
-        if(credentialVal == "SU" || credentialVal == "SM"){
+    $("form select[name='degree']").change(function(){
+        var degreeVal = $("form select[name='degree']").val();
+        // var email = $('#id_adviser_email');
+        // var firstName = $('#id_adviser_first_name');
+        // var lastName = $('#id_adviser_last_name');
+        if(degreeVal == "SU" || degreeVal == "SM"){
             $('#studentAccess').show();
         }
         else {
-            email.val('');
-            firstName.val('');
-            lastName.val('');
+            // email.val('');
+            // firstName.val('');
+            // lastName.val('');
             $('#studentAccess').hide();
         }
     });
@@ -122,11 +122,6 @@ $('#editExpertise').click(function(){
     $('#topic_list').hide();
     $('#expertise_topic_form').show();
 });
-
-function EditContactInformation() {
-    $('#contact_list').hide();
-    $('#contactInfoForm').show();
-}
 
 $('a').parent().hover(
   function () {

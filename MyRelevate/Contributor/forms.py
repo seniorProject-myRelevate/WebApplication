@@ -17,7 +17,7 @@ class ContributorForm(forms.ModelForm):
         ('SPsyD', 'Student-PsyD')
     )
 
-    credential = forms.ChoiceField(choices=DEGREES, required=True)
+    degree = forms.ChoiceField(choices=DEGREES, required=True)
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
                                                              'class': 'form-control'}), label='', required=False)
     cv = forms.FileField(label='Specific MIME type', required=True)
@@ -29,8 +29,10 @@ class ContributorForm(forms.ModelForm):
 
     class Meta:
         model = ContributorProfile
-        fields = ['credential', 'program', 'institution', 'biography', 'interests', 'address', 'city', 'state',
-                  'zipcode', 'cv', 'accept_terms', 'website_url']
+        fields = [
+            'degree', 'program', 'institution', 'biography', 'interests', 'address',
+            'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url'
+        ]
         widgets = {
             'program': forms.TextInput(attrs={'placeholder': 'Field of study/specialization', 'class': 'form-control'}),
             'institution': forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
@@ -54,10 +56,10 @@ class ContributorForm(forms.ModelForm):
         }
 
 
-class CredentialForm(forms.ModelForm):
+class DegreeForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
-        fields = ['credential']
+        fields = ['degree']
 
 
 class AreaOfExpertiseForm(forms.ModelForm):
