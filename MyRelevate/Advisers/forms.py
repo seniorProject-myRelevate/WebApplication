@@ -19,3 +19,7 @@ class UpdateAvailableForm(forms.ModelForm):
     class Meta:
         model = Advisers
         fields = ['is_available']
+        labels = {
+            'is_available': 'Approve Adviser',
+        }
+

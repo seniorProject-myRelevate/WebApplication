@@ -10,6 +10,7 @@ from .forms import AdviserApplicationForm, ApproveAdviserForm, UpdateAvailableFo
 from models import Advisers, PendingAdvisers
 from ..models import ContributorProfile
 from ..models import User
+from ..models import Topics
 
 
 def index(request):
@@ -32,6 +33,7 @@ def approve(request):
     # contributor_profile_ids
     # contributor_profiles = ContributorProfile.objects.filter(id__in=contributor_profile_ids)
     contributor_profiles = ContributorProfile.objects.all()
+    topics = Topics.objects.all()
     approve_form_set = modelformset_factory(User, form=ApproveAdviserForm, extra=0)
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
@@ -43,7 +45,7 @@ def approve(request):
     else:
         formset = approve_form_set(queryset=users)
     return render(request, 'approve_adviser.html', {'users_forms': zip(users, formset), 'formset': formset,
-                                                    'profiles': contributor_profiles})
+                                                    'profiles': contributor_profiles, 'topics': topics})
 
 
 @login_required()

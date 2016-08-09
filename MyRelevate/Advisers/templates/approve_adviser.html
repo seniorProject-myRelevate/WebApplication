@@ -1,12 +1,13 @@
 {% extends "base-titlebar.html" %}
 {% load staticfiles %}
+{% load static %}
 
 {% block head %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.almost-flat.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
-    <script src="{% static 'uikit/js/components/accordion.min.js' %}"></script>
+    <script src="{% static 'uikit/js/core/toggle.min.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -37,6 +38,17 @@
                                         <br>{{ profile.city }}, {{ profile.state }} {{ profile.zipcode }}
                                     </li>
                                     <li>
+                                        {% for topic in topics %}
+                                            {% for expertise_topic in profile.expertise_topics.all %}
+                                                {% if expertise_topic.id == topic.id %}
+                                                    <button class="uk-button" type="button"
+                                                            data-uk-toggle="{target:'#topicDiscription'}">{{ topic.topicName }}</button>
+                                                    <div id="#topicDiscription" class="uk-panel-box-primary">
+                                                        {{ topic.topicDescription }}
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
 
                                     </li>
                                     <li>
@@ -46,9 +58,13 @@
                                         </span>
                                     </li>
                                     <li>
-
+                                        <br>
+                                        <span>
+                                            {{ profile.interests }}
+                                        </span>
                                     </li>
                                     <li>
+                                        <br>
                                         <object data="{{ profile.cv.url }}" type="application/pdf"
                                                 width="1100" height="1000">
                                         </object>
