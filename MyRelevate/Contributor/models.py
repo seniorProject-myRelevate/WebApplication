@@ -1,5 +1,4 @@
 from django.db import models
-# from ..models import User
 
 
 class ContributorProfile(models.Model):
@@ -34,3 +33,15 @@ class ContributorProfile(models.Model):
     has_adviser = models.BooleanField(default=False)
     # adviser = models.ForeignKey('MyRelevate.Advisers')
 
+
+class PendingContributors(models.Model):
+    class Meta:
+        db_table = 'pending_contributors'
+    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
+
+
+class Denied(models.Model):
+    class Meta:
+        db_table = 'denied_contributors'
+    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
+    reason = models.TextField(null=False, blank=False)

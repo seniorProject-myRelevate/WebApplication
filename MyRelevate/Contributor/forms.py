@@ -1,7 +1,6 @@
 from django import forms
 from .models import ContributorProfile
 from ..models import User
-from MyRelevate.models import Denied
 
 
 class ContributorForm(forms.ModelForm):

@@ -33,23 +33,6 @@ class Topics(models.Model):
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
 
 
-class Pending(models.Model):
-    class Meta:
-        db_table = 'pending_contributors'
-    user = models.ForeignKey(User, null=True, blank=True)
-
-
-class Denied(models.Model):
-    class Meta:
-        db_table = 'denied_contributors'
-    user = models.ForeignKey(User, null=True, blank=True)
-    reason1 = models.TextField(null=False, blank=False)
-    reason2 = models.TextField(null=False, blank=False)
-    reason3 = models.TextField(null=False, blank=False)
-    reason4 = models.TextField(null=False, blank=False)
-    reason5 = models.TextField(null=False, blank=False)
-
-
 # DemographicData Database Model
 # class DemographicData(models.py.Model):
 #     EDUCATION = (

@@ -8,8 +8,8 @@ from django.forms import modelformset_factory
 from .forms import ContributorForm, DegreeForm, ProgramForm, AreaOfExpertiseForm, BiographyForm, InterestForm, \
     ContactForm, AvatarForm, CVResumeForm, ApprovalUpdateUserForm
 
-from ..models import Topics, Pending
-from models import ContributorProfile
+from ..models import Topics
+from models import ContributorProfile, PendingContributors
 from ..models import User
 
 
@@ -33,11 +33,11 @@ def create(request):
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
             user = get_user_model().objects.get(email=request.user.email)
-            pending = Pending()
+            pending_contributor = PendingContributors()
             contributor_profile = form.save()
             user.contributor_profile = contributor_profile
-            pending.user = user
-            pending.save()
+            pending_contributor.contributor = contributor_profile
+            pending_contributor.save()
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
@@ -205,14 +205,14 @@ def approve(request):
     :return: The contributor profile from application, the users being evaluated, and
     formset: a list of forms for each user
     """
-    pending_user_ids = Pending.objects.values_list('user_id', flat=True)
+    pending_contributor_ids = PendingContributors.objects.values_list('contributor_id', flat=True)
     profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
-    users = User.objects.filter(id__in=pending_user_ids)
+    users = User.objects.filter(contributor_profile=pending_contributor_ids)
     profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
     for user in users:
         if user.is_contributor:
-            Pending.objects.filter(user_id=user.id).delete()
+            PendingContributors.objects.filter(contributor_id=user.contributor_profile).delete()
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
         if formset.is_valid():
