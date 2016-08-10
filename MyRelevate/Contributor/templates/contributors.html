@@ -27,10 +27,49 @@
                 </span>
             </p>
             {% for user in users %}
-                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                 {% for contributor in contributors %}
                     {% if user.contributor_profile_id == contributor.id %}
+                        <a href="#contributorProfile" data-uk-modal="{target: '#contributorProfile'}">
+                            <h3 class="blue">{{ user.first_name }} {{ user.last_name }}, {{ contributor.degree }}</h3>
+                        </a>
+                        {{ contributor.program }}<br>
+                        {{ contributor.institution }}<br><br>
+                        <div id="contributorProfile" class="uk-modal">
+                            <div class="uk-modal-dialog uk-modal-dialog-blank">
+                                <a href class="uk-modal-close uk-close"></a>
+                                <div class="uk-container">
+                                    {% if contributor.avatar == ""  %}
+                                        <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
+                                    {% elif contributor.avatar != "" %}
+                                        <img class="profile_avatar" src="{{ contributor.avatar.url }}">
+                                    {% endif %}
+                                    <h1 class="uk-text-center orange">{{ user.first_name }} {{ user.last_name }}, {{ contributor.degree }}</h1>
+                                    <h3>Credentials</h3>
+                                    {{ contributor.program }}<br>
+                                    {{ contributor.institution }}<br>
+                                    {{ contributor.degree }}<br>
 
+                                    <h3 class="blue">Biography</h3>
+                                    <div class="uk-scrollable-box">
+                                        {{ contributor.biography|safe }}
+                                    </div>
+
+                                    <h3 class="blue">Research and Clinical Interests</h3>
+                                    <div class="uk-scrollable-box">
+                                        {{ contributor.interests|safe }}
+                                    </div>
+
+                                    <h3 class="blue">Contact and Additional Information</h3>
+                                    {{ contributor.address }}<br>
+                                    {{ contributor.city }}, {{ contributor.state }} {{ contributor.zipcode }}
+                                    {{ contributor.website_url }}
+
+                                    <h3 class="blue">CV/Resume</h3>
+                                    <object data="{{ contributor.cv.url }}" type="application/pdf"
+                                            width="1100" height="1000"></object>
+                                </div>
+                            </div>
+                        </div>
                     {% endif %}
                 {% endfor %}
             {% endfor %}
