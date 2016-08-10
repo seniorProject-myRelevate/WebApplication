@@ -15,40 +15,53 @@
 {% block content %}
     <!--The Contributor Profile Menu Bar-->
     <div>
-        <img class="logo_contributors" src="{% static "images/logo.png" %}" alt="logo"/>
-        <div class="container">
-            <div class="text-center">
+        {% if contributorProfile.avatar == ""  %}
+            <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
+        {% elif contributorProfile.avatar != "" %}
+            <img class="profile_avatar" src="{{ contributorProfile.avatar.url }}">
+        {% endif %}
+
+        <div class="uk-container">
+            <div class="uk-text-center">
                 <h1 class="orange">
                     {{ user.first_name }} {{ user.last_name }},
-                    {% if  contributorProfile.credential  == 'MS' %}
+                    {% if  contributorProfile.degree  == 'MS' %}
                         Master of Science
-                    {% elif contributorProfile.credential  == 'MA' %}
+                    {% elif contributorProfile.degree  == 'MA' %}
                         Master of Arts
-                    {% elif contributorProfile.credential  == 'PhD' %}
+                    {% elif contributorProfile.degree  == 'PhD' %}
                         Doctor of Philosophy
-                    {% elif contributorProfile.credential  == 'PsyD' %}
+                    {% elif contributorProfile.degree  == 'PsyD' %}
                         Doctor of Psychology
-                    {% elif contributorProfile.credential  == 'PsyD' %}
+                    {% elif contributorProfile.degree  == 'PsyD' %}
                         Doctor of Psychology
-                    {% elif contributorProfile.credential  == 'SU' %}
+                    {% elif contributorProfile.degree  == 'SU' %}
                         Undergraduate Student
-                    {% elif contributorProfile.credential == 'SM' %}
+                    {% elif contributorProfile.degree == 'SM' %}
                         Master Student
-                    {% elif contributorProfile.credential == 'SPhD' %}
+                    {% elif contributorProfile.degree == 'SPhD' %}
                         Doctor of Philosophy Student
-                    {% elif contributorProfile.credential == 'SPsyD' %}
+                    {% elif contributorProfile.degree == 'SPsyD' %}
                         Doctor of Psychology Student
                     {% endif %}
                 </h1>
-                <h3 class="blue">Approved Relevate Contributor</h3>
+                {% if user.is_contributor %}
+                    <h3 class="blue">Approved Relevate Contributor</h3>
+                {% endif %}
             </div>
+            <form class="uk-form" method="post" enctype='multipart/form-data'
+                  action="{% url 'myrelevate:contributor:updateAvatar' %}">
+                {% csrf_token %}
+                {{ avatarForm }}
+                <input class="uk-button" type="submit" value="Update">
+            </form>
         </div>
 
     </div>
     <br><br><br>
     <div class="uk-container">
         <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#profileContent'}">
-            <li class="uk-active"><a onclick="ViewProfile()">Credentials</a></li>
+            <li class="uk-active"><a>Credentials</a></li>
             <li><a href="">Area Of Expertise</a></li>
             <li><a href="">Biography</a></li>
             <li><a href="">Research Area/Clinical Interest</a></li>
@@ -63,39 +76,43 @@
         <ul id="profileContent" class="uk-switcher">
             <li>
                 <br><br>
-                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateCredentials' %}">
+                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateDegree' %}">
                     {% csrf_token %}
-                    {{ credenrialForm }}
+                    {{ degreeForm }}
+                    <input class="uk-button" type="submit" value="Update">
+                </form>
+                <br><br>
+                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateProgram' %}">
+                    {% csrf_token %}
+                    {{ programForm }}
                     <input class="uk-button" type="submit" value="Update">
                 </form>
             </li>
             <li>
-                <div class="uk-accordion" data-uk-accordion>
-                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
-                        {% csrf_token %}
-                        <ul id="id_expertise_topics" class="uk-list uk-column-1-2" >
-                            {% for topic in topics %}
-                                <li>
-                                    <label>
-                                        <input id="id_expertise_topics_{{ topic.id }}"
-                                               {% for expertise_topic in contributorProfile.expertise_topics.all %}
-                                                   {% if expertise_topic.id == topic.id %} checked="checked" {% endif %}
-                                               {% endfor %}
-                                               name="expertise_topics" type="checkbox" value="{{ topic.id }}">
-                                        {{ topic.topicName }}
-                                    </label>
-                                    <div class="uk-button-dropdown" data-uk-dropdown="{pos:'bottom-center', mode:'click'}">
-                                        <i class="uk-icon-caret-down"></i>
-                                        <div class="uk-dropdown-blank uk-panel-box-primary uk-dropdown-bottom">
-                                            {{ topic.topicDescription }}
-                                        </div>
+                <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateAreaOfExpertise' %}">
+                    {% csrf_token %}
+                    <ul id="id_expertise_topics" class="uk-list uk-column-1-2" >
+                        {% for topic in topics %}
+                            <li>
+                                <label>
+                                    <input id="id_expertise_topics_{{ topic.id }}"
+                                           {% for expertise_topic in contributorProfile.expertise_topics.all %}
+                                               {% if expertise_topic.id == topic.id %} checked="checked" {% endif %}
+                                           {% endfor %}
+                                           name="expertise_topics" type="checkbox" value="{{ topic.id }}">
+                                    {{ topic.topicName }}
+                                </label>
+                                <div class="uk-button-dropdown" data-uk-dropdown="{pos:'bottom-center', mode:'click'}">
+                                    <i class="uk-icon-caret-down"></i>
+                                    <div class="uk-dropdown-blank uk-panel-box-primary uk-dropdown-bottom">
+                                        {{ topic.topicDescription }}
                                     </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        <input class="uk-button" type="submit" value="Update">
-                    </form>
-                </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <input class="uk-button" type="submit" value="Update">
+                </form>
             </li>
             <li>
                 <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateBiography' %}">
@@ -114,7 +131,10 @@
             <li>
                 <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateContact' %}">
                     {% csrf_token %}
-                    {{ contactForm }}
+                    <br>{{ contactForm.address }}<br>
+                    <br>{{ contactForm.city }}<br>
+                    <br>{{ contactForm.state }}<br>
+                    <br>{{ contactForm.zipcode }}<br><br>
                     <input class="uk-button" type="submit" value="Update">
                 </form>
             </li>
@@ -123,6 +143,12 @@
                     {{ contributorProfile.adviser_email }}
             </li>
             <li>
+                <form class="uk-form" method="post" enctype='multipart/form-data'
+                      action="{% url 'myrelevate:contributor:updateCVResume' %}">
+                    {% csrf_token %}
+                    {{ resumeForm }}
+                    <input class="uk-button" type="submit" value="Update">
+                </form>
                 <object data="{{ contributorProfile.cv.url }}" type="application/pdf"
                         width="1100" height="1000"></object>
             </li>

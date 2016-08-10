@@ -39,6 +39,7 @@ class ContributorForm(forms.ModelForm):
                                                   'class': 'form-control'}),
             'address': forms.TextInput(attrs={'placeholder': 'Address', 'class': 'form-control'}),
             'city': forms.TextInput(attrs={'placeholder': 'City', 'class': 'form-control'}),
+            'state': forms.TextInput(attrs={'placeholder': 'State', 'class': 'form-control'}),
             'zipcode': forms.TextInput(attrs={'placeholder': 'Zipcode', 'class': 'form-control'}),
             'website_url': forms.URLInput(attrs={'placeholder': 'Website URL', 'class': 'form-control'}),
             'biography': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
@@ -60,24 +61,45 @@ class DegreeForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['degree']
+        labels = {
+            'degree': ''
+        }
+
+
+class ProgramForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = ['program']
+        labels = {
+            'program': ''
+        }
 
 
 class AreaOfExpertiseForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['expertise_topics']
+        labels = {
+            'expertise_topics': ''
+        }
 
 
 class BiographyForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['biography']
+        labels = {
+            'biography': ''
+        }
 
 
 class InterestForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['interests']
+        labels = {
+            'interests': ''
+        }
 
 
 class ContactForm(forms.ModelForm):
@@ -90,6 +112,15 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = ['avatar']
+
+
+class CVResumeForm(forms.ModelForm):
+    class Meta:
+        model = ContributorProfile
+        fields = ['cv']
+        labels = {
+            'cv': ''
+        }
 
 
 class ApprovalUpdateUserForm(forms.ModelForm):

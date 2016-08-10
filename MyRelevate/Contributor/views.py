@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.forms import modelformset_factory
 
-from .forms import ContributorForm, DegreeForm, AreaOfExpertiseForm, BiographyForm, InterestForm, ContactForm, \
-    ApprovalUpdateUserForm
+from .forms import ContributorForm, DegreeForm, ProgramForm, AreaOfExpertiseForm, BiographyForm, InterestForm, \
+    ContactForm, AvatarForm, CVResumeForm, ApprovalUpdateUserForm
 
 from ..models import Topics, Pending
 from models import ContributorProfile
@@ -71,10 +71,13 @@ def update(request):
     return render(request, 'contributorprofile.html', {'contributorProfile': profile,
                                                        'topics': topics,
                                                        'contributorForm': ContributorForm(instance=profile),
-                                                       'credenrialForm': DegreeForm(instance=profile),
+                                                       'degreeForm': DegreeForm(instance=profile),
+                                                       'programForm': ProgramForm(instance=profile),
                                                        'biographyForm': BiographyForm(instance=profile),
                                                        'interestForm': InterestForm(instance=profile),
-                                                       'contactForm': ContactForm(instance=profile)})
+                                                       'contactForm': ContactForm(instance=profile),
+                                                       'avatarForm': AvatarForm(instance=profile),
+                                                       'resumeForm': CVResumeForm(instance=profile)})
 
 
 @login_required()
@@ -129,6 +132,39 @@ def update_contact(request):
             form.save()
         else:
             print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
+
+
+@login_required()
+def update_program(request):
+    if request.method == 'POST':
+        form = ProgramForm(request.POST, initial=request.user.contributor_profile)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse(form.errors)
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
+
+
+@login_required()
+def update_avatar(request):
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES, instance=request.user.contributor_profile)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse(form.errors)
+    return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
+
+
+@login_required()
+def update_cv_resume(request):
+    if request.method == 'POST':
+        form = CVResumeForm(request.POST, request.FILES, instance=request.user.contributor_profile)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse(form.errors)
     return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
 
 

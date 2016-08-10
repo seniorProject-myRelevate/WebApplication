@@ -143,10 +143,6 @@ ul.qualifications {
     overflow: auto;
 }
 
-.container2 {
-    margin-left: 100px;
-}
-
 .contributors-menu-bar {
     background-color: #1b6d85;
     /*display: block;*/
@@ -233,16 +229,12 @@ img.logo {
     margin-right: auto;
 }
 
-img.logo-background {
-
-}
-
 img.logo1 {
     display: block;
     float: right;
 }
 
-img.logo_contributors {
+img.profile_avatar {
     display: block;
     height: auto;
     width: auto;

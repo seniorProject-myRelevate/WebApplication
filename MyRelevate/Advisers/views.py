@@ -28,13 +28,15 @@ def advisers(request):
 @login_required()
 def approve(request):
     pending_adviser_ids = PendingAdvisers.objects.values_list('adviser_id', flat=True)
-    advisers = Advisers.objects.filter(id__in=pending_adviser_ids)
     users = User.objects.filter(id__in=pending_adviser_ids)
     # contributor_profile_ids
     # contributor_profiles = ContributorProfile.objects.filter(id__in=contributor_profile_ids)
     contributor_profiles = ContributorProfile.objects.all()
     topics = Topics.objects.all()
     approve_form_set = modelformset_factory(User, form=ApproveAdviserForm, extra=0)
+    for user in users:
+        if user.is_adviser:
+            PendingAdvisers.objects.get(adviser_id=user.adviser_profile).delete()
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
         if formset.is_valid():
