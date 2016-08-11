@@ -64,77 +64,39 @@ $('#contributorPage').click(function () {
     return false;
 });
 
-$("form select[name='credential']").change(function(){
-        var credentialVal = $("form select[name='credential']").val();
-        var email = $('#id_adviser_email');
-        var firstName = $('#id_adviser_first_name');
-        var lastName = $('#id_adviser_last_name');
-        if(credentialVal == "SU" || credentialVal == "SM"){
+$("form select[name='degree_completed']").change(function(){
+        var degreeCompletedVal = $("form select[name='degree_completed']").val();
+        // var email = $('#id_adviser_email');
+        // var firstName = $('#id_adviser_first_name');
+        // var lastName = $('#id_adviser_last_name');
+        if(degreeCompletedVal == "SU" || degreeCompletedVal == "SM"){
             $('#studentAccess').show();
         }
         else {
-            email.val('');
-            firstName.val('');
-            lastName.val('');
+            // email.val('');
+            // firstName.val('');
+            // lastName.val('');
             $('#studentAccess').hide();
         }
-    });
-
-/*
- Remove selected topic from option list and add it to selected list
-*/
-//$('#add_right_arrow').click(function(){
-
-//    $("form select[name='expertise_topics']").selected().each(function(){
-//        $('#id_my_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-//        $(this).remove();
-//    });
-
-    /*
-   $('#id_expertise_topics option:selected').each(function(){
-       $('#id_my_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-       $(this).remove();
-       */
-       /*
-       $('#id_selected_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-       $(this).remove();
-       */
-   //});
-//});
-
-/*
- Remove selected topic from select list and add it back to the options list
-*/
-//$('#remove_left_arrow').click(function(){
-//    $('#id_my_topics option:selected').each(function(){
-//        $('#id_expertise_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-//        $(this).remove();
-//   });
-    /*
-    $('#id_selected_topics option:selected').each(function(){
-        $('#id_expertise_topics').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-        $(this).remove();
-   });
-   */
-//});
+});
 
 
 function ContributorAccess() {
     //$('#profiles').hide();
     //$('#contributorApplication').show();
 
-    $("form select[name='credential']").change(function(){
-        var credentialVal = $("form select[name='credential']").val();
-        var email = $('#id_adviser_email');
-        var firstName = $('#id_adviser_first_name');
-        var lastName = $('#id_adviser_last_name');
-        if(credentialVal == "SU" || credentialVal == "SM"){
+    $("form select[name='degree']").change(function(){
+        var degreeVal = $("form select[name='degree']").val();
+        // var email = $('#id_adviser_email');
+        // var firstName = $('#id_adviser_first_name');
+        // var lastName = $('#id_adviser_last_name');
+        if(degreeVal == "SU" || degreeVal == "SM"){
             $('#studentAccess').show();
         }
         else {
-            email.val('');
-            firstName.val('');
-            lastName.val('');
+            // email.val('');
+            // firstName.val('');
+            // lastName.val('');
             $('#studentAccess').hide();
         }
     });
@@ -155,64 +117,11 @@ $(document).ready(function () {
         }
     );
 }); // end ready
-function ViewProfile() {
-    $('#viewContent').hide();
-    $('#createPost').hide();
-    $('#contributorProfile').show();
-
-    if($('#id_interests').val() == ""){
-        $('#interests-paragraph').hide();
-        $('#interestsForm').show();
-    }
-
-    /*
-    $('#editInterests').onclick = function() {
-        //$('#interests-paragraph').hide();
-        //$('#interestsForm').show();
-    }
-    */
-}
-
-function ViewContent() {
-    $('#contributorProfile').hide();
-    $('#viewResources').hide();
-    $('#createPost').hide();
-    $('#viewContent').show();
-}
-
-function ViewResources() {
-    $('#contributorProfile').hide();
-    $('#viewContent').hide();
-    $('#createPost').hide();
-    $('#viewResources').show();
-}
-
-function CreatePost() {
-    $('#contributorProfile').hide();
-    $('#viewContent').hide();
-    $('#viewResources').hide();
-    $('#createPost').show();
-}
 
 $('#editExpertise').click(function(){
     $('#topic_list').hide();
     $('#expertise_topic_form').show();
 });
-
-function EditBiography() {
-    $('#biography-paragraph').hide();
-    $('#biographyForm').show();
-}
-
-function EditInterests() {
-    $('#interests-paragraph').hide();
-    $('#interestsForm').show();
-}
-
-function EditContactInformation() {
-    $('#contact_list').hide();
-    $('#contactInfoForm').show();
-}
 
 $('a').parent().hover(
   function () {

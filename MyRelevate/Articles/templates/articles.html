@@ -12,6 +12,27 @@
             {% csrf_token %}
             {{ form.title }}
             <br><br>
+            <ul id="id_article_topics" class="uk-list uk-column-1-2" >
+                {% for topic in topics %}
+                    <li>
+                        <label>
+                            <input id="id_article_topics_{{ topic.id }}"
+                                   {% for article_topic in form.article_topics.all %}
+                                       {% if article_topic.id == topic.id %} checked="checked" {% endif %}
+                                   {% endfor %}
+                                   name="article_topics" type="checkbox" value="{{ topic.id }}">
+                            {{ topic.topicName }}
+                        </label>
+                        <button type="button" class="uk-accordion-title">
+                            <i class="uk-icon-question"></i>
+                        </button>
+                        <div class="uk-panel-box-primary uk-accordion-content">
+                            {{ topic.topicDescription }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <br><br>
             {{ form.content }}
              <br>
             {{ form.isPublished.label }}{{ form.isPublished }}
@@ -20,6 +41,11 @@
     {% elif articles %}
         {% for a in articles %}
             <p>{{ a.title }}</p>
+            <p>
+                {% for article_topic in a.article_topics.all %}
+                    <p>{{ article_topic.id }}, {{ article_topic.topicName }}</p>
+                {% endfor %}
+            </p>
             <p>{{ a.content|safe }}</p>
             <hr>
         {% endfor %}

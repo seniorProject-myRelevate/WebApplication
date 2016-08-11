@@ -2,111 +2,184 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div class="contributorsProfiles" id="profiles">
-        <nav class="navbar contributors-menu-bar">
-            <div class="container-fluid center">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Brand</a>
-                </div>
+    <div class="uk-container">
+        <nav class="uk-navbar">
+            <div class="uk-navbar-flip">
+                <div class="uk-navbar-content">
+                    <form class="uk-search" data-uk-search>
 
-    <div class="contributorAccess" id="requestAccess" style="display: none">
-        <div class="container">
-            <form action="{% url 'myrelevate:contributor:contributors' %}" method="post" enctype='multipart/form-data'>
-                {% csrf_token %}
-                <div class="text-center"><h2>Contributor Application</h2></div>
-                <h4>{{ user.first_name }}</h4>
-                <h4>{{ user.last_name }}</h4>
-                <h4>{{ user.email }}</h4>
-                <p><h4>Credential/Dregree Completed: </h4> {{ contributorForm.credential }} </p>
-                <div id="studentAccess" style="display: none">
-                    <p>{{ contributorForm.adviser_email }}</p>
-                    <p>{{ contributorForm.adviser_first_name }}</p>
-                    <p>{{ contributorForm.adviser_last_name }}</p>
-                </div>
-                <p>{{ contributorForm.program }}</p>
-                <p>{{ contributorForm.institution }}</p>
-                <p>{{ contributorForm.address }}</p>
-                <p><h4>Upload your cv: </h4> {{ contributorForm.cv }} </p>
-                <p>{{ contributorForm.biography }}</p>
-                <p><h3>Terms and Conditions</h3> </p>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Link</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="navbar-form navbar-left" role="search"
-                          action="{% url 'myrelevate:contributor:contributors' %}" method="get">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q">
-                        </div>
-                        <button onclick="ContributorSearch()" type="submit" class="btn btn-primary">Submit</button>
                     </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="register">
-                            Interested in becoming a contributor?
-                            <a id="contributorRegistration" title="Access" href="{% url 'myrelevate:contributor:create' %}">
-                                Get contributor access here.</a>
-                        </li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
+                </div>
+            </div>
         </nav>
 
+        <div>
+            <h2 class="orange">Meet Our Contributors</h2>
+            <p>
+                <span>
+                    Our contributors at Relevate are scholars and practitioners with expert knowledge to share about
+                    romantic relationships. Our contributors range from University professors, graduate students, certified
+                    therapists and relationship educators, and undergraduate students studying relationships under
+                    mentorship. Each contributor has been vetted by the Relevate team to ensure that all content is
+                    trustworthy and grounded in romantic relationship theory and research in order to ensure that everyone
+                    has access to the cutting edge knowledge and skills they need to elevate current and future romantic
+                    relationships.
+                </span>
+            </p>
+            {% for user in users %}
+                {% for contributor in contributors %}
+                    {% if user.contributor_profile_id == contributor.id %}
+                        <a href="#contributorProfile" data-uk-modal="{target: '#contributorProfile'}">
+                            <h3 class="blue">{{ user.first_name }} {{ user.last_name }}, {{ contributor.degree }}</h3>
+                        </a>
+                        {{ contributor.program }}<br>
+                        {{ contributor.institution }}<br><br>
+                        <div id="contributorProfile" class="uk-modal">
+                            <div class="uk-modal-dialog uk-modal-dialog-blank">
+                                <a href class="uk-modal-close uk-close"></a>
+                                <div class="uk-container">
+                                    {% if contributor.avatar == ""  %}
+                                        <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
+                                    {% elif contributor.avatar != "" %}
+                                        <img class="profile_avatar" src="{{ contributor.avatar.url }}">
+                                    {% endif %}
+                                    <h1 class="uk-text-center orange">{{ user.first_name }} {{ user.last_name }}, {{ contributor.degree }}</h1>
+                                    <h3>Credentials</h3>
+                                    {{ contributor.program }}<br>
+                                    {{ contributor.institution }}<br>
+                                    {{ contributor.degree }}<br>
 
-        <h2 class="orange">Meet Our Contributors</h2>
-        <p>
-            <span>
-                Our contributors at Relevate are scholars and practitioners with expert knowledge to share about
-                romantic relationships. Our contributors range from University professors, graduate students, certified
-                therapists and relationship educators, and undergraduate students studying relationships under
-                mentorship. Each contributor has been vetted by the Relevate team to ensure that all content is
-                trustworthy and grounded in romantic relationship theory and research in order to ensure that everyone
-                has access to the cutting edge knowledge and skills they need to elevate current and future romantic
-                relationships.
-            </span>
-        </p>
-        <div id="allContributors">
-            {{ contributors }}
-        </div>
-        <div id="searchedContributors" style="display: block">
-            {% if profiles %}
-                <ul>
-                    {% for profile in profiles %}
-                        <li>
-                            <h3 class="blue">
-                                {{ profile.first_name}} {{ profile.last_name }}, {{ profile.credential }}
-                                <br>
-                                {{ profile.email }}
-                            </h3>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No profile match!</p>
-            {% endif %}
+                                    <h3 class="blue">Biography</h3>
+                                    <div class="uk-scrollable-box">
+                                        {{ contributor.biography|safe }}
+                                    </div>
+
+                                    <h3 class="blue">Research and Clinical Interests</h3>
+                                    <div class="uk-scrollable-box">
+                                        {{ contributor.interests|safe }}
+                                    </div>
+
+                                    <h3 class="blue">Contact and Additional Information</h3>
+                                    {{ contributor.address }}<br>
+                                    {{ contributor.city }}, {{ contributor.state }} {{ contributor.zipcode }}
+                                    {{ contributor.website_url }}
+
+                                    <h3 class="blue">CV/Resume</h3>
+                                    <object data="{{ contributor.cv.url }}" type="application/pdf"
+                                            width="1100" height="1000"></object>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
         </div>
     </div>
+{#    <div class="contributorsProfiles" id="profiles">#}
+{#        <nav class="navbar contributors-menu-bar">#}
+{#            <div class="container-fluid center">#}
+{#                <!-- Brand and toggle get grouped for better mobile display -->#}
+{#                <div class="navbar-header">#}
+{#                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"#}
+{#                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
+{#                        <span class="sr-only">Toggle navigation</span>#}
+{#                        <span class="icon-bar"></span>#}
+{#                        <span class="icon-bar"></span>#}
+{#                        <span class="icon-bar"></span>#}
+{#                    </button>#}
+{#                    <a class="navbar-brand" href="#">Brand</a>#}
+{#                </div>#}
+{##}
+{#    <div class="contributorAccess" id="requestAccess" style="display: none">#}
+{#        <div class="container">#}
+{#            <form action="{% url 'myrelevate:contributor:contributors' %}" method="post" enctype='multipart/form-data'>#}
+{#                {% csrf_token %}#}
+{#                <div class="text-center"><h2>Contributor Application</h2></div>#}
+{#                <h4>{{ user.first_name }}</h4>#}
+{#                <h4>{{ user.last_name }}</h4>#}
+{#                <h4>{{ user.email }}</h4>#}
+{#                <p><h4>Credential/Dregree Completed: </h4> {{ contributorForm.credential }} </p>#}
+{#                <div id="studentAccess" style="display: none">#}
+{#                    <p>{{ contributorForm.adviser_email }}</p>#}
+{#                    <p>{{ contributorForm.adviser_first_name }}</p>#}
+{#                    <p>{{ contributorForm.adviser_last_name }}</p>#}
+{#                </div>#}
+{#                <p>{{ contributorForm.program }}</p>#}
+{#                <p>{{ contributorForm.institution }}</p>#}
+{#                <p>{{ contributorForm.address }}</p>#}
+{#                <p><h4>Upload your cv: </h4> {{ contributorForm.cv }} </p>#}
+{#                <p>{{ contributorForm.biography }}</p>#}
+{#                <p><h3>Terms and Conditions</h3> </p>#}
+{#                <!-- Collect the nav links, forms, and other content for toggling -->#}
+{#                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">#}
+{#                    <ul class="nav navbar-nav">#}
+{#                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>#}
+{#                        <li><a href="#">Link</a></li>#}
+{#                        <li class="dropdown">#}
+{#                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"#}
+{#                               aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>#}
+{#                            <ul class="dropdown-menu">#}
+{#                                <li><a href="#">Action</a></li>#}
+{#                                <li><a href="#">Another action</a></li>#}
+{#                                <li><a href="#">Something else here</a></li>#}
+{#                                <li role="separator" class="divider"></li>#}
+{#                                <li><a href="#">Separated link</a></li>#}
+{#                                <li role="separator" class="divider"></li>#}
+{#                                <li><a href="#">One more separated link</a></li>#}
+{#                            </ul>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                    <form class="navbar-form navbar-left" role="search"#}
+{#                          action="{% url 'myrelevate:contributor:contributors' %}" method="get">#}
+{#                        <div class="form-group">#}
+{#                            <input type="text" class="form-control" placeholder="Search" name="q">#}
+{#                        </div>#}
+{#                        <button onclick="ContributorSearch()" type="submit" class="btn btn-primary">Submit</button>#}
+{#                    </form>#}
+{#                    <ul class="nav navbar-nav navbar-right">#}
+{#                        <li class="register">#}
+{#                            Interested in becoming a contributor?#}
+{#                            <a id="contributorRegistration" title="Access" href="{% url 'myrelevate:contributor:create' %}">#}
+{#                                Get contributor access here.</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </div><!-- /.navbar-collapse -->#}
+{#            </div><!-- /.container-fluid -->#}
+{#        </nav>#}
+{##}
+{##}
+{#        <h2 class="orange">Meet Our Contributors</h2>#}
+{#        <p>#}
+{#            <span>#}
+{#                Our contributors at Relevate are scholars and practitioners with expert knowledge to share about#}
+{#                romantic relationships. Our contributors range from University professors, graduate students, certified#}
+{#                therapists and relationship educators, and undergraduate students studying relationships under#}
+{#                mentorship. Each contributor has been vetted by the Relevate team to ensure that all content is#}
+{#                trustworthy and grounded in romantic relationship theory and research in order to ensure that everyone#}
+{#                has access to the cutting edge knowledge and skills they need to elevate current and future romantic#}
+{#                relationships.#}
+{#            </span>#}
+{#        </p>#}
+{#        <div id="allContributors">#}
+{#            {{ contributors }}#}
+{#        </div>#}
+{#        <div id="searchedContributors" style="display: block">#}
+{#            {% if profiles %}#}
+{#                <ul>#}
+{#                    {% for profile in profiles %}#}
+{#                        <li>#}
+{#                            <h3 class="blue">#}
+{#                                {{ profile.first_name}} {{ profile.last_name }}, {{ profile.credential }}#}
+{#                                <br>#}
+{#                                {{ profile.email }}#}
+{#                            </h3>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% else %}#}
+{#                <p>No profile match!</p>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </div>#}
 
 {% endblock %}

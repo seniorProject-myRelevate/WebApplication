@@ -31,7 +31,8 @@
                 </div>
             </div>
             <div class="uk-navbar-center">
-                <img style="max-height: 40px" src="{% static 'images/favicon.png' %}">
+{#                <img style="max-height: 40px" src="{% static 'images/Relevate Logo.png' %}">#}
+                <img style="max-height: 100px" src="{% static 'images/Relevate Logo.png' %}">
             </div>
         </div>
     </nav>
@@ -42,6 +43,7 @@
 
             <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
                 <li><a href="{% url 'myrelevate:index' %}">Home</a></li>
+                <li><a href="{% url 'myrelevate:advisers:advisers' %}">Advisers</a> </li>
                 <li><a href="{% url 'myrelevate:contributor:contributors' %}">Contributors</a></li>
                 {% if not user.is_authenticated %}
                     <li>
@@ -52,8 +54,24 @@
                     </li>
                 {% else %}
                     {% if user.is_contributor %}
+                        <li><a href="{% url 'myrelevate:advisers:create' %}">Adviser Application</a> </li>
                         <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
-                        <li><a href="{% url 'myrelevate:articles:display' %}">Contributor Articles</a></li>
+                        <li class="uk-parent">
+                            <a href="#">Contributor Articles</a>
+                            <ul class="uk-nav-sub">
+                                <li><a href="{% url 'myrelevate:articles:display' %}">Posts To Date</a></li>
+                                <li><a href="{% url 'myrelevate:articles:create' %}">Create Post</a></li>
+                            </ul>
+                        </li>
+                        {% if user.is_staff %}
+                            <li class="uk-parent">
+                                <a href="#">Approve</a>
+                                <ul class="uk-nav-sub">
+                                    <li><a href="{% url 'myrelevate:advisers:approve' %}">Adviser</a> </li>
+                                    <li><a href="{% url 'myrelevate:contributor:approve' %}">Contributor</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
                     {% else %}
                         <li><a href="{% url 'myrelevate:contributor:create' %}">Contributor Application</a></li>
                     {% endif %}

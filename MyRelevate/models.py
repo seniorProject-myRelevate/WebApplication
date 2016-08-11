@@ -5,13 +5,13 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
 from Contributor.models import ContributorProfile
+from User.models import User
 
 
 class Subscriber(models.Model):
     class Meta:
         db_table = 'subscriber'
     email = models.EmailField(unique=True, null=False, blank=False)
-
 
     # Below are helper functions that are not associated with any particular route
     def send_email(self, subject, html, sender='noreply@myrelevate.com'):
@@ -31,19 +31,6 @@ class Topics(models.Model):
         db_table = 'topics'
     topicName = models.CharField(max_length=100, null=False, blank=False)
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
-
-
-# class ContributorTopics(models.Model):
-#     class Meta:
-#         db_table = 'contributor_topics'
-#     contributor_profile = models.ForeignKey(ContributorProfile, on_delete=models.CASCADE)
-#     topics = models.ForeignKey(Topics, on_delete=models.CASCADE)
-
-
-# class Adviser(models.Model):
-#     adviser_email = models.EmailField(max_length=254, unique=False, null=False, blank=False)
-#     adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
-#     adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
 
 
 # DemographicData Database Model

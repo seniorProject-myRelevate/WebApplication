@@ -21,12 +21,24 @@
                 {{ user.last_name }}
                 <br>
                 {{ user.email }}
-                <br>
-                Credential/Degree Completed:{{ contributorForm.credential }}
+                <br><br>
+                Credential/Degree Completed:{{ contributorForm.degree }}
                 <div id="studentAccess" style="display: none">
-                    {{ contributorForm.adviser_email }}
-                    {{ contributorForm.adviser_first_name }}
-                    {{ contributorForm.adviser_last_name }}
+                    {{ contributorForm.adviser }}
+{#                    <div class="uk-form-select" data-uk-form-select>#}
+{#                        <select id="id_adviser">#}
+{#                            {% for adviser in advisers %}#}
+{#                                {% for user in users %}#}
+{#                                    {% if adviser.id == user.adviser_profile_id %}#}
+{#                                        <option value="{{ adviser.id }}">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</option>#}
+{#                                    {% endif %}#}
+{#                                {% endfor %}#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+{#                    </div>#}
+{#                    {{ contributorForm.adviser_email }}#}
+{#                    {{ contributorForm.adviser_first_name }}#}
+{#                    {{ contributorForm.adviser_last_name }}#}
                 </div>
                 <br><br>
                 <h3>Academic information</h3>
@@ -54,78 +66,44 @@
                 <br><br>
                 {{ contributorForm.biography }}
 
-                <p>
-                <h3>Terms and Conditions</h3></p>
+                <br><br>
+                <h3>Terms and Conditions</h3>
                 <div class="uk-scrollable-box">
-                <div class=3DWordSection1>
-
-                    <p class=3DMsoNormal style=3D'margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>
-                        <span style=3D'font-size:12.0pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:
-                        "Times New Roman";mso-hansi-font-family:Calibri;mso-bidi-font-family:"Times New Roman";
-                        color:black'>Any information on any topic given by <span class=3DSpellE>Relevate</span>,
-                        its members, its contributors,&nbsp;and/or its community members should not be
-                        considered to be advice, diagnosis,&nbsp;and/or any treatment appropriate for
-                        its readers. Appropriate advice, diagnosis,&nbsp;and/or treatment can only be
-                        given by licensed professionals within a professional&nbsp;setting. <span
-                            class=3DSpellE>Relevate</span> makes no claim to be a professional setting
-                        appropriate for&nbsp;giving advice, diagnosis, and/or treatment. Although many
-                        contributors to <span class=3DSpellE>Relevate</span>&nbsp;topics are licensed
-                        professionals, the information shared by <span class=3DSpellE>Relevate</span>,
-                        its&nbsp;members, its contributors, and its community members is subject to
-                        error and&nbsp;should not be used to make any major life choices. The purpose
-                        of <span class=3DSpellE>Relevate</span> is to&nbsp;share general research
-                        findings, which is subject to error and may not apply to&nbsp;each reader.
-                        <span
-                                class=3DSpellE>Relevate</span> information may contain a call to action, which is
-                        subject&nbsp;to error and may not apply to each reader. The reader assumes all
-                        risks of making&nbsp;decisions and choices based on information that he/she
-                        found on <span class=3DSpellE>Relevate's</span>&nbsp;website, app, social media
-                        pages, or any other source of <span class=3DSpellE>Relevate</span> information.
-                        The&nbsp;reader withdraws any right to civil or legal claims or litigation of
-                        any type&nbsp;against <span class=3DSpellE>Relevate</span>, its members, and its
-                        contributors due to any consequences of&nbsp;choices made by the reader based
-                        on information gained through <span class=3DSpellE>Relevate</span> or any
-                        of&nbsp;its parties.
-                        <o:p></o:p>
-                        </span>
-                    </p>
-
-                    <p class=3DMsoNormal style=3D'margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>
-                        <span style=3D'font-size:12.0pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:
-                        "Times New Roman";mso-hansi-font-family:Calibri;mso-bidi-font-family:"Times New Roman";
-                        color:black'>
-                        <o:p>&nbsp;</o:p>
-                        </span>
-                    </p>
-
-                    <p class=3DMsoNormal style=3D'margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>
-                        <span class=3DSpellE>
-                            <span style=3D'font-size:12.0pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:
-                                "Times New Roman";mso-hansi-font-family:Calibri;
-                                mso-bidi-font-family:"Times New Roman";color:black'>Relevate
-                            </span>
-                        </span>
-                        <span style=3D'font-size:12.0pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:
-                        "Times New Roman";mso-hansi-font-family:Calibri;mso-bidi-font-family:"Times New Roman";
-                        color:black'> reserves the right to remove any information that it believes to
-                        be&nbsp;contrary to its purpose or inappropriate in nature. Examples of
-                        material subject&nbsp;to removal include but are not limited to any material
-                        that is inflammatory,&nbsp;illegal, commercial in nature, off topic,
-                        discriminatory, dangerous, plagiarized&nbsp;material, personally identifiable
-                        information, and any other material <span class=3DSpellE>Relevate</span>&nbsp;decides
-                        to remove. <span class=3DSpellE>Relevate</span> reserves the right to remove any
-                        contributor or community member and any&nbsp;material added from any
-                        contributor or community member from its database&nbsp;including but not
-                        limited to screen name, comments, contributions, ratings, and&nbsp;any other
-                        material.
-                        <o:p></o:p>
-                        </span>
-                    </p>
-                </div>
+                    <span>
+                        Any information on any topic given by Relevate, its members, its contributors,
+                        and/or its community members should not be considered to be advice, diagnosis,
+                        and/or any treatment appropriate for its readers. Appropriate advice, diagnosis,
+                        and/or treatment can only be given by licensed professionals within a professional
+                        setting. Relevate makes no claim to be a professional setting appropriate for
+                        giving advice, diagnosis, and/or treatment. Although many contributors to Relevate
+                        topics are licensed professionals, the information shared by Relevate, its members,
+                        its contributors, and its community members is subject to error and should not be
+                        used to make any major life choices. The purpose of Relevate is to share general
+                        research findings, which is subject to error and may not apply to each reader.
+                        Relevate information may contain a call to action, which is subject to error and
+                        may not apply to each reader. The reader assumes all risks of making decisions and
+                        choices based on information that he/she found on Relevate's website, app, social
+                        media pages, or any other source of Relevate information. The reader withdraws any
+                        right to civil or legal claims or litigation of any type against Relevate, its
+                        members, and its contributors due to any consequences of choices made by the reader
+                        based on information gained through Relevate or any of its parties.
+                    </span>
+                    <br><br><br>
+                    <span>
+                        Relevate reserves the right to remove any information that it believes to be contrary to its
+                        purpose or inappropriate in nature. Examples of material subject to removal include but are not
+                        limited to any material that is inflammatory, illegal, commercial in nature, off topic,
+                        discriminatory, dangerous, plagiarized material, personally identifiable information, and any
+                        other material Relevate decides to remove. Relevate reserves the right to remove any
+                        contributor or community member and any material added from any contributor or community member
+                        from its database including but not limited to screen name, comments, contributions, ratings,
+                        and any other material.
+                    </span>
                 </div>
                 <p>I agree to terms and conditions: {{ contributorForm.accept_terms }}</p>
                 <br/>
                 <input type="submit" class="uk-button" value="Request Access"/>
+                <br>
             </form>
         </div>
     </div>

@@ -1,4 +1,5 @@
 from django.db import models
+from ..Advisers.models import Advisers
 
 
 class ContributorProfile(models.Model):
@@ -15,10 +16,7 @@ class ContributorProfile(models.Model):
         ('SPhD', 'Student-PhD'),
         ('SPsyD', 'Student-PsyD')
     )
-    credential = models.CharField(max_length=5, choices=DEGREES)
-    adviser_email = models.EmailField(max_length=254, unique=False, null=False, blank=False)
-    adviser_first_name = models.CharField(max_length=255, null=False, blank=False)
-    adviser_last_name = models.CharField(max_length=255, null=False, blank=False)
+    degree = models.CharField(max_length=5, choices=DEGREES)
     institution = models.CharField(max_length=255, null=False, blank=False)
     address = models.CharField(max_length=255, null=False, blank=False)
     city = models.CharField(max_length=255, null=False, blank=False)
@@ -26,13 +24,25 @@ class ContributorProfile(models.Model):
     zipcode = models.CharField(max_length=5, null=False, blank=False)
     program = models.CharField(max_length=255, null=False, blank=False)
     biography = models.TextField(null=False, blank=False)
-    # research and clinical interests
     interests = models.TextField(null=True, blank=True)
-    # profile_image = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(upload_to='user_profiles/avatar', null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='user_profiles/cv', null=True, blank=True)
     accept_terms = models.BooleanField(default=False)
     expertise_topics = models.ManyToManyField('MyRelevate.Topics')
-    # expertise_topics = models.ManyToManyField('MyRelevate.Topics', through='MyRelevate.ContributorTopics',
-    #                                           through_fields=('contributor_profile', 'topics'))
-    # adviser = models.ForeignKey(to='MyRelevate.Adviser')
+    has_adviser = models.BooleanField(default=False)
+    adviser = models.ForeignKey(Advisers, null=True, blank=True)
+
+
+class PendingContributors(models.Model):
+    class Meta:
+        db_table = 'pending_contributors'
+    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
+
+
+class DeniedContributors(models.Model):
+    class Meta:
+        db_table = 'denied_contributors'
+    contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
+    reason = models.TextField(null=False, blank=False)
+    denied = models.BooleanField(default=False)

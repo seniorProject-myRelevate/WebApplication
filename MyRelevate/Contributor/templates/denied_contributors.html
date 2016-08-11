@@ -1,0 +1,117 @@
+{% extends "base-titlebar.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.almost-flat.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
+{##}
+    <script src="{% static 'uikit/js/components/accordion.min.js' %}"></script>
+{#    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>#}
+{##}
+{% endblock %}
+
+{% block content %}
+{#    <div class="uk-container">#}
+{#        <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect: '#approvalContent'}">#}
+{#            <li class="uk-active"><a>Pending</a></li>#}
+{#            <li><a>Denied</a></li>#}
+{#        </ul>#}
+{#    </div>#}
+{##}
+{#    <div class="uk-container">#}
+{#        <ul id="approvalContent" class="uk-switcher">#}
+{#            <li>#}
+{#                <h1>Contributors Needing Approval</h1>#}
+{#                <div class="uk-accordion" data-uk-accordion>#}
+{#                    <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:approve' %}">#}
+{#                        {% csrf_token %}#}
+{#                        {{ formset.management_form }}#}
+{#                        {% for user, approve_form in users_forms %}#}
+{#                            <h3 class="uk-accordion-title">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</h3>#}
+{#                            <div class="uk-accordion-content">#}
+{#                                {% for profile in profiles %}#}
+{#                                    {% if user.contributor_profile_id == profile.id %}#}
+{#                                        <h3>Credential/Degree Completed</h3>#}
+{#                                        <p>{{ profile.credential }}</p>#}
+{##}
+{#                                        <h3>Academic information</h3>#}
+{#                                        <p>{{ profile.program }}</p>#}
+{#                                        <p>{{ profile.institution }}</p>#}
+{##}
+{#                                        <h3>Personal Information</h3>#}
+{#                                        <p>#}
+{#                                            {{ profile.address }}<br>#}
+{#                                            {{ profile.city }}<br>#}
+{#                                            {{ profile.state }}<br>#}
+{#                                            {{ profile.zipcode }}<br>#}
+{#                                            <a href="{{ profile.website_url }}">{{ profile.website_url }}</a>#}
+{#                                        </p>#}
+{##}
+{#                                        <h3>CV/Resume</h3>#}
+{#                                        <object data="{{ profile.cv.url }}" type="application/pdf"#}
+{#                                                width="1100" height="1000"></object>#}
+{##}
+{#                                        <h3>Biography</h3>#}
+{#                                        <div class="uk-scrollable-box">#}
+{#                                            {{ profile.biography|safe }}#}
+{#                                        </div>#}
+{##}
+{#                                        <h3>Terms and Conditions</h3>#}
+{#                                        <div class="uk-scrollable-box">#}
+{#                                            <span>#}
+{#                                                Any information on any topic given by Relevate, its members, its contributors,#}
+{#                                                and/or its community members should not be considered to be advice, diagnosis,#}
+{#                                                and/or any treatment appropriate for its readers. Appropriate advice, diagnosis,#}
+{#                                                and/or treatment can only be given by licensed professionals within a professional#}
+{#                                                setting. Relevate makes no claim to be a professional setting appropriate for#}
+{#                                                giving advice, diagnosis, and/or treatment. Although many contributors to Relevate#}
+{#                                                topics are licensed professionals, the information shared by Relevate, its members,#}
+{#                                                its contributors, and its community members is subject to error and should not be#}
+{#                                                used to make any major life choices. The purpose of Relevate is to share general#}
+{#                                                research findings, which is subject to error and may not apply to each reader.#}
+{#                                                Relevate information may contain a call to action, which is subject to error and#}
+{#                                                may not apply to each reader. The reader assumes all risks of making decisions and#}
+{#                                                choices based on information that he/she found on Relevate's website, app, social#}
+{#                                                media pages, or any other source of Relevate information. The reader withdraws any#}
+{#                                                right to civil or legal claims or litigation of any type against Relevate, its#}
+{#                                                members, and its contributors due to any consequences of choices made by the reader#}
+{#                                                based on information gained through Relevate or any of its parties.#}
+{#                                            </span>#}
+{#                                            <br><br><br>#}
+{#                                            <span>#}
+{#                                                Relevate reserves the right to remove any information that it believes to be contrary to its#}
+{#                                                purpose or inappropriate in nature. Examples of material subject to removal include but are not#}
+{#                                                limited to any material that is inflammatory, illegal, commercial in nature, off topic,#}
+{#                                                discriminatory, dangerous, plagiarized material, personally identifiable information, and any#}
+{#                                                other material Relevate decides to remove. Relevate reserves the right to remove any#}
+{#                                                contributor or community member and any material added from any contributor or community member#}
+{#                                                from its database including but not limited to screen name, comments, contributions, ratings,#}
+{#                                                and any other material.#}
+{#                                            </span>#}
+{#                                        </div>#}
+{#                                        {% if profile.accept_terms %}#}
+{#                                            Accepted Terms and Conditions: <i class="uk-icon-check-square"></i>#}
+{#                                        {% endif %}#}
+{#                                    {% endif %}#}
+{#                                {% endfor %}#}
+{##}
+{#                                <br><br>#}
+{#                                {{ approve_form }}#}
+{#                                <br><br>#}
+{#                                <input class="uk-button" type="submit" value="Approve">#}
+{#                                <br>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    </form>#}
+{#                </div>#}
+{#            </li>#}
+{##}
+{#            <li>#}
+{#                <h1>Users Denied from Contributor Access</h1>#}
+{#            </li>#}
+{#        </ul>#}
+{##}
+{#    </div>#}
+{% endblock %}

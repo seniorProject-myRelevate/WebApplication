@@ -1,11 +1,16 @@
 from django.contrib import messages
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.http import HttpResponse
 
-from forms import ArticleForm
+from forms import ArticleForm, ArticleTopicForm
 from models import Article
+from .models import Topics
 
 
 def index(request):
@@ -22,13 +27,32 @@ def create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            form.save(email=request.user.email)
+            article = form.save(commit=False)
+            article.contributor_id = get_user_model().objects.get(email=request.user.email).contributor_profile.pk
+            if article.isPublished:
+                article.publishDate = datetime.now()
+            article.save()
+            form.save_m2m()
+
             # messages.SUCCESS(request, 'Article posted!')
-            # return HttpResponseRedirect(reverse('myrelevate:articles:index'))
+            return HttpResponseRedirect(reverse('myrelevate:articles:create'))
         else:
-            pass
+            return HttpResponse(form.errors)
             # messages.ERROR(request, form.errors)
-    return render(request, 'articles.html', {'form': ArticleForm()})
+    else:
+        topics = Topics.objects.all()
+    return render(request, 'articles.html', {'form': ArticleForm(), 'topics': topics})
+
+
+@login_required()
+def articleTopics(request):
+    if request.method == 'POST':
+        form = ArticleTopicForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect(reverse('myrelevate:article:create'))
 
 
 @login_required()

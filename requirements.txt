@@ -5,3 +5,4 @@ MySQL-python==1.2.3
 Pillow==3.3.0
 sendgrid==1.5.20
 wheel==0.24.0
+Pillow==3.3.0
