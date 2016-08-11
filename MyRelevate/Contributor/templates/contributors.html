@@ -29,12 +29,12 @@
             {% for user in users %}
                 {% for contributor in contributors %}
                     {% if user.contributor_profile_id == contributor.id %}
-                        <a href="#contributorProfile" data-uk-modal="{target: '#contributorProfile'}">
+                        <a href="#contributorProfile{{ contributor.id }}" data-uk-modal>
                             <h3 class="blue">{{ user.first_name }} {{ user.last_name }}, {{ contributor.degree }}</h3>
                         </a>
                         {{ contributor.program }}<br>
                         {{ contributor.institution }}<br><br>
-                        <div id="contributorProfile" class="uk-modal">
+                        <div id="contributorProfile{{ contributor.id }}" class="uk-modal">
                             <div class="uk-modal-dialog uk-modal-dialog-blank">
                                 <a href class="uk-modal-close uk-close"></a>
                                 <div class="uk-container">

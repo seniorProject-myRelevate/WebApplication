@@ -139,7 +139,7 @@ def update_contact(request):
 @login_required()
 def update_program(request):
     if request.method == 'POST':
-        form = ProgramForm(request.POST, initial=request.user.contributor_profile)
+        form = ProgramForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid():
             form.save()
         else:
