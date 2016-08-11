@@ -1,7 +1,7 @@
 from django import forms
 from .models import ContributorProfile
 from ..models import User
-from MyRelevate.models import Denied
+from ..Advisers.models import Advisers
 
 
 class ContributorForm(forms.ModelForm):
@@ -25,15 +25,17 @@ class ContributorForm(forms.ModelForm):
                            #                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                            #                     ))
 
-    accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
+    # accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
+    adviser = forms.ModelChoiceField(queryset=Advisers.objects.filter(is_available=True), to_field_name='id', required=False)
 
     class Meta:
         model = ContributorProfile
         fields = [
-            'degree', 'program', 'institution', 'biography', 'interests', 'address',
+            'adviser', 'degree', 'program', 'institution', 'biography', 'interests', 'address',
             'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url'
         ]
         widgets = {
+            'accept_terms': forms.CheckboxInput(),
             'program': forms.TextInput(attrs={'placeholder': 'Field of study/specialization', 'class': 'form-control'}),
             'institution': forms.TextInput(attrs={'placeholder': 'Institution ex:Kansas State University',
                                                   'class': 'form-control'}),
@@ -46,6 +48,7 @@ class ContributorForm(forms.ModelForm):
                                                'class': 'form-control'}),
         }
         labels = {
+            'adviser': '',
             'program': '',
             'institution': '',
             'address': '',
@@ -132,23 +135,15 @@ class ApprovalUpdateUserForm(forms.ModelForm):
         }
 
 
-# class DeniedContributorUserForm(forms.ModelForm):
-#     reason1 = forms.CharField(widget=forms.Textarea(
-#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
-#                'class': 'form-control'}), label='')
-#     reason2 = forms.CharField(widget=forms.Textarea(
-#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
-#                'class': 'form-control'}), label='')
-#     reason3 = forms.CharField(widget=forms.Textarea(
-#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
-#                'class': 'form-control'}), label='')
-#     reason4 = forms.CharField(widget=forms.Textarea(
-#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
-#                'class': 'form-control'}), label='')
-#     reason5 = forms.CharField(widget=forms.Textarea(
-#         attrs={'placeholder': 'Write a brief reason why user was denied contributor access.',
-#                'class': 'form-control'}), label='')
-#
+# class DeniedContributorForm(forms.ModelForm):
 #     class Meta:
-#         model = Denied
-#         fields = ['user, reason1, reason2, reason3, reason4, reason5']
+#         model = DeniedContributors
+#         fields = ['reason, denied']
+#         widgets = {
+#             'reason': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
+#                                             'class': 'form-control'}),
+#         }
+#         labels = {
+#             'reason': '',
+#             'denied': '',
+#         }

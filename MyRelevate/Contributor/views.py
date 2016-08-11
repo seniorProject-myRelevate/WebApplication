@@ -8,9 +8,10 @@ from django.forms import modelformset_factory
 from .forms import ContributorForm, DegreeForm, ProgramForm, AreaOfExpertiseForm, BiographyForm, InterestForm, \
     ContactForm, AvatarForm, CVResumeForm, ApprovalUpdateUserForm
 
-from ..models import Topics, Pending
-from models import ContributorProfile
+from ..models import Topics
+from models import ContributorProfile, PendingContributors
 from ..models import User
+from ..Advisers.models import Advisers
 
 
 def index(request):
@@ -26,25 +27,26 @@ def create(request):
     :param request:
     :return: redirect to index page
     """
-    # available_advisers_ids = AvailableAdvisers.objects.values_list('adviser_id', flat=True)
-    # available_advisers = User.objects.filter(id__in=available_advisers_ids)
-    # adviser_ids = Advisers.objects.values_list('userAdviser_id', flat=True)
+    advisers = Advisers.objects.filter(is_available=True)
+    users = User.objects.filter(is_adviser=True)
+
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
             user = get_user_model().objects.get(email=request.user.email)
-            pending = Pending()
+            pending_contributor = PendingContributors()
             contributor_profile = form.save()
             user.contributor_profile = contributor_profile
-            pending.user = user
-            pending.save()
+            pending_contributor.contributor = contributor_profile
+            pending_contributor.save()
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
     else:
         contributor_form = ContributorForm()
-    return render(request, 'application.html', {'contributorForm': contributor_form})
+    return render(request, 'application.html', {'contributorForm': contributor_form,
+                                                'advisers': advisers, 'users': users})
 
 
 @login_required()
@@ -59,7 +61,6 @@ def update(request):
         user = get_user_model().objects.get(email=request.user.email)
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
-            # profile = ContributorProfile(cv=request.FILES['cv'])
             form.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
         else:
@@ -205,28 +206,41 @@ def approve(request):
     :return: The contributor profile from application, the users being evaluated, and
     formset: a list of forms for each user
     """
-    pending_user_ids = Pending.objects.values_list('user_id', flat=True)
-    profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
-    users = User.objects.filter(id__in=pending_user_ids)
-    profiles = ContributorProfile.objects.filter(id__in=profile_ids)
+    pending_contributor_ids = PendingContributors.objects.values_list('contributor_id', flat=True)
+    contributor_profiles = ContributorProfile.objects.filter(id__in=pending_contributor_ids)
+    users = User.objects.filter(contributor_profile=pending_contributor_ids)
+    # profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
+    # profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
+
     for user in users:
         if user.is_contributor:
-            Pending.objects.filter(user_id=user.id).delete()
+            PendingContributors.objects.filter(contributor_id=user.contributor_profile).delete()
+
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
         if formset.is_valid():
             formset.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
-            print formset.errors
+            return HttpResponse(formset.errors)
     else:
         formset = approve_form_set(queryset=users)
-    return render(request, 'approval.html', {'profiles': profiles, 'users_forms': zip(users, formset),
+    return render(request, 'approval.html', {'profiles': contributor_profiles, 'users_forms': zip(users, formset),
                                              'formset': formset})
 
 
-@login_required()
-def denied(request):
-
-    pass
+# @login_required()
+# def denied(request):
+#     denied_contributors_ids = DeniedContributors.objects.values_list('contributor_id', flat=True)
+#     contributor_profiles = ContributorProfile.objects.filter(id__in=denied_contributors_ids)
+#     users = User.objects.filter(contributor_profile=denied_contributors_ids)
+#     denied_form_set = modelformset_factory(DeniedContributors, form=DeniedContributorForm, extra=0)
+#
+#     if request.method == 'POST':
+#         formset = denied_form_set(request.POST)
+#         if formset.is_valid():
+#             formset.save()
+#         else:
+#             return HttpResponse(formset.errors)
+#     return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
