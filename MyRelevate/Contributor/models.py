@@ -40,8 +40,9 @@ class PendingContributors(models.Model):
     contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
 
 
-class Denied(models.Model):
+class DeniedContributors(models.Model):
     class Meta:
         db_table = 'denied_contributors'
     contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
     reason = models.TextField(null=False, blank=False)
+    denied = models.BooleanField(default=False)
