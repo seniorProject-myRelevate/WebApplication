@@ -1,6 +1,6 @@
 from django import forms
 from .models import Advisers
-from ..models import User
+from ..User.models import User
 
 
 class AdviserApplicationForm(forms.ModelForm):
