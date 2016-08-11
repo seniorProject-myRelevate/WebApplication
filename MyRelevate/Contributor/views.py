@@ -35,10 +35,9 @@ def create(request):
         if form.is_valid():
             user = get_user_model().objects.get(email=request.user.email)
             pending_contributor = PendingContributors()
-            contributor_profile = form.save(commit=False)
+            contributor_profile = form.save()
             user.contributor_profile = contributor_profile
             pending_contributor.contributor = contributor_profile
-            contributor_profile.save()
             pending_contributor.save()
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
