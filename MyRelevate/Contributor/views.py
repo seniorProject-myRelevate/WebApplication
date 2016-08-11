@@ -11,6 +11,7 @@ from .forms import ContributorForm, DegreeForm, ProgramForm, AreaOfExpertiseForm
 from ..models import Topics
 from models import ContributorProfile, PendingContributors, DeniedContributors
 from ..models import User
+from ..Advisers.models import Advisers
 
 
 def index(request):
@@ -26,9 +27,8 @@ def create(request):
     :param request:
     :return: redirect to index page
     """
-    # available_advisers_ids = AvailableAdvisers.objects.values_list('adviser_id', flat=True)
-    # available_advisers = User.objects.filter(id__in=available_advisers_ids)
-    # adviser_ids = Advisers.objects.values_list('userAdviser_id', flat=True)
+    advisers = Advisers.objects.filter(is_available=True)
+
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -44,7 +44,7 @@ def create(request):
             return HttpResponse(form.errors)
     else:
         contributor_form = ContributorForm()
-    return render(request, 'application.html', {'contributorForm': contributor_form})
+    return render(request, 'application.html', {'contributorForm': contributor_form, 'advisers': advisers})
 
 
 @login_required()

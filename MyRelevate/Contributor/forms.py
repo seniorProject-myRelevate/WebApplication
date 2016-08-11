@@ -29,7 +29,7 @@ class ContributorForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
         fields = [
-            'degree', 'program', 'institution', 'biography', 'interests', 'address',
+            'adviser', 'degree', 'program', 'institution', 'biography', 'interests', 'address',
             'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url'
         ]
         widgets = {
@@ -46,6 +46,7 @@ class ContributorForm(forms.ModelForm):
                                                'class': 'form-control'}),
         }
         labels = {
+            'adviser': '',
             'program': '',
             'institution': '',
             'address': '',

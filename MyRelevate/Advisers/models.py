@@ -1,5 +1,4 @@
 from django.db import models
-from ..models import ContributorProfile
 
 
 class Advisers(models.Model):
@@ -8,13 +7,6 @@ class Advisers(models.Model):
     accept_terms = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_available = models.BooleanField(default=False)
-
-
-class AdviserAdvisee(models.Model):
-    class Meta:
-        db_table = 'adviser_advisee'
-    adviser = models.ForeignKey(Advisers)
-    advisee = models.ForeignKey(ContributorProfile)
 
 
 class PendingAdvisers(models.Model):

@@ -1,4 +1,5 @@
 from django.db import models
+from ..Advisers.models import Advisers
 
 
 class ContributorProfile(models.Model):
@@ -23,7 +24,6 @@ class ContributorProfile(models.Model):
     zipcode = models.CharField(max_length=5, null=False, blank=False)
     program = models.CharField(max_length=255, null=False, blank=False)
     biography = models.TextField(null=False, blank=False)
-    # research and clinical interests
     interests = models.TextField(null=True, blank=True)
     avatar = models.ImageField(upload_to='user_profiles/avatar', null=True, blank=True)
     website_url = models.URLField(null=True, blank=True)
@@ -31,7 +31,7 @@ class ContributorProfile(models.Model):
     accept_terms = models.BooleanField(default=False)
     expertise_topics = models.ManyToManyField('MyRelevate.Topics')
     has_adviser = models.BooleanField(default=False)
-    # adviser = models.ForeignKey('MyRelevate.Advisers')
+    adviser = models.ForeignKey(Advisers)
 
 
 class PendingContributors(models.Model):
