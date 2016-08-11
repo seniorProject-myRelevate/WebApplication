@@ -1,5 +1,4 @@
 from django.db import models
-from ..models import ContributorProfile
 
 
 class Advisers(models.Model):
@@ -10,14 +9,15 @@ class Advisers(models.Model):
     is_available = models.BooleanField(default=False)
 
 
-class AdviserAdvisee(models.Model):
-    class Meta:
-        db_table = 'adviser_advisee'
-    adviser = models.ForeignKey(Advisers)
-    advisee = models.ForeignKey(ContributorProfile)
-
-
 class PendingAdvisers(models.Model):
     class Meta:
         db_table = 'pending_advisers'
     adviser = models.ForeignKey(Advisers)
+
+
+class DeniedAdvisers(models.Model):
+    class Meta:
+        db_table = 'denied_advisers'
+    adviser = models.ForeignKey(Advisers)
+    reason = models.TextField(null=False, blank=False)
+    denied = models.BooleanField(default=False)
