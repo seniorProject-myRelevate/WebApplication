@@ -1,6 +1,7 @@
 from django import forms
-from .models import ContributorProfile, DeniedContributors
+from .models import ContributorProfile
 from ..models import User
+from ..Advisers.models import Advisers
 
 
 class ContributorForm(forms.ModelForm):
@@ -25,6 +26,7 @@ class ContributorForm(forms.ModelForm):
                            #                     ))
 
     # accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
+    adviser = forms.ModelChoiceField(queryset=Advisers.objects.filter(is_available=True), to_field_name='id', required=False)
 
     class Meta:
         model = ContributorProfile
@@ -133,15 +135,15 @@ class ApprovalUpdateUserForm(forms.ModelForm):
         }
 
 
-class DeniedContributorForm(forms.ModelForm):
-    class Meta:
-        model = DeniedContributors
-        fields = ['reason, denied']
-        widgets = {
-            'reason': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
-                                            'class': 'form-control'}),
-        }
-        labels = {
-            'reason': '',
-            'denied': '',
-        }
+# class DeniedContributorForm(forms.ModelForm):
+#     class Meta:
+#         model = DeniedContributors
+#         fields = ['reason, denied']
+#         widgets = {
+#             'reason': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
+#                                             'class': 'form-control'}),
+#         }
+#         labels = {
+#             'reason': '',
+#             'denied': '',
+#         }

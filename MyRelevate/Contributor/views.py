@@ -6,10 +6,10 @@ from django.shortcuts import render
 from django.forms import modelformset_factory
 
 from .forms import ContributorForm, DegreeForm, ProgramForm, AreaOfExpertiseForm, BiographyForm, InterestForm, \
-    ContactForm, AvatarForm, CVResumeForm, ApprovalUpdateUserForm, DeniedContributorForm
+    ContactForm, AvatarForm, CVResumeForm, ApprovalUpdateUserForm
 
 from ..models import Topics
-from models import ContributorProfile, PendingContributors, DeniedContributors
+from models import ContributorProfile, PendingContributors
 from ..models import User
 from ..Advisers.models import Advisers
 
@@ -28,6 +28,7 @@ def create(request):
     :return: redirect to index page
     """
     advisers = Advisers.objects.filter(is_available=True)
+    users = User.objects.filter(is_adviser=True)
 
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES)
@@ -44,7 +45,8 @@ def create(request):
             return HttpResponse(form.errors)
     else:
         contributor_form = ContributorForm()
-    return render(request, 'application.html', {'contributorForm': contributor_form, 'advisers': advisers})
+    return render(request, 'application.html', {'contributorForm': contributor_form,
+                                                'advisers': advisers, 'users': users})
 
 
 @login_required()
@@ -228,17 +230,17 @@ def approve(request):
                                              'formset': formset})
 
 
-@login_required()
-def denied(request):
-    denied_contributors_ids = DeniedContributors.objects.values_list('contributor_id', flat=True)
-    contributor_profiles = ContributorProfile.objects.filter(id__in=denied_contributors_ids)
-    users = User.objects.filter(contributor_profile=denied_contributors_ids)
-    denied_form_set = modelformset_factory(DeniedContributors, form=DeniedContributorForm, extra=0)
-
-    if request.method == 'POST':
-        formset = denied_form_set(request.POST)
-        if formset.is_valid():
-            formset.save()
-        else:
-            return HttpResponse(formset.errors)
-    return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
+# @login_required()
+# def denied(request):
+#     denied_contributors_ids = DeniedContributors.objects.values_list('contributor_id', flat=True)
+#     contributor_profiles = ContributorProfile.objects.filter(id__in=denied_contributors_ids)
+#     users = User.objects.filter(contributor_profile=denied_contributors_ids)
+#     denied_form_set = modelformset_factory(DeniedContributors, form=DeniedContributorForm, extra=0)
+#
+#     if request.method == 'POST':
+#         formset = denied_form_set(request.POST)
+#         if formset.is_valid():
+#             formset.save()
+#         else:
+#             return HttpResponse(formset.errors)
+#     return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))

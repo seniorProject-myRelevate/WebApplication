@@ -31,7 +31,7 @@ class ContributorProfile(models.Model):
     accept_terms = models.BooleanField(default=False)
     expertise_topics = models.ManyToManyField('MyRelevate.Topics')
     has_adviser = models.BooleanField(default=False)
-    adviser = models.ForeignKey(Advisers)
+    adviser = models.ForeignKey(Advisers, null=True, blank=True)
 
 
 class PendingContributors(models.Model):
