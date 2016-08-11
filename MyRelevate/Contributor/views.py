@@ -38,8 +38,8 @@ def create(request):
             contributor_profile = form.save(commit=False)
             user.contributor_profile = contributor_profile
             pending_contributor.contributor = contributor_profile
-            pending_contributor.save()
             contributor_profile.save()
+            pending_contributor.save()
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
