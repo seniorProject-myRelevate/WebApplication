@@ -24,8 +24,6 @@ class ContributorForm(forms.ModelForm):
                            # mimetype_whitelist=("application/pdf", "application/msword",
                            #                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                            #                     ))
-
-    # accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
     adviser = forms.ModelChoiceField(queryset=Advisers.objects.filter(is_available=True), to_field_name='id', required=False)
 
     class Meta:
@@ -108,7 +106,7 @@ class InterestForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
-        fields = ['address', 'city', 'state', 'zipcode']
+        fields = ['address', 'city', 'state', 'zipcode', 'website_url']
 
 
 class AvatarForm(forms.ModelForm):

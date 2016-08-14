@@ -62,7 +62,7 @@ def update(request):
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('myrelevate:contributor_profile'))
+            return HttpResponseRedirect(reverse('myrelevate:contributor:update'))
         else:
             return HttpResponse(form.errors)
     else:
