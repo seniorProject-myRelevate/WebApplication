@@ -4,6 +4,7 @@ from django.db import models
 class Advisers(models.Model):
     class Meta:
         db_table = 'advisers'
+        
     accept_terms = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_available = models.BooleanField(default=False)
