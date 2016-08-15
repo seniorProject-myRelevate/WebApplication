@@ -1,23 +1,23 @@
 from django import forms
-from .models import ContributorProfile
+from .models import Degree, ContributorProfile
 from ..models import User
 from ..Advisers.models import Advisers
 
 
 class ContributorForm(forms.ModelForm):
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Student-PsyD')
-    )
-
-    degree = forms.ChoiceField(choices=DEGREES, required=True)
+    # DEGREES = (
+    #     ('-1', ''),
+    #     ('MS', 'MS (Master of Science)'),
+    #     ('MA', 'MA (Master of Arts)'),
+    #     ('PhD', 'PhD (Doctor of Philosophy)'),
+    #     ('PsyD', 'PsyD (Doctor of Psychology)'),
+    #     ('SU', 'Student-Undergraduate'),
+    #     ('SM', 'Student-Masters'),
+    #     ('SPhD', 'Student-PhD'),
+    #     ('SPsyD', 'Student-PsyD')
+    # )
+    #
+    # degree = forms.ChoiceField(choices=DEGREES, required=True)
     interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
                                                              'class': 'form-control'}), label='', required=False)
     cv = forms.FileField(label='Specific MIME type', required=True)

@@ -33,6 +33,15 @@ class Topics(models.Model):
     topicDescription = models.CharField(max_length=255, null=False, blank=False)
 
 
+# class Permission(models.Model):
+#     name = models.CharField(max_length=50)
+#     codename = models.CharField(max_length=50)
+#
+#
+# class Groups(models.Model):
+#     pass
+
+
 # DemographicData Database Model
 # class DemographicData(models.py.Model):
 #     EDUCATION = (

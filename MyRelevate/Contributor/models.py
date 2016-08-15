@@ -2,21 +2,29 @@ from django.db import models
 from ..Advisers.models import Advisers
 
 
+class Degree(models.Model):
+    class Meta:
+        db_table = 'degree'
+    degreeAbbreviation = models.CharField(max_length=10, null=False, blank=False)
+    degreeName = models.CharField(max_length=50, null=False, blank=False)
+
+
 class ContributorProfile(models.Model):
     class Meta:
         db_table = 'contributorprofile'
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Student-PsyD')
-    )
-    degree = models.CharField(max_length=5, choices=DEGREES)
+    # DEGREES = (
+    #     ('-1', ''),
+    #     ('MS', 'MS (Master of Science)'),
+    #     ('MA', 'MA (Master of Arts)'),
+    #     ('PhD', 'PhD (Doctor of Philosophy)'),
+    #     ('PsyD', 'PsyD (Doctor of Psychology)'),
+    #     ('SU', 'Student-Undergraduate'),
+    #     ('SM', 'Student-Masters'),
+    #     ('SPhD', 'Student-PhD'),
+    #     ('SPsyD', 'Student-PsyD')
+    # )
+    # degree = models.CharField(max_length=5, choices=DEGREES)
+    degree = models.ForeignKey(Degree, null=False, blank=False)
     institution = models.CharField(max_length=255, null=False, blank=False)
     address = models.CharField(max_length=255, null=False, blank=False)
     city = models.CharField(max_length=255, null=False, blank=False)
