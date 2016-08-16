@@ -9,7 +9,7 @@ from .forms import ContributorForm, DegreeForm, ProgramForm, AreaOfExpertiseForm
     ContactForm, AvatarForm, CVResumeForm, ApprovalUpdateUserForm
 
 from ..models import Topics
-from models import ContributorProfile, PendingContributors
+from models import Degree, ContributorProfile, PendingContributors
 from ..models import User
 from ..Advisers.models import Advisers
 
@@ -27,6 +27,7 @@ def create(request):
     :param request:
     :return: redirect to index page
     """
+    degrees = Degree.objects.all()
     advisers = Advisers.objects.filter(is_available=True)
     users = User.objects.filter(is_adviser=True)
 
@@ -45,7 +46,7 @@ def create(request):
             return HttpResponse(form.errors)
     else:
         contributor_form = ContributorForm()
-    return render(request, 'application.html', {'contributorForm': contributor_form,
+    return render(request, 'application.html', {'contributorForm': contributor_form, 'degrees': degrees,
                                                 'advisers': advisers, 'users': users})
 
 
