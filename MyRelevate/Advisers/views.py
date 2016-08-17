@@ -36,7 +36,7 @@ def approve(request):
     approve_form_set = modelformset_factory(User, form=ApproveAdviserForm, extra=0)
     for user in users:
         if user.is_adviser:
-            PendingAdvisers.objects.get(adviser_id=user.adviser_profile).delete()
+            PendingAdvisers.objects.filter(adviser_id=user.adviser_profile).delete()
     if request.method == 'POST':
         formset = approve_form_set(request.POST, queryset=users)
         if formset.is_valid():

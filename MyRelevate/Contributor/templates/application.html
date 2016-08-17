@@ -22,38 +22,33 @@
                 <br>
                 {{ user.email }}
                 <br><br>
-{#                Degree Completed:{{ contributorForm.degree.degreeName }}#}
 
-{#                <select name="{{ contributorForm.degree.degreeName }}">#}
-{#                    {% for name in contributorForm.degree.degreeName.queryset %}#}
-{#                        <option value="{{ name.id }}">{{ name.degreeName }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
+                <label for="id_degree">Degree Completed:</label>
+                <select id="id_degree" name="degree">
+                    <option>Choose Your Degree</option>
+                    {% for degree in degrees %}
+                        <option {% if contributor.degree_id == degree.id %} selected="selected" {% endif %}
+                                value="{{ degree.id }}">
+                            {{ degree.degreeName }}
+                        </option>
+                    {% endfor %}
+                </select>
 
-{#                <label for="id_degree">Degree Completed:</label>#}
-{#                <select id="id_degree" name="degree">#}
-{#                    <option value selected="selected">Choose Your Degree</option>#}
-{#                    {% for degree in degrees %}#}
-{#                        <option value="{{ degree.id }}">{{ degree.degreeName }}</option>#}
-{#                        <input id="id_degree{{ degree.id }}" type="">#}
-{#                    {% endfor %}#}
-{#                </select>#}
-{#                <div class="uk-form-select" data-uk-form-select>#}
-{##}
-{#                </div>#}
                 <div id="studentAccess" style="display: none">
-                    {{ contributorForm.adviser }}
-{#                    <div class="uk-form-select" data-uk-form-select>#}
-{#                        <select id="id_adviser">#}
-{#                            {% for adviser in advisers %}#}
-{#                                {% for user in users %}#}
-{#                                    {% if adviser.id == user.adviser_profile_id %}#}
-{#                                        <option value="{{ adviser.id }}">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</option>#}
-{#                                    {% endif %}#}
-{#                                {% endfor %}#}
-{#                            {% endfor %}#}
-{#                        </select>#}
-{#                    </div>#}
+                    <label for="id_adviser">Adviser:</label>
+                    <select id="id_adviser">
+                        <option>Choose Your Adviser</option>
+                        {% for adviser in list.advisers %}
+                            {% for user in users %}
+                                {% if adviser.id == user.adviser_profile_id %}
+                                    <option {% if contributor.adviser_id == adviser.id %} selected="selected" {% endif %}
+                                            value="{{ adviser.id }}">
+                                        {{ user.first_name }} {{ user.last_name }} {{ user.email }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
 {#                    {{ contributorForm.adviser_email }}#}
 {#                    {{ contributorForm.adviser_first_name }}#}
 {#                    {{ contributorForm.adviser_last_name }}#}
@@ -72,6 +67,7 @@
 
                 <h4>Upload your cv/resume: </h4> {{ contributorForm.cv }}
                 <br><br>
+                <h3>Biography</h3>
                     <span>
                         In this section, tell us about yourself. What are your special interests (research topics
                         and/or clinical populations)? Also, tell why you want to contribute to Relevate.

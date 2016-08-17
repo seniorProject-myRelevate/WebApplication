@@ -30,11 +30,11 @@ def create(request):
     degrees = Degree.objects.all()
     advisers = Advisers.objects.filter(is_available=True)
     users = User.objects.filter(is_adviser=True)
+    user = get_user_model().objects.get(email=request.user.email)
 
     if request.method == 'POST':
-        form = ContributorForm(request.POST, request.FILES)
+        form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
-            user = get_user_model().objects.get(email=request.user.email)
             pending_contributor = PendingContributors()
             contributor_profile = form.save()
             user.contributor_profile = contributor_profile
@@ -45,9 +45,18 @@ def create(request):
         else:
             return HttpResponse(form.errors)
     else:
-        contributor_form = ContributorForm()
-    return render(request, 'application.html', {'contributorForm': contributor_form, 'degrees': degrees,
-                                                'advisers': advisers, 'users': users})
+        if user.contributor_profile is None:
+            context = {
+                'contributorForm': ContributorForm(), 'degrees': degrees, 'advisers': advisers, 'users': users
+            }
+        else:
+            contributor = ContributorProfile.objects.get(id=user.contributor_profile.id)
+            context = {
+                'contributorForm': ContributorForm(instance=contributor), 'contributor': contributor,
+                'degrees': degrees, 'advisers': advisers, 'users': users
+            }
+
+    return render(request, 'application.html', context)
 
 
 @login_required()

@@ -64,12 +64,12 @@ $('#contributorPage').click(function () {
     return false;
 });
 
-$("form select[name='degree_completed']").change(function(){
-        var degreeCompletedVal = $("form select[name='degree_completed']").val();
+$("form select[name='degree']").change(function(){
+        var degreeCompletedVal = $("form select[name='degree']").val();
         // var email = $('#id_adviser_email');
         // var firstName = $('#id_adviser_first_name');
         // var lastName = $('#id_adviser_last_name');
-        if(degreeCompletedVal == "SU" || degreeCompletedVal == "SM"){
+        if(degreeCompletedVal == 5 || degreeCompletedVal == 6){
             $('#studentAccess').show();
         }
         else {
@@ -90,7 +90,7 @@ function ContributorAccess() {
         // var email = $('#id_adviser_email');
         // var firstName = $('#id_adviser_first_name');
         // var lastName = $('#id_adviser_last_name');
-        if(degreeVal == "SU" || degreeVal == "SM"){
+        if(degreeVal == 5 || degreeVal == 6){
             $('#studentAccess').show();
         }
         else {
