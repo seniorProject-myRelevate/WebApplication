@@ -97,6 +97,11 @@ def update(request):
 
 @login_required()
 def update_degree(request):
+    """
+    Update the contributors completed degree field
+    :param request:
+    :return: Redirect to contributor profile with updated degree field
+    """
     if request.method == 'POST':
         form = DegreeForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -108,6 +113,11 @@ def update_degree(request):
 
 @login_required()
 def update_area_of_expertise(request):
+    """
+    Update the contributors area of expertise field
+    :param request:
+    :return: Redirect to contributor profile with updated area of expertise field
+    """
     if request.method == 'POST':
         form = AreaOfExpertiseForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -119,6 +129,11 @@ def update_area_of_expertise(request):
 
 @login_required()
 def update_biography(request):
+    """
+    Update the contributors biography text area field
+    :param request:
+    :return: Redirect to contributor profile with updated biography field
+    """
     if request.method == 'POST':
         form = BiographyForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -130,6 +145,11 @@ def update_biography(request):
 
 @login_required()
 def update_interest(request):
+    """
+    Update the contributors text area interest description
+    :param request:
+    :return: Redirect to contributor profile with updated interest field
+    """
     if request.method == 'POST':
         form = InterestForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -141,6 +161,11 @@ def update_interest(request):
 
 @login_required()
 def update_contact(request):
+    """
+    Update the contributors contact information
+    :param request:
+    :return: Redirect to contributor profile with updated contact information
+    """
     if request.method == 'POST':
         form = ContactForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid:
@@ -152,6 +177,11 @@ def update_contact(request):
 
 @login_required()
 def update_program(request):
+    """
+    Update the contributors program of study
+    :param request:
+    :return: Redirect to contributor profile with updated program of study
+    """
     if request.method == 'POST':
         form = ProgramForm(request.POST, instance=request.user.contributor_profile)
         if form.is_valid():
@@ -163,6 +193,11 @@ def update_program(request):
 
 @login_required()
 def update_avatar(request):
+    """
+    Update the contributors profile picture
+    :param request:
+    :return: Redirect to contributor profile with updated profile picture
+    """
     if request.method == 'POST':
         form = AvatarForm(request.POST, request.FILES, instance=request.user.contributor_profile)
         if form.is_valid():
@@ -174,6 +209,11 @@ def update_avatar(request):
 
 @login_required()
 def update_cv_resume(request):
+    """
+    Update the uploaded cv/resume for a contributor
+    :param request:
+    :return: Redirect to contributor profile with updated cv/resume
+    """
     if request.method == 'POST':
         form = CVResumeForm(request.POST, request.FILES, instance=request.user.contributor_profile)
         if form.is_valid():
@@ -223,8 +263,6 @@ def approve(request):
     pending_contributor_ids = PendingContributors.objects.values_list('contributor_id', flat=True)
     contributor_profiles = ContributorProfile.objects.filter(id__in=pending_contributor_ids)
     users = User.objects.filter(contributor_profile=pending_contributor_ids)
-    # profile_ids = User.objects.values_list('contributor_profile_id', flat=True)
-    # profiles = ContributorProfile.objects.filter(id__in=profile_ids)
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
 
     for user in users:
