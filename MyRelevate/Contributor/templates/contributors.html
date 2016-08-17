@@ -30,7 +30,7 @@
                 {% for contributor in contributors %}
                     {% if user.contributor_profile_id == contributor.id %}
                         <a href="#contributorProfile{{ contributor.id }}" data-uk-modal>
-                            <h3 class="blue">{{ user.first_name }} {{ user.last_name }}, {{ contributor.degree }}</h3>
+                            <h3 class="blue">{{ user.first_name }} {{ user.last_name }}, {{ contributor.degree.degreeAbbreviation }}</h3>
                         </a>
                         {{ contributor.program }}<br>
                         {{ contributor.institution }}<br><br>
@@ -50,7 +50,7 @@
                                     <h3 class="blue">Credentials</h3>
                                     {{ contributor.program }}<br>
                                     {{ contributor.institution }}<br>
-                                    {{ contributor.degree }}<br>
+                                    {{ contributor.degree.degreeName }}<br>
 
                                     <h3 class="blue">Biography</h3>
                                     <div class="uk-scrollable-box">

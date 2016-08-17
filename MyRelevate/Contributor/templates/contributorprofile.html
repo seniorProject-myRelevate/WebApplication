@@ -24,26 +24,7 @@
         <div class="uk-container">
             <div class="uk-text-center">
                 <h1 class="orange">
-                    {{ user.first_name }} {{ user.last_name }},
-                    {% if  contributorProfile.degree  == 'MS' %}
-                        Master of Science
-                    {% elif contributorProfile.degree  == 'MA' %}
-                        Master of Arts
-                    {% elif contributorProfile.degree  == 'PhD' %}
-                        Doctor of Philosophy
-                    {% elif contributorProfile.degree  == 'PsyD' %}
-                        Doctor of Psychology
-                    {% elif contributorProfile.degree  == 'PsyD' %}
-                        Doctor of Psychology
-                    {% elif contributorProfile.degree  == 'SU' %}
-                        Undergraduate Student
-                    {% elif contributorProfile.degree == 'SM' %}
-                        Master Student
-                    {% elif contributorProfile.degree == 'SPhD' %}
-                        Doctor of Philosophy Student
-                    {% elif contributorProfile.degree == 'SPsyD' %}
-                        Doctor of Psychology Student
-                    {% endif %}
+                    {{ user.first_name }} {{ user.last_name }}, {{ contributorProfile.degree.degreeName }}
                 </h1>
                 {% if user.is_contributor %}
                     <h3 class="blue">Approved Relevate Contributor</h3>
@@ -78,7 +59,16 @@
                 <br><br>
                 <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateDegree' %}">
                     {% csrf_token %}
-                    {{ degreeForm }}
+                    <label for="id_degree">Degree Completed:</label>
+                    <select id="id_degree" name="degree">
+                        <option>Choose Your Degree</option>
+                        {% for degree in degrees %}
+                            <option {% if contributorProfile.degree_id == degree.id %} selected="selected" {% endif %}
+                                value="{{ degree.id }}">
+                            {{ degree.degreeName }}
+                            </option>
+                        {% endfor %}
+                    </select>
                     <input class="uk-button" type="submit" value="Update">
                 </form>
                 <br><br>

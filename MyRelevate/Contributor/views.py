@@ -79,16 +79,20 @@ def update(request):
         user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
         topics = Topics.objects.all()
-    return render(request, 'contributorprofile.html', {'contributorProfile': profile,
-                                                       'topics': topics,
-                                                       'contributorForm': ContributorForm(instance=profile),
-                                                       'degreeForm': DegreeForm(instance=profile),
-                                                       'programForm': ProgramForm(instance=profile),
-                                                       'biographyForm': BiographyForm(instance=profile),
-                                                       'interestForm': InterestForm(instance=profile),
-                                                       'contactForm': ContactForm(instance=profile),
-                                                       'avatarForm': AvatarForm(instance=profile),
-                                                       'resumeForm': CVResumeForm(instance=profile)})
+        degrees = Degree.objects.all()
+        context = {
+            'contributorProfile': profile,
+            'topics': topics,
+            'degrees': degrees,
+            'contributorForm': ContributorForm(instance=profile),
+            'programForm': ProgramForm(instance=profile),
+            'biographyForm': BiographyForm(instance=profile),
+            'interestForm': InterestForm(instance=profile),
+            'contactForm': ContactForm(instance=profile),
+            'avatarForm': AvatarForm(instance=profile),
+            'resumeForm': CVResumeForm(instance=profile)
+        }
+    return render(request, 'contributorprofile.html', context)
 
 
 @login_required()
@@ -236,8 +240,12 @@ def approve(request):
             return HttpResponse(formset.errors)
     else:
         formset = approve_form_set(queryset=users)
-    return render(request, 'approval.html', {'profiles': contributor_profiles, 'users_forms': zip(users, formset),
-                                             'formset': formset})
+        context = {
+            'profiles': contributor_profiles,
+            'users_forms': zip(users, formset),
+            'formset': formset
+        }
+    return render(request, 'approval.html', context)
 
 
 # @login_required()
