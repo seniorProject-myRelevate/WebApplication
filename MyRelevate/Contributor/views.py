@@ -47,13 +47,19 @@ def create(request):
     else:
         if user.contributor_profile is None:
             context = {
-                'contributorForm': ContributorForm(), 'degrees': degrees, 'advisers': advisers, 'users': users
+                'contributorForm': ContributorForm(),
+                'degrees': degrees,
+                'advisers': advisers,
+                'users': users
             }
         else:
             contributor = ContributorProfile.objects.get(id=user.contributor_profile.id)
             context = {
-                'contributorForm': ContributorForm(instance=contributor), 'contributor': contributor,
-                'degrees': degrees, 'advisers': advisers, 'users': users
+                'contributorForm': ContributorForm(instance=contributor),
+                'contributor': contributor,
+                'degrees': degrees,
+                'advisers': advisers,
+                'users': users
             }
 
     return render(request, 'application.html', context)
