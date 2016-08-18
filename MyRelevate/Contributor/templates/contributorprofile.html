@@ -15,21 +15,23 @@
 {% block content %}
     <!--The Contributor Profile Menu Bar-->
     <div>
-        {% if contributorProfile.avatar == ""  %}
+        {% if user.contributor_profile.avatar == ""  %}
             <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
-        {% elif contributorProfile.avatar != "" %}
-            <img class="profile_avatar" src="{{ contributorProfile.avatar.url }}">
+        {% elif user.contributor_profile.avatar != "" %}
+            <img class="profile_avatar" src="{{ user.contributor_profile.avatar.url }}">
         {% endif %}
 
         <div class="uk-container">
             <div class="uk-text-center">
                 <h1 class="orange">
-                    {{ user.first_name }} {{ user.last_name }}, {{ contributorProfile.degree.name }}
+                    {{ user.first_name }} {{ user.last_name }}, {{ user.contributor_profile.degree.name }}
                 </h1>
                 {% if user.is_contributor %}
                     <h3 class="blue">Approved Relevate Contributor</h3>
                 {% endif %}
             </div>
+            <br><br>
+
             <form class="uk-form" method="post" enctype='multipart/form-data'
                   action="{% url 'myrelevate:contributor:updateAvatar' %}">
                 {% csrf_token %}
@@ -64,7 +66,7 @@
                     <select id="id_degree" name="degree">
                         <option>Choose Your Degree</option>
                         {% for degree in degrees %}
-                            <option {% if contributorProfile.degree_id == degree.id %} selected="selected" {% endif %}
+                            <option {% if user.contributor_profile.degree_id == degree.id %} selected="selected" {% endif %}
                                 value="{{ degree.id }}">
                             {{ degree.name }}
                             </option>
@@ -89,7 +91,7 @@
                             <li>
                                 <label>
                                     <input id="id_expertise_topics_{{ topic.id }}"
-                                           {% for expertise_topic in contributorProfile.expertise_topics.all %}
+                                           {% for expertise_topic in user.contributor_profile.expertise_topics.all %}
                                                {% if expertise_topic.id == topic.id %} checked="checked" {% endif %}
                                            {% endfor %}
                                            name="expertise_topics" type="checkbox" value="{{ topic.id }}">
@@ -142,7 +144,7 @@
                     {{ resumeForm }}
                     <input class="uk-button" type="submit" value="Update">
                 </form>
-                <object data="{{ contributorProfile.cv.url }}" type="application/pdf"
+                <object data="{{ user.contributor_profile.cv.url }}" type="application/pdf"
                         width="1100" height="1000"></object>
             </li>
         </ul>

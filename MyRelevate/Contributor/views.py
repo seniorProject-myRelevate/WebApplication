@@ -67,8 +67,9 @@ def update(request):
     :param request:
     :return: a redirect to contributor profile page
     """
+    user = get_user_model().objects.get(email=request.user.email)
+
     if request.method == 'POST':
-        user = get_user_model().objects.get(email=request.user.email)
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
             form.save()
@@ -76,12 +77,10 @@ def update(request):
         else:
             return HttpResponse(form.errors)
     else:
-        user = get_user_model().objects.get(email=request.user.email)
         profile = user.get_contributor_profile()
         topics = Topics.objects.all()
         degrees = Degree.objects.all()
         context = {
-            'contributorProfile': profile,
             'topics': topics,
             'degrees': degrees,
             'contributorForm': ContributorForm(instance=profile),
