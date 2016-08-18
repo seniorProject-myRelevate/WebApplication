@@ -59,48 +59,6 @@ $("#form-subscribe").submit(function (event) {
     postData();
 });
 
-$('#contributorPage').click(function () {
-    ContributorAccess();
-    return false;
-});
-
-$("form select[name='degree']").change(function(){
-        var degreeCompletedVal = $("form select[name='degree']").val();
-        // var email = $('#id_adviser_email');
-        // var firstName = $('#id_adviser_first_name');
-        // var lastName = $('#id_adviser_last_name');
-        if(degreeCompletedVal == 5 || degreeCompletedVal == 6){
-            $('#studentAccess').show();
-        }
-        else {
-            // email.val('');
-            // firstName.val('');
-            // lastName.val('');
-            $('#studentAccess').hide();
-        }
-});
-
-
-function ContributorAccess() {
-    //$('#profiles').hide();
-    //$('#contributorApplication').show();
-
-    $("form select[name='degree']").change(function(){
-        var degreeVal = $("form select[name='degree']").val();
-        // var email = $('#id_adviser_email');
-        // var firstName = $('#id_adviser_first_name');
-        // var lastName = $('#id_adviser_last_name');
-        if(degreeVal == 5 || degreeVal == 6){
-            $('#studentAccess').show();
-        }
-        else {
-            // email.val('');
-            // firstName.val('');
-            // lastName.val('');
-            $('#studentAccess').hide();
-        }
-    });
-}
 
 function ContributorSearch() {
     $('#allContributors').hide();

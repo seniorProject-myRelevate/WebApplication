@@ -29,8 +29,8 @@ class Subscriber(models.Model):
 class Topics(models.Model):
     class Meta:
         db_table = 'topics'
-    topicName = models.CharField(max_length=100, null=False, blank=False)
-    topicDescription = models.CharField(max_length=255, null=False, blank=False)
+    name = models.CharField(max_length=100, null=False, blank=False)
+    description = models.CharField(max_length=255, null=False, blank=False)
 
 
 # class Permission(models.Model):

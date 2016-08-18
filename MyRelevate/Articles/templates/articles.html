@@ -21,13 +21,13 @@
                                        {% if article_topic.id == topic.id %} checked="checked" {% endif %}
                                    {% endfor %}
                                    name="article_topics" type="checkbox" value="{{ topic.id }}">
-                            {{ topic.topicName }}
+                            {{ topic.name }}
                         </label>
                         <button type="button" class="uk-accordion-title">
                             <i class="uk-icon-question"></i>
                         </button>
                         <div class="uk-panel-box-primary uk-accordion-content">
-                            {{ topic.topicDescription }}
+                            {{ topic.description }}
                         </div>
                     </li>
                 {% endfor %}

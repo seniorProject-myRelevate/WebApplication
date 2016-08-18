@@ -34,7 +34,62 @@
                                 {% for profile in profiles %}
                                     {% if user.contributor_profile_id == profile.id %}
                                         <h3>Credential/Degree Completed</h3>
-                                        <p>{{ profile.credential }}</p>
+                                        <p>{{ profile.degree.name }}</p>
+
+                                        {% if profile.adviser != "" %}
+                                            <h3>Adviser</h3>
+                                            {% for adviser in user_advisers %}
+                                                {% if adviser.adviser_profile_id == profile.adviser.id %}
+                                                    {{ adviser.first_name }} {{ adviser.last_name }}, {{ adviser.email }}
+                                                    <a href="#adviserProfile{{ adviser.id }}" data-uk-modal>
+                                                        <br>View Adviser Profile
+                                                    </a>
+                                                    <div id="adviserProfile{{ adviser.id }}" class="uk-modal">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-blank">
+                                                            <a href class="uk-modal-close uk-close"></a>
+                                                            <div class="uk-container">
+                                                                {% if adviser.contributor_profile.avatar == ""  %}
+                                                                    <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
+                                                                    <br>
+                                                                {% elif adviser.contributor_profile.avatar != "" %}
+                                                                    <img class="profile_avatar" src="{{ adviser.contributor_profile.avatar.url }}">
+                                                                    <br>
+                                                                {% endif %}
+                                                                <h1 class="uk-text-center orange">
+                                                                    {{ adviser.first_name }} {{ adviser.last_name }}, {{ adviser.contributor_profile.degree.name }}
+                                                                </h1>
+                                                                {% if adviser.is_contributor %}
+                                                                    <h3 class="uk-text-center blue">Approved Relevate Contributor</h3>
+                                                                {% endif %}
+                                                                <h3 class="blue">Credentials</h3>
+                                                                {{ adviser.contributor_profile.program }}<br>
+                                                                {{ adviser.contributor_profile.institution }}<br>
+                                                                {{ adviser.contributor_profile.degree.name }}<br>
+
+                                                                <h3 class="blue">Biography</h3>
+                                                                <div class="uk-scrollable-box">
+                                                                    {{ adviser.contributor_profile.biography|safe }}
+                                                                </div>
+
+                                                                <h3 class="blue">Research and Clinical Interests</h3>
+                                                                <div class="uk-scrollable-box">
+                                                                    {{ adviser.contributor_profile.interests|safe }}
+                                                                </div>
+
+                                                                <h3 class="blue">Contact and Additional Information</h3>
+                                                                {{ adviser.contributor_profile.address }}<br>
+                                                                {{ adviser.contributor_profile.city }}, {{ adviser.contributor_profile.state }} {{ adviser.contributor_profile.zipcode }}
+                                                                <br><a href="{{ adviser.contributor_profile.website_url }}">{{ adviser.contributor_profile.website_url }}</a>
+
+                                                                <h3 class="blue">CV/Resume</h3>
+                                                                <object data="{{ adviser.contributor_profile.cv.url }}" type="application/pdf"
+                                                                        width="1100" height="1000"></object>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
 
                                         <h3>Academic information</h3>
                                         <p>{{ profile.program }}</p>

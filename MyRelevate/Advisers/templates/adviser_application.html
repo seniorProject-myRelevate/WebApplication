@@ -16,16 +16,36 @@
             appropriately referenced. Advisors must approve the content their advisees create before it can be posted.
             MyRelevate advisors may specify how many, whom, and for how long they advise.
         </span>
-        <h3>Terms and Conditions</h3>
-        <div class="uk-scrollable-box">
-            <span>
-                These are the terms and conditions for being an adviser
-            </span>
-        </div>
+        <br><br>
+
         <form class="uk-form" method="post" action="{% url 'myrelevate:advisers:create' %}">
             {% csrf_token %}
+            <span>How many advisees will you take on</span>
+            <br>
+            {{ adviser_form.number_of_advisees }}
+            <br><br>
+
+            <span>Briefly explain why you want to be an adviser.</span>
+            <br>
+            {{ adviser_form.description }}
+
+            <h3>Terms and Conditions</h3>
+            <div class="uk-scrollable-box">
+                <span>
+                    These are the terms and conditions for being an adviser
+                </span>
+            </div>
             Accept terms: {{ adviser_form.accept_terms }}
             <input class="uk-button" type="submit" value="Apply">
         </form>
     </div>
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('id_description');
+    </script>
 {% endblock %}

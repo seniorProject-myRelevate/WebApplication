@@ -6,7 +6,7 @@ from ..User.models import User
 class AdviserApplicationForm(forms.ModelForm):
     class Meta:
         model = Advisers
-        fields = ['accept_terms']
+        fields = ['accept_terms', 'number_of_advisees', 'description']
 
 
 class ApproveAdviserForm(forms.ModelForm):

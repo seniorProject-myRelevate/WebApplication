@@ -264,6 +264,8 @@ def approve(request):
     contributor_profiles = ContributorProfile.objects.filter(id__in=pending_contributor_ids)
     users = User.objects.filter(contributor_profile=pending_contributor_ids)
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
+    user_adviser_ids = Advisers.objects.values_list('id', flat=True)
+    user_advisers = User.objects.filter(adviser_profile=user_adviser_ids)
 
     for user in users:
         if user.is_contributor:
@@ -281,7 +283,8 @@ def approve(request):
         context = {
             'profiles': contributor_profiles,
             'users_forms': zip(users, formset),
-            'formset': formset
+            'formset': formset,
+            'user_advisers': user_advisers,
         }
     return render(request, 'approval.html', context)
 

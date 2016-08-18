@@ -24,7 +24,7 @@
         <div class="uk-container">
             <div class="uk-text-center">
                 <h1 class="orange">
-                    {{ user.first_name }} {{ user.last_name }}, {{ contributorProfile.degree.degreeName }}
+                    {{ user.first_name }} {{ user.last_name }}, {{ contributorProfile.degree.name }}
                 </h1>
                 {% if user.is_contributor %}
                     <h3 class="blue">Approved Relevate Contributor</h3>
@@ -59,13 +59,14 @@
                 <br><br>
                 <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateDegree' %}">
                     {% csrf_token %}
-                    <label for="id_degree">Degree Completed:</label>
+                    <label for="id_degree">Degree Completed</label>
+                    <br><br>
                     <select id="id_degree" name="degree">
                         <option>Choose Your Degree</option>
                         {% for degree in degrees %}
                             <option {% if contributorProfile.degree_id == degree.id %} selected="selected" {% endif %}
                                 value="{{ degree.id }}">
-                            {{ degree.degreeName }}
+                            {{ degree.name }}
                             </option>
                         {% endfor %}
                     </select>
@@ -74,6 +75,8 @@
                 <br><br>
                 <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateProgram' %}">
                     {% csrf_token %}
+                    Field of study/specialization
+                    <br><br>
                     {{ programForm }}
                     <input class="uk-button" type="submit" value="Update">
                 </form>
@@ -90,12 +93,12 @@
                                                {% if expertise_topic.id == topic.id %} checked="checked" {% endif %}
                                            {% endfor %}
                                            name="expertise_topics" type="checkbox" value="{{ topic.id }}">
-                                    {{ topic.topicName }}
+                                    {{ topic.name }}
                                 </label>
                                 <div class="uk-button-dropdown" data-uk-dropdown="{pos:'bottom-center', mode:'click'}">
                                     <i class="uk-icon-caret-down"></i>
                                     <div class="uk-dropdown-blank uk-panel-box-primary uk-dropdown-bottom">
-                                        {{ topic.topicDescription }}
+                                        {{ topic.description }}
                                     </div>
                                 </div>
                             </li>
@@ -130,8 +133,7 @@
                 </form>
             </li>
             <li>
-                {{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}
-                    {{ contributorProfile.adviser_email }}
+                update Adviser
             </li>
             <li>
                 <form class="uk-form" method="post" enctype='multipart/form-data'

@@ -16,43 +16,40 @@
                 <div class="text-center">
                     <h1>Contributor Application</h1>
                 </div>
-                {{ user.first_name }}
-                <br>
-                {{ user.last_name }}
-                <br>
-                {{ user.email }}
-                <br><br>
+                <h4>{{ user.first_name }} {{ user.last_name }}<br>{{ user.email }}</h4>
 
-                <label for="id_degree">Degree Completed:</label>
+                <h3><label for="id_degree">Degree Completed<br></label></h3>
                 <select id="id_degree" name="degree">
                     <option>Choose Your Degree</option>
                     {% for degree in degrees %}
                         <option {% if contributor.degree_id == degree.id %} selected="selected" {% endif %}
                                 value="{{ degree.id }}">
-                            {{ degree.degreeName }}
+                            {{ degree.name }}
                         </option>
                     {% endfor %}
                 </select>
-
-                <div id="studentAccess" style="display: none">
-                    <label for="id_adviser">Adviser:</label>
-                    <select id="id_adviser">
-                        <option>Choose Your Adviser</option>
-                        {% for adviser in list.advisers %}
-                            {% for user in users %}
-                                {% if adviser.id == user.adviser_profile_id %}
-                                    <option {% if contributor.adviser_id == adviser.id %} selected="selected" {% endif %}
-                                            value="{{ adviser.id }}">
-                                        {{ user.first_name }} {{ user.last_name }} {{ user.email }}
-                                    </option>
-                                {% endif %}
-                            {% endfor %}
+                <br><br><br>
+{#                {{ contributorForm.adviser }}#}
+                <h3><label for="id_adviser">Adviser<br></label></h3>
+                <span>
+                    In this section you need to pick an adviser if you degree is Student-Undergraduate
+                    or Student-Masters. <br>For all other majors select Non Applicable in the adviser drop down.
+                </span>
+                <br><br>
+                <select id="id_adviser" name="adviser">
+                    <option>Choose Your Adviser</option>
+                    <option value="-1">Non Applicable</option>
+                    {% for adviser in advisers %}
+                        {% for user in users %}
+                            {% if adviser.id == user.adviser_profile_id %}
+                                <option {% if contributor.adviser_id == adviser.id %} selected="selected" {% endif %}
+                                        value="{{ adviser.id }}">
+                                    {{ user.first_name }} {{ user.last_name }}, {{ user.email }}
+                                </option>
+                            {% endif %}
                         {% endfor %}
-                    </select>
-{#                    {{ contributorForm.adviser_email }}#}
-{#                    {{ contributorForm.adviser_first_name }}#}
-{#                    {{ contributorForm.adviser_last_name }}#}
-                </div>
+                    {% endfor %}
+                </select>
                 <br><br>
                 <h3>Academic information</h3>
                 {{ contributorForm.program }}
