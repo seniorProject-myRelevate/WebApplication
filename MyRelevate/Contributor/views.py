@@ -261,7 +261,6 @@ def approve(request):
     formset: a list of forms for each user
     """
     pending_contributor_ids = PendingContributors.objects.values_list('contributor_id', flat=True)
-    contributor_profiles = ContributorProfile.objects.filter(id__in=pending_contributor_ids)
     users = User.objects.filter(contributor_profile=pending_contributor_ids)
     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
     user_adviser_ids = Advisers.objects.values_list('id', flat=True)
@@ -281,7 +280,6 @@ def approve(request):
     else:
         formset = approve_form_set(queryset=users)
         context = {
-            'profiles': contributor_profiles,
             'users_forms': zip(users, formset),
             'formset': formset,
             'user_advisers': user_advisers,
