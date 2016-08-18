@@ -289,7 +289,7 @@ def approve(request):
             'formset': formset,
             'user_advisers': user_advisers,
         }
-    return render(request, 'approval.html', context)
+    return render(request, 'approve_contributor.html', context)
 
 
 # @login_required()

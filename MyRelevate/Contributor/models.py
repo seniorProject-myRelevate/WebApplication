@@ -30,6 +30,12 @@ class ContributorProfile(models.Model):
     adviser = models.ForeignKey(Advisers, null=True, blank=True)
 
 
+class MissingFields(models.Model):
+    class Meta:
+        db_table = 'missing_fields'
+    name = models.CharField(max_length=100, null=False, blank=False)
+
+
 class PendingContributors(models.Model):
     class Meta:
         db_table = 'pending_contributors'
@@ -40,5 +46,7 @@ class DeniedContributors(models.Model):
     class Meta:
         db_table = 'denied_contributors'
     contributor = models.ForeignKey(ContributorProfile, null=True, blank=True)
-    reason = models.TextField(null=False, blank=False)
     denied = models.BooleanField(default=False)
+    reason = models.TextField(null=False, blank=False)
+    fields = models.ManyToManyField(MissingFields)
+

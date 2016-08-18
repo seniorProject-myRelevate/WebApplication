@@ -1,7 +1,6 @@
 from django import forms
-from .models import ContributorProfile
+from .models import ContributorProfile, DeniedContributors
 from ..models import User
-from ..Advisers.models import Advisers
 
 
 class ContributorForm(forms.ModelForm):
@@ -119,15 +118,16 @@ class ApprovalUpdateUserForm(forms.ModelForm):
         }
 
 
-# class DeniedContributorForm(forms.ModelForm):
-#     class Meta:
-#         model = DeniedContributors
-#         fields = ['reason, denied']
-#         widgets = {
-#             'reason': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
-#                                             'class': 'form-control'}),
-#         }
-#         labels = {
-#             'reason': '',
-#             'denied': '',
-#         }
+class DeniedContributorForm(forms.ModelForm):
+    class Meta:
+        model = DeniedContributors
+        fields = ['denied', 'reason', 'fields']
+        widgets = {
+            'reason': forms.Textarea(attrs={
+                'placeholder': 'Write a brief reason why contributor is being denied access', 'class': 'form-control'}),
+        }
+        labels = {
+            'denied': '',
+            'reason': '',
+            'fields': '',
+        }
