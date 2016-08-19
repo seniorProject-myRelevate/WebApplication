@@ -27,7 +27,7 @@
                 <div class="uk-accordion" data-uk-accordion>
                     <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:approve' %}">
                         {% csrf_token %}
-                        {{ formset.management_form }}
+                        {{ formset_approve.management_form }}
                         {% for user, approve_form in users_forms %}
                             <h3 class="uk-accordion-title">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</h3>
                             <div class="uk-accordion-content">

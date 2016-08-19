@@ -29,6 +29,7 @@
                     {% endfor %}
                 </select>
                 <br><br><br>
+
 {#                {{ contributorForm.adviser }}#}
                 <h3><label for="id_adviser">Adviser<br></label></h3>
                 <span>
@@ -36,9 +37,10 @@
                     or Student-Masters. <br>For all other majors select Non Applicable in the adviser drop down.
                 </span>
                 <br><br>
+{#                {{ contributorForm.adviser }}#}
                 <select id="id_adviser" name="adviser">
                     <option>Choose Your Adviser</option>
-                    <option value="-1">Non Applicable</option>
+                    <option value selected>Non Applicable</option>
                     {% for adviser in advisers %}
                         {% for user in users %}
                             {% if adviser.id == user.adviser_profile_id %}
@@ -62,7 +64,7 @@
                 {{ contributorForm.zipcode }}
                 {{ contributorForm.website_url }}
 
-                <h4>Upload your cv/resume: </h4> {{ contributorForm.cv }}
+                <h3>Upload your cv/resume </h3> {{ contributorForm.cv }}
                 <br><br>
                 <h3>Biography</h3>
                     <span>

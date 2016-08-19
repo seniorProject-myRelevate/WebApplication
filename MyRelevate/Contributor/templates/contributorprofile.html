@@ -13,14 +13,12 @@
 {#{% endblock %}#}
 
 {% block content %}
-    <!--The Contributor Profile Menu Bar-->
     <div>
         {% if user.contributor_profile.avatar == ""  %}
             <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
         {% elif user.contributor_profile.avatar != "" %}
             <img class="profile_avatar" src="{{ user.contributor_profile.avatar.url }}">
         {% endif %}
-
         <div class="uk-container">
             <div class="uk-text-center">
                 <h1 class="orange">
@@ -135,7 +133,7 @@
                 </form>
             </li>
             <li>
-                update Adviser
+                {{ user.adviser_profile.description|safe }}
             </li>
             <li>
                 <form class="uk-form" method="post" enctype='multipart/form-data'

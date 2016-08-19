@@ -31,9 +31,8 @@ def create(request):
             article.contributor_id = get_user_model().objects.get(email=request.user.email).contributor_profile.pk
             if article.isPublished:
                 article.publishDate = datetime.now()
-            article.save()
-            form.save_m2m()
-
+                article.save()
+                form.save_m2m()
             # messages.SUCCESS(request, 'Article posted!')
             return HttpResponseRedirect(reverse('myrelevate:articles:create'))
         else:

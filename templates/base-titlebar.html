@@ -54,7 +54,9 @@
                     </li>
                 {% else %}
                     {% if user.is_contributor %}
-                        <li><a href="{% url 'myrelevate:advisers:create' %}">Adviser Application</a> </li>
+                        {% if not user.is_adviser and not user.contributor_profile.has_adviser %}
+                            <li><a href="{% url 'myrelevate:advisers:create' %}">Adviser Application</a> </li>
+                        {% endif %}
                         <li><a href="{% url 'myrelevate:contributor:update' %}">Contributor Profile</a></li>
                         <li class="uk-parent">
                             <a href="#">Contributor Articles</a>

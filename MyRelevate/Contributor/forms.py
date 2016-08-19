@@ -1,20 +1,22 @@
 from django import forms
-from .models import ContributorProfile, DeniedContributors
+from .models import ContributorProfile
 from ..models import User
+from MyRelevate.Advisers.models import Advisers
 
 
 class ContributorForm(forms.ModelForm):
-    interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
-                                                             'class': 'form-control'}), label='', required=False)
+    # interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
+    #                                                          'class': 'form-control'}), label='', required=False)
     cv = forms.FileField(label='Specific MIME type', required=True)
                            # mimetype_whitelist=("application/pdf", "application/msword",
                            #                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                            #                     ))
+    # adviser = forms.ModelChoiceField(queryset=Advisers.objects.all(), label='', required=False)
 
     class Meta:
         model = ContributorProfile
         fields = [
-            'adviser', 'degree', 'program', 'institution', 'biography', 'interests', 'address',
+            'adviser', 'degree', 'program', 'institution', 'biography', 'address',
             'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url'
         ]
         widgets = {
@@ -31,7 +33,7 @@ class ContributorForm(forms.ModelForm):
                                                'class': 'form-control'}),
         }
         labels = {
-            'adviser': '',
+            # 'adviser': '',
             'program': '',
             'institution': '',
             'address': '',
@@ -118,16 +120,17 @@ class ApprovalUpdateUserForm(forms.ModelForm):
         }
 
 
-class DeniedContributorForm(forms.ModelForm):
-    class Meta:
-        model = DeniedContributors
-        fields = ['denied', 'reason', 'fields']
-        widgets = {
-            'reason': forms.Textarea(attrs={
-                'placeholder': 'Write a brief reason why contributor is being denied access', 'class': 'form-control'}),
-        }
-        labels = {
-            'denied': '',
-            'reason': '',
-            'fields': '',
-        }
+# class DeniedContributorForm(forms.ModelForm):
+#     class Meta:
+#         model = DeniedContributors
+#         fields = ['denied', 'reason', 'fields']
+#         widgets = {
+#             'reason': forms.Textarea(attrs={
+#                 'placeholder': 'Write a brief reason why contributor is being denied access',
+#                 'class': 'form-control'}),
+#         }
+#         labels = {
+#             'denied': '',
+#             'reason': '',
+#             'fields': '',
+#         }

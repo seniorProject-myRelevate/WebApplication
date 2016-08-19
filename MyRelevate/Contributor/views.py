@@ -35,11 +35,12 @@ def create(request):
     if request.method == 'POST':
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
-            pending_contributor = PendingContributors()
+            pending_contributors = PendingContributors()
             contributor_profile = form.save()
             user.contributor_profile = contributor_profile
-            pending_contributor.contributor = contributor_profile
-            pending_contributor.save()
+            # if form.adviser.i
+            pending_contributors.contributor = contributor_profile
+            pending_contributors.save()
             user.save()
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
@@ -267,42 +268,94 @@ def approve(request):
     """
     pending_contributor_ids = PendingContributors.objects.values_list('contributor_id', flat=True)
     users = User.objects.filter(contributor_profile=pending_contributor_ids)
-    approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
     user_adviser_ids = Advisers.objects.values_list('id', flat=True)
     user_advisers = User.objects.filter(adviser_profile=user_adviser_ids)
+    approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
 
     for user in users:
         if user.is_contributor:
             PendingContributors.objects.filter(contributor_id=user.contributor_profile).delete()
 
     if request.method == 'POST':
-        formset = approve_form_set(request.POST, queryset=users)
-        if formset.is_valid():
-            formset.save()
+        formset_approve = approve_form_set(request.POST, queryset=users)
+        if formset_approve.is_valid():
+            formset_approve.save()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
-            return HttpResponse(formset.errors)
+            return HttpResponse(formset_approve.errors)
     else:
-        formset = approve_form_set(queryset=users)
+        formset_approve = approve_form_set(queryset=users)
         context = {
-            'users_forms': zip(users, formset),
-            'formset': formset,
+            'users_forms': zip(users, formset_approve),
+            'formset_approve': formset_approve,
             'user_advisers': user_advisers,
         }
     return render(request, 'approve_contributor.html', context)
 
 
 # @login_required()
+# def approve(request):
+#     """
+#     Displays list of all users that have applied for contributor access
+#     Displays application from user for contributor access
+#     Allows staff member to approve user for contributor access
+#     :param request:
+#     :return: The contributor profile from application, the users being evaluated, and
+#     formset: a list of forms for each user
+#     """
+#     pending_contributor_ids = PendingContributors.objects.values_list('contributor_id', flat=True)
+#     users = User.objects.filter(contributor_profile=pending_contributor_ids)
+#     user_adviser_ids = Advisers.objects.values_list('id', flat=True)
+#     user_advisers = User.objects.filter(adviser_profile=user_adviser_ids)
+#     approve_form_set = modelformset_factory(User, form=ApprovalUpdateUserForm, extra=0)
+#     denied_form_set = modelformset_factory(DeniedContributors, form=DeniedContributorForm, extra=0)
+#
+#     for user in users:
+#         if user.is_contributor:
+#             PendingContributors.objects.filter(contributor_id=user.contributor_profile).delete()
+#
+#     if request.method == 'POST':
+#         formset_approve = approve_form_set(request.POST, queryset=users)
+#         formset_denied = denied_form_set(request.POST)
+#         if formset_approve.is_valid():
+#             formset_approve.save()
+#             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
+#         elif formset_denied.is_valid():
+#             denied_contributors = DeniedContributors()
+#             denied = formset_denied.save(commit=False)
+#             # denied_contributors.contributor =
+#             denied.save()
+#             formset_denied.save_m2m()
+#             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
+#         else:
+#             return HttpResponse(formset_approve.errors)
+#     else:
+#         formset_approve = approve_form_set(queryset=users)
+#         formset_denied = denied_form_set()
+#         forms = zip(users, zip(formset_approve, formset_denied))
+#         context = {
+#             # 'users_forms': zip(users, formset_approve),
+#             'users_forms': forms,
+#             'formset_approve': formset_approve,
+#             'formset_denied': formset_denied,
+#             'user_advisers': user_advisers,
+#         }
+#     return render(request, 'approve_contributor.html', context)
+
+
+# @login_required()
 # def denied(request):
 #     denied_contributors_ids = DeniedContributors.objects.values_list('contributor_id', flat=True)
-#     contributor_profiles = ContributorProfile.objects.filter(id__in=denied_contributors_ids)
 #     users = User.objects.filter(contributor_profile=denied_contributors_ids)
 #     denied_form_set = modelformset_factory(DeniedContributors, form=DeniedContributorForm, extra=0)
 #
 #     if request.method == 'POST':
-#         formset = denied_form_set(request.POST)
+#         formset = denied_form_set(request.POST, queryset=users)
 #         if formset.is_valid():
 #             formset.save()
+#             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
 #         else:
 #             return HttpResponse(formset.errors)
+#     else:
+#         formset = denied_form_set(queryset=users)
 #     return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
