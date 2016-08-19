@@ -38,6 +38,7 @@ def create(request):
             pending_contributors = PendingContributors()
             contributor_profile = form.save()
             user.contributor_profile = contributor_profile
+            # if contributor.adviser not blank then set has_adviser to True
             # if form.adviser.i
             pending_contributors.contributor = contributor_profile
             pending_contributors.save()
