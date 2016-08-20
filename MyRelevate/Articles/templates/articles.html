@@ -3,7 +3,11 @@
 
 {% block head %}
     {{ block.super }}
-    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.almost-flat.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
+
+    <script src="{% static 'uikit/js/components/accordion.min.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +16,7 @@
             {% csrf_token %}
             {{ form.title }}
             <br><br>
-            <ul id="id_article_topics" class="uk-list uk-column-1-2" >
+            <ul id="id_article_topics" class="uk-list uk-column-1-3" >
                 {% for topic in topics %}
                     <li>
                         <label>
@@ -23,11 +27,13 @@
                                    name="article_topics" type="checkbox" value="{{ topic.id }}">
                             {{ topic.name }}
                         </label>
-                        <button type="button" class="uk-accordion-title">
-                            <i class="uk-icon-question"></i>
-                        </button>
-                        <div class="uk-panel-box-primary uk-accordion-content">
-                            {{ topic.description }}
+                        <div class="uk-accordion" data-uk-accordion="{showfirst:false}">
+                            <button type="button" class="uk-accordion-title">
+                                <i class="uk-icon-question"></i>
+                            </button>
+                            <div class="uk-panel-box-primary uk-accordion-content">
+                                {{ topic.description }}
+                            </div>
                         </div>
                     </li>
                 {% endfor %}
@@ -40,13 +46,14 @@
         </form>
     {% elif articles %}
         {% for a in articles %}
-            <p>{{ a.title }}</p>
-            <p>
-                {% for article_topic in a.article_topics.all %}
-                    <p>{{ article_topic.id }}, {{ article_topic.topicName }}</p>
+            <h2>{{ a.title }}</h2>
+            <h4>Article Topics</h4>
+            <ul class="uk-list uk-column-1-4">
+                {% for topic in a.article_topics.all %}
+                    <li>{{ topic.name }}</li>
                 {% endfor %}
-            </p>
-            <p>{{ a.content|safe }}</p>
+            </ul>
+            <p class="uk-panel-box-primary">{{ a.content|safe }}</p>
             <hr>
         {% endfor %}
     {% endif %}

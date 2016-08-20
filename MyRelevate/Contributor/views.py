@@ -63,7 +63,6 @@ def create(request):
                 'advisers': advisers,
                 'users': users
             }
-
     return render(request, 'application.html', context)
 
 

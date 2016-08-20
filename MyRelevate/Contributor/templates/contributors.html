@@ -1,6 +1,15 @@
 {% extends "base-titlebar.html" %}
 {% load staticfiles %}
 
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.almost-flat.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
+
+    <script src="{% static 'uikit/js/components/accordion.min.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="uk-container">
         <nav class="uk-navbar">
@@ -31,7 +40,14 @@
                     <h3 class="blue">{{ user.first_name }} {{ user.last_name }}, {{ user.contributor_profile.degree.abbreviation }}</h3>
                 </a>
                 {{ user.contributor_profile.program }}<br>
-                {{ user.contributor_profile.institution }}<br><br>
+                {{ user.contributor_profile.institution }}<br>
+                {% for expertise_topic in user.contributor_profile.expertise_topics.all %}
+                    <div class="uk-accordion" data-uk-accordion="{showfirst:false}">
+                        <h6 class="uk-accordion-title">{{ expertise_topic.name }}</h6>
+                        <div class="uk-accordion-content uk-panel-box-primary">{{ expertise_topic.description }}</div>
+                    </div>
+                {% endfor %}
+                <br><br>
                 <div id="contributorProfile{{ user.contributor_profile.id }}" class="uk-modal">
                     <div class="uk-modal-dialog uk-modal-dialog-blank">
                         <a href class="uk-modal-close uk-close"></a>
@@ -41,10 +57,11 @@
                             {% elif user.contributor_profile.avatar != "" %}
                                 <img class="profile_avatar" src="{{ user.contributor_profile.avatar.url }}">
                             {% endif %}
-                            <h1 class="uk-text-center orange">{{ user.first_name }} {{ user.last_name }}, {{ user.contributor_profile.degree }}</h1>
+                            <h1 class="uk-text-center orange">{{ user.first_name }} {{ user.last_name }}, {{ user.contributor_profile.degree.abbreviation }}</h1>
                             {% if user.is_contributor %}
                                 <h3 class="uk-text-center blue">Approved Relevate Contributor</h3>
                             {% endif %}
+                            <br><br>
                             <h3 class="blue">Credentials</h3>
                             {{ user.contributor_profile.program }}<br>
                             {{ user.contributor_profile.institution }}<br>

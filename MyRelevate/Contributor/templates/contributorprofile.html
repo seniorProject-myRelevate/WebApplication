@@ -133,7 +133,12 @@
                 </form>
             </li>
             <li>
-                {{ user.adviser_profile.description|safe }}
+                {% if user.adviser_profile != "" %}
+{#                    {{ user.adviser_profile.description|safe }}#}
+                    {{ user.contributor_profile.adviser.user.first_name }}
+                    {{ user.contributor_profile.adviser.user.last_name }}<br>
+                    {{ user.contributor_profile.adviser.user.email }}
+                {% endif %}
             </li>
             <li>
                 <form class="uk-form" method="post" enctype='multipart/form-data'
