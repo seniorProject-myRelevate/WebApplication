@@ -1,7 +1,1 @@
-Contact Name:
-{{ contact_name }}
-
-Email:
-{{ contact_email }}
-
-Approved!
+You have been approved as a Relevate contributor!
