@@ -15,11 +15,13 @@ class ApproveAdviserForm(forms.ModelForm):
         fields = ['is_adviser']
 
 
-class UpdateAvailableForm(forms.ModelForm):
+class UpdateAdviserForm(forms.ModelForm):
     class Meta:
         model = Advisers
-        fields = ['is_available']
+        fields = ['is_available', 'number_of_advisees', 'description']
         labels = {
             'is_available': 'Approve Adviser',
+            'number_of_advisees': '',
+            'description': '',
         }
 

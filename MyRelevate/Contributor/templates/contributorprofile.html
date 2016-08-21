@@ -139,6 +139,15 @@
                     {{ user.contributor_profile.adviser.user.last_name }}<br>
                     {{ user.contributor_profile.adviser.user.email }}
                 {% endif %}
+                {% if user.is_adviser %}
+                    <form class="uk-form" method="post" action="{% url 'myrelevate:advisers:update' %}">
+                        {% csrf_token %}
+                        <p>Available to take on advisees: {{ adviserForm.is_available }}</p>
+                        <p>Max amount of advisees: {{ adviserForm.number_of_advisees }}</p>
+                        {{ adviserForm.description }}<br><br>
+                        <input class="uk-button" type="submit" value="Update">
+                    </form>
+                {% endif %}
             </li>
             <li>
                 <form class="uk-form" method="post" enctype='multipart/form-data'
@@ -162,5 +171,6 @@
         // instance, using default configuration.
         CKEDITOR.replace('id_biography');
         CKEDITOR.replace('id_interests');
+        CKEDITOR.replace('id_description');
     </script>
 {% endblock %}

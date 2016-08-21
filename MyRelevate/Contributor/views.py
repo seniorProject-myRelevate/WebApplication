@@ -12,6 +12,7 @@ from ..models import Topics
 from models import Degree, ContributorProfile, PendingContributors
 from ..models import User
 from ..Advisers.models import Advisers
+from ..Advisers.forms import UpdateAdviserForm
 
 
 def index(request):
@@ -96,7 +97,8 @@ def update(request):
             'interestForm': InterestForm(instance=profile),
             'contactForm': ContactForm(instance=profile),
             'avatarForm': AvatarForm(instance=profile),
-            'resumeForm': CVResumeForm(instance=profile)
+            'resumeForm': CVResumeForm(instance=profile),
+            'adviserForm': UpdateAdviserForm(instance=user.adviser_profile),
         }
     return render(request, 'contributorprofile.html', context)
 

@@ -5,10 +5,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.forms import modelformset_factory
 
-from .forms import AdviserApplicationForm, ApproveAdviserForm, UpdateAvailableForm
+from .forms import AdviserApplicationForm, ApproveAdviserForm, UpdateAdviserForm
 
 from models import Advisers, PendingAdvisers
-from ..models import ContributorProfile
 from ..models import User
 from ..models import Topics
 
@@ -28,10 +27,7 @@ def advisers(request):
 @login_required()
 def approve(request):
     pending_adviser_ids = PendingAdvisers.objects.values_list('adviser_id', flat=True)
-    users = User.objects.filter(id__in=pending_adviser_ids)
-    # contributor_profile_ids
-    # contributor_profiles = ContributorProfile.objects.filter(id__in=contributor_profile_ids)
-    contributor_profiles = ContributorProfile.objects.all()
+    users = User.objects.filter(adviser_profile=pending_adviser_ids)
     topics = Topics.objects.all()
     approve_form_set = modelformset_factory(User, form=ApproveAdviserForm, extra=0)
     for user in users:
@@ -46,8 +42,12 @@ def approve(request):
             return HttpResponse(formset.errors)
     else:
         formset = approve_form_set(queryset=users)
-    return render(request, 'approve_adviser.html', {'users_forms': zip(users, formset), 'formset': formset,
-                                                    'profiles': contributor_profiles, 'topics': topics})
+        context = {
+            'users_forms': zip(users, formset),
+            'formset': formset,
+            'topics': topics
+        }
+    return render(request, 'approve_adviser.html', context)
 
 
 @login_required()
@@ -73,9 +73,9 @@ def create(request):
 @login_required()
 def update(request):
     if request.method == 'POST':
-        form = UpdateAvailableForm(request.POST)
+        form = UpdateAdviserForm(request.POST, instance=request.user.adviser_profile)
         if form.is_valid():
             form.save()
         else:
-            pass
+            return HttpResponse(form.errors)
     return HttpResponseRedirect(reverse('myrelevate:advisers:update'))
