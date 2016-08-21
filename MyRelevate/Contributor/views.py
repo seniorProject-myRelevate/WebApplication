@@ -231,10 +231,7 @@ def approve(request):
 
                 # Email the profile with the
                 # contact information
-                if (user.is_contributor):
-                    template = get_template('approval.txt')
-                else:
-                    template = get_template('denied.txt')
+                template = get_template('approval.txt')
                 context = Context({
                     'contact_name': contact_name,
                     'contact_email': contact_email,
