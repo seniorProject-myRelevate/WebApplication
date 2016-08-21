@@ -108,6 +108,13 @@ DATABASES = {
 }
 
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ['SendgridUser']
+EMAIL_HOST_PASSWORD = os.environ['SendgridPassword']
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 

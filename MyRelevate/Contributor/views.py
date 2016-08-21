@@ -13,6 +13,10 @@ from models import ContributorProfile, PendingContributors
 from ..models import User
 from ..Advisers.models import Advisers
 
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+from django.template import Context
+
 
 def index(request):
     if not request.user.is_contributor:
@@ -221,6 +225,29 @@ def approve(request):
         formset = approve_form_set(request.POST, queryset=users)
         if formset.is_valid():
             formset.save()
+            contact_name = formset.instance.first_name + user.last_name
+            contact_email = formset.instance.email
+
+            # Email the profile with the
+            # contact information
+            if (user.is_contributor):
+                template = get_template('approval.txt')
+            else:
+                template = get_template('denied.txt')
+            context = Context({
+                'contact_name': contact_name,
+                'contact_email': contact_email,
+            })
+            content = template.render(context)
+
+            email = EmailMessage(
+                "Contributor Application Status",
+                content,
+                "http://www.myrelevate.com" +'',
+                ['relevate@gmail.com'],
+                headers = {'Reply-To': contact_email }
+            )
+            email.send()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
         else:
             return HttpResponse(formset.errors)
