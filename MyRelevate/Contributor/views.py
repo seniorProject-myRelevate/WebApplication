@@ -242,8 +242,8 @@ def approve(request):
                     "Contributor Application Status",
                     content,
                     "http://www.myrelevate.com" +'',
-                    ['relevate@gmail.com'],
-                    headers = {'Reply-To': contact_email }
+                    [contact_email],
+                    headers = {'Reply-To': "relevate@gmail.com" }
                 )
                 email.send()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
