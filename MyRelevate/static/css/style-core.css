@@ -96,6 +96,14 @@ ul.sub-menu {
 
 }
 
+.title-bar-3 {
+    background: #fff;
+    color: #999;
+    box-shadow: 0 1px 1px #2BA2D9;
+    padding: 10px 30px;
+
+}
+
 #title-text {
     color: #999;
 }
@@ -143,30 +151,9 @@ ul.qualifications {
     overflow: auto;
 }
 
-.contributors-menu-bar {
-    background-color: #1b6d85;
-    /*display: block;*/
-    padding-top: 25px;
-    /*vertical-align: text-top;*/
-}
-
 .contributor-menu {
     background-color: #f5f5f5;
     padding-top: 25px;
-}
-
-.button-menu {
-    padding-left: 150px;
-    /*display: inline-block;
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 2%;
-    */
-}
-
-#contributorApplication {
-    /*background-color: #f5f5f5;
-    background-color: #dff0d8;*/
 }
 
 #studentAccess{

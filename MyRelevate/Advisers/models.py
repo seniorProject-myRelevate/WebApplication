@@ -8,6 +8,8 @@ class Advisers(models.Model):
     accept_terms = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_available = models.BooleanField(default=False)
+    number_of_advisees = models.IntegerField()
+    description = models.TextField(null=False, blank=False)
 
 
 class PendingAdvisers(models.Model):

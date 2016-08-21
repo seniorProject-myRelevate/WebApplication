@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.almost-flat.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'uikit/css/components/accordion.gradient.min.css' %}"/>
-    <script src="{% static 'uikit/js/core/toggle.min.js' %}"></script>
+{#    <script src="{% static 'uikit/js/core/toggle.min.js' %}"></script>#}
 {% endblock %}
 
 {% block content %}
@@ -21,78 +21,50 @@
                 {% for user, approve_form in users_forms %}
                     <h3 class="uk-accordion-title">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</h3>
                     <div class="uk-accordion-content">
-                        {% for profile in profiles %}
-                            {% if user.contributor_profile.id == profile.id %}
-                                 <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#profileContent'}">
-                                     <li class="uk-active"><a>Credentials/Contact Information</a></li>
-                                     <li><a href="">Area Of Expertise</a></li>
-                                     <li><a href="">Biography</a></li>
-                                     <li><a href="">Research Area/Clinical Interest</a></li>
-                                     <li><a href="">CV/Resume</a></li>
-                                 </ul>
+                         <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#profileContent'}">
+                             <li class="uk-active"><a>Credentials/Contact Information</a></li>
+                             <li><a href="">Area Of Expertise</a></li>
+                             <li><a href="">Biography</a></li>
+                             <li><a href="">Research Area/Clinical Interest</a></li>
+                             <li><a href="">CV/Resume</a></li>
+                         </ul>
 
-                                <ul id="profileContent" class="uk-switcher">
-                                    <li>
-                                    <br>
-                                        {% if  profile.degree  == 'MS' %}
-                                            Master of Science
-                                        {% elif profile.degree  == 'MA' %}
-                                            Master of Arts
-                                        {% elif profile.degree  == 'PhD' %}
-                                            Doctor of Philosophy
-                                        {% elif profile.degree  == 'PsyD' %}
-                                            Doctor of Psychology
-                                        {% elif profile.degree  == 'PsyD' %}
-                                            Doctor of Psychology
-                                        {% elif profile.degree  == 'SU' %}
-                                            Undergraduate Student
-                                        {% elif profile.degree == 'SM' %}
-                                            Master Student
-                                        {% elif profile.degree == 'SPhD' %}
-                                            Doctor of Philosophy Student
-                                        {% elif profile.degree == 'SPsyD' %}
-                                            Doctor of Psychology Student
-                                        {% endif %}
-                                        <br>{{ profile.program }}
-                                        <br>{{ user.email }}
-                                        <br>{{ profile.address }}
-                                        <br>{{ profile.city }}, {{ profile.state }} {{ profile.zipcode }}
-                                    </li>
-                                    <li>
-                                        {% for topic in topics %}
-                                            {% for expertise_topic in profile.expertise_topics.all %}
-                                                {% if expertise_topic.id == topic.id %}
-                                                    <button class="uk-button" type="button"
-                                                            data-uk-toggle="{target:'#topicDiscription'}">{{ topic.topicName }}</button>
-                                                    <div id="#topicDiscription" class="uk-panel-box-primary">
-                                                        {{ topic.topicDescription }}
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-
-                                    </li>
-                                    <li>
-                                        <br>
-                                        <span>
-                                            {{ profile.biography|safe }}
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <br>
-                                        <span>
-                                            {{ profile.interests|safe }}
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <br>
-                                        <object data="{{ profile.cv.url }}" type="application/pdf"
-                                                width="1100" height="1000">
-                                        </object>
-                                    </li>
-                                </ul>
-                            {% endif %}
-                        {% endfor %}
+                        <ul id="profileContent" class="uk-switcher">
+                            <li>
+                                <br>{{ user.contributor_profile.degree.name }}
+                                <br>{{ user.contributor_profile.program }}
+                                <br>{{ user.email }}
+                                <br>{{ user.contributor_profile.address }}
+                                <br>{{ user.contributor_profile.city }}, {{ user.contributor_profile.state }} {{ user.contributor_profile.zipcode }}
+                            </li>
+                            <li>
+                                {% for expertise_topic in user.contributor_profile.expertise_topics.all %}
+                                    <button class="uk-button" type="button"
+                                            data-uk-toggle="{target:'#topicDiscription'}">{{ expertise_topic.name }}</button>
+                                    <div id="#topicDiscription" class="uk-panel-box-primary">
+                                        {{ expertise_topic.description }}
+                                    </div>
+                                {% endfor %}
+                            </li>
+                            <li>
+                                <br>
+                                <span>
+                                    {{ user.contributor_profile.biography|safe }}
+                                </span>
+                            </li>
+                            <li>
+                                <br>
+                                <span>
+                                    {{ user.contributor_profile.interests|safe }}
+                                </span>
+                            </li>
+                            <li>
+                                <br>
+                                <object data="{{ user.contributor_profile.cv.url }}" type="application/pdf"
+                                        width="1100" height="1000">
+                                </object>
+                            </li>
+                        </ul>
                         <br><br>
                         {{ approve_form }}
                         <br><br>

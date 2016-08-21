@@ -15,7 +15,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1>{{ user.email }}</h1>
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
         <p>Confirmation status: {{ user.confirmed }}</p>
     {% else %}
         <h1>User is not logged in</h1>
@@ -65,12 +65,13 @@
         </div>
         <div class="uk-width-1-3"><img src="{% static 'images/infographics/forgiveness.png' %}"></div>
         <div class="uk-width-1-3 ">
-            <div class="uk-panel uk-panel-box uk-text-large uk-text-center" style="color: #6F787B;">
-                We are currently working on making this website great and need contributors from relationship
-                content experts. If that’s you, sign up to be a contributor access <a id="contributorRegistration"
-                                                                                      title="Access" href="#"
-                                                                                      onclick="ContributorAccess()"><u>here!</u></a>
-            </div>
+            {% if user.is_authenticated and not user.is_contributor %}
+                <div class="uk-panel uk-panel-box uk-text-large uk-text-center" style="color: #6F787B;">
+                    We are currently working on making this website great and need contributors from relationship
+                    content experts. If that’s you, sign up to be a contributor access
+                    <a href="{% url 'myrelevate:contributor:create' %}"><u>here!</u></a>
+                </div>
+            {% endif %}
         </div>
     </div>
 

@@ -9,19 +9,43 @@
     <div class="uk-container">
         <h1>Adviser Application</h1>
         <br>
-        <div class="uk-scrollable-box">
-            These are the responsibilities of being an adviser
-        </div>
-        <h3>Terms and Conditions</h3>
-        <div class="uk-scrollable-box">
-            <span>
-                These are the terms and conditions for being an adviser
-            </span>
-        </div>
+        <span>
+            MyRelevate advisors provide guidance and feedback to contributors who have not yet attained a graduate
+            degree on the quality of the content they create for MyRelevate. Advisors are responsible for ensuring the
+            research-based relationship content posted by their advisees is accurate, timely, professional, and
+            appropriately referenced. Advisors must approve the content their advisees create before it can be posted.
+            MyRelevate advisors may specify how many, whom, and for how long they advise.
+        </span>
+        <br><br>
+
         <form class="uk-form" method="post" action="{% url 'myrelevate:advisers:create' %}">
             {% csrf_token %}
+            <span>How many advisees will you take on</span>
+            <br>
+            {{ adviser_form.number_of_advisees }}
+            <br><br>
+
+            <span>Briefly explain why you want to be an adviser.</span>
+            <br>
+            {{ adviser_form.description }}
+
+            <h3>Terms and Conditions</h3>
+            <div class="uk-scrollable-box">
+                <span>
+                    These are the terms and conditions for being an adviser
+                </span>
+            </div>
             Accept terms: {{ adviser_form.accept_terms }}
             <input class="uk-button" type="submit" value="Apply">
         </form>
     </div>
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('id_description');
+    </script>
 {% endblock %}

@@ -1,37 +1,22 @@
 from django import forms
 from .models import ContributorProfile
 from ..models import User
-from ..Advisers.models import Advisers
+from MyRelevate.Advisers.models import Advisers
 
 
 class ContributorForm(forms.ModelForm):
-    DEGREES = (
-        ('-1', ''),
-        ('MS', 'MS (Master of Science)'),
-        ('MA', 'MA (Master of Arts)'),
-        ('PhD', 'PhD (Doctor of Philosophy)'),
-        ('PsyD', 'PsyD (Doctor of Psychology)'),
-        ('SU', 'Student-Undergraduate'),
-        ('SM', 'Student-Masters'),
-        ('SPhD', 'Student-PhD'),
-        ('SPsyD', 'Student-PsyD')
-    )
-
-    degree = forms.ChoiceField(choices=DEGREES, required=True)
-    interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
-                                                             'class': 'form-control'}), label='', required=False)
+    # interests = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Clinical and resources interests.',
+    #                                                          'class': 'form-control'}), label='', required=False)
     cv = forms.FileField(label='Specific MIME type', required=True)
                            # mimetype_whitelist=("application/pdf", "application/msword",
                            #                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                            #                     ))
-
-    # accept_terms = forms.BooleanField(widget=forms.CheckboxInput(), label='I agree to terms')
-    adviser = forms.ModelChoiceField(queryset=Advisers.objects.filter(is_available=True), to_field_name='id', required=False)
+    # adviser = forms.ModelChoiceField(queryset=Advisers.objects.all(), label='', required=False)
 
     class Meta:
         model = ContributorProfile
         fields = [
-            'adviser', 'degree', 'program', 'institution', 'biography', 'interests', 'address',
+            'adviser', 'degree', 'program', 'institution', 'biography', 'address',
             'city', 'state', 'zipcode', 'cv', 'accept_terms', 'website_url'
         ]
         widgets = {
@@ -48,7 +33,7 @@ class ContributorForm(forms.ModelForm):
                                                'class': 'form-control'}),
         }
         labels = {
-            'adviser': '',
+            # 'adviser': '',
             'program': '',
             'institution': '',
             'address': '',
@@ -108,7 +93,7 @@ class InterestForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContributorProfile
-        fields = ['address', 'city', 'state', 'zipcode']
+        fields = ['address', 'city', 'state', 'zipcode', 'website_url']
 
 
 class AvatarForm(forms.ModelForm):
@@ -138,12 +123,14 @@ class ApprovalUpdateUserForm(forms.ModelForm):
 # class DeniedContributorForm(forms.ModelForm):
 #     class Meta:
 #         model = DeniedContributors
-#         fields = ['reason, denied']
+#         fields = ['denied', 'reason', 'fields']
 #         widgets = {
-#             'reason': forms.Textarea(attrs={'placeholder': 'Write a brief biography about yourself.',
-#                                             'class': 'form-control'}),
+#             'reason': forms.Textarea(attrs={
+#                 'placeholder': 'Write a brief reason why contributor is being denied access',
+#                 'class': 'form-control'}),
 #         }
 #         labels = {
-#             'reason': '',
 #             'denied': '',
+#             'reason': '',
+#             'fields': '',
 #         }

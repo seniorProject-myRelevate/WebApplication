@@ -16,30 +16,42 @@
                 <div class="text-center">
                     <h1>Contributor Application</h1>
                 </div>
-                {{ user.first_name }}
-                <br>
-                {{ user.last_name }}
-                <br>
-                {{ user.email }}
+                <h4>{{ user.first_name }} {{ user.last_name }}<br>{{ user.email }}</h4>
+
+                <h3><label for="id_degree">Degree Completed<br></label></h3>
+                <select id="id_degree" name="degree">
+                    <option>Choose Your Degree</option>
+                    {% for degree in degrees %}
+                        <option {% if contributor.degree_id == degree.id %} selected="selected" {% endif %}
+                                value="{{ degree.id }}">
+                            {{ degree.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br><br><br>
+
+{#                {{ contributorForm.adviser }}#}
+                <h3><label for="id_adviser">Adviser<br></label></h3>
+                <span>
+                    In this section you need to pick an adviser if you degree is Student-Undergraduate
+                    or Student-Masters. <br>For all other majors select Non Applicable in the adviser drop down.
+                </span>
                 <br><br>
-                Credential/Degree Completed:{{ contributorForm.degree }}
-                <div id="studentAccess" style="display: none">
-                    {{ contributorForm.adviser }}
-{#                    <div class="uk-form-select" data-uk-form-select>#}
-{#                        <select id="id_adviser">#}
-{#                            {% for adviser in advisers %}#}
-{#                                {% for user in users %}#}
-{#                                    {% if adviser.id == user.adviser_profile_id %}#}
-{#                                        <option value="{{ adviser.id }}">{{ user.first_name }} {{ user.last_name }} {{ user.email }}</option>#}
-{#                                    {% endif %}#}
-{#                                {% endfor %}#}
-{#                            {% endfor %}#}
-{#                        </select>#}
-{#                    </div>#}
-{#                    {{ contributorForm.adviser_email }}#}
-{#                    {{ contributorForm.adviser_first_name }}#}
-{#                    {{ contributorForm.adviser_last_name }}#}
-                </div>
+{#                {{ contributorForm.adviser }}#}
+                <select id="id_adviser" name="adviser">
+                    <option>Choose Your Adviser</option>
+                    <option value selected>Non Applicable</option>
+                    {% for adviser in advisers %}
+                        {% for user in users %}
+                            {% if adviser.id == user.adviser_profile_id %}
+                                <option {% if contributor.adviser_id == adviser.id %} selected="selected" {% endif %}
+                                        value="{{ adviser.id }}">
+                                    {{ user.first_name }} {{ user.last_name }}, {{ user.email }}
+                                </option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </select>
                 <br><br>
                 <h3>Academic information</h3>
                 {{ contributorForm.program }}
@@ -52,16 +64,15 @@
                 {{ contributorForm.zipcode }}
                 {{ contributorForm.website_url }}
 
-                <h4>Upload your cv/resume: </h4> {{ contributorForm.cv }}
+                <h3>Upload your cv/resume </h3> {{ contributorForm.cv }}
                 <br><br>
+                <h3>Biography</h3>
                     <span>
                         In this section, tell us about yourself. What are your special interests (research topics
-                        and/or clinical populations)? Also, tell why you want to contribute to Relevate.
-                        Include anything else you think should be known about you.
-                        <br>
-                        Please take notice! You are writing this biography as though you are speaking directly to
-                        the users of Relevate who are exploring your profile, so write with user-friendly language.
-                        Thanks!
+                        and/or clinical populations)? Also, tell why you want to contribute to Relevate. Include
+                        anything else you think should be known about you. If, approved, this biography will go on
+                        your contributor profile page, so write it as though you are speaking directly to the users of
+                        Relevate who are exploring your profile (i.e., avoid jargon and acronyms, use third grade language).
                     </span>
                 <br><br>
                 {{ contributorForm.biography }}

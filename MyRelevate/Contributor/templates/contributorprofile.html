@@ -13,42 +13,23 @@
 {#{% endblock %}#}
 
 {% block content %}
-    <!--The Contributor Profile Menu Bar-->
     <div>
-        {% if contributorProfile.avatar == ""  %}
+        {% if user.contributor_profile.avatar == ""  %}
             <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
-        {% elif contributorProfile.avatar != "" %}
-            <img class="profile_avatar" src="{{ contributorProfile.avatar.url }}">
+        {% elif user.contributor_profile.avatar != "" %}
+            <img class="profile_avatar" src="{{ user.contributor_profile.avatar.url }}">
         {% endif %}
-
         <div class="uk-container">
             <div class="uk-text-center">
                 <h1 class="orange">
-                    {{ user.first_name }} {{ user.last_name }},
-                    {% if  contributorProfile.degree  == 'MS' %}
-                        Master of Science
-                    {% elif contributorProfile.degree  == 'MA' %}
-                        Master of Arts
-                    {% elif contributorProfile.degree  == 'PhD' %}
-                        Doctor of Philosophy
-                    {% elif contributorProfile.degree  == 'PsyD' %}
-                        Doctor of Psychology
-                    {% elif contributorProfile.degree  == 'PsyD' %}
-                        Doctor of Psychology
-                    {% elif contributorProfile.degree  == 'SU' %}
-                        Undergraduate Student
-                    {% elif contributorProfile.degree == 'SM' %}
-                        Master Student
-                    {% elif contributorProfile.degree == 'SPhD' %}
-                        Doctor of Philosophy Student
-                    {% elif contributorProfile.degree == 'SPsyD' %}
-                        Doctor of Psychology Student
-                    {% endif %}
+                    {{ user.first_name }} {{ user.last_name }}, {{ user.contributor_profile.degree.name }}
                 </h1>
                 {% if user.is_contributor %}
                     <h3 class="blue">Approved Relevate Contributor</h3>
                 {% endif %}
             </div>
+            <br><br>
+
             <form class="uk-form" method="post" enctype='multipart/form-data'
                   action="{% url 'myrelevate:contributor:updateAvatar' %}">
                 {% csrf_token %}
@@ -78,12 +59,24 @@
                 <br><br>
                 <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateDegree' %}">
                     {% csrf_token %}
-                    {{ degreeForm }}
+                    <label for="id_degree">Degree Completed</label>
+                    <br><br>
+                    <select id="id_degree" name="degree">
+                        <option>Choose Your Degree</option>
+                        {% for degree in degrees %}
+                            <option {% if user.contributor_profile.degree_id == degree.id %} selected="selected" {% endif %}
+                                value="{{ degree.id }}">
+                            {{ degree.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
                     <input class="uk-button" type="submit" value="Update">
                 </form>
                 <br><br>
                 <form class="uk-form" method="post" action="{% url 'myrelevate:contributor:updateProgram' %}">
                     {% csrf_token %}
+                    Field of study/specialization
+                    <br><br>
                     {{ programForm }}
                     <input class="uk-button" type="submit" value="Update">
                 </form>
@@ -96,16 +89,16 @@
                             <li>
                                 <label>
                                     <input id="id_expertise_topics_{{ topic.id }}"
-                                           {% for expertise_topic in contributorProfile.expertise_topics.all %}
+                                           {% for expertise_topic in user.contributor_profile.expertise_topics.all %}
                                                {% if expertise_topic.id == topic.id %} checked="checked" {% endif %}
                                            {% endfor %}
                                            name="expertise_topics" type="checkbox" value="{{ topic.id }}">
-                                    {{ topic.topicName }}
+                                    {{ topic.name }}
                                 </label>
                                 <div class="uk-button-dropdown" data-uk-dropdown="{pos:'bottom-center', mode:'click'}">
                                     <i class="uk-icon-caret-down"></i>
                                     <div class="uk-dropdown-blank uk-panel-box-primary uk-dropdown-bottom">
-                                        {{ topic.topicDescription }}
+                                        {{ topic.description }}
                                     </div>
                                 </div>
                             </li>
@@ -134,13 +127,27 @@
                     <br>{{ contactForm.address }}<br>
                     <br>{{ contactForm.city }}<br>
                     <br>{{ contactForm.state }}<br>
-                    <br>{{ contactForm.zipcode }}<br><br>
+                    <br>{{ contactForm.zipcode }}<br>
+                    <br>{{ contactForm.website_url }}<br><br>
                     <input class="uk-button" type="submit" value="Update">
                 </form>
             </li>
             <li>
-                {{ contributorProfile.adviser_first_name }} {{ contributorProfile.adviser_last_name }}
-                    {{ contributorProfile.adviser_email }}
+                {% if user.adviser_profile != "" %}
+{#                    {{ user.adviser_profile.description|safe }}#}
+                    {{ user.contributor_profile.adviser.user.first_name }}
+                    {{ user.contributor_profile.adviser.user.last_name }}<br>
+                    {{ user.contributor_profile.adviser.user.email }}
+                {% endif %}
+                {% if user.is_adviser %}
+                    <form class="uk-form" method="post" action="{% url 'myrelevate:advisers:update' %}">
+                        {% csrf_token %}
+                        <p>Available to take on advisees: {{ adviserForm.is_available }}</p>
+                        <p>Max amount of advisees: {{ adviserForm.number_of_advisees }}</p>
+                        {{ adviserForm.description }}<br><br>
+                        <input class="uk-button" type="submit" value="Update">
+                    </form>
+                {% endif %}
             </li>
             <li>
                 <form class="uk-form" method="post" enctype='multipart/form-data'
@@ -149,7 +156,7 @@
                     {{ resumeForm }}
                     <input class="uk-button" type="submit" value="Update">
                 </form>
-                <object data="{{ contributorProfile.cv.url }}" type="application/pdf"
+                <object data="{{ user.contributor_profile.cv.url }}" type="application/pdf"
                         width="1100" height="1000"></object>
             </li>
         </ul>
@@ -164,5 +171,6 @@
         // instance, using default configuration.
         CKEDITOR.replace('id_biography');
         CKEDITOR.replace('id_interests');
+        CKEDITOR.replace('id_description');
     </script>
 {% endblock %}
