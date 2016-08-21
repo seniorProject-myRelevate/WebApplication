@@ -302,7 +302,7 @@ def approve(request):
                 email = EmailMessage(
                     "Contributor Application Status",
                     content,
-                    "http://www.myrelevate.com" +'',
+                    "relevate@gmail.com" +'',
                     [contact_email],
                     headers = {'Reply-To': "relevate@gmail.com" }
                 )
