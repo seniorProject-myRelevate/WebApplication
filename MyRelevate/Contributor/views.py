@@ -41,10 +41,14 @@ def create(request):
         form = ContributorForm(request.POST, request.FILES, instance=user.contributor_profile)
         if form.is_valid():
             pending_contributors = PendingContributors()
-            contributor_profile = form.save()
+            contributor_profile = form.save(commit=False)
+            if contributor_profile.adviser is None:
+                contributor_profile.has_adviser = False
+            else:
+                contributor_profile.has_adviser = True
+            contributor_profile.save()
             user.contributor_profile = contributor_profile
             # if contributor.adviser not blank then set has_adviser to True
-            # if form.adviser.i
             pending_contributors.contributor = contributor_profile
             pending_contributors.save()
             user.save()
@@ -287,7 +291,7 @@ def approve(request):
         if formset_approve.is_valid():
             formset_approve.save()
             for form in formset_approve:
-                contact_name = form.instance.first_name + user.last_name
+                contact_name = form.instance.first_name + form.instance.last_name
                 contact_email = form.instance.email
 
                 # Email the profile with the
@@ -302,9 +306,9 @@ def approve(request):
                 email = EmailMessage(
                     "Contributor Application Status",
                     content,
-                    "relevate@gmail.com" +'',
+                    "relevate@gmail.com" + '',
                     [contact_email],
-                    headers = {'Reply-To': "relevate@gmail.com" }
+                    headers={'Reply-To': "relevate@gmail.com"}
                 )
                 email.send()
             return HttpResponseRedirect(reverse('myrelevate:contributor:approve'))
