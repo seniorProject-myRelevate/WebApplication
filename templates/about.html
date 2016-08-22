@@ -1,0 +1,22 @@
+{% extends "base-titlebar.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="uk-container">
+        <h1>About Us</h1>
+
+        <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#content'}">
+            <li class="uk-active"><a>Main Team</a></li>
+            <li><a href="">Engineering</a></li>
+        </ul>
+
+        <ul id="content" class="uk-switcher">
+            <li>
+                Main Team stuff
+            </li>
+            <li>
+                Engineering Team Stuff
+            </li>
+        </ul>
+    </div>
+{% endblock %}

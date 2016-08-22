@@ -17,6 +17,15 @@ def index(request):
     return render(request, 'index.html', {'user': request.user})
 
 
+def about(request):
+    """
+    About page telling about the purpose of the website and the different teams that made it happen
+    :param request:
+    :return: The about page
+    """
+    return render(request, 'about.html')
+
+
 def subscribe(request):
     """
     allows non-users to subscribe for email updates, regular users are already subscribed.
