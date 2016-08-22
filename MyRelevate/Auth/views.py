@@ -13,7 +13,7 @@ from ..Contributor.forms import ContributorForm
 def register_user(request):
     """
     Allows new users to register for an account if they aren't authenticated and their for is valid.
-    Logs user in after accont is created.
+    Logs user in after account is created.
     :param request:
     :return: returns a new page, or redirects user to index page.
     """

@@ -2,19 +2,19 @@
 {% load staticfiles %}
 
 {% block content %}
-    <div class="uk-container-center uk-text-center" id="login">
-        <div class="uk-display-inline-block uk-padding-large" style="border: 1px solid #2BA2D9; border-radius: 6px">
+    <div class="uk-vertical-align uk-text-center uk-height-1-1">
+        <div class="uk-vertical-align-middle" style="width: 300px; border: 1px solid #2BA2D9; border-radius: 6px">
+{#            <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>#}
             <form action="{% url 'myrelevate:auth:login' %}"
-                  class="uk-form uk-margin-top uk-margin-bottom uk-margin-left uk-margin-right" method="post">
+                  class="uk-form uk-panel uk-panel-box" method="post">
                 {% csrf_token %}
-                <div class="uk-text-center createAccount">
-                    {{ form.email }}
-                    {{ form.password }}
-                    <br><br>
-                    <input class="uk-button" type="submit" value="Sign In"/>
+                <div class="uk-form-row">{{ form.email }}</div>
+                <div class="uk-form-row">{{ form.password }}</div>
+                <div class="uk-form-row">
+                    <input class="uk-width-1-1 uk-button uk-button-primary" type="submit" value="Login"
                 </div>
             </form>
-                </div>
+        </div>
     </div>
     <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

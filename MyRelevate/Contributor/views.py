@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -52,6 +53,7 @@ def create(request):
             pending_contributors.contributor = contributor_profile
             pending_contributors.save()
             user.save()
+            messages.success(request, 'Your application has been submitted and being review!')
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             return HttpResponse(form.errors)
