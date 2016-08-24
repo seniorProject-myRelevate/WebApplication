@@ -95,7 +95,8 @@ def new_confirm(request):
             return HttpResponse(form.errors)
     else:
         context = {
-            'user': request.user
+            'user': request,
+            'form': ConfirmationForm()
         }
     return render(request, 'confirm.html', context)
 
