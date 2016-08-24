@@ -78,6 +78,8 @@ def new_confirm(request):
     :param request:
     :return:
     """
+    user = get_user_model().objects.get(email=request.user.email)
+    new_token = user.generate_confirmation_token()
     if request.user.confirmed:
         return HttpResponseRedirect(reverse('myrelevate:index'))
     if request.method == 'POST':
@@ -95,10 +97,11 @@ def new_confirm(request):
             return HttpResponse(form.errors)
     else:
         context = {
-            'user': request,
-            'form': ConfirmationForm()
+            'user': request.user,
+            'form': ConfirmationForm(),
+            'token': new_token,
         }
-    return render(request, 'confirm.html', context)
+    return render(request, 'confirm.html', {'user': request.user, 'form': ConfirmationForm, 'token': new_token})
 
 
 @login_required()

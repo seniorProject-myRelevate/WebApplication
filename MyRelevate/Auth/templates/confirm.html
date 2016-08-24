@@ -6,6 +6,9 @@
     <div id="main">
         <div id="confirm-text" class="container">
             <div class="row">
+                <br><br>
+                your token is {{ token }}
+                <br><br>
                 It looks like the your email hasn't been confirmed.
                 <br>
                 An email has been sent to <div class="relevate-blue">{{ user.email }}</div>
@@ -19,9 +22,9 @@
 {#                <div class="relevate-blue">{{ user.email }}</div>#}
 {#                is the correct email please confirm using the button below.#}
             </div>
-            <div class="row">
-                <a href="{% url 'myrelevate:auth:confirm' %}" class="uk-button">Confirm</a>
-            </div>
+{#            <div class="row">#}
+{#                <a href="{% url 'myrelevate:auth:confirm' %}" class="uk-button">Confirm</a>#}
+{#            </div>#}
         </div>
     </div>
 {% endblock %}
