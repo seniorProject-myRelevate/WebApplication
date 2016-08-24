@@ -9,7 +9,11 @@ from django.template import Context
 
 from .forms import RegistrationForm, LoginForm, ConfirmationForm
 from ..Contributor.forms import ContributorForm
+from ..User.models import User
 
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+from django.template import Context
 
 def register_user(request):
     """
@@ -26,6 +30,30 @@ def register_user(request):
             form.save()
             login(request, authenticate(email=request.POST['email'], password=request.POST['password1']))
             messages.success(request, 'Your account has been created!')
+
+            userName = form.instance.first_name + form.instance.last_name
+            userEmail = form.instance.email
+
+            user = User.objects.get(email=userEmail)
+            code = user.get_confirmation_token()
+
+            template = get_template('confirmation.txt')
+            context = Context({
+                'userName': userName,
+                'email': userEmail,
+                'code': code,
+            })
+            content = template.render(context)
+
+            email = EmailMessage(
+                "Confirm Your Account with MyRelevate",
+                content,
+                "relevate@gmail.com" + '',
+                [userEmail],
+                headers={'Reply-To': "relevate@gmail.com"}
+            )
+            email.send()
+
             return HttpResponseRedirect(reverse('myrelevate:index'))
         else:
             messages.error(request, 'Your account could not be created, please try again.')

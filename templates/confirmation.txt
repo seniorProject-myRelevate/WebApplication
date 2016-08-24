@@ -1,0 +1,12 @@
+{{ userName }},
+
+Thank you for becoming a member of MyRelevate.
+
+Your username is: {{ userEmail }}
+
+Your confirmation code is:
+
+{{ code }}
+
+You will need to use this code to confirm your account with MyRelevate
+before you may continue using the site.
