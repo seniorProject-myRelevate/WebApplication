@@ -43,13 +43,13 @@ def create(request):
         if form.is_valid():
             pending_contributors = PendingContributors()
             contributor_profile = form.save(commit=False)
+            # if contributor.adviser not blank then set has_adviser to True
             if contributor_profile.adviser is None:
                 contributor_profile.has_adviser = False
             else:
                 contributor_profile.has_adviser = True
             contributor_profile.save()
             user.contributor_profile = contributor_profile
-            # if contributor.adviser not blank then set has_adviser to True
             pending_contributors.contributor = contributor_profile
             pending_contributors.save()
             user.save()
