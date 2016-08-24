@@ -5,6 +5,7 @@ from passwords.fields import PasswordField
 from passwords.validators import LengthValidator, ComplexityValidator
 
 
+
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}),
                              label='')
@@ -110,3 +111,7 @@ class RegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class ConfirmationForm(forms.Form):
+    token = forms.CharField(widget=forms.TextInput())

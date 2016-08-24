@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.template import Context
 
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, ConfirmationForm
 from ..Contributor.forms import ContributorForm
 
 
@@ -55,7 +56,7 @@ def login_view(request):
             return HttpResponse('Invalid Login.')
     else:
         form = LoginForm()
-        return render(request, 'login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 
 @login_required
@@ -79,7 +80,24 @@ def new_confirm(request):
     """
     if request.user.confirmed:
         return HttpResponseRedirect(reverse('myrelevate:index'))
-    return render(request, 'confirm.html', {'user': request.user})
+    if request.method == 'POST':
+        token = request.POST['token']
+        user = get_user_model().objects.get(email=request.user.email)
+        form = ConfirmationForm(request.POST)
+        if form.is_valid():
+            if user.confirm(token):
+                messages.success(request, 'Thank you for confirming your account!')
+                return HttpResponseRedirect(reverse('myrelevate:index'))
+            else:
+                # email code for new confirmation token
+                pass
+        else:
+            return HttpResponse(form.errors)
+    else:
+        context = {
+            'user': request.user
+        }
+    return render(request, 'confirm.html', context)
 
 
 @login_required()
