@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from django.template import Context
 
 from .forms import RegistrationForm, LoginForm, ConfirmationForm
 from ..Contributor.forms import ContributorForm
@@ -14,6 +13,7 @@ from ..User.models import User
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.template import Context
+
 
 def register_user(request):
     """
@@ -31,16 +31,16 @@ def register_user(request):
             login(request, authenticate(email=request.POST['email'], password=request.POST['password1']))
             messages.success(request, 'Your account has been created!')
 
-            userName = form.instance.first_name + form.instance.last_name
-            userEmail = form.instance.email
+            user_name = form.instance.first_name + form.instance.last_name
+            user_email = form.instance.email
 
-            user = User.objects.get(email=userEmail)
+            user = User.objects.get(email=user_email)
             code = user.get_confirmation_token()
 
             template = get_template('confirmation.txt')
             context = Context({
-                'userName': userName,
-                'email': userEmail,
+                'userName': user_name,
+                'email': user_email,
                 'code': code,
             })
             content = template.render(context)
@@ -49,7 +49,7 @@ def register_user(request):
                 "Confirm Your Account with MyRelevate",
                 content,
                 "relevate@gmail.com" + '',
-                [userEmail],
+                [user_email],
                 headers={'Reply-To': "relevate@gmail.com"}
             )
             email.send()
