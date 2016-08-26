@@ -15,7 +15,7 @@
 {% block content %}
     <div>
         {% if user.contributor_profile.avatar == ""  %}
-            <img class="profile_avatar" src="{% static "images/Relevate Logo.png" %}" alt="logo"/>
+            <img class="profile_avatar" src="{% static "images/profile-placeholder.png" %}" alt="logo"/>
         {% elif user.contributor_profile.avatar != "" %}
             <img class="profile_avatar" src="{{ user.contributor_profile.avatar.url }}">
         {% endif %}
