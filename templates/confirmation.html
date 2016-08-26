@@ -2,6 +2,19 @@
 
 {% block content %}
     <div class="uk-container">
-
+        <div class="uk-align-center">
+            <img class="profile_avatar" src="{% static "images/profile-placeholder.png" %}" alt="logo"/>
+        </div>
+        <span>{{ userName }},</span>
+        <span>Thank you for becoming a member of MyRelevate.</span>
+        <br>
+        <span>Your username is: {{ userEmail }}</span>
+        <span>
+            Your confirmation code is: <br> {{ code }}
+        </span>
+        <span>
+            You will need to use this code to confirm your account with MyRelevate
+            before you may continue using the site.
+        </span>
     </div>
 {% endblock %}
