@@ -35,7 +35,7 @@ def register_user(request):
             user_email = form.instance.email
 
             user = User.objects.get(email=user_email)
-            code = user.get_confirmation_token()
+            code = user.generate_confirmation_token()
 
             template = get_template('confirmation.html')
             context = Context({
